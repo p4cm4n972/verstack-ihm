@@ -1,0 +1,114 @@
+/* Conteneur principal */
+
+.container {
+    display: flex;
+    height: 85vh;
+    justify-content: center;
+    align-items: center;
+   // background-color: #121212;
+    color: white;
+  }
+  
+  .row {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    height: 100%;
+  }
+  
+  .col {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  
+  
+  .text-content {
+    text-align: center;
+  }
+  
+  .pixel-art-title {
+    font-size: 3rem;
+    text-transform: uppercase;
+  }
+  
+  .pixel-art-subtitle {
+    font-size: 1.2rem;
+    line-height: 1.5;
+  }
+  
+
+  
+  .disabled {
+    background-color: #bbb;
+    pointer-events: none;
+    color: #666;
+  }
+  
+
+  .hide-on-large {
+    display: none;
+  }
+  
+  .hide-on-small {
+    display: flex;
+  }
+  
+  @media (max-width: 600px) {
+    .hide-on-large {
+      display: flex;
+    }
+    .hide-on-small {
+      display: none;
+    }
+  }
+
+  h1 {
+    color: limegreen;
+    
+  }
+  
+ h1, h5 {
+    text-align: start;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: flex-start;
+  }
+  
+  .btn {
+    display: inline-block;
+    background-color: white;
+    color: black;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    margin-right: 15px; /* Ajout de l'espace entre les boutons */
+  }
+  
+  .btn:last-child {
+    margin-right: 0; /* Pas de marge sur le dernier bouton */
+  }
+  
+  .btn:hover {
+    background-color: lightgray;
+  }
+  
+  .disabled {
+    background-color: #bbb;
+    pointer-events: none;
+    color: #666;
+  }
+  
+  h1, h4, h5 {
+    font-weight:900;
+    text-shadow: 1px 1px 2px black;
+  }
+
+  

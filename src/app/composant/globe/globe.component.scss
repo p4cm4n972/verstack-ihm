@@ -1,0 +1,60 @@
+.globe-container {
+    perspective: 1000px;
+    width: 50vw;
+    height: 50vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .orbit {
+    width: 500px;
+    height: 500px;
+    position: relative;
+    animation: orbit-rotation 15s infinite linear;
+    transform-style: preserve-3d;
+  }
+  
+  .globe {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    top: 50%;
+    left: 50%;
+    transform-style: preserve-3d;
+    transform-origin: center;
+    animation: globe-rotation 50s infinite linear;
+  }
+  
+  .globe img {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    // background-color: #fff;
+    // border-radius: 50%;
+    transform-style: preserve-3d;
+    image-rendering: pixelated;
+  }
+  
+  /* Animation de la rotation autour d'un point fixe */
+  @keyframes orbit-rotation {
+    from {
+      transform: rotateY(0deg);
+    }
+  
+    to {
+      transform: rotateY(360deg);
+    }
+  }
+  
+  /* Animation de la rotation du globe sur lui-même */
+  @keyframes globe-rotation {
+    from {
+      transform: rotateY(0deg);
+    }
+  
+    to {
+      transform: rotateY(360deg);
+    }
+  }
+  

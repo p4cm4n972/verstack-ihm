@@ -1,0 +1,41 @@
+
+section {
+    // background-color: black;
+    color: limegreen;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex;
+    align-items: center;
+    height: 10vh;
+    padding: 10px;
+
+  }
+
+  .console {
+   font-size: 18px;
+    white-space: nowrap;
+    overflow: hidden;
+    border-right: 2px solid limegreen;
+    animation: typing 3.5s steps(30, end), blink 0.75s step-end infinite;
+  }
+
+  /* Animation de la frappe */
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  /* Animation du curseur clignotant */
+  @keyframes blink {
+    50% {
+      border-color: transparent;
+    }
+  }
+
+  h4 {
+    text-transform:lowercase;
+    text-shadow: 1px 1px 2px black;
+  }

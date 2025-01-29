@@ -1,0 +1,43 @@
+<mat-toolbar color="primary" class="toolbar">
+    <div class="menu-button-container hide-on-large">
+        <button mat-icon-button (click)="onToggleSidenav()">
+            <mat-icon>menu</mat-icon>
+        </button>
+    </div>
+
+    <div class="left-container">
+        <div class="logo">
+            <a routerLink="/home">V/></a>
+        </div>
+
+        <ul class="navigation-items hide-on-small">
+            <li class="">
+                <a class="" routerLink="/home" routerLinkActive="active">home</a>
+            </li>
+            <li class="">
+                <a class="" routerLink="/version" routerLinkActive="active">version</a>
+            </li>
+            <li class="">
+                <a class="" routerLink="/stat" routerLinkActive="active">stat</a>
+            </li>
+            <li class="">
+                <a class="" routerLink="/news" routerLinkActive="active">news</a>
+            </li>
+            <li class="">
+                <a class="" routerLink="/shop" routerLinkActive="active">shop</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="navigation-container hide-on-small">
+        
+        <ul class="navigation-items">
+            <li>
+                <a routerLink="/owner">Owner Actions</a>
+            </li>
+            <li>
+                <a routerLink="/account">Account Actions</a>
+            </li>
+        </ul>
+    </div>
+</mat-toolbar>
