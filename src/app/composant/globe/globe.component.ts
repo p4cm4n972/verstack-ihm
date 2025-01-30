@@ -5,7 +5,8 @@ import { FieldService } from '../../services/field.service';
   selector: 'app-globe',
   imports: [],
   templateUrl: './globe.component.html',
-  styleUrl: './globe.component.scss'
+  styleUrl: './globe.component.scss',
+  standalone: true
 })
 export class GlobeComponent {
 

@@ -5,6 +5,7 @@ import { TapeTextConsoleComponent } from "../../../composant/tape-text-console/t
 
 @Component({
   selector: 'app-home',
+  standalone: true,
   imports: [MatTabsModule, GlobeComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
