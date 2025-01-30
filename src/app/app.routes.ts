@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './core/component/home/home.component';
 import { VersionComponent } from './core/component/version/version.component';
 import { AboutComponent } from './core/component/about/about.component';
+import { StatComponent } from './core/component/stat/stat.component';
 
 export const routes: Routes = [
     { path: 'home', component: HomeComponent },
@@ -9,8 +10,8 @@ export const routes: Routes = [
   {
     path: 'version', component: VersionComponent
   },
- /* { path: 'stat', component: StatComponent },
-  { path: 'learn', component: LearnComponent },
+  { path: 'stat', component: StatComponent },
+ /* { path: 'learn', component: LearnComponent },
   { path: 'shop', component: ShopComponent },
   { path: 'login', component: LoginComponent },*/
   { path: '', redirectTo: '/home', pathMatch: 'full' },
