@@ -3,8 +3,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    //padding: 5px 5px;
+    padding: 5px 5px;
     flex-wrap: wrap;
+    position: absolute;
+    bottom: 0;
   }
   
   .footer-logo a {
@@ -21,7 +23,7 @@
   .footer-links a {
     color: white;
     text-decoration: none;
-    font-size: 0.9rem;
+   // font-size: 0.9rem;
   }
   
   .footer-links a:hover {
@@ -35,7 +37,7 @@
   
   .footer-note {
     margin-top: 5px;
-    font-size: 12px;
+    font-size: 14px;
     text-align: center;
     color: white;
   }
