@@ -7,11 +7,44 @@ a:hover, a:active{
     color: lightgray;
 }
  
-.navigation-items{
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+
+
+.navigation-items {
+  list-style: none;
+  display: flex;
+  gap: 15px;
+  padding: 0;
 }
+
+.navigation-items li {
+  display: inline;
+}
+
+.navigation-items a {
+  text-decoration: none;
+  color: #ffffff;
+  padding: 8px 15px;
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.navigation-items a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #00ff88, #00ff44);
+  box-shadow: 0 0 8px #00ff88, 0 0 12px #00ff44;
+  transition: width 0.3s ease;
+}
+
+.navigation-items a:hover::after,
+.navigation-items a.active::after {
+  width: 100%;
+}
+
  
 mat-toolbar{
     border-radius: 3px;

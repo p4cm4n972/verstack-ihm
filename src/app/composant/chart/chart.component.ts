@@ -60,7 +60,7 @@ export class ChartComponent {
   }
 
   loadTrendsData(): void {
-    this.http.get('assets/json/popularity-trends.json').subscribe((trends: any) => {
+    this.http.get('json/popularity-trends.json').subscribe((trends: any) => {
       this.fullData = trends;
       this.updateChart('animation'); // Charge par défaut l'animation
     });
