@@ -1,0 +1,23 @@
+[
+    { "name": "Python", "popularity": 16.41 },
+    { "name": "JavaScript", "popularity": 14.07 },
+    { "name": "Java", "popularity": 13.00 },
+    { "name": "C#", "popularity": 8.21 },
+    { "name": "C", "popularity": 7.56 },
+    { "name": "C++", "popularity": 6.91 },
+    { "name": "TypeScript", "popularity": 6.03 },
+    { "name": "PHP", "popularity": 5.54 },
+    { "name": "Swift", "popularity": 3.85 },
+    { "name": "Kotlin", "popularity": 3.29 },
+    { "name": "Ruby", "popularity": 2.97 },
+    { "name": "Go", "popularity": 2.52 },
+    { "name": "Rust", "popularity": 2.43 },
+    { "name": "R", "popularity": 1.94 },
+    { "name": "Dart", "popularity": 1.65 },
+    { "name": "MATLAB", "popularity": 1.50 },
+    { "name": "Scala", "popularity": 1.32 },
+    { "name": "Lua", "popularity": 1.24 },
+    { "name": "Visual Basic", "popularity": 1.10 },
+    { "name": "Assembly", "popularity": 0.98 }
+  ]
+  
