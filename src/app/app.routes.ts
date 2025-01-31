@@ -7,6 +7,7 @@ import { ShopComponent } from './core/component/shop/shop.component';
 import { NewsComponent } from './core/component/news/news.component';
 import { PageNotFoundComponent } from './core/page-not-found/page-not-found.component';
 import { SigninComponent } from './account/signin/signin.component';
+import { SignupComponent } from './core/component/signup/signup.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -18,7 +19,7 @@ export const routes: Routes = [
   { path: 'stat', component: StatComponent },
   { path: 'shop', component: ShopComponent },
   { path: 'news', component: NewsComponent },
-  { path: 'signin', component: SigninComponent },
+  { path: 'signup', component: SignupComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 

@@ -77,116 +77,89 @@
       </mat-card>
       
 </section> -->
-<section>
-    <mat-card class="signup-container">
-        <mat-tab-group class="tabstyle">
-          <!-- Onglet Connexion -->
-          <mat-tab class="tabstyle" label="Login">
-            <form [formGroup]="signupForm" (ngSubmit)="onLogin()">
-              <h2>Connexion</h2>
-      
-              <mat-form-field class="full-width" appearance="outline">
-                <mat-label>Email</mat-label>
-                <input matInput placeholder="Entrez votre email" formControlName="email" type="email" required>
-              </mat-form-field>
-      
-              <mat-form-field class="full-width" appearance="outline">
-                <mat-label>Mot de passe</mat-label>
-                <input matInput placeholder="Entrez votre mot de passe" formControlName="password" type="password" required>
-              </mat-form-field>
-      
-              <button mat-raised-button color="primary" class="full-width signup-btn">Se connecter</button>
-            </form>
-          </mat-tab>
-      
-          <!-- Onglet Inscription -->
-          <mat-tab class="tabstyle" label="Register">
-            <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
-              <h2>Créer un compte</h2>
-      
-              <!-- Boutons réseaux sociaux -->
-              <div class="social-login">
-                <p>Ou connectez-vous avec :</p>
-                <button class="social-btn google-btn" aria-label="Connexion Google"><img src="assets/ico/google.ico" alt="google icone" width="24px"></button>
-                <button class="social-btn facebook-btn" aria-label="Connexion Facebook"><img src="assets/ico/facebook.ico" alt="google icone" width="24px"></button>
-                <button class="social-btn github-btn" aria-label="Connexion GitHub"><img src="assets/ico/github.ico" alt="google icone" width="24px"></button>
-              </div>
-      
-              <span class="separator">ou :</span>
-      
-              <!-- Champs d'inscription -->
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Nom</mat-label>
-                <input matInput placeholder="Entrez votre nom" formControlName="lastName" required>
-               @if(signupForm.get('lastName')?.invalid && signupForm.get('lastName')?.touched) {<mat-error>
-                  Le nom est obligatoire
-                </mat-error>}
-              </mat-form-field>
-          
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Prénom</mat-label>
-                <input matInput placeholder="Entrez votre prénom" formControlName="firstName" required>
-              @if(signupForm.get('firstName')?.invalid && signupForm.get('firstName')?.touched)  {<mat-error >
-                  Le prénom est obligatoire
-                </mat-error>}
-              </mat-form-field>
-          
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Pseudo</mat-label>
-                <input matInput placeholder="Entrez votre pseudo" formControlName="username" required>
-              @if(signupForm.get('username')?.invalid && signupForm.get('username')?.touched)  {<mat-error>
-                  Le pseudo est obligatoire
-                </mat-error>}
-              </mat-form-field>
-          
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Email</mat-label>
-                <input matInput type="email" placeholder="Entrez votre adresse mail" formControlName="email" required>
-            @if(signupForm.get('email')?.invalid && signupForm.get('email')?.touched)    {<mat-error>
-                  Entrez une adresse e-mail valide
-                </mat-error>}
-              </mat-form-field>
-          
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Numéro de téléphone</mat-label>
-                <input matInput type="tel" placeholder="Entrez votre numéro de téléphone" formControlName="phoneNumber" required>
-            @if(signupForm.get('phoneNumber')?.invalid && signupForm.get('phoneNumber')?.touched)    {<mat-error>
-                  Le numéro de téléphone est obligatoire
-                </mat-error>}
-              </mat-form-field>
-          
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Mot de passe</mat-label>
-                <input matInput type="password" placeholder="Entrez votre mot de passe" formControlName="password" required>
-            @if(signupForm.get('password')?.invalid && signupForm.get('password')?.touched)    {<mat-error>
-                  Le mot de passe est obligatoire
-                </mat-error>}
-              </mat-form-field>
-          
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Confirmer le mot de passe</mat-label>
-                <input matInput type="password" placeholder="Confirmez votre mot de passe" formControlName="confirmPassword" required>
-             @if(signupForm.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched){<mat-error >
-                  La confirmation du mot de passe est obligatoire
-                </mat-error>}
-              </mat-form-field>
-          
-              <mat-form-field appearance="outline" class="full-width">
-                <mat-label>Votre métier</mat-label>
-                <mat-select formControlName="job">
-                 @for(job of jobList; track job) {<mat-option [value]="job">{{ job }}</mat-option>}
-                </mat-select>
-               @if(signupForm.get('job')?.invalid && signupForm.get('job')?.touched){<mat-error >
-                  Le métier est obligatoire
-                </mat-error>}
-              </mat-form-field>
-      
-              <mat-checkbox formControlName="acceptTerms">J'accepte les termes et conditions</mat-checkbox>
-      
-              <button mat-raised-button color="primary" class="full-width signup-btn" [disabled]="signupForm.invalid">Créer un compte</button>
-            </form>
-          </mat-tab>
-        </mat-tab-group>
-      </mat-card>
-      
-</section>
+
+<!-- Onglet Inscription -->
+  <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
+    <h2>Créer un compte</h2>
+
+    <!-- Boutons réseaux sociaux -->
+    <div class="social-login">
+      <p>Ou connectez-vous avec :</p>
+      <button class="social-btn google-btn" aria-label="Connexion Google"><img src="assets/ico/google.ico" alt="google icone" width="24px"></button>
+      <button class="social-btn facebook-btn" aria-label="Connexion Facebook"><img src="assets/ico/facebook.ico" alt="google icone" width="24px"></button>
+      <button class="social-btn github-btn" aria-label="Connexion GitHub"><img src="assets/ico/github.ico" alt="google icone" width="24px"></button>
+    </div>
+
+    <span class="separator">ou :</span>
+
+    <!-- Champs d'inscription -->
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nom</mat-label>
+      <input matInput placeholder="Entrez votre nom" formControlName="lastName" required>
+     @if(signupForm.get('lastName')?.invalid && signupForm.get('lastName')?.touched) {<mat-error>
+        Le nom est obligatoire
+      </mat-error>}
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Prénom</mat-label>
+      <input matInput placeholder="Entrez votre prénom" formControlName="firstName" required>
+    @if(signupForm.get('firstName')?.invalid && signupForm.get('firstName')?.touched)  {<mat-error >
+        Le prénom est obligatoire
+      </mat-error>}
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Pseudo</mat-label>
+      <input matInput placeholder="Entrez votre pseudo" formControlName="username" required>
+    @if(signupForm.get('username')?.invalid && signupForm.get('username')?.touched)  {<mat-error>
+        Le pseudo est obligatoire
+      </mat-error>}
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput type="email" placeholder="Entrez votre adresse mail" formControlName="email" required>
+  @if(signupForm.get('email')?.invalid && signupForm.get('email')?.touched)    {<mat-error>
+        Entrez une adresse e-mail valide
+      </mat-error>}
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Numéro de téléphone</mat-label>
+      <input matInput type="tel" placeholder="Entrez votre numéro de téléphone" formControlName="phoneNumber" required>
+  @if(signupForm.get('phoneNumber')?.invalid && signupForm.get('phoneNumber')?.touched)    {<mat-error>
+        Le numéro de téléphone est obligatoire
+      </mat-error>}
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Mot de passe</mat-label>
+      <input matInput type="password" placeholder="Entrez votre mot de passe" formControlName="password" required>
+  @if(signupForm.get('password')?.invalid && signupForm.get('password')?.touched)    {<mat-error>
+        Le mot de passe est obligatoire
+      </mat-error>}
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Confirmer le mot de passe</mat-label>
+      <input matInput type="password" placeholder="Confirmez votre mot de passe" formControlName="confirmPassword" required>
+   @if(signupForm.get('confirmPassword')?.invalid && signupForm.get('confirmPassword')?.touched){<mat-error >
+        La confirmation du mot de passe est obligatoire
+      </mat-error>}
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Votre métier</mat-label>
+      <mat-select formControlName="job">
+       @for(job of jobList; track job) {<mat-option [value]="job">{{ job }}</mat-option>}
+      </mat-select>
+     @if(signupForm.get('job')?.invalid && signupForm.get('job')?.touched){<mat-error >
+        Le métier est obligatoire
+      </mat-error>}
+    </mat-form-field>
+
+    <mat-checkbox formControlName="acceptTerms">J'accepte les termes et conditions</mat-checkbox>
+
+    <button mat-raised-button color="primary" class="full-width signup-btn" [disabled]="signupForm.invalid">Créer un compte</button>
+  </form>

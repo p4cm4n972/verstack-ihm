@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
+import { MatCardModule } from '@angular/material/card';
+import { MatTabsModule } from '@angular/material/tabs';
+import { SigninComponent } from "../../../account/signin/signin.component";
+import { LoginComponent } from "../../../account/login/login.component";
 
 @Component({
   selector: 'app-signup',
-  imports: [],
+  imports: [MatCardModule, MatTabsModule, SigninComponent, LoginComponent],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })

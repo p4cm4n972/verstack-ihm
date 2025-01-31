@@ -1,1 +1,41 @@
-<p>news works!</p>
+<section>
+    <mat-toolbar color="primary" class="mb-4">
+        <span>Articles Techniques</span>
+    </mat-toolbar>
+
+    <div class="articles-container">
+        <div class="filters">
+            <mat-form-field appearance="outline">
+                <mat-label>Rechercher un article</mat-label>
+                <input matInput placeholder="Tapez un mot-clé">
+            </mat-form-field>
+
+            @if(frameworks.length > 0) {<mat-chip-set>
+                @for(framework of frameworks; track framework) {
+                <mat-chip selectable>
+                    {{ framework }}
+                </mat-chip>}
+            </mat-chip-set>
+            }
+        </div>
+
+        <mat-grid-list cols="3" rowHeight="300px" gutterSize="16px">
+            @for(article of articles; track article) {
+            <mat-grid-tile class="article-card">
+                <mat-card>
+                    <mat-card-header>
+                        <mat-card-title>{{ article.title }}</mat-card-title>
+                        <mat-card-subtitle>{{ article.framework }}</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image src="{{ article.image }}" alt="{{ article.title }}" width="24px">
+                    <mat-card-content>
+                        <p>{{ article.excerpt }}</p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <button mat-raised-button color="accent">Lire la suite</button>
+                    </mat-card-actions>
+                </mat-card>
+            </mat-grid-tile>}
+        </mat-grid-list>
+    </div>
+</section>

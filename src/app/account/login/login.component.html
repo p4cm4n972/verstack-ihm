@@ -1,1 +1,15 @@
-<p>login works!</p>
+    <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+      <h2>Connexion</h2>
+
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput placeholder="Entrez votre email" formControlName="email" type="email" required>
+      </mat-form-field>
+
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Mot de passe</mat-label>
+        <input matInput placeholder="Entrez votre mot de passe" formControlName="password" type="password" required>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" class="full-width signup-btn">Se connecter</button>
+    </form>

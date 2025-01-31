@@ -1,0 +1,117 @@
+@use '@angular/material' as mat;
+
+// Customize the entire app. Change :root to your selector if you want to scope the styles.
+// .tabstyle {
+//   @include mat.tabs-overrides((
+//     active-indicator-color: rgba(0, 132, 255, 1),
+//   ));
+// }
+  
+  .signup-card {
+    background: rgba(30, 30, 30, 0.9);
+    padding: 32px;
+    border-radius: 16px;
+    max-width: 450px;
+    color: white;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+  }
+  
+  
+  .signup-field {
+    width: 100%;
+    margin-top: 16px;
+  }
+  
+  .signup-btn {
+    width: 100%;
+    background: linear-gradient(45deg, #00ff88, #00bbaa);
+    color: black;
+    margin-top: 24px;
+    font-weight: bold;
+    transition: box-shadow 0.3s, transform 0.2s;
+  
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(0, 255, 100, 0.6);
+    }
+  }
+  
+  .signin-link {
+    margin-top: 16px;
+    text-align: center;
+  
+    a {
+      color: #00ff88;
+      text-decoration: none;
+      font-weight: bold;
+  
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  
+ 
+  
+  .full-width {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  .signup-container {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    color: white;
+  }
+
+  .signup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: radial-gradient(circle, rgba(0, 0, 0, 0.9), rgba(0, 30, 50, 1));
+  }
+  
+  .full-width {
+    width: 100%;
+    margin-bottom: 16px;
+  }
+  
+  .social-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin: 16px 0;
+  }
+  
+  .separator {
+    display: block;
+    text-align: center;
+    margin: 8px 0;
+    color: lightgray;
+  }
+  
+  .social-login {
+    margin-top: 24px;
+    text-align: center;
+  
+    .social-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: inline-block;
+      margin: 0 8px;
+      background-color: white;
+      transition: transform 0.2s, box-shadow 0.2s;
+  
+      &:hover {
+        transform: scale(1.2);
+        box-shadow: 0 0 10px rgba(0, 255, 100, 0.5);
+      }
+    }
+  
+    
+  }
+  
