@@ -1,7 +1,7 @@
 <div class="globe-container">
     <div class="orbit">
         <div class="globe">
-          @for(img of images; track img) {<img  [src]="img" alt="image" [style.opacity]="loading ? 0 : 1"
+          @for(img of images; track img) {<img  [src]="img" alt="image"
                 (load)="onImageLoad()" /> }
         </div>
     </div>
