@@ -1,5 +1,5 @@
 <section>
-    <mat-toolbar color="primary" class="mb-4">
+    <mat-toolbar color="secondary" class="mb-4">
         <span>Articles Techniques</span>
     </mat-toolbar>
 
@@ -19,7 +19,7 @@
             }
         </div>
 
-        <mat-grid-list cols="3" rowHeight="300px" gutterSize="16px">
+        <!-- <mat-grid-list cols="3" rowHeight="300px" gutterSize="16px">
             @for(article of articles; track article) {
             <mat-grid-tile class="article-card">
                 <mat-card>
@@ -36,6 +36,25 @@
                     </mat-card-actions>
                 </mat-card>
             </mat-grid-tile>}
-        </mat-grid-list>
+        </mat-grid-list> -->
+
+        <div class="article-grid">
+            @for(article of articles; track article) { <ng-container>
+              <mat-card class="article-card" appearance="outlined">
+                <mat-card-header>
+                    <div mat-card-avatar class="header-image" style="background-image: url({{article.image}}); background-size: cover; background-position: center;background-repeat: no-repeat;"></div>
+                  <mat-card-title>{{ article.title }}</mat-card-title>
+                  <mat-card-subtitle>{{ article.framework }}</mat-card-subtitle>
+                </mat-card-header>
+                <img mat-card-image [src]="article.image" [alt]="article.title" >
+                <mat-card-content>
+                  <p>{{ article.excerpt }}</p>
+                </mat-card-content>
+                <mat-card-actions>
+                  <button mat-raised-button color="accent">Lire la suite</button>
+                </mat-card-actions>
+              </mat-card>
+            </ng-container>}
+          </div>
     </div>
 </section>

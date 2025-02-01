@@ -1,0 +1,29 @@
+{
+    "articles": [
+      {
+        "title": "Introduction à Angular",
+        "framework": "Angular",
+        "image": "assets/images/angular.png",
+        "excerpt": "Découvrez les bases d'Angular et démarrez votre projet avec ce framework puissant."
+      },
+      {
+        "title": "Créer une app Vue.js",
+        "framework": "Vue.js",
+        "image": "assets/images/vuejs.png",
+        "excerpt": "Apprenez à structurer une application performante avec Vue.js."
+      },
+      {
+        "title": "Guide complet React",
+        "framework": "React",
+        "image": "assets/images/react.png",
+        "excerpt": "Les meilleures pratiques pour réussir avec React."
+      },
+      {
+        "title": "Créer une UI moderne avec SwiftUI",
+        "framework": "SwiftUI",
+        "image": "assets/images/swiftui.png",
+        "excerpt": "Démarrez facilement avec SwiftUI pour vos apps iOS et macOS."
+      }
+    ]
+  }
+  

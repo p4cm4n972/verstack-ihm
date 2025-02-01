@@ -27,18 +27,20 @@ export class GlobeComponent {
 
   loadImages(): void {
 
-    this._fieldService.getImages().subscribe(
-      (logos: string[]) => {
-        this.images = logos;
+    this._fieldService.getImages().subscribe({
+      next: (logos: string[]) => {
+        console.log('logos', logos.length);
+        this.images = Array.from(new Set(logos));
+        console.log('images', this.images.length);
         this.totalImages = this.images.length;
       },
-      (error) => {
+      error: (error) => {
         console.error('Erreur lors de la recuperation des images', error);
       },
-      () => {
+      complete: () => {
         // this.loading = false;
       }
-    )
+    });
   }
 
   onImageLoad(): void {

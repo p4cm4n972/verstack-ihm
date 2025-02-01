@@ -45,6 +45,13 @@ export class FieldService {
             living_standard: "24/10/2024"
           },
           {
+            name: 'Bootstrap',
+            logoUrl: '../../../../assets/images/bootstrap.png',
+            websiteUrl:
+              'https://getbootstrap.com/',
+            edition: '5.3'
+          },
+          {
             name: 'TypeScript',
             logoUrl: '../../../../assets/images/ts.png',
             websiteUrl:
