@@ -1,1 +1,91 @@
-<p>version works!</p>
+<section>
+    <div class="language-container">
+        <mat-tab-group [(selectedIndex)]="selectedDomainIndex">
+            @for(domain of domaines; track domain;let i = $index){<mat-tab (click)="selectedDomain = domain">
+                <ng-template mat-tab-label>{{ domain }}</ng-template>
+            </mat-tab>}
+        </mat-tab-group>
+
+        <div class="languages-grid">
+            @for(language of filteredLangages; track language.name) {<ng-container>
+                <!-- <mat-card class="language-card">
+                    <mat-card-header>
+                        <mat-card-title>{{ language.name }}</mat-card-title>
+                        <mat-card-subtitle>{{ language.currentVersion }} (LTS: {{ language.ltsVersion
+                            }})</mat-card-subtitle>
+                    </mat-card-header>
+                    <img mat-card-image [src]="language.logoUrl" [alt]="language.name">
+                    <mat-card-content>
+                        <p>{{ language.description }}</p>
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <a [href]="language.documentation" target="_blank" class="doc-link">
+                            <button mat-raised-button color="primary">Documentation</button>
+                        </a>
+                    </mat-card-actions>
+                </mat-card> -->
+
+                <mat-card class="language-card" appearance="outlined">
+                    <mat-card-header>
+                      <mat-card-title-group>
+                        <mat-card-title>{{ language.name }}</mat-card-title>
+                        <mat-card-subtitle>{{ language.currentVersion }} (LTS: {{ language.ltsVersion
+                            }})</mat-card-subtitle>
+                        <img mat-card-sm-image [src]="language.logoUrl" [alt]="language.name">
+                      </mat-card-title-group>
+                    </mat-card-header>
+                    <mat-card-content>
+                        {{ language.description }}
+                    </mat-card-content>
+                    <mat-card-actions>
+                        <a [href]="language.documentation" target="_blank" class="doc-link">
+                            <button mat-raised-button color="primary">Documentation</button>
+                        </a>
+                    </mat-card-actions>
+                  </mat-card>
+
+
+
+
+
+
+
+            </ng-container>}
+        </div>
+    </div>
+</section>
+
+
+<!-- <section>
+    <mat-tab-group mat-align-tabs="start" class="vertical-tab-group" (selectedTabChange)="filterLangages($event)">
+    @for(domain of domaines; track domain; let i = $index){<mat-tab [label]="domain">
+    </mat-tab>}
+  </mat-tab-group>
+  
+  <div class="language-container">
+    <mat-grid-list cols="4" rowHeight="320px" gutterSize="16px">
+     @for(langage of filteredLangages; track langage.name) {
+        <mat-grid-tile>
+        <mat-card class="language-card">
+          <mat-card-header>
+            <div mat-card-avatar class="language-logo">
+              <img [src]="langage.logoUrl" [alt]="langage.name" />
+            </div>
+            <mat-card-title>{{ langage.name }}</mat-card-title>
+            <mat-card-subtitle>{{ langage.domain.join(', ') }}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+            <p>{{ langage.description }}</p>
+            <p><strong>Version Actuelle :</strong> {{ langage.currentVersion }}</p>
+            <p><strong>Date de Sortie :</strong> {{ langage.releaseDate }}</p>
+          </mat-card-content>
+          <mat-card-actions>
+            <a mat-button color="primary" [href]="langage.documentation" target="_blank">
+              Documentation
+            </a>
+          </mat-card-actions>
+        </mat-card>
+      </mat-grid-tile>}
+    </mat-grid-list>
+  </div>
+</section> -->
