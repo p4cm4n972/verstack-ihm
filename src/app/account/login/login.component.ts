@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -11,7 +12,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'app-login',
-    imports: [MatToolbarModule,MatTabsModule,MatCheckboxModule, MatCardModule,MatFormFieldModule,MatInputModule, MatIconModule, MatSelectModule , ReactiveFormsModule],
+    imports: [MatToolbarModule,MatButtonModule, MatTabsModule,MatCheckboxModule, MatCardModule,MatFormFieldModule,MatInputModule, MatIconModule, MatSelectModule , ReactiveFormsModule],
   
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'

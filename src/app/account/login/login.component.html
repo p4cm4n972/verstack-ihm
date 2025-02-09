@@ -11,5 +11,5 @@
         <input matInput placeholder="Entrez votre mot de passe" formControlName="password" type="password" required>
       </mat-form-field>
 
-      <button mat-raised-button color="primary" class="full-width signup-btn">Se connecter</button>
+      <button mat-raised-button color="primary" class="full-width signup-btn" [disabled]="loginForm.invalid">Se connecter</button>
     </form>

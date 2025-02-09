@@ -25,7 +25,7 @@
   .signup-btn {
     width: 100%;
     background: linear-gradient(45deg, #00ff88, #00bbaa);
-    color: black;
+    color: black !important;
     margin-top: 24px;
     font-weight: bold;
     transition: box-shadow 0.3s, transform 0.2s;
@@ -75,10 +75,6 @@
     background: radial-gradient(circle, rgba(0, 0, 0, 0.9), rgba(0, 30, 50, 1));
   }
   
-  .full-width {
-    width: 100%;
-    margin-bottom: 16px;
-  }
   
   .social-buttons {
     display: flex;

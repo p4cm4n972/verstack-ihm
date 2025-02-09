@@ -19,19 +19,4 @@ export class AppComponent {
 
   constructor(private router: Router, private renderer: Renderer2) {}
 
-  /* ngOnInit(): void {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationEnd) {
-        if (event.urlAfterRedirects === '/home') {
-          this.applyBackground('transparent');
-        } else {
-          this.applyBackground('rgba(255, 255, 255, 0.5)');
-        }
-      }
-    });
-  }
-
-  private applyBackground(color: string) {
-    this.renderer.setStyle(this.sidenavContent.nativeElement, 'background-color', color);
-  } */
 }

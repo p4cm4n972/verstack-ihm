@@ -8,6 +8,8 @@ import { NewsComponent } from './core/component/news/news.component';
 import { PageNotFoundComponent } from './core/page-not-found/page-not-found.component';
 import { SigninComponent } from './account/signin/signin.component';
 import { SignupComponent } from './core/component/signup/signup.component';
+import { MentionsComponent } from './composant/mentions/mentions.component';
+import { ReleaseComponent } from './composant/release/release.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -20,6 +22,8 @@ export const routes: Routes = [
   { path: 'shop', component: ShopComponent },
   { path: 'news', component: NewsComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'mentions', component: MentionsComponent },
+  { path: 'release', component: ReleaseComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 

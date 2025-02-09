@@ -8,41 +8,32 @@
 
         <div class="languages-grid">
             @for(language of filteredLangages; track language.name) {<ng-container>
-                <!-- <mat-card class="language-card">
-                    <mat-card-header>
-                        <mat-card-title>{{ language.name }}</mat-card-title>
-                        <mat-card-subtitle>{{ language.currentVersion }} (LTS: {{ language.ltsVersion
-                            }})</mat-card-subtitle>
-                    </mat-card-header>
-                    <img mat-card-image [src]="language.logoUrl" [alt]="language.name">
-                    <mat-card-content>
-                        <p>{{ language.description }}</p>
-                    </mat-card-content>
-                    <mat-card-actions>
-                        <a [href]="language.documentation" target="_blank" class="doc-link">
-                            <button mat-raised-button color="primary">Documentation</button>
-                        </a>
-                    </mat-card-actions>
-                </mat-card> -->
-
                 <mat-card class="language-card" appearance="outlined">
                     <mat-card-header>
-                      <mat-card-title-group>
-                        <mat-card-title>{{ language.name }}</mat-card-title>
-                        <mat-card-subtitle>{{ language.currentVersion }} (LTS: {{ language.ltsVersion
-                            }})</mat-card-subtitle>
-                        <img mat-card-sm-image [src]="language.logoUrl" [alt]="language.name">
-                      </mat-card-title-group>
+                        <mat-card-title-group>
+                            <mat-card-title>{{ language.name }}</mat-card-title>
+                            <mat-card-subtitle>LTS: {{ language.ltsVersion
+                                }}</mat-card-subtitle>
+                            <mat-card-subtitle>current: {{ language.currentVersion }}</mat-card-subtitle>
+                            <img mat-card-sm-image [src]="language.logoUrl" [alt]="language.name">
+                        </mat-card-title-group>
                     </mat-card-header>
                     <mat-card-content>
                         {{ language.description }}
                     </mat-card-content>
-                    <mat-card-actions>
+                    <mat-card-actions class="card-actions">
                         <a [href]="language.documentation" target="_blank" class="doc-link">
                             <button mat-raised-button color="primary">Documentation</button>
                         </a>
+                        <a mat-icon-button aria-label="épingler"
+                            [matTooltip]="'Ajouter ' + language.name + ' à votre board'"
+                            aria-label="Bouton qui ajoute la carte au tableau personnalisé"
+                            (click)="pinLanguage(language)">
+                            <mat-icon aria-hidden="false" aria-label="épingle icone"
+                                [fontIcon]="isPinned(language) ? 'beenhere' : 'new_label'"></mat-icon>
+                        </a>
                     </mat-card-actions>
-                  </mat-card>
+                </mat-card>
 
 
 
