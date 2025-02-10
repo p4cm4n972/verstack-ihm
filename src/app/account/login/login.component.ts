@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { AuthenticationService } from '../../services/authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +22,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 export class LoginComponent {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private readonly authService: AuthenticationService, private router: Router) {
 
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -30,7 +32,15 @@ export class LoginComponent {
 
   onLogin() {
     if (this.loginForm.valid) {
-      console.log('Login form data:', this.loginForm.value);
+      this.authService.login(this.loginForm.value).subscribe({
+        next: (response) => {
+          localStorage.setItem('token', response.token);
+          this.router.navigate(['/home']);
+        },
+        error: (error) => {
+          console.error('Login failed', error);
+        }
+      })
     }
   }
 

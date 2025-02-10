@@ -1,9 +1,10 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, OnInit } from '@angular/core';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { TapeTextConsoleComponent } from '../../composant/tape-text-console/tape-text-console.component';
+import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
   selector: 'app-header',
@@ -11,8 +12,25 @@ import { TapeTextConsoleComponent } from '../../composant/tape-text-console/tape
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  constructor(private authService: AuthenticationService, private router: Router) { }
   @Output() public sidenavToggle = new EventEmitter();
+  isAuthenticated = false;
+  authStatus: boolean = false;
+
+  ngOnInit(): void {
+    this.isAuthenticated = this.authService.isLoggedIn();
+    this.authService.authStatus$.subscribe(status => {
+      this.authStatus = status;
+    });
+  }
+
+  logout() {
+    this.authService.updateAuthStatus(false);
+
+    this.authService.logout();
+    this.router.navigate(['/signup']);
+  }
 
   public onToggleSidenav = () => {
     this.sidenavToggle.emit();

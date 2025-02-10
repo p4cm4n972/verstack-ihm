@@ -138,19 +138,19 @@ export class SigninComponent {
   ) {
     this.signupForm = this.fb.group(
       {
-        pseudo: ['', Validators.required],
-        email: ['', [Validators.required, Validators.email]],
-        password: ['',
+        "pseudo": ['', Validators.required],
+        "email": ['', [Validators.required, Validators.email]],
+        "password": ['',
           Validators.required,
          // Validators.minLength(8),
          // Validators.pattern('(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*?&]).{8,}')
          ],
         // confirmPassword: ['', Validators.required],
-        job: ['', Validators.required],
-        ageRange: ['', Validators.required],
-        salaryRange: ['', Validators.required],
-        experience: ['', Validators.required],
-        acceptTerms: [false, Validators.requiredTrue],
+        "job": ['', Validators.required],
+        "ageRange": ['', Validators.required],
+        "salaryRange": ['', Validators.required],
+        "experience": ['', Validators.required],
+        "acceptTerms": [false, Validators.requiredTrue],
       }
     );
   }
