@@ -25,9 +25,10 @@ export class AuthenticationService {
       })
       .pipe(
         tap((response: any) => {
+          console.log(response);
           if (response) {
-            this.updateAuthStatus(true); // Mise à jour de l'état
-            // this.authService.login(response.token); // Mise à jour de l'état
+            this.updateAuthStatus(true);
+            this.storeUserData(response);
           }
         })
       );
@@ -48,5 +49,15 @@ export class AuthenticationService {
 
   getAuthStatus(): Observable<boolean> {
     return this.authStatusSubject.asObservable();
+  }
+
+  getUserData(): string {
+    const userData = localStorage.getItem('user');
+    return userData ? JSON.parse(userData)._id : null;
+  }
+
+  private storeUserData(response: any) {
+    localStorage.setItem('token', response.token);
+    localStorage.setItem('user', JSON.stringify(response));
   }
 }

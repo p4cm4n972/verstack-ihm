@@ -4,6 +4,8 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
+  ValidatorFn,
+  AbstractControl,
 } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,7 +19,6 @@ import { Component, inject, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TermesComponent } from '../../composant/termes/termes.component';
-import { passwordMatchValidator } from '../../common/passwordMatchValidator';
 import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
@@ -138,35 +139,63 @@ export class SigninComponent {
   ) {
     this.signupForm = this.fb.group(
       {
-        "pseudo": ['', Validators.required],
-        "email": ['', [Validators.required, Validators.email]],
-        "password": ['',
-          Validators.required,
-         // Validators.minLength(8),
-         // Validators.pattern('(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*?&]).{8,}')
-         ],
-        // confirmPassword: ['', Validators.required],
-        "job": ['', Validators.required],
-        "ageRange": ['', Validators.required],
-        "salaryRange": ['', Validators.required],
-        "experience": ['', Validators.required],
-        "acceptTerms": [false, Validators.requiredTrue],
-      }
+        pseudo: ['', Validators.required],
+        email: ['', [Validators.required, Validators.email]],
+        password: [
+          '',
+          [
+            Validators.required,
+            Validators.minLength(8),
+            Validators.pattern(
+              '(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[@$!%*?&_:]).{8,}'
+            ),
+          ],
+        ],
+        confirmPassword: ['', [Validators.required, passwordMatchValidator]],
+        job: ['', Validators.required],
+        ageRange: ['', Validators.required],
+        salaryRange: ['', Validators.required],
+        experience: ['', Validators.required],
+        acceptTerms: [false, Validators.requiredTrue],
+      },
+      { validators: passwordMatchValidator }
     );
   }
 
   onSignup() {
     if (this.signupForm.valid) {
-      this.authService.signup(this.signupForm.value).subscribe({
+      const signupData = {
+        pseudo: this.signupForm.value.pseudo,
+        email: this.signupForm.value.email,
+        password: this.signupForm.value.password,
+        job: this.signupForm.value.job,
+        ageRange: this.signupForm.value.ageRange,
+        salaryRange: this.signupForm.value.salaryRange,
+        experience: this.signupForm.value.experience,
+        acceptTerms: this.signupForm.value.acceptTerms,
+      };
+
+      this.authService.signup(signupData).subscribe({
         next: (response) => {
           console.log('Inscription réussie', response);
         },
         error: (error) => {
           console.error("Erreur d'inscription", error);
-        }
+        },
       });
     } else {
       console.warn('Formulaire invalide');
     }
   }
 }
+
+export const passwordMatchValidator: ValidatorFn = (
+  formGroup: AbstractControl
+): { [key: string]: boolean } | null => {
+  const password = formGroup.get('password');
+  const confirmPassword = formGroup.get('confirmPassword');
+  if (password && confirmPassword && password.value !== confirmPassword.value) {
+    return { passwordMismatch: true };
+  }
+  return null;
+};
