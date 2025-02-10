@@ -3,7 +3,6 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
-import { TapeTextConsoleComponent } from '../../composant/tape-text-console/tape-text-console.component';
 import { AuthenticationService } from '../../services/authentication.service';
 
 @Component({
@@ -20,7 +19,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.isAuthenticated = this.authService.isLoggedIn();
-    this.authService.authStatus$.subscribe(status => {
+    this.authService.getAuthStatus().subscribe(status => {
       this.authStatus = status;
     });
   }

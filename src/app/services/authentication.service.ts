@@ -7,8 +7,8 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
 })
 export class AuthenticationService {
   private baseUrl = 'api/authentication';
-  private authStatusSubject = new BehaviorSubject<boolean>(false);
-authStatus$ = this.authStatusSubject.asObservable();
+   authStatusSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
+
   constructor(private http: HttpClient) {}
 
   signup(data: any): Observable<any> {
@@ -19,21 +19,23 @@ authStatus$ = this.authStatusSubject.asObservable();
   }
 
   login(credentials: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/signin`, credentials, {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-    }).pipe(
-      tap((response: any) => {
-        if (response) {
-          this.updateAuthStatus(true); // Mise à jour de l'état
-         // this.authService.login(response.token); // Mise à jour de l'état
-        }
+    return this.http
+      .post(`${this.baseUrl}/signin`, credentials, {
+        headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
       })
-    );
+      .pipe(
+        tap((response: any) => {
+          if (response) {
+            this.updateAuthStatus(true); // Mise à jour de l'état
+            // this.authService.login(response.token); // Mise à jour de l'état
+          }
+        })
+      );
   }
 
   logout() {
     localStorage.removeItem('token');
-    this.authStatusSubject.next(false);
+    this.updateAuthStatus(false);
   }
 
   isLoggedIn(): boolean {
@@ -42,5 +44,9 @@ authStatus$ = this.authStatusSubject.asObservable();
 
   updateAuthStatus(status: boolean) {
     this.authStatusSubject.next(status);
+  }
+
+  getAuthStatus(): Observable<boolean> {
+    return this.authStatusSubject.asObservable();
   }
 }

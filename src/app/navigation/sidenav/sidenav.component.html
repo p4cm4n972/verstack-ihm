@@ -21,18 +21,22 @@
     </a>
 
 
-    <a mat-list-item routerLink="/owner" (click)="onSidenavClose()">
+    @if(isAuthenticated){<a mat-list-item routerLink="/profile" (click)="onSidenavClose()">
         <mat-icon>assignment_ind</mat-icon> <span class="nav-caption">Profile</span>   
     </a>
-    <a mat-list-item routerLink="/signup" (click)="onSidenavClose()">
+    <a mat-list-item (click)="logout()" (click)="onSidenavClose()">
+        <mat-icon>logout</mat-icon><span class="nav-caption">Déconnexion</span>
+    </a>}
+    @if(!isAuthenticated){<a mat-list-item routerLink="/signup" (click)="onSidenavClose()">
         <mat-icon>account_balance</mat-icon><span class="nav-caption">Sign up</span>
     </a>
-    <mat-list-item [matMenuTriggerFor]="menu">
+    }
+    <!-- <mat-list-item [matMenuTriggerFor]="menu">
         <mat-icon>unfold_more</mat-icon>
         <a matline>Example</a>
     </mat-list-item>
     <mat-menu #menu="matMenu">
       <button mat-menu-item (click)="onSidenavClose()">View profile</button>
       <button mat-menu-item (click)="onSidenavClose()">Add contact</button>
-    </mat-menu>
+    </mat-menu> -->
 </mat-nav-list>
