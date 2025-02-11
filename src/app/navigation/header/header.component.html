@@ -38,7 +38,7 @@
             </li>}
             @if(authStatus){<li>
 
-                <a routerLink="/profile">Profile <mat-icon>account_circle</mat-icon></a>
+                <a routerLink="/profile" routerLinkActive="active">Profile <mat-icon>account_circle</mat-icon></a>
 
                 <a routerLink="" (click)="logout()" >Déconnexion <mat-icon>logout</mat-icon></a>
             </li>}

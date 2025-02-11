@@ -14,11 +14,9 @@ import { AuthenticationService } from '../../services/authentication.service';
 export class HeaderComponent implements OnInit {
   constructor(private authService: AuthenticationService, private router: Router) { }
   @Output() public sidenavToggle = new EventEmitter();
-  isAuthenticated = false;
   authStatus: boolean = false;
 
   ngOnInit(): void {
-    this.isAuthenticated = this.authService.isLoggedIn();
     this.authService.getAuthStatus().subscribe(status => {
       this.authStatus = status;
     });

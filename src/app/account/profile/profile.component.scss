@@ -1,5 +1,5 @@
 .profile-container {
-    max-width: 600px;
+    min-width: 600px;
     margin: 50px auto;
   }
   
@@ -36,3 +36,11 @@
     margin-bottom: 20px;
   }
   
+  .mat-mdc-list-item {
+    height: auto;
+    padding: 20px;
+  }
+
+  .mat-mdc-chip-set {
+    max-width: 100px;
+  }

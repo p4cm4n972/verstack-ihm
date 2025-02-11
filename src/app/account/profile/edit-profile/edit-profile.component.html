@@ -1,0 +1,38 @@
+<mat-card appearance="outlined">
+    <mat-card-header>
+        <mat-card-title mat-dialog-title>Modifier le Profil</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <form [formGroup]="profileForm" (ngSubmit)="saveChanges()" class="dialog-content">
+            <div class="avatar-upload-container">
+                <img mat-card-sm-image [src]="profilePicture || 'default-avatar.png'" class="avatar-preview"
+                    alt="Avatar">
+                <mat-icon matTooltip="Choisir un fichier pour modifier l'image de profile"
+                    aria-label="le bouton va afficher une previsualisation des images" class="upload-icon"
+                    (click)="fileInput.click()">cloud_upload</mat-icon>
+                <input #fileInput type="file" (change)="onFileSelected($event)" hidden>
+            </div>
+
+            <mat-form-field class="full-width">
+                <mat-label>Nom</mat-label>
+                <input matInput formControlName="lastName">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Prénom</mat-label>
+                <input matInput formControlName="firstName">
+            </mat-form-field>
+
+            <mat-form-field class="full-width">
+                <mat-label>Pseudo</mat-label>
+                <input matInput formControlName="pseudo" required>
+            </mat-form-field>
+
+            <div class="dialog-actions">
+                <button mat-button type="button" (click)="dialogRef.close()">Annuler</button>
+                <button mat-raised-button color="primary" type="submit"
+                    [disabled]="!profileForm.valid">Enregistrer</button>
+            </div>
+        </form>
+    </mat-card-content>
+</mat-card>
