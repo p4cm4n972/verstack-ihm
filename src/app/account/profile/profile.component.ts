@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -16,6 +16,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-profile',
   imports: [
@@ -71,7 +73,7 @@ export class ProfileComponent implements OnInit {
     this.profileService.getUserProfile(userId).subscribe({
       next: (data) => {
         this.userData = data;
-        this.storeUserData(data)
+        this.storeUserData(data);
       },
       error: (err) => {
         console.error(
@@ -104,7 +106,7 @@ export class ProfileComponent implements OnInit {
         this.profileService
           .updateUserProfile(this.userData._id, result)
           .subscribe(() => {
-            alert('Profil mis à jour avec succès !');
+            this.openSnackBar('Profil mis à jour avec succès !');
             this.loadUserProfile(); // Recharger les données utilisateur
           });
       }
@@ -152,7 +154,7 @@ export class ProfileComponent implements OnInit {
         .updateUserProfile(this.userData._id, updatedData)
         .subscribe({
           next: () => {
-            alert('Profil mis à jour avec succès !');
+            this.openSnackBar('Profil mis à jour avec succès !');
 
             // Met à jour les données locales pour refléter les changements
             this.userData = { ...this.userData, ...updatedData };
@@ -165,11 +167,23 @@ export class ProfileComponent implements OnInit {
           },
           error: (err) => {
             console.error('Erreur lors de la mise à jour du profil :', err);
-            alert('La mise à jour a échoué.');
+            this.openSnackBar('La mise à jour a échoué.');
           },
         });
     } else {
-      alert('Veuillez remplir les champs requis.');
+      this.openSnackBar('Veuillez remplir les champs requis.');
     }
+  }
+
+  private _snackBar = inject(MatSnackBar);
+
+  durationInSeconds = 5;
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, '', {
+      duration: this.durationInSeconds * 1000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
   }
 }

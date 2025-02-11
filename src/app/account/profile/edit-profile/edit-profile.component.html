@@ -10,7 +10,7 @@
                 <mat-icon matTooltip="Choisir un fichier pour modifier l'image de profile"
                     aria-label="le bouton va afficher une previsualisation des images" class="upload-icon"
                     (click)="fileInput.click()">cloud_upload</mat-icon>
-                <input #fileInput type="file" (change)="onFileSelected($event)" hidden>
+                <input #fileInput type="file" (change)="onFileSelected($event)" aria-hidden>
             </div>
 
             <mat-form-field class="full-width">
