@@ -14,7 +14,7 @@ interface Article {
 })
 export class ArticlesService {
 
-  private apiUrl = 'http://localhost:3000/articles';
+  private apiUrl = 'api/articles';
   
   constructor(private http: HttpClient) { }
 
