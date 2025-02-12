@@ -15,11 +15,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
-import { Component, inject, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, inject, Output, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TermesComponent } from '../../composant/termes/termes.component';
 import { AuthenticationService } from '../../services/authentication.service';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-signin',
@@ -41,7 +43,12 @@ import { AuthenticationService } from '../../services/authentication.service';
   encapsulation: ViewEncapsulation.None,
 })
 export class SigninComponent {
+  @Output() signUpComplete = new EventEmitter<void>();
+  
   readonly dialog = inject(MatDialog);
+  private _snackBar = inject(MatSnackBar);
+  durationInSeconds = 5;
+  selected: number = 0
 
   openPrivacyTermeDialog() {
     const dialogRef = this.dialog.open(TermesComponent);
@@ -135,7 +142,8 @@ export class SigninComponent {
 
   constructor(
     private fb: FormBuilder,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private router: Router
   ) {
     this.signupForm = this.fb.group(
       {
@@ -178,6 +186,9 @@ export class SigninComponent {
       this.authService.signup(signupData).subscribe({
         next: (response) => {
           console.log('Inscription réussie', response);
+          this.signupForm.reset();
+          this.onSignUpSuccess();
+          this.openSnackBar('Inscription réussie');
         },
         error: (error) => {
           console.error("Erreur d'inscription", error);
@@ -186,6 +197,20 @@ export class SigninComponent {
     } else {
       console.warn('Formulaire invalide');
     }
+  }
+
+  onSignUpSuccess() {
+    
+    this.signUpComplete.emit();
+  }
+
+
+  openSnackBar(message: string) {
+    this._snackBar.open(message, '', {
+      duration: this.durationInSeconds * 1000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
+    });
   }
 }
 

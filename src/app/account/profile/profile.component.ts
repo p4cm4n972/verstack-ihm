@@ -114,7 +114,6 @@ export class ProfileComponent implements OnInit {
   }
 
   private storeUserData(response: any) {
-    localStorage.setItem('token', response.token);
     localStorage.setItem('user', JSON.stringify(response));
   }
 
