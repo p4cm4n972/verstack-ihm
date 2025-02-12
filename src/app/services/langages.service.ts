@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class LangagesService {
 
-  private apiLangagesUrl = 'api/langages/all';
+  private apiLangagesUrl = 'langages/all';
 
   constructor(private http: HttpClient) { }
 

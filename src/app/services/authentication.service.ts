@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private baseUrl = 'api/authentication';
+  private baseUrl = 'authentication';
    authStatusSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
 
   constructor(private http: HttpClient) {}

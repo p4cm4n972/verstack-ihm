@@ -14,7 +14,7 @@ interface Article {
 })
 export class ArticlesService {
 
-  private apiUrl = 'api/articles';
+  private apiUrl = 'articles';
   
   constructor(private http: HttpClient) { }
 

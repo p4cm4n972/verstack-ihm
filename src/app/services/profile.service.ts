@@ -6,7 +6,7 @@ import { Observable, tap } from 'rxjs';
   providedIn: 'root',
 })
 export class ProfileService {
-  private baseUrl = 'api/users';
+  private baseUrl = 'users';
   constructor(private http: HttpClient) {}
   getUserProfile(userId: string): Observable<any> {
     return this.http.get(`${this.baseUrl}/${userId}`);
