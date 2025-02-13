@@ -2,15 +2,15 @@
   <div class="row">
     <div class="col left">
       <div class="text-content">
-        <h1 class="pixel-art-title">verstack </h1>
+        <h1 class="pixel-art-title">verstack.io </h1>
         @if(!authStatus){<p class="pixel-art-subtitle">
           L'univers des stacks :<br>
           Versions, Références et Tendances<br>
           pour rester à jour
         </p>}
-        @if(userData && authStatus){
+        @if(authStatus){
         <p class="pixel-art-subtitle">
-          Bienvenue<br> dans ton univers <em>{{userData.pseudo}}</em><br>
+          Bienvenue<br> dans ton univers<br> <em>{{userData.pseudo}}</em><br>
         </p>}
         <!--<app-tape-text-console></app-tape-text-console> -->
         @if(!authStatus){<div class="button-container">

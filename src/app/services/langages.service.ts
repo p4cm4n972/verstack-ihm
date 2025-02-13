@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class LangagesService {
 
   private apiLangagesUrl = 'api/langages/all';

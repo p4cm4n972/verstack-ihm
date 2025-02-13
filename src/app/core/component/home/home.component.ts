@@ -32,7 +32,5 @@ export class HomeComponent {
     }
   }
 
-  public executeSelectedChange = (event: any) => {
-    console.log(event);
-  };
+  
 }

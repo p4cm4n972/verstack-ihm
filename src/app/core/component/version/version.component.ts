@@ -6,11 +6,18 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { AuthenticationService } from '../../../services/authentication.service';
 
 @Component({
   selector: 'app-version',
-  imports: [MatTabsModule, MatCardModule, MatGridListModule, MatIconModule, MatTooltipModule],
+  imports: [
+    MatTabsModule,
+    MatCardModule,
+    MatGridListModule,
+    MatIconModule,
+    MatTooltipModule,
+  ],
   templateUrl: './version.component.html',
   styleUrl: './version.component.scss',
 })
@@ -18,23 +25,16 @@ export class VersionComponent implements OnInit {
   langages: any[] = [];
   filteredLangages: any[] = [];
   selectedDomainIndex: number = 0;
-  domaines: string[] = [
-    'Tous',
-    'Web',
-    'Frontend',
-    'Backend',
-    'Mobile',
-    'Data Science',
-  ];
+  domaines: string[] = ['Web', 'Mobile', 'Embedded', 'Data Science', 'IA', ''];
   toggle: boolean = false;
   fields: Field[] = [];
-  selectedDomain: string = 'Tous';
+  selectedDomain: string = 'Web';
 
-  
+  authStatus: boolean = false;
 
   constructor(
-    private _fieldService: FieldService,
-    private _langagesService: LangagesService
+    private _langagesService: LangagesService,
+    private authService: AuthenticationService
   ) {
     //  this._fieldService.getField().subscribe((fields) => {
     //   this.fields = fields;
@@ -45,7 +45,20 @@ export class VersionComponent implements OnInit {
     this._langagesService.getAllLangages().subscribe((langages) => {
       this.langages = langages;
       this.filteredLangages = langages;
+      this.authService.getAuthStatus().subscribe((status) => {
+        this.authStatus = status;
+      });
     });
+  }
+
+  domainLangages(langages: any[], selectedDomain: string, index: number) {
+    let filtered: any[] = [];
+    langages.forEach((langage) => {
+      if (langage.domain.includes(this.domaines[index])) {
+        filtered = [...filtered, langage];
+      }
+    });
+    return filtered;
   }
 
   pinnedLangages: Set<string> = new Set();

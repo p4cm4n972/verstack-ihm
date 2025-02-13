@@ -1,9 +1,10 @@
 import { Component, ElementRef } from '@angular/core';
 import { FieldService } from '../../services/field.service';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-globe',
-  imports: [],
+  imports: [MatProgressSpinnerModule],
   templateUrl: './globe.component.html',
   styleUrl: './globe.component.scss',
   standalone: true
@@ -23,22 +24,20 @@ export class GlobeComponent {
     this.loadImages()
   }
   ngAfterViewInit(): void {
-  }
+  } 
 
   loadImages(): void {
 
     this._fieldService.getImages().subscribe({
       next: (logos: string[]) => {
-        console.log('logos', logos.length);
         this.images = Array.from(new Set(logos));
-        console.log('images', this.images.length);
         this.totalImages = this.images.length;
       },
       error: (error) => {
         console.error('Erreur lors de la recuperation des images', error);
       },
       complete: () => {
-        // this.loading = false;
+       setTimeout(() => this.loading = false, 2000) ;
       }
     });
   }

@@ -1,8 +1,9 @@
 <div class="globe-container">
-    <div class="orbit">
+    @if(loading) {<mat-spinner aria-label="" color="primary" ></mat-spinner>}
+    @if(!loading) {<div class="orbit">
         <div class="globe">
           @for(img of images; track img) {<img  [src]="img" alt="image"
                 (load)="onImageLoad()" /> }
         </div>
-    </div>
+    </div>}
 </div>

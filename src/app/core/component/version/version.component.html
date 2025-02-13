@@ -1,49 +1,48 @@
 <section>
-    <div class="language-container">
-        <mat-tab-group [(selectedIndex)]="selectedDomainIndex">
-            @for(domain of domaines; track domain;let i = $index){<mat-tab (click)="selectedDomain = domain">
-                <ng-template mat-tab-label>{{ domain }}</ng-template>
-            </mat-tab>}
-        </mat-tab-group>
+  <div class="language-container">
+    <mat-tab-group [(selectedIndex)]="selectedDomainIndex">
+      @for(domain of domaines; track domain; let i = $index ){<mat-tab (click)="selectedDomain = domain">
+        <ng-template mat-tab-label>{{ domain }}</ng-template>
+      </mat-tab>}
+    </mat-tab-group>
 
-        <div class="languages-grid">
-            @for(language of filteredLangages; track language.name) {<ng-container>
-                <mat-card class="language-card" appearance="outlined">
-                    <mat-card-header>
-                        <mat-card-title-group>
-                            <mat-card-title>{{ language.name }}</mat-card-title>
-                            <mat-card-subtitle>LTS: {{ language.ltsVersion
-                                }}</mat-card-subtitle>
-                            <mat-card-subtitle>current: {{ language.currentVersion }}</mat-card-subtitle>
-                            <img mat-card-sm-image [src]="language.logoUrl" [alt]="language.name">
-                        </mat-card-title-group>
-                    </mat-card-header>
-                    <mat-card-content>
-                        {{ language.description }}
-                    </mat-card-content>
-                    <mat-card-actions class="card-actions">
-                        <a [href]="language.documentation" target="_blank" class="doc-link">
-                            <button mat-raised-button color="primary">Documentation</button>
-                        </a>
-                        <a mat-icon-button aria-label="épingler"
-                            [matTooltip]="'Ajouter ' + language.name + ' à votre board'"
-                            aria-label="Bouton qui ajoute la carte au tableau personnalisé"
-                            (click)="pinLanguage(language)">
-                            <mat-icon aria-hidden="false" aria-label="épingle icone"
-                                [fontIcon]="isPinned(language) ? 'beenhere' : 'new_label'"></mat-icon>
-                        </a>
-                    </mat-card-actions>
-                </mat-card>
-
+    <div class="languages-grid">
+      @for(language of domainLangages(filteredLangages, selectedDomain, selectedDomainIndex) ; track language._id) {<ng-container>
+        <mat-card class="language-card" appearance="outlined">
+          <mat-card-header>
+            <mat-card-title-group>
+              <mat-card-title>{{ language.name }}</mat-card-title>
+              <mat-card-subtitle>LTS: {{ language.ltsVersion
+                }}</mat-card-subtitle>
+              <mat-card-subtitle>current: {{ language.currentVersion }}</mat-card-subtitle>
+              <img mat-card-sm-image [src]="language.logoUrl" [alt]="language.name">
+            </mat-card-title-group>
+          </mat-card-header>
+          <mat-card-content>
+            {{ language.description }}
+          </mat-card-content>
+          <mat-card-actions class="card-actions">
+            <a [href]="language.documentation" target="_blank" class="doc-link">
+              <button mat-raised-button color="primary">Documentation</button>
+            </a>
+            @if(authStatus){ <a mat-icon-button aria-label="épingler"
+              [matTooltip]="'Ajouter ' + language.name + ' à votre board'"
+              aria-label="Bouton qui ajoute la carte au tableau personnalisé" (click)="pinLanguage(language)">
+              <mat-icon aria-hidden="false" aria-label="épingle icone"
+                [fontIcon]="isPinned(language) ? 'beenhere' : 'new_label'"></mat-icon>
+            </a>}
+          </mat-card-actions>
+        </mat-card>
 
 
 
 
 
 
-            </ng-container>}
-        </div>
+
+      </ng-container>}
     </div>
+  </div>
 </section>
 
 
