@@ -15,8 +15,8 @@
             <mat-list>
                 <mat-list-item>Stack:
                     <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Cutest dog breeds">
-                        @for(favoris of listFavoris; track favoris.name){<mat-chip-option>
-                            <img matChipAvatar [src]="favoris.img" [alt]="favoris.name" />
+                        @for(favoris of userData.favoris; track favoris.name){<mat-chip-option>
+                            <img matChipAvatar [src]="favoris.logoUrl" [alt]="favoris.name" />
                             {{favoris.name}}
                         </mat-chip-option>}
                     </mat-chip-listbox>

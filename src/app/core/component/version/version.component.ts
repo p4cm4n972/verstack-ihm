@@ -8,6 +8,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthenticationService } from '../../../services/authentication.service';
+import { ProfileService } from '../../../services/profile.service';
 
 @Component({
   selector: 'app-version',
@@ -31,10 +32,12 @@ export class VersionComponent implements OnInit {
   selectedDomain: string = 'Web';
 
   authStatus: boolean = false;
+  userData: any;
 
   constructor(
     private _langagesService: LangagesService,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private profileService: ProfileService
   ) {
     //  this._fieldService.getField().subscribe((fields) => {
     //   this.fields = fields;
@@ -42,6 +45,7 @@ export class VersionComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.pinnedLangages)
     this._langagesService.getAllLangages().subscribe((langages) => {
       this.langages = langages;
       this.filteredLangages = langages;
@@ -49,6 +53,12 @@ export class VersionComponent implements OnInit {
         this.authStatus = status;
       });
     });
+    const storedUserData = localStorage.getItem('user');
+    if (storedUserData) {
+      this.userData = JSON.parse(storedUserData);
+    } else {
+      this.userData = null;
+    }
   }
 
   domainLangages(langages: any[], selectedDomain: string, index: number) {
@@ -65,17 +75,22 @@ export class VersionComponent implements OnInit {
 
   pinLanguage(language: any): void {
     console.log(language);
-    const languageName = language.name;
 
-    if (this.pinnedLangages.has(languageName)) {
-      this.pinnedLangages.delete(languageName); // Supprimer des favoris
+    if (this.pinnedLangages.has(language.name)) {
+      this.pinnedLangages.delete(language);
     } else {
-      this.pinnedLangages.add(languageName); // Ajouter en favoris
+      const { name, logoUrl } = language
+      const updatedData = { favoris: [...this.userData.favoris, { name, logoUrl }] }
+      this.profileService.updateUserProfile(this.userData._id, updatedData).subscribe(() => {
+        console.log('Profil mis à jour avec succès !', this.pinnedLangages);
+        this.pinnedLangages.add(language.name);
+      });
     }
     console.log(this.pinnedLangages);
   }
 
   isPinned(language: any): boolean {
+    console.log(language)
     return this.pinnedLangages.has(language.name);
   }
 
