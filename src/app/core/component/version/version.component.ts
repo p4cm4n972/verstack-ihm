@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FieldService } from '../../../services/field.service';
 import { Field } from '../../../models/field.model';
 import { LangagesService } from '../../../services/langages.service';
@@ -33,31 +33,67 @@ export class VersionComponent implements OnInit {
 
   authStatus: boolean = false;
   userData: any;
+  userFavoris: any;
 
   constructor(
     private _langagesService: LangagesService,
     private authService: AuthenticationService,
     private profileService: ProfileService
-  ) {
-    //  this._fieldService.getField().subscribe((fields) => {
-    //   this.fields = fields;
-    //  }) ;
-  }
+  ) {}
 
   ngOnInit(): void {
-    console.log(this.pinnedLangages)
-    this._langagesService.getAllLangages().subscribe((langages) => {
-      this.langages = langages;
-      this.filteredLangages = langages;
-      this.authService.getAuthStatus().subscribe((status) => {
-        this.authStatus = status;
-      });
-    });
+    this.loadUserData();
+    this.loadUserFavoris();
+    this.loadLangages();
+    this.subscribeToAuthStatus();
+    this.loadUserProfile();
+  }
+
+  private loadUserData(): void {
     const storedUserData = localStorage.getItem('user');
     if (storedUserData) {
       this.userData = JSON.parse(storedUserData);
     } else {
       this.userData = null;
+    }
+  }
+
+  private loadUserFavoris(): void {
+    const storedUserFavoris = localStorage.getItem('favoris');
+
+    if (storedUserFavoris && storedUserFavoris.length !== 0) {
+      this.userFavoris = JSON.parse(storedUserFavoris);
+    } else {
+      this.userFavoris = null;
+    }
+  }
+
+  private loadLangages(): void {
+    this._langagesService.getAllLangages().subscribe((langages) => {
+      this.langages = langages;
+      this.filteredLangages = langages;
+    });
+  }
+
+  private subscribeToAuthStatus(): void {
+    this.authService.getAuthStatus().subscribe((status) => {
+      this.authStatus = status;
+    });
+  }
+
+  private loadUserProfile(): void {
+    if (this.userData?._id) {
+      this.profileService.getUserProfile(this.userData._id).subscribe({
+        next: (data) => {
+          this.userData = data;
+          this.storeUserData(data);
+        },
+        error: (err) =>
+          console.error(
+            'Erreur lors de la récupération des données utilisateur',
+            err
+          ),
+      });
     }
   }
 
@@ -74,24 +110,75 @@ export class VersionComponent implements OnInit {
   pinnedLangages: Set<string> = new Set();
 
   pinLanguage(language: any): void {
-    console.log(language);
-
-    if (this.pinnedLangages.has(language.name)) {
+    if (
+      (this.userFavoris &&
+        this.userFavoris?.some((elm: any) => elm.name == language.name)) ||
+      this.pinnedLangages.has(language.name)
+    ) {
+      console.log('DELETE favoris');
+      const index = this.userFavoris.findIndex(
+        (elm: any) => elm.name == language.name
+      );
+      console.log('delete', index);
+      this.userFavoris.splice(index, 1);
+      const updatedData = {
+        favoris: [...this.userFavoris],
+      };
+      this.updateUserFavoris(updatedData);
       this.pinnedLangages.delete(language);
     } else {
-      const { name, logoUrl } = language
-      const updatedData = { favoris: [...this.userData.favoris, { name, logoUrl }] }
-      this.profileService.updateUserProfile(this.userData._id, updatedData).subscribe(() => {
-        console.log('Profil mis à jour avec succès !', this.pinnedLangages);
-        this.pinnedLangages.add(language.name);
-      });
+      const { name, logoUrl } = language;
+      console.log(...this.userData.favoris);
+      this.userFavoris = [...this.userData.favoris, { name, logoUrl }];
+      const updatedData = {
+        favoris: [...this.userData.favoris, { name, logoUrl }],
+      };
+      this.updateUserFavoris(updatedData);
+      this.loadUserFavoris();
+      this.pinnedLangages.add(language.name);
     }
-    console.log(this.pinnedLangages);
+  }
+  private storeUserData(response: any) {
+    localStorage.setItem('user', JSON.stringify(response));
+    localStorage.setItem('favoris', JSON.stringify(response.favoris));
+  }
+  private updateUserFavoris(updatedData: any): void {
+    this.profileService
+      .updateUserProfile(this.userData._id, updatedData)
+      .subscribe({
+        next: () => {
+        console.log('Profil mis à jour avec succès !', this.pinnedLangages);
+          this.refreshUserData();
+        },
+        error: (err) =>
+          console.error('Erreur lors de la mise à jour du profil', err),
+      });
   }
 
-  isPinned(language: any): boolean {
-    console.log(language)
-    return this.pinnedLangages.has(language.name);
+  private refreshUserData(): void {
+    this.profileService.getUserProfile(this.userData._id).subscribe({
+      next: (data) => {
+        this.userData = data;
+        this.storeUserData(data);
+      },
+      error: (err) =>
+        console.error(
+          'Erreur lors de la récupération des données utilisateur',
+          err
+        ),
+    });
+  }
+
+  isPinned(languageName: any): boolean {
+    if (
+      (this.userFavoris &&
+        this.userFavoris.some((elm: any) => elm.name == languageName)) ||
+      this.pinnedLangages.has(languageName)
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   redirectTo(url: string): void {

@@ -29,7 +29,7 @@
               [matTooltip]="'Ajouter ' + language.name + ' à votre board'"
               aria-label="Bouton qui ajoute la carte au tableau personnalisé" (click)="pinLanguage(language)">
               <mat-icon aria-hidden="false" aria-label="épingle icone"
-                [fontIcon]="isPinned(language) ? 'beenhere' : 'new_label'"></mat-icon>
+                [fontIcon]="isPinned(language.name) ? 'beenhere' : 'new_label'"></mat-icon>
             </a>}
           </mat-card-actions>
         </mat-card>

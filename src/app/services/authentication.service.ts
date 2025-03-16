@@ -53,11 +53,17 @@ export class AuthenticationService {
 
   getUserData(): string {
     const userData = localStorage.getItem('user');
-    return userData ? JSON.parse(userData)._id : null;
+    return userData ? JSON.parse(userData) : '';
+  }
+
+  getUserId(): string {
+    const userData = localStorage.getItem('user');
+    return userData ? JSON.parse(userData)._id : '';
   }
 
   private storeUserData(response: any) {
     localStorage.setItem('token', response.token);
     localStorage.setItem('user', JSON.stringify(response));
+    localStorage.setItem('favoris', JSON.stringify(response.favoris));
   }
 }

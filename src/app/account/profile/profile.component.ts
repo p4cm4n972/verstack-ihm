@@ -39,12 +39,7 @@ export class ProfileComponent implements OnInit {
   defaultProfilePicture: string = 'https://placehold.co/10x10';
   favoris: string[] = [];
   userData: any;
-  listFavoris: any[] = [
-    { name: 'Angular', img: 'https://placehold.co/10x10' },
-    { name: 'React', img: 'https://placehold.co/10x10' },
-    { name: 'VueJS', img: 'https://placehold.co/10x10' },
-    { name: 'NodeJS', img: 'https://placehold.co/10x10' },
-  ];
+
 
   constructor(
     private fb: FormBuilder,
@@ -68,7 +63,7 @@ export class ProfileComponent implements OnInit {
   }
 
   loadUserProfile() {
-    const userId = this.authService.getUserData();
+    const userId = this.authService.getUserId();
     console.log(userId);
     this.profileService.getUserProfile(userId).subscribe({
       next: (data) => {
@@ -81,17 +76,6 @@ export class ProfileComponent implements OnInit {
           err
         );
       },
-      // this.defaultProfilePicture = this.userData.profilePicture || this.defaultProfilePicture;
-      // this.favoris = this.userData.favoris || this.favoris;
-      // this.profileForm.patchValue({
-      //   pseudo: this.userData.pseudo,
-      //   firstName: this.userData.firstName,
-      //   lastName: this.userData.lastName,
-      //   email: this.userData.email,
-      //   job: this.userData.job,
-      //   favoris: this.userData.favoris,
-      //   profilePicture: this.userData.profilePicture,
-      // });
     });
   }
 
@@ -115,6 +99,7 @@ export class ProfileComponent implements OnInit {
 
   private storeUserData(response: any) {
     localStorage.setItem('user', JSON.stringify(response));
+    localStorage.setItem('favoris', JSON.stringify(response.favoris))
   }
 
   toggleEditMode(): void {

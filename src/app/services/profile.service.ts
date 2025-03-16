@@ -30,7 +30,6 @@ export class ProfileService {
       formData.append('profilePicture', updatedData.profilePicture);
     }
     
-    console.log(userId, updatedData);
     return this.http.patch<any | any[]>(`${this.baseUrl}/${userId}`, updatedData, {headers: this.header}).pipe(
       tap((response) => {
         if (response) {
