@@ -23,4 +23,4 @@ jobs:
         
 
     - name: Test SSH Connection
-      run: ssh -o StrictHostKeyChecking=no deploy@"${{secrets.SSH_HOST}}" "echo Connected!"
+      run: ssh -o StrictHostKeyChecking=no ubuntu@"${{secrets.SSH_HOST}}" "echo Connected!"
