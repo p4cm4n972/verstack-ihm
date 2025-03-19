@@ -1,39 +1,34 @@
-name: Test OVHcloud Deploy Action
+name: Deploy Frontend to VPS
 
 on:
   push:
     branches:
-      - master
+      - master 
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout Repository
       uses: actions/checkout@v3
 
-    - name: Check if VPS is up
-      run: |
-        echo "Checking if VPS is reachable..."
-        if ! nc -zvw3 ${{ secrets.SSH_HOST }} 22; then
-          echo "VPS is down or unreachable. Stopping deployment."
-          exit 1
-        fi
-        echo "VPS is online, proceeding with deployment."
-
-    - name: Add SSH Private Key
+    - name: Setup SSH Key
       run: |
         mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+        ssh-keyscan -H "${{secrets.SSH_HOST}}" >> ~/.ssh/known_hosts
+      
+        
 
-    - name: Deploy to VPS
-      uses: fabienOVH/action-deploy-vps-ovhcloud@v1.0.0
-      with:
-        ssh_host: ${{ secrets.SSH_HOST }}
-        ssh_user: ${{ secrets.SSH_USER }}
-        ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-        site_path: /var/www/html
-      continue-on-error: true
+    - name: Deploy Frontend
+      run: |
+        ssh "${{secrets.SSH_HOST}}" << 'EOF'
+          cd /var/www/verstack.io/verstack-ihm
+          git pull origin main
+          npm install
+          npm run build --prod
+          cp -r dist/verstack-ihm/* /var/www/html/verstack
+          systemctl restart nginx
+        EOF
