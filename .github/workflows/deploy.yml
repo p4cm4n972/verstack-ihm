@@ -22,7 +22,7 @@ jobs:
 
     - name: Deploy Frontend
       run: |
-        ssh deploy@vps.verstack.io << 'EOF'
+        ssh deploy@vps-4c406ddb.vps.ovh.net << 'EOF'
           cd /var/www/verstack-ihm
           git pull origin main
           npm install
