@@ -21,7 +21,7 @@ jobs:
         ssh-keyscan -H vps-4c406ddb.vps.ovh.net >> ~/.ssh/known_hosts
 
     - name: Test SSH Connection
-      run: ssh -o StrictHostKeyChecking=no deploy@vps.verstack.io "echo Connected!"
+      run: ssh -o StrictHostKeyChecking=no deploy@vps-4c406ddb.vps.ovh.net "echo Connected!"
       
         
 
