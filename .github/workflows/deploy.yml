@@ -19,9 +19,6 @@ jobs:
         echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan -H vps-4c406ddb.vps.ovh.net >> ~/.ssh/known_hosts
-
-    - name: Test SSH Connection
-      run: ssh -o StrictHostKeyChecking=no deploy@verstack.io "echo Connected!"
       
         
 
