@@ -22,5 +22,15 @@ jobs:
         ssh-keyscan -H github.com >> ~/.ssh/known_hosts
         
 
-    - name: Test SSH Connection
-      run: ssh -o StrictHostKeyChecking=no ubuntu@"${{secrets.SSH_HOST}}" "echo Connected!"
+    - name: Deploy Frontend
+      run: |
+        ssh ubuntu@"${{secrets.SSH_HOST}}" << 'EOF'
+          cd /var/www/verstack.io/verstack-ihm
+          git pull origin main
+          npm install
+          npm run build --prod
+          cp -r dist/verstack-ihm/* /var/www/html/verstack
+          systemctl restart nginx
+        EOF
+
+        
