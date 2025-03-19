@@ -24,7 +24,7 @@ jobs:
 
     - name: Deploy Frontend
       run: |
-        ssh "${{secrets.SSH_HOST}}" << 'EOF'
+        ssh ubuntu:I4m44ll*@"${{secrets.SSH_HOST}}" << 'EOF'
           cd /var/www/verstack.io/verstack-ihm
           git pull origin main
           npm install
