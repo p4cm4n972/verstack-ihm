@@ -3,34 +3,31 @@ name: Deploy Frontend to VPS
 on:
   push:
     branches:
-      - master 
+      - master
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
+      - name: Checkout Repository
+        uses: actions/checkout@v3
 
-    - name: Setup SSH Key
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H "${{secrets.SSH_HOST}}" >> ~/.ssh/known_hosts
-        ssh-keyscan -H github.com >> ~/.ssh/known_hosts
-        
+      - name: Setup SSH Key
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H "${{secrets.SSH_HOST}}" >> ~/.ssh/known_hosts
+          ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
-    - name: Deploy Frontend
-      run: |
-        ssh ubuntu@"${{secrets.SSH_HOST}}" << 'EOF'
-          cd /var/www/verstack.io/verstack-ihm
-          git pull origin main
-          npm install
-          npm run build --prod
-          cp -r dist/verstack-ihm/* /var/www/html/verstack
-          sudo systemctl restart nginx
-        EOF
-
-        
+      - name: Deploy Frontend
+        run: |
+          ssh ubuntu@"${{secrets.SSH_HOST}}" << 'EOF'
+            cd /var/www/verstack.io/verstack-ihm
+            git pull origin master
+            npm install
+            npm run build --prod
+            cp -r dist/verstack-ihm/* /var/www/html/verstack
+            sudo systemctl restart nginx
+          EOF
