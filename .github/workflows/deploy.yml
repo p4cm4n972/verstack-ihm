@@ -23,4 +23,4 @@ jobs:
         
 
     - name: Test SSH Connection
-      run: ssh -o StrictHostKeyChecking=no deploy@vps.verstack.io "echo Connected!"
+      run: ssh -o StrictHostKeyChecking=no deploy@"${{secrets.SSH_HOST}}" "echo Connected!"
