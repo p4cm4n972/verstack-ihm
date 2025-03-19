@@ -30,7 +30,7 @@ jobs:
           npm install
           npm run build --prod
           cp -r dist/verstack-ihm/* /var/www/html/verstack
-          systemctl restart nginx
+          sudo systemctl restart nginx
         EOF
 
         
