@@ -3,7 +3,7 @@ name: Deploy Frontend to VPS
 on:
   push:
     branches:
-      - main  # Déploiement automatique sur push dans main
+      - master  # Déploiement automatique sur push dans main
 
 jobs:
   deploy:
