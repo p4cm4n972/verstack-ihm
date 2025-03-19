@@ -26,8 +26,6 @@ interface Article {
     MatButtonModule,
     MatChipsModule,
     MatGridListModule,
-    MatSelect,
-    MatOption
   ],
   templateUrl: './news.component.html',
   styleUrl: './news.component.scss',
