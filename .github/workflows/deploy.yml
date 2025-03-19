@@ -21,13 +21,13 @@ jobs:
         ssh-keyscan -H vps-4c406ddb.vps.ovh.net >> ~/.ssh/known_hosts
 
     - name: Test SSH Connection
-      run: ssh -o StrictHostKeyChecking=no ubuntu@vps-4c406ddb.vps.ovh.net "echo Connected!"
+      run: ssh -o StrictHostKeyChecking=no deploy@verstack.io "echo Connected!"
       
         
 
     - name: Deploy Frontend
       run: |
-        ssh ubuntu@vps-4c406ddb.vps.ovh.net << 'EOF'
+        ssh deploy@verstack.io << 'EOF'
           cd /var/www/verstack.io/verstack-ihm
           git pull origin main
           npm install
