@@ -1,0 +1,32 @@
+name: Deploy Frontend to VPS
+
+on:
+  push:
+    branches:
+      - main  # Déploiement automatique sur push dans main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Setup SSH Key
+      run: |
+        mkdir -p ~/.ssh
+        echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+        chmod 600 ~/.ssh/id_rsa
+        ssh-keyscan -H vps.verstack.io >> ~/.ssh/known_hosts
+
+    - name: Deploy Frontend
+      run: |
+        ssh deploy@vps.verstack.io << 'EOF'
+          cd /var/www/verstack-ihm
+          git pull origin main
+          npm install
+          npm run build --prod
+          cp -r dist/verstack-ihm/* /var/www/html/verstack
+          systemctl restart nginx
+        EOF

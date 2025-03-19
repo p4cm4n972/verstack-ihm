@@ -7,6 +7,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { ArticlesService } from '../../../services/articles.service';
+import { MatOption, MatSelect } from '@angular/material/select';
 
 interface Article {
   title: string;
@@ -24,15 +25,17 @@ interface Article {
     MatCardModule,
     MatButtonModule,
     MatChipsModule,
-    MatGridListModule
+    MatGridListModule,
+    MatSelect,
+    MatOption
   ],
   templateUrl: './news.component.html',
   styleUrl: './news.component.scss',
 })
 export class NewsComponent implements OnInit {
   frameworks: string[] = ['Tous', 'Angular', 'Vue.js', 'React', 'SwiftUI', 'Svelte', 'Next.js'];
-  articles: Article[] = [];
-  filteredArticles: Article[] = [];
+  articles: any[] = [];
+  filteredArticles: any[] = [];
 
   constructor(private articlesService: ArticlesService) {}
 
@@ -64,4 +67,8 @@ export class NewsComponent implements OnInit {
       ? this.articles
       : this.articles.filter(article => article.framework === framework);
   }
+
+  openArticle(elm: any) {}
+
+  filterByTag(elm: any) {}
 }
