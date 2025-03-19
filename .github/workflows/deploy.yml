@@ -3,7 +3,7 @@ name: Test OVHcloud Deploy Action
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   deploy:
