@@ -27,11 +27,11 @@
                             style="background-image: url({{article.img}}); background-size: cover; background-position: center;background-repeat: no-repeat;">
                         </div>
                         <mat-card-title>{{ article.title }}</mat-card-title>
-                        <mat-card-subtitle>{{ article.framework }}</mat-card-subtitle>
+                        <mat-card-subtitle>{{ article.resume }}</mat-card-subtitle>
                     </mat-card-header>
                     <img mat-card-image [src]="article.img || defaultPicture" [alt]="article.title">
                     <mat-card-content>
-                        <p>{{ article.excerpt }}</p>
+                        <p>{{ article.date }}</p>
                     </mat-card-content>
                     <mat-card-actions>
                         <button mat-raised-button color="accent" (click)="openArticleContentDialog(article.content)">Lire la suite</button>
