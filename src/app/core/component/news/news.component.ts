@@ -13,6 +13,7 @@ import {
   MatDialogModule,
 } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 interface Article {
   title: string;
@@ -32,6 +33,7 @@ interface Article {
     MatChipsModule,
     MatGridListModule,
     MatButtonModule,
+    CommonModule
   ],
   templateUrl: './news.component.html',
   styleUrl: './news.component.scss',
