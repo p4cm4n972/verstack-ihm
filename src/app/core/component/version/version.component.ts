@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ProfileService } from '../../../services/profile.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-version',
@@ -18,6 +19,7 @@ import { ProfileService } from '../../../services/profile.service';
     MatGridListModule,
     MatIconModule,
     MatTooltipModule,
+    CommonModule
   ],
   templateUrl: './version.component.html',
   styleUrl: './version.component.scss',
