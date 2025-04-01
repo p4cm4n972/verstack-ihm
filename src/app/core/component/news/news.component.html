@@ -10,10 +10,10 @@
                 <input matInput placeholder="Tapez un mot-clé">
             </mat-form-field>
 
-            @if(frameworks.length > 0) {
+            @if(actualiteType.length > 0) {
                 <mat-chip-listbox  >
-                @for(framework of frameworks; track framework; let i = $index) {
-                    <mat-chip-option (selectionChange)="filterByFramework(i)"> {{ framework }}</mat-chip-option>
+                @for(type of actualiteType; track type; let i = $index) {
+                    <mat-chip-option (selectionChange)="filterByType(i)"> {{ type }}</mat-chip-option>
                 }
                 </mat-chip-listbox>}
             
@@ -27,11 +27,14 @@
                             style="background-image: url({{article.img}}); background-size: cover; background-position: center;background-repeat: no-repeat;">
                         </div>
                         <mat-card-title>{{ article.title }}</mat-card-title>
-                        <mat-card-subtitle>{{ article.resume  | slice:0:100 }} ...</mat-card-subtitle>
+                        <mat-card-subtitle>[{{ article.category }}] - P4cm4n972</mat-card-subtitle>
                     </mat-card-header>
                     <img mat-card-image [src]="article.img || defaultPicture" [alt]="article.title">
                     <mat-card-content>
-                        <p>{{ article.date }}</p>
+                        <div class="meta-row">
+                        <p class="article-date">{{ article.date }}</p>
+                        <mat-icon [matBadge]="article.recommendations"  aria-hidden="false" aria-label="recommendations">thumb_up</mat-icon>
+                    </div>
                     </mat-card-content>
                     <mat-card-actions>
                         <button mat-raised-button color="accent" (click)="openArticleContentDialog(article.content)">Lire la suite</button>

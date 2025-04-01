@@ -7,6 +7,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { ArticlesService } from '../../../services/articles.service';
+import { MatIconModule } from '@angular/material/icon';
+import { MatBadgeModule } from '@angular/material/badge';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
@@ -32,8 +34,9 @@ interface Article {
     MatButtonModule,
     MatChipsModule,
     MatGridListModule,
-    MatButtonModule,
-    CommonModule
+    CommonModule,
+    MatBadgeModule,
+    MatIconModule,
   ],
   templateUrl: './news.component.html',
   styleUrl: './news.component.scss',
@@ -42,7 +45,7 @@ export class NewsComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   defaultPicture: string = 'assets/images/bkg-home-old.jpg';
 
-  frameworks: string[] = ['tous', 'article', 'release', 'story'];
+  actualiteType: string[] = ['tous', 'editorial', 'article', 'note', 'story'];
   selectedDomainIndex: number = 0;
   articles: any[] = [];
   filteredArticles: any[] = [];
@@ -77,12 +80,12 @@ export class NewsComponent implements OnInit {
   }
 
   // Filtre par framework
-  filterByFramework(index: number): void {
+  filterByType(index: number): void {
     this.filteredArticles =
       index === 0
         ? this.articles
         : this.articles.filter(
-            (article) => article.category === this.frameworks[index]
+            (article) => article.category === this.actualiteType[index]
           );
   }
 
