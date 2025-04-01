@@ -26,7 +26,7 @@ export class VersionComponent implements OnInit {
   langages: any[] = [];
   filteredLangages: any[] = [];
   selectedDomainIndex: number = 0;
-  domaines: string[] = ['Web', 'Mobile', 'Embedded', 'Data Science', 'IA', ''];
+  domaines: string[] = ['web', 'mobile', 'embedded', 'datascience', 'ia', 'game'];
   toggle: boolean = false;
   fields: Field[] = [];
   selectedDomain: string = 'Web';
