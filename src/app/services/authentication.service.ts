@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, tap, shareReplay } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -26,12 +26,13 @@ export class AuthenticationService {
       .pipe(
         tap((response: any) => {
           console.log(response);
-          if (response) {
+          if (response.accessToken) {
             this.updateAuthStatus(true);
             this.storeUserData(response);
           }
-        })
-      );
+        }),
+        shareReplay()
+      )
   }
 
   logout() {
@@ -62,7 +63,7 @@ export class AuthenticationService {
   }
 
   private storeUserData(response: any) {
-    localStorage.setItem('token', response.token);
+    localStorage.setItem('token', response.accessToken);
     localStorage.setItem('user', JSON.stringify(response));
     localStorage.setItem('favoris', JSON.stringify(response.favoris));
   }

@@ -35,7 +35,6 @@ export class LoginComponent {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
-          localStorage.setItem('token', response.token);
           this.router.navigate(['/home']);
           this.openSnackBar()
         },

@@ -15,7 +15,8 @@
         </p>}
         @if(authStatus){
         <p class="pixel-art-subtitle">
-          Bienvenue<br> dans ton univers<br> <em>{{userData.pseudo}}</em><br>
+          @let userName = (userData.pseudo ) ?? 'Guest';
+          Bienvenue<br> dans ton univers<br> <em>{{userName}}</em><br>
         </p>}
         <!--<app-tape-text-console></app-tape-text-console> -->
         @if(!authStatus){<div class="button-container">

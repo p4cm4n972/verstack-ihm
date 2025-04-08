@@ -63,8 +63,8 @@ export class VersionComponent implements OnInit {
   private loadUserFavoris(): void {
     const storedUserFavoris = localStorage.getItem('favoris');
 
-    if (storedUserFavoris && storedUserFavoris.length !== 0) {
-      this.userFavoris = JSON.parse(storedUserFavoris);
+    if (storedUserFavoris  && storedUserFavoris.length !== 0) {
+      this.userFavoris = JSON.parse(localStorage.getItem('userFavoris') || '[]');
     } else {
       this.userFavoris = null;
     }

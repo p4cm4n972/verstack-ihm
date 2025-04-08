@@ -19,7 +19,7 @@
               <mat-card-title>{{ language.name }}</mat-card-title>
               @for(version of language.versions; track version) {
               <mat-card-subtitle>
-                <span> {{ version.type }}:</span>&nbsp; {{ version.label }} ({{ version.releaseDate | date:'yyyy' }})
+                <span> {{ version.type }}:</span>&nbsp; {{ version.label }} ({{ version.releaseDate | date:'MM/yyyy' }})
               </mat-card-subtitle>
               }
               <img mat-card-sm-image [src]="language.logoUrl" [alt]="language.name">
