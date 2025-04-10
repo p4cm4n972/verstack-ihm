@@ -157,7 +157,6 @@ export class VersionComponent implements OnInit {
     }
   }
   private storeUserData(response: any) {
-    console.log('response', response);
     // localStorage.setItem('user', JSON.stringify(response));
     localStorage.setItem('favoris', JSON.stringify(response.favoris));
   }

@@ -36,7 +36,8 @@
               [matTooltip]="'Ajouter ' + language.name + ' à votre board'"
               aria-label="Bouton qui ajoute la carte au tableau personnalisé" (click)="pinLanguage(language)">
               <mat-icon aria-hidden="true" aria-label="épingle icone"
-                [fontIcon]="isPinned(language.name) ? 'beenhere' : 'new_label'"></mat-icon>
+                [fontIcon]="isPinned(language.name) ? 'beenhere' : 'new_label'"
+                [ngClass]="{ 'pinned-icon': isPinned(language.name) }"></mat-icon>
             </a>}
           </mat-card-actions>
         </mat-card>

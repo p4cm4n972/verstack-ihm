@@ -13,18 +13,18 @@
 
         <mat-card-content>
             <mat-list>
-                <mat-list-item>Stack:
-                    <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Cutest dog breeds">
-                        @for(favoris of userData.favoris; track favoris.name){<mat-chip-option>
+                @if(userData.favoris.length != 0 ){<mat-list-item>Stack:
+                    <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="liste stack favoris">
+                        @for(favoris of userData.favoris; track favoris.name){<mat-chip-option selectable="false" chipListSelectable="false">
                             <img matChipAvatar [src]="favoris.logoUrl" [alt]="favoris.name" />
                             {{favoris.name}}
                         </mat-chip-option>}
                     </mat-chip-listbox>
                 </mat-list-item>
+                <mat-divider></mat-divider>}
+                <mat-list-item>Projets:&nbsp; {{userData.projets || " vous n'avez aucun projet connecté ! --- (non implémenté)" }}</mat-list-item>
                 <mat-divider></mat-divider>
-                <mat-list-item>Projets:&nbsp; {{userData.projets || " vous n'avez aucun projet connecté !"}}</mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>Amis:&nbsp; {{userData.friends || "votre liste d'amis est vide !" }} </mat-list-item>
+                <mat-list-item>Amis:&nbsp; {{userData.friends || "votre liste d'amis est vide ! --- (non implémenté)" }} </mat-list-item>
                 <mat-divider></mat-divider>
 
             </mat-list>
