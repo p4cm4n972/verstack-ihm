@@ -10,6 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ProfileService } from '../../../services/profile.service';
 import { CommonModule } from '@angular/common';
+import { Observable, tap } from 'rxjs';
 
 @Component({
   selector: 'app-version',
@@ -19,7 +20,7 @@ import { CommonModule } from '@angular/common';
     MatGridListModule,
     MatIconModule,
     MatTooltipModule,
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './version.component.html',
   styleUrl: './version.component.scss',
@@ -28,7 +29,14 @@ export class VersionComponent implements OnInit {
   langages: any[] = [];
   filteredLangages: any[] = [];
   selectedDomainIndex: number = 0;
-  domaines: string[] = ['web', 'mobile', 'embedded', 'datascience', 'ia', 'game'];
+  domaines: string[] = [
+    'web',
+    'mobile',
+    'embedded',
+    'datascience',
+    'ia',
+    'game',
+  ];
   toggle: boolean = false;
   fields: Field[] = [];
   selectedDomain: string = 'Web';
@@ -44,11 +52,14 @@ export class VersionComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadUserData();
-    this.loadUserFavoris();
-    this.loadLangages();
-    this.subscribeToAuthStatus();
-    this.loadUserProfile();
+    this.getAuthStatus().subscribe((status: any) => {
+      if (status) {
+        this.loadUserData();
+        this.loadUserFavoris();
+        this.loadUserProfile();
+      }
+      this.loadLangages();
+    });
   }
 
   private loadUserData(): void {
@@ -63,8 +74,10 @@ export class VersionComponent implements OnInit {
   private loadUserFavoris(): void {
     const storedUserFavoris = localStorage.getItem('favoris');
 
-    if (storedUserFavoris  && storedUserFavoris.length !== 0) {
-      this.userFavoris = JSON.parse(localStorage.getItem('userFavoris') || '[]');
+    if (storedUserFavoris && storedUserFavoris.length !== 0) {
+      this.userFavoris = JSON.parse(
+        localStorage.getItem('favoris') || '[]'
+      );
     } else {
       this.userFavoris = null;
     }
@@ -77,10 +90,13 @@ export class VersionComponent implements OnInit {
     });
   }
 
-  private subscribeToAuthStatus(): void {
-    this.authService.getAuthStatus().subscribe((status) => {
-      this.authStatus = status;
-    });
+  private getAuthStatus(): Observable<boolean> {
+    return this.authService.getAuthStatus().pipe(
+      tap((status: boolean) => {
+        this.authStatus = status;
+      })
+    );
+    
   }
 
   private loadUserProfile(): void {
@@ -141,7 +157,8 @@ export class VersionComponent implements OnInit {
     }
   }
   private storeUserData(response: any) {
-    localStorage.setItem('user', JSON.stringify(response));
+    console.log('response', response);
+    // localStorage.setItem('user', JSON.stringify(response));
     localStorage.setItem('favoris', JSON.stringify(response.favoris));
   }
   private updateUserFavoris(updatedData: any): void {
@@ -149,7 +166,7 @@ export class VersionComponent implements OnInit {
       .updateUserProfile(this.userData._id, updatedData)
       .subscribe({
         next: () => {
-        console.log('Profil mis à jour avec succès !', this.pinnedLangages);
+          console.log('Profil mis à jour avec succès !', this.pinnedLangages);
           this.refreshUserData();
         },
         error: (err) =>

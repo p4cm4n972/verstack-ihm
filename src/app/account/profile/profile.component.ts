@@ -64,7 +64,6 @@ export class ProfileComponent implements OnInit {
 
   loadUserProfile() {
     const userId = this.authService.getUserId();
-    console.log(userId);
     this.profileService.getUserProfile(userId).subscribe({
       next: (data) => {
         this.userData = data;
@@ -85,7 +84,6 @@ export class ProfileComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      console.log(result);
       if (result) {
         this.profileService
           .updateUserProfile(this.userData._id, result)

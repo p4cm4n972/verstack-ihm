@@ -10,7 +10,7 @@ export class JwtInterceptorService implements HttpInterceptor {
   constructor() { }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('authToken'); // Assure-toi de stocker correctement le token
+    const token = localStorage.getItem('access_token'); // Assure-toi de stocker correctement le token
 
     if (token) {
       req = req.clone({
