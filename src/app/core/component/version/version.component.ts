@@ -1,5 +1,4 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { FieldService } from '../../../services/field.service';
 import { Field } from '../../../models/field.model';
 import { LangagesService } from '../../../services/langages.service';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -11,6 +10,8 @@ import { AuthenticationService } from '../../../services/authentication.service'
 import { ProfileService } from '../../../services/profile.service';
 import { CommonModule } from '@angular/common';
 import { Observable, tap } from 'rxjs';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { addMonths, differenceInMonths, parseISO } from 'date-fns';
 
 @Component({
   selector: 'app-version',
@@ -21,6 +22,7 @@ import { Observable, tap } from 'rxjs';
     MatIconModule,
     MatTooltipModule,
     CommonModule,
+    MatProgressBarModule,
   ],
   templateUrl: './version.component.html',
   styleUrl: './version.component.scss',
@@ -75,9 +77,7 @@ export class VersionComponent implements OnInit {
     const storedUserFavoris = localStorage.getItem('favoris');
 
     if (storedUserFavoris && storedUserFavoris.length !== 0) {
-      this.userFavoris = JSON.parse(
-        localStorage.getItem('favoris') || '[]'
-      );
+      this.userFavoris = JSON.parse(localStorage.getItem('favoris') || '[]');
     } else {
       this.userFavoris = null;
     }
@@ -96,7 +96,6 @@ export class VersionComponent implements OnInit {
         this.authStatus = status;
       })
     );
-    
   }
 
   private loadUserProfile(): void {
@@ -160,6 +159,7 @@ export class VersionComponent implements OnInit {
     // localStorage.setItem('user', JSON.stringify(response));
     localStorage.setItem('favoris', JSON.stringify(response.favoris));
   }
+
   private updateUserFavoris(updatedData: any): void {
     this.profileService
       .updateUserProfile(this.userData._id, updatedData)
@@ -205,5 +205,67 @@ export class VersionComponent implements OnInit {
 
   toggler() {
     this.toggle = !this.toggle;
+  }
+
+  calculateEndSupport(releaseDateStr: string, supportTimeMonths: number): Date {
+    const releaseDate = new Date(releaseDateStr);
+    const endSupport = new Date(releaseDate);
+    endSupport.setMonth(releaseDate.getMonth() + supportTimeMonths);
+    return endSupport;
+  }
+
+  getSupportPercentageFromDuration(
+    releaseDateStr: string,
+    supportTimeMonths: number
+  ): number {
+    const releaseDate = new Date(releaseDateStr);
+    const today = new Date();
+  
+    const totalMonths = supportTimeMonths;
+  
+    const diffInMonths =
+      (today.getFullYear() - releaseDate.getFullYear()) * 12 +
+      (today.getMonth() - releaseDate.getMonth());
+  
+    const remainingMonths = Math.max(0, totalMonths - diffInMonths);
+    const ratio = 100 - (remainingMonths / totalMonths) * 100 ;
+  
+    return ratio;
+  }
+  
+  
+  
+
+  getSupportColor(releaseDate: string, supportTime: number): string {
+    const release = parseISO(releaseDate);
+    const now = new Date();
+    const totalMonths = supportTime;
+    const monthsPassed = differenceInMonths(now, release);
+    const monthsLeft = totalMonths - monthsPassed;
+    
+    if (monthsLeft <= 0) {
+      return 'support-warn'; // 🔴 Support terminé
+    } else if (monthsLeft === 1) {
+      return 'support-warn'; // 🔴 Dernier mois
+    } else if (monthsLeft === 2) {
+      return 'support-accent'; // 🟠 Avant-dernier mois
+    } else {
+      return 'support-primary'; // 🟢 OK
+    }
+  }
+
+  getSupportTooltip(releaseDate: string, supportTime: number): string {
+    const release = parseISO(releaseDate);
+    const now = new Date();
+    const monthsPassed = differenceInMonths(now, release);
+    const monthsLeft = supportTime - monthsPassed;
+  
+    if (monthsLeft <= 0) {
+      return 'Support terminé';
+    } else if (monthsLeft === 1) {
+      return 'Dernier mois de support';
+    } else {
+      return `${monthsLeft} mois restants avant la fin du support`;
+    }
   }
 }

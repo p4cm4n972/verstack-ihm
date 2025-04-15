@@ -25,9 +25,27 @@
               <img mat-card-sm-image [src]="language.logoUrl" [alt]="language.name">
             </mat-card-title-group>
           </mat-card-header>
-          <mat-card-content>
-            {{ language.description }}
-          </mat-card-content>
+          @if(!authStatus){
+          <ng-container>
+            <mat-card-content>
+              {{ language.description }}
+            </mat-card-content>
+          </ng-container>} @else {
+          <ng-container>
+            <mat-card-content style="margin: 10px;">
+              <mat-card appearance="outlined">
+                <mat-card-content>
+                  @for(version of language.versions; track version) {
+                  <mat-progress-bar mode="determinate" style="margin-bottom: 5px;"
+                    [value]="getSupportPercentageFromDuration(version.releaseDate, version.supportDuration)"
+                    [ngClass]="getSupportColor(version.releaseDate, version.supportDuration)"
+                    matTooltip="{{ getSupportTooltip(version.releaseDate, version.supportDuration) }}"
+                    matTooltipPosition="above">
+                  </mat-progress-bar>}
+                </mat-card-content>
+              </mat-card>
+            </mat-card-content>
+          </ng-container>}
           <mat-card-actions class="card-actions">
             <a [href]="language.documentation" target="_blank" class="doc-link">
               <button mat-raised-button color="primary">Documentation</button>
