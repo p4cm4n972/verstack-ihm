@@ -50,6 +50,8 @@ export class AuthenticationService {
   logout() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('userId');
     this.isAuthenticated$.next(false);
     // this.updateAuthStatus(false);
   }
@@ -57,6 +59,8 @@ export class AuthenticationService {
   storeUserData(response: any) {
     localStorage.setItem('access_token', response.accessToken);
     localStorage.setItem('refresh_token', response.refreshToken);
+    this.getUserData();
+
   }
 
   getAccessToken(): string | null {
@@ -86,7 +90,7 @@ export class AuthenticationService {
   getDecodedToken(): any {
     const token = this.getAccessToken();
     const decodedToken: any = token ? jwtDecode(token) : null;
-    localStorage.setItem('user', decodedToken ? decodedToken.pseudo : '');
+    localStorage.setItem('user', decodedToken ? JSON.stringify(decodedToken) : '');
     localStorage.setItem('userId', decodedToken ? decodedToken.id : '');
     return decodedToken;
   }
