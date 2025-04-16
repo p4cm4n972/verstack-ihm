@@ -1,4 +1,6 @@
-section {
+@use '@angular/material' as mat;
+
+*section {
   width: 100%;
 }
 .language-container {
@@ -45,14 +47,26 @@ section {
     color: #4caf50; /* vert material */
   }
 
-  .support-primary .mat-progress-bar-fill::after {
-    background-color: #4caf50 !important; // vert
+
+  .support-primary  {
+    @include mat.progress-bar-overrides((
+      active-indicator-color: green,
+    track-color: black,
+    ));
   }
   
-  .support-accent .mat-progress-bar-fill::after {
-    background-color: #ff9800 !important; // orange
+  .support-accent {
+    @include mat.progress-bar-overrides((
+      active-indicator-color: orange,
+    track-color: black,
+    ));
   }
   
-  .support-warn .mat-progress-bar-fill::after {
-    background-color: #f44336 !important; // rouge
+  .support-warn {
+    @include mat.progress-bar-overrides((
+      active-indicator-color: red,
+    track-color: black,
+    ));
   }
+
+  
