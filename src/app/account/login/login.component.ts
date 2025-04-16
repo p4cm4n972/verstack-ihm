@@ -50,7 +50,7 @@ export class LoginComponent {
   durationInSeconds = 5;
 
   openSnackBar() {
-    this._snackBar.open('Bienvenue', '', {
+    this._snackBar.open('Connexion réussie !', '', {
       duration: this.durationInSeconds * 1000,
       horizontalPosition: 'center',
       verticalPosition: 'top',

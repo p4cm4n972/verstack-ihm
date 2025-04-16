@@ -99,8 +99,9 @@ export class VersionComponent implements OnInit {
   }
 
   private loadUserProfile(): void {
-    if (this.userData?._id) {
-      this.profileService.getUserProfile(this.userData._id).subscribe({
+    console.log('userData', this.userData);
+    if (this.userData?.id) {
+      this.profileService.getUserProfile(this.userData.id).subscribe({
         next: (data) => {
           this.userData = data;
           this.storeUserData(data);

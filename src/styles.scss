@@ -37,6 +37,13 @@ body { margin: 0; font-family: Doto, "Helvetica Neue", sans-serif; }
 }
 
 :root {
+  @include mat.snack-bar-overrides((
+    container-color: grey,
+    supporting-text-color: green,
+  ));
+}
+
+:root {
   --support-primary: #4caf50;
   --support-accent: #ff9800;
   --support-warn: #f44336;
