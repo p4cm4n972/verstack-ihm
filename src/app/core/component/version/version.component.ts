@@ -38,6 +38,8 @@ export class VersionComponent implements OnInit {
     'datascience',
     'ia',
     'game',
+    'devops',
+    'backend',
   ];
   toggle: boolean = false;
   fields: Field[] = [];
@@ -230,6 +232,8 @@ export class VersionComponent implements OnInit {
   
     const remainingMonths = Math.max(0, totalMonths - diffInMonths);
     const ratio = 100 - (remainingMonths / totalMonths) * 100 ;
+
+    if(ratio === 0) { return  1} 
   
     return ratio;
   }
@@ -243,6 +247,9 @@ export class VersionComponent implements OnInit {
     const totalMonths = supportTime;
     const monthsPassed = differenceInMonths(now, release);
     const monthsLeft = totalMonths - monthsPassed;
+    if(supportTime ===  0 || supportTime === null || supportTime === undefined) {
+      return 'support-primary'; // 🟢 OK
+    }
     
     if (monthsLeft <= 0) {
       return 'support-warn'; // 🔴 Support terminé
@@ -260,6 +267,10 @@ export class VersionComponent implements OnInit {
     const now = new Date();
     const monthsPassed = differenceInMonths(now, release);
     const monthsLeft = supportTime - monthsPassed;
+
+    if(supportTime ===  0 || supportTime === null || supportTime === undefined) {
+      return 'Living Standard';
+    }
   
     if (monthsLeft <= 0) {
       return 'Support terminé';
@@ -268,5 +279,12 @@ export class VersionComponent implements OnInit {
     } else {
       return `${monthsLeft} mois restants avant la fin du support`;
     }
+  }
+
+  getMode(duration: number): any {
+    if(duration > 0) {
+      return 'determinate';
+    } 
+    return 'indeterminate';
   }
 }

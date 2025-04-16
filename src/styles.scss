@@ -29,7 +29,7 @@ body { margin: 0; font-family: Doto, "Helvetica Neue", sans-serif; }
 
 :root {
   @include mat.card-overrides((
-    subtitle-text-color: orange,
+    subtitle-text-color: white,
     elevated-container-color: red,
     title-text-size: 1em,
     subtitle-text-size: .7em
