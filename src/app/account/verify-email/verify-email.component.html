@@ -1,0 +1,36 @@
+@if(!loading){
+    <div class="verify-container">
+    <mat-card class="verify-card" [@fadeIn]>
+      <mat-card-header>
+        <mat-card-title>Validation de l'email</mat-card-title>
+      </mat-card-header>
+  
+      <mat-card-content>
+        <div class="status-icon">
+          @if(message.includes('succès')){<mat-icon
+            color="primary"
+            fontIcon="check_circle"
+          ></mat-icon>}
+         @if(message.includes('invalide') || message.includes('Aucun')){<mat-icon
+            color="warn"
+            fontIcon="error"
+          ></mat-icon>}
+        </div>
+  
+        <p>{{ message }}</p>
+      </mat-card-content>
+  
+      <mat-card-actions>
+        <button mat-raised-button color="primary" routerLink="/signup">
+          Se connecter
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </div>} @else {
+  
+  <ng-template>
+    <div class="loading-container">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Validation en cours...</p>
+    </div>
+  </ng-template> }

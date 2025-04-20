@@ -3,7 +3,7 @@
   <h2>Créer un compte</h2>
 
   <!-- Boutons réseaux sociaux -->
-  <div class="social-login">
+ <!-- <div class="social-login">
     <p>Ou connectez-vous avec :</p>
     <button class="social-btn google-btn" aria-label="Connexion Google"><img src="assets/ico/google.ico"
         alt="google icone" width="24px"></button>
@@ -13,9 +13,16 @@
         alt="google icone" width="24px"></button>
   </div>
 
-  <span class="separator">ou :</span>
+  <span class="separator">ou :</span>-->
 
   <!-- Champs d'inscription -->
+
+  <!-- sexe -->
+  <mat-radio-group aria-label="Select an option" formControlName="pseudo">
+    <mat-radio-button value="femme">femme</mat-radio-button>
+    <mat-radio-button value="homme">homme</mat-radio-button>
+  </mat-radio-group>
+  
 
   <!-- pseudo -->
   <mat-form-field appearance="outline" class="full-width">
