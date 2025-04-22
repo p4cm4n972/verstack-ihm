@@ -1,20 +1,41 @@
 <div class="container">
-    <div class="message">
-      <h1>Mobile Is Not Geek</h1>
-      <p>
-        Tu veux entrer dans le game ?<br />
-        <strong>Reviens avec un clavier !</strong>
-      </p>
-  
-      <div class="illustration">
-        <img src="assets/img/no-mobile.svg" alt="No Mobile Access" />
+  <div class="message">
+    <h1>Mobile Is Not Geek</h1>
+    <p>
+      Tu veux entrer dans le game ?<br />
+      <strong>Reviens avec un clavier !</strong>
+    </p>
+
+    <div class="illustration">
+      <mat-tab-group animationDuration="500ms" class="intro-carousel" mat-align-tabs="center"
+        [(selectedIndex)]="selectedIndex">
+        @for(slide of slides; track slide.img;let i = $index){<mat-tab>
+          <ng-template mat-tab-label></ng-template>
+          <div class="slide-content">
+            <img [src]="slide.img" alt="slide illustration" />
+            <h2>{{ slide.title }}</h2>
+            <p>{{ slide.text }}</p>
+
+            @if(i === slides.length - 1){<button mat-stroked-button color="primary" (click)="redirectToDesktop()">
+              Accéder à la version desktop
+            </button>}
+          </div>
+        </mat-tab>}
+      </mat-tab-group>
+
+      <!-- Bullets -->
+      <div class="bullets">
+        @for(slide of slides; track slide.img; let i = $index){<div  class="dot" [class.active]="i === selectedIndex"
+          (click)="selectedIndex = i"></div>}
       </div>
-  
-      <button mat-raised-button color="primary" routerLink="/manifeste" class="manifeste-button">
-        Lire le manifeste
-      </button>
-  
-      <small class="hashtag">#MobileIsNotGeek</small>
+
+
     </div>
+
+    <button mat-raised-button color="primary" routerLink="/manifeste" class="manifeste-button">
+      Lire le manifeste
+    </button>
+
+    <p> <small class="hashtag">#MobileIsNotGeek</small></p>
   </div>
-  
+</div>

@@ -62,3 +62,47 @@
     background-color: #303f9f;
   }
   
+  
+  
+  .slide-content {
+    text-align: center;
+    padding: 24px;
+  
+    img {
+      width: 460px;
+      margin: 0 auto 20px;
+    }
+  
+    h2 {
+      font-size: 1.6rem;
+      color: #3f51b5;
+      margin-bottom: 12px;
+    }
+  
+    p {
+      font-size: 1rem;
+      color: #555;
+      padding: 0 16px;
+    }
+  }
+  
+  .bullets {
+    display: flex;
+    justify-content: center;
+    margin-top: 12px;
+  
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background-color: #bbb;
+      margin: 0 6px;
+      transition: all 0.3s;
+      cursor: pointer;
+  
+      &.active {
+        background-color: #3f51b5;
+        transform: scale(1.3);
+      }
+    }
+  }
