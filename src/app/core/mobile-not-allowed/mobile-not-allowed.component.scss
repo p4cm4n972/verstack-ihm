@@ -11,7 +11,7 @@
   }
 
   .message {
-    max-width: 600px;
+    max-width: 610px;
     animation: fadeIn 1s ease-in-out;
   }
 
@@ -47,3 +47,18 @@
       transform: translateY(0);
     }
   }
+
+  .manifeste-button {
+    margin-top: 24px;
+    font-weight: 500;
+    border-radius: 8px;
+    padding: 10px 24px;
+    background-color: #3f51b5;
+    color: white;
+    transition: background-color 0.3s ease;
+  }
+  
+  .manifeste-button:hover {
+    background-color: #303f9f;
+  }
+  

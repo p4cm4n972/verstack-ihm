@@ -1,9 +1,10 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-mobile-not-allowed',
-  imports: [],
+  imports: [RouterModule],
   templateUrl: './mobile-not-allowed.component.html',
   styleUrl: './mobile-not-allowed.component.scss'
 })

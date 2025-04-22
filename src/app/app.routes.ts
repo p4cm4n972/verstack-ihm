@@ -15,6 +15,7 @@ import { ResetPasswordComponent } from './account/reset-password/reset-password.
 import { ForgotPasswordComponent } from './account/forgot-password/forgot-password.component';
 import { mobileNotAllowedGuard } from './guards/mobile-not-allowed.guard';
 import { MobileNotAllowedComponent } from './core/mobile-not-allowed/mobile-not-allowed.component';
+import { ManisfesteComponent } from './core/manisfeste/manisfeste.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [mobileNotAllowedGuard] },
@@ -34,6 +35,7 @@ export const routes: Routes = [
   { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [mobileNotAllowedGuard] },
   { path: 'reset-password', component: ResetPasswordComponent, canActivate: [mobileNotAllowedGuard] },
   { path: 'mobile-not-allowed', component: MobileNotAllowedComponent },
+  { path: 'manifeste', component: ManisfesteComponent },
 
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },

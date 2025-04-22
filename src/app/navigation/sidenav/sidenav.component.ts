@@ -4,10 +4,12 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router, RouterModule } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
+import { IsMobileOnlyDirective } from '../../shared/is-mobile-only.directive';
+import { IsDesktopOnlyDirective } from '../../shared/is-desktop-only.directive';
 
 @Component({
   selector: 'app-sidenav',
-  imports: [MatListModule, MatIconModule, MatMenuModule, RouterModule],
+  imports: [MatListModule, MatIconModule, MatMenuModule, RouterModule, IsMobileOnlyDirective, IsDesktopOnlyDirective],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
 })

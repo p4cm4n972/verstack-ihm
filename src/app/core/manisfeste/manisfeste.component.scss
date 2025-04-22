@@ -1,0 +1,73 @@
+.manifeste-container {
+    max-width: 800px;
+    margin: 80px auto;
+    padding: 48px 32px;
+    background-color: #121212;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    color: #e0e0e0;
+    animation: fadeInUp 0.8s ease-out both;
+  }
+  
+  .manifeste-title {
+    font-size: 2.6rem;
+    font-weight: 700;
+    text-align: center;
+    color: #7c4dff; /* violet accent */
+    margin-bottom: 36px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  
+  .manifeste-container p {
+    font-size: 1.1rem;
+    line-height: 1.9;
+    margin-bottom: 24px;
+    color: #c7c7c7;
+  }
+  
+  .manifeste-container p strong {
+    color: #82b1ff;
+  }
+  
+  .slogan {
+    font-size: 1.4rem;
+    font-weight: bold;
+    text-align: center;
+    color: #ff5252;
+    margin: 48px 0 24px;
+    letter-spacing: 1px;
+  }
+  
+  .conclusion p {
+    font-size: 1.2rem;
+    font-weight: 600;
+    text-align: center;
+    margin: 14px 0;
+    color: #00e676;
+  }
+  
+  .signature {
+    margin-top: 40px;
+    text-align: center;
+  }
+  
+  .signature small {
+    font-size: 0.95rem;
+    color: #888;
+    font-style: italic;
+  }
+  
+  /* Animation */
+  @keyframes fadeInUp {
+    0% {
+      transform: translateY(30px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
