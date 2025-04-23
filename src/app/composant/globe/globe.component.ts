@@ -1,73 +1,136 @@
-import { Component, ElementRef } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FieldService } from '../../services/field.service';
-import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { BehaviorSubject } from 'rxjs';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-globe',
-  imports: [MatProgressSpinnerModule],
+  imports: [MatProgressSpinnerModule, CommonModule],
   templateUrl: './globe.component.html',
   styleUrl: './globe.component.scss',
   standalone: true
 })
-export class GlobeComponent {
+export class GlobeComponent implements OnInit, AfterViewInit {
 
-  images: any[] = []
-  loading: boolean = true;
-  totalImages: number = 0;
-  loadedImages: number = 0;
-  progress: number = 0;
+  @ViewChild('globeCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
+  private ctx!: CanvasRenderingContext2D;
+  private logos: HTMLImageElement[] = [];
+  private points: { x: number, y: number, z: number, img: HTMLImageElement }[] = [];
+  private angleY = 0;
+  private images: any[] = []
+  loading = true;
+  loading$ = new BehaviorSubject<boolean>(true);
+  loadedImages = 0;
+  totalImages = 0;
 
-  constructor(private _fieldService: FieldService,private elementRef: ElementRef) {
+  constructor(private _fieldService: FieldService) {
   }
 
   ngOnInit(): void {
-    this.loadImages()
+    this.loadImagesLogos()
   }
   ngAfterViewInit(): void {
-  } 
+    const canvas = this.canvasRef.nativeElement;
+    this.ctx = canvas.getContext('2d')!;
+    canvas.width = 600;
+    canvas.height = 600;
+    this.animate();
+  }
 
-  loadImages(): void {
+
+
+
+  private loadImages(urls: string[]): void {
+    urls.forEach(url => {
+      const img = new Image();
+      this.totalImages = urls.length;
+      img.src = url;
+      img.onload = () => {
+        this.logos.push(img);
+        this.loadedImages++;
+        if (this.loadedImages === this.totalImages) {
+          setTimeout(() => {
+            this.loading$.next(false)
+
+          }, 1000)
+          this.generatePoints();
+        }
+      };
+    });
+  }
+
+  private generatePoints(): void {
+    const total = this.logos.length;
+    const radius = 250;
+    this.points = this.logos.map((img, index) => {
+      const phi = Math.acos(-1 + (2 * index) / total);
+      const theta = Math.sqrt(total * Math.PI) * phi;
+      const x = radius * Math.cos(theta) * Math.sin(phi);
+      const y = radius * Math.sin(theta) * Math.sin(phi);
+      const z = radius * Math.cos(phi);
+      return { x, y, z, img };
+    });
+  }
+
+
+  private animate(): void {
+    requestAnimationFrame(() => this.animate());
+    this.draw();
+    this.angleY += 0.01;
+  }
+
+
+  private draw(): void {
+    const ctx = this.ctx;
+    ctx.clearRect(0, 0, 600, 600);
+    const cx = 300, cy = 300;
+
+    const rotated = this.points.map(({ x, y, z, img }) => {
+      const cosY = Math.cos(this.angleY);
+      const sinY = Math.sin(this.angleY);
+      const xRot = x * cosY - z * sinY;
+      const zRot = z * cosY + x * sinY;
+      const scale = 500 / (500 + zRot);
+      return {
+        x: cx + xRot * scale,
+        y: cy + y * scale,
+        size: scale * 30,
+        img,
+        z: zRot
+      };
+    });
+
+    rotated.sort((a, b) => b.z - a.z); // draw farthest points first
+
+    for (const p of rotated) {
+      ctx.drawImage(p.img, p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
+    }
+  }
+
+
+
+  private loadImagesLogos(): void {
 
     this._fieldService.getAllImages().subscribe({
       next: (logos: string[]) => {
         this.images = Array.from(new Set(logos));
-        this.totalImages = this.images.length;
+        //this.totalImages = this.images.length;
+        this.loadImages(this.images)
       },
       error: (error) => {
         console.error('Erreur lors de la recuperation des images', error);
-      },
-      complete: () => {
-       setTimeout(() => this.loading = false, 2000) ;
       }
     });
   }
 
-  onImageLoad(): void {
-    this.loadedImages++;
-    const newProgress = Math.round((this.loadedImages / this.totalImages) * 100);
-    this.progress = newProgress;
-    if ((this.loadedImages == this.totalImages) && this.progress == 100) {
-      this.loading = false;
-      this.positionImagesOnSphere();
 
-    }
+  getLoading(status: any) {
+    return status === false ? 'canvasLoad' : 'canvasNotLoad'
   }
 
-  positionImagesOnSphere(): void {
-    const globe = this.elementRef.nativeElement.querySelector('.globe');
-    const images = globe.querySelectorAll('img');
-    const totalImages = images.length;
-    const radius = 300; // rayon de la sphère
-
-    images.forEach((img: HTMLElement, index: number) => {
-      const phi = Math.acos(-1 + (2 * index) / totalImages); // angle vertical
-      const theta = Math.sqrt(totalImages * Math.PI) * phi; // angle horizontal
-
-      const x = radius * Math.cos(theta) * Math.sin(phi);
-      const y = radius * Math.sin(theta) * Math.sin(phi);
-      const z = radius * Math.cos(phi);
-
-      img.style.transform = `translate3d(${x}px, ${y}px, ${z}px)`;
-    });
+  displayLoadingLevel(time: any) {
+    return Math.round(time)
   }
+
 }

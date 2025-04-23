@@ -1,78 +1,40 @@
 /* TODO :
 amelioration rotation orbit => ligne 32 classe
 */
+canvas {
+  display: block;
+  margin: 0 auto;
+  background: transparent;
+}
 
-.globe-container {
-    perspective: 1000px;
-    width: 40vh;
-    height: 40vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
   
-  .orbit {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    //animation: orbit-rotation 15s infinite linear;
-    transform-style: preserve-3d;
-  }
-  
-  .globe {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    top: 50%;
-    left: 50%;
-    transform-style: preserve-3d;
-    transform-origin: center;
-    animation: globe-rotation 15s infinite linear;
-  }
+.retro-loading-bar-container {
+  width: 300px;
+  margin: auto;
+  background-color: black;
+  padding: 12px;
+  border: 2px solid lime;
+  text-align: center;
+  font-family: 'Press Start 2P', monospace;
+  color: lime;
+  box-shadow: 0 0 20px lime;
+}
 
-  /* GOOD EFFECT 3D rotation!!!!!
-  .globe {
-    position: absolute;
-    width: 80%;
-    height: 80%;
-    top: 50%;
-    left: 50%;
-    transform-style: preserve-3d;
-    transform-origin: center;
-    animation: globe-rotation 50s infinite linear;
-  }
-  */
-  
-  .globe img {
-    position: absolute;
-    width: 50px;
-    height: 50px;
-    // background-color: #fff;
-    // border-radius: 50%;
-    transform-style: preserve-3d;
-    image-rendering: pixelated;
-  }
-  
-  /* Animation de la rotation autour d'un point fixe */
-  @keyframes orbit-rotation {
-    from {
-      transform: rotateY(0deg);
-    }
-  
-    to {
-      transform: rotateY(360deg);
-    }
-  }
-  
-  /* Animation de la rotation du globe sur lui-même */
-  @keyframes globe-rotation {
-    from {
-      transform: rotateY(0deg);
-    }
-  
-    to {
-      transform: rotateY(360deg);
-    }
-  }
-  
+.retro-loading-bar {
+  height: 20px;
+  background-color: lime;
+  transition: width 0.3s;
+}
 
+.retro-text {
+  font-size: 10px;
+  margin-top: 8px;
+}
+
+.canvasLoad {
+  display: inline;
+}
+
+.canvasNotLoad {
+  display: none;
+}
