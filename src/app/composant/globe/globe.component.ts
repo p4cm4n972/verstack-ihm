@@ -85,7 +85,7 @@ export class GlobeComponent implements OnInit, AfterViewInit {
   private animate(): void {
     requestAnimationFrame(() => this.animate());
     this.draw();
-    this.angleY += 0.01;
+    this.angleY += 0.005;
   }
 
 
