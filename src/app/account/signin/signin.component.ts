@@ -189,7 +189,6 @@ export class SigninComponent {
 
       this.authService.signup(signupData).subscribe({
         next: (response) => {
-          console.log('Inscription réussie', response);
           this.signupForm.reset();
           this.onSignUpSuccess();
           this.openSnackBar('Inscription réussie');

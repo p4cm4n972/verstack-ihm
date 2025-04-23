@@ -28,7 +28,7 @@ export class GlobeComponent {
 
   loadImages(): void {
 
-    this._fieldService.getImages().subscribe({
+    this._fieldService.getAllImages().subscribe({
       next: (logos: string[]) => {
         this.images = Array.from(new Set(logos));
         this.totalImages = this.images.length;

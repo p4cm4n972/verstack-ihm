@@ -16,17 +16,17 @@ export class MobileNotAllowedComponent {
   autoplayInterval: any;
   slides = [
     {
-      img: 'assets/images/slide1.png',
+      img: 'assets/slider/slide1.png',
       title: 'Bienvenue sur Verstack',
       text: 'Une plateforme dédiée !'
     },
     {
-      img: 'assets/images/slide2.png',
+      img: 'assets/slider/slide2.png',
       title: 'Pas d’app, juste du code',
       text: 'Ici on parle framework, backend, frontend, et clavier mécanique.'
     },
     {
-      img: 'assets/images/slide3.png',
+      img: 'assets/slider/slide3.png',
       title: 'Passe au bureau',
       text: 'Tu veux rentrer dans le rectangle ? Oublie ton mobile. Connecte-toi depuis un ordi.'
     }
