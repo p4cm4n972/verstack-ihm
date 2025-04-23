@@ -9,8 +9,9 @@ canvas {
 
   
 .retro-loading-bar-container {
+  position: absolute;
   width: 300px;
-  margin: auto;
+  margin: 20% 20%;
   background-color: black;
   padding: 12px;
   border: 2px solid lime;
@@ -37,4 +38,47 @@ canvas {
 
 .canvasNotLoad {
   display: none;
+}
+
+.boot-screen {
+  background: black;
+  color: #00ff00;
+  font-family: 'Courier New', monospace;
+  font-size: 14px;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+  margin: 20% 20%;
+  box-shadow: 0 0 15px #0f0;
+  animation: terminalFadeOut 3.5s forwards;
+  position: absolute;
+}
+
+.boot-lines {
+  white-space: pre-line;
+  animation: typing 2s steps(30, end);
+  overflow: hidden;
+}
+
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes terminalFadeOut {
+  0% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; display: none; }
+}
+
+
+.globe-wrapper {
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 1s ease, transform 0.8s ease;
+}
+
+.globe-wrapper.visible {
+  opacity: 1;
+  transform: scale(1);
 }

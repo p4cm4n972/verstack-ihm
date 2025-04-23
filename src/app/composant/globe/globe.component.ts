@@ -23,12 +23,19 @@ export class GlobeComponent implements OnInit, AfterViewInit {
   loading$ = new BehaviorSubject<boolean>(true);
   loadedImages = 0;
   totalImages = 0;
+  showBoot = false;
+  globeVisible: boolean = false;
 
   constructor(private _fieldService: FieldService) {
   }
 
   ngOnInit(): void {
-    this.loadImagesLogos()
+    this.loadImagesLogos();
+    // Simulation du boot
+    setTimeout(() => {
+      this.showBoot = false;
+      this.globeVisible = true;
+    }, 3500); // durée = animation terminalFadeOut
   }
   ngAfterViewInit(): void {
     const canvas = this.canvasRef.nativeElement;
@@ -52,6 +59,7 @@ export class GlobeComponent implements OnInit, AfterViewInit {
         if (this.loadedImages === this.totalImages) {
           setTimeout(() => {
             this.loading$.next(false)
+            this.showBoot = true;
 
           }, 1000)
           this.generatePoints();
