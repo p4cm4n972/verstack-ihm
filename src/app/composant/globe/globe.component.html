@@ -1,4 +1,4 @@
-<div>
+<!--<div>
 
     @if(loading$ | async){<div class="retro-loading-bar-container">
         <div class="retro-loading-bar" [style.width.%]="(loadedImages / totalImages) * 100"></div>
@@ -16,5 +16,27 @@
     </div>}
     <div class="globe-wrapper" [class.visible]="globeVisible">
         <canvas #globeCanvas class="globe-canvas" width="600" height="600"></canvas>
+    </div>
+</div>-->
+<div class="globe-container">
+    @if(loading) {<div class="retro-loading-bar-container">
+        <div class="retro-loading-bar" [style.width.%]="(loadedImages / totalImages) * 100"></div>
+        <p class="retro-text">Chargement... {{ displayLoadingLevel((loadedImages/totalImages) * 100) }}</p>
+    </div>} @else if(showBoot) {
+    <div class="boot-screen">
+        <pre class="boot-lines">
+          Initializing globe display...
+          Loading framework logos...
+          Establishing 3D coordinates...
+          Launching orbital rendering system...
+          ...
+          ✔ Boot complete — welcome geek.
+        </pre>
+    </div>
+    }
+    <div class="globe-wrapper" [class.visible]="globeVisible">
+        <div class="globe">
+            @for(img of images; track img) {<img [src]="img" alt="image" (load)="onImageLoad()" /> }
+        </div>
     </div>
 </div>
