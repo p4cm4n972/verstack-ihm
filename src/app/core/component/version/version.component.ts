@@ -12,6 +12,8 @@ import { CommonModule } from '@angular/common';
 import { Observable, tap } from 'rxjs';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { addMonths, differenceInMonths, parseISO } from 'date-fns';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-version',
@@ -23,6 +25,8 @@ import { addMonths, differenceInMonths, parseISO } from 'date-fns';
     MatTooltipModule,
     CommonModule,
     MatProgressBarModule,
+    MatBadgeModule,
+    MatButtonModule
   ],
   templateUrl: './version.component.html',
   styleUrl: './version.component.scss',

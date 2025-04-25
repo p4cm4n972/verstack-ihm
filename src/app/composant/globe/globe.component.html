@@ -1,6 +1,6 @@
 <div>
 
-    @if(loading$ | async){<div class="retro-loading-bar-container">
+    @if(loading){<div class="retro-loading-bar-container">
         <div class="retro-loading-bar" [style.width.%]="(loadedImages / totalImages) * 100"></div>
         <p class="retro-text">Chargement... {{ displayLoadingLevel((loadedImages/totalImages) * 100) }}</p>
     </div>}
@@ -15,6 +15,6 @@
     </pre>
     </div>}
     <div class="globe-wrapper" [class.visible]="globeVisible">
-        <canvas #globeCanvas class="globe-canvas" width="600" height="600"></canvas>
+        <canvas #globeCanvas class="globe-canvas" width="400" height="400"></canvas>
     </div>
 </div>

@@ -50,6 +50,8 @@
             <a [href]="language.documentation" target="_blank" class="doc-link">
               <button mat-raised-button color="primary">Documentation</button>
             </a>
+             @if(language.recommendations){<button mat-icon-button  matTooltip="Popularité *Tiobe" matBadgeDescription="Popularité" [matBadge]="language.recommendations" aria-label="Popularité" >🔥</button>}
+
             @if(authStatus){ <a mat-icon-button aria-label="épingler"
               [matTooltip]="'Ajouter ' + language.name + ' à votre board'"
               aria-label="Bouton qui ajoute la carte au tableau personnalisé" (click)="pinLanguage(language)">
