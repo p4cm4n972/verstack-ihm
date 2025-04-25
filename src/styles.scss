@@ -59,3 +59,9 @@ body { margin: 0; font-family: Doto, "Helvetica Neue", sans-serif; }
   background-color: var(--support-warn) !important;
 }
 
+:root {
+  @include mat.badge-overrides((
+    background-color: white,
+    text-color: red,
+  ));
+}
