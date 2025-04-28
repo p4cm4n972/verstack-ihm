@@ -39,7 +39,7 @@
                   <mat-progress-bar [mode]="getMode(version.supportDuration)" style="margin-bottom: 5px;"
                     [value]="getSupportPercentageFromDuration(version.releaseDate, version.supportDuration)"
                     [ngClass]="getSupportColor(version.releaseDate, version.supportDuration)"
-                    matTooltip="{{ getSupportTooltip(version.releaseDate, version.supportDuration) }}"
+                    matTooltip="{{ getSupportTooltip(version.releaseDate, version.supportDuration, version.type) }}"
                     matTooltipPosition="above">
                   </mat-progress-bar>}
                 </mat-card-content>
@@ -50,10 +50,10 @@
             <a [href]="language.documentation" target="_blank" class="doc-link">
               <button mat-raised-button color="primary">Documentation</button>
             </a>
-             @if(language.recommendations){<button mat-icon-button  matTooltip="Popularité *Tiobe" matBadgeDescription="Popularité" [matBadge]="language.recommendations" aria-label="Popularité" >🔥</button>}
+             @if(!authStatus && language.recommendations){<button mat-icon-button  matTooltip="Popularité *Tiobe" matBadgeDescription="Popularité" [matBadge]="language.recommendations" aria-label="Popularité" >🔥</button>}
 
             @if(authStatus){ <a mat-icon-button aria-label="épingler"
-              [matTooltip]="'Ajouter ' + language.name + ' à votre board'"
+              matTooltip="{{(isPinned(language.name) ? 'Retirer ' : 'Ajouter ') + language.name + ' à votre board'}}"
               aria-label="Bouton qui ajoute la carte au tableau personnalisé" (click)="pinLanguage(language)">
               <mat-icon aria-hidden="true" aria-label="épingle icone"
                 [fontIcon]="isPinned(language.name) ? 'beenhere' : 'new_label'"

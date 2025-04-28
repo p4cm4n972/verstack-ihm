@@ -11,7 +11,7 @@ import { ProfileService } from '../../../services/profile.service';
 import { CommonModule } from '@angular/common';
 import { Observable, tap } from 'rxjs';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { addMonths, differenceInMonths, parseISO } from 'date-fns';
+import { differenceInMonths, parseISO } from 'date-fns';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 
@@ -266,7 +266,7 @@ export class VersionComponent implements OnInit {
     }
   }
 
-  getSupportTooltip(releaseDate: string, supportTime: number): string {
+  getSupportTooltip(releaseDate: string, supportTime: number, type:string): string {
     const release = parseISO(releaseDate);
     const now = new Date();
     const monthsPassed = differenceInMonths(now, release);
@@ -277,11 +277,11 @@ export class VersionComponent implements OnInit {
     }
   
     if (monthsLeft <= 0) {
-      return 'Support terminé';
+      return `Support ${type} terminé`;
     } else if (monthsLeft === 1) {
-      return 'Dernier mois de support';
+      return `Dernier mois de support ${type}`;
     } else {
-      return `${monthsLeft} mois restants avant la fin du support`;
+      return `${monthsLeft} mois restants avant la fin du support ${type}`;
     }
   }
 
