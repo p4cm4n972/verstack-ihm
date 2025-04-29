@@ -38,8 +38,8 @@ body { margin: 0; font-family: Doto, "Helvetica Neue", sans-serif; }
 
 :root {
   @include mat.snack-bar-overrides((
-    container-color: grey,
-    supporting-text-color: green,
+    container-color: green,
+    supporting-text-color: white,
   ));
 }
 
@@ -59,3 +59,9 @@ body { margin: 0; font-family: Doto, "Helvetica Neue", sans-serif; }
   background-color: var(--support-warn) !important;
 }
 
+:root {
+  @include mat.badge-overrides((
+    background-color: white,
+    text-color: red,
+  ));
+}

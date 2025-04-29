@@ -22,6 +22,7 @@ import { TermesComponent } from '../../composant/termes/termes.component';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {MatRadioModule} from '@angular/material/radio';
 
 @Component({
   selector: 'app-signin',
@@ -37,6 +38,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     ReactiveFormsModule,
     MatButtonModule,
     MatDialogModule,
+    MatRadioModule
   ],
   templateUrl: './signin.component.html',
   styleUrl: './signin.component.scss',
@@ -147,6 +149,7 @@ export class SigninComponent {
   ) {
     this.signupForm = this.fb.group(
       {
+        sexe: [''],
         pseudo: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
         password: [
@@ -173,6 +176,7 @@ export class SigninComponent {
   onSignup() {
     if (this.signupForm.valid) {
       const signupData = {
+        sexe: this.signupForm.value.sexe,
         pseudo: this.signupForm.value.pseudo,
         email: this.signupForm.value.email,
         password: this.signupForm.value.password,
@@ -185,13 +189,14 @@ export class SigninComponent {
 
       this.authService.signup(signupData).subscribe({
         next: (response) => {
-          console.log('Inscription réussie', response);
           this.signupForm.reset();
           this.onSignUpSuccess();
           this.openSnackBar('Inscription réussie');
         },
         error: (error) => {
-          console.error("Erreur d'inscription", error);
+          
+          this.openSnackBar("Erreur d'inscription: " + error.error.message);
+          console.error("Erreur d'inscription", error.error.message);
         },
       });
     } else {

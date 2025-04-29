@@ -11,17 +11,20 @@
         </div>
 
         <ul class="navigation-items hide-on-small">
-            <li class="">
+            <li class="" *isDesktopOnly>
                 <a class="" routerLink="/home" routerLinkActive="active">accueil</a>
             </li>
-            <li class="">
+            <li class="" *isDesktopOnly>
                 <a class="" routerLink="/version" routerLinkActive="active">stack</a>
             </li>
-            <li class="">
+            <li class="" *isDesktopOnly>
                 <a class="" routerLink="/stat" routerLinkActive="active">evolution</a>
             </li>
-            <li class="">
+            <li class="" *isDesktopOnly>
                 <a class="" routerLink="/news" routerLinkActive="active">actualités</a>
+            </li>
+            <li class="" *isMobileOnly>
+                <a class="" routerLink="/manifeste" routerLinkActive="active">Le Manifeste</a>
             </li>
             <!-- <li class="">
                 <a class="" routerLink="/shop" routerLinkActive="active">boutique</a>
@@ -29,7 +32,7 @@
         </ul>
     </div>
 
-    <div class="navigation-container hide-on-small">
+    <div class="navigation-container hide-on-small" *isDesktopOnly>
 
         <ul class="navigation-items">
 

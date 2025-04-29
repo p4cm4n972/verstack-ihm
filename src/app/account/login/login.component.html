@@ -11,5 +11,9 @@
         <input matInput placeholder="Entrez votre mot de passe" formControlName="password" type="password" required>
       </mat-form-field>
 
+      <div class="forgot-password-link">
+        <a routerLink="/forgot-password">Mot de passe oublié ?</a>
+      </div>
+
       <button mat-raised-button color="primary" class="full-width signup-btn" [disabled]="loginForm.invalid">Se connecter</button>
     </form>

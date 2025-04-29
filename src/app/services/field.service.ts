@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Field } from '../models/field.model';
 import { map, Observable, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
@@ -8,10 +9,10 @@ import { map, Observable, of } from 'rxjs';
 })
 export class FieldService {
 
-  constructor() { }
-  getField(): Observable<Field[]> {
+  constructor(private http: HttpClient) { }
+  getField(): Observable<any[]> {
     // TODO  Retournez la liste réelle des langages depuis une API ou une source de données
-    return of([
+  /*  return of([
       {
         domaine: 'web',
         languages: [
@@ -178,7 +179,7 @@ export class FieldService {
       },
       /* { name: "Shell", logoUrl: '../../../../assets/images/angular.png', websiteUrl: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },
       { name: "SQL", logoUrl: '../../../../assets/images/angular.png', websiteUrl: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript' },*/
-      {
+    /*  {
         domaine: 'mobile',
         languages: [
           {
@@ -546,7 +547,8 @@ export class FieldService {
           },
         ],
       },
-    ]);
+    ]);images*/
+    return this.http.get<any>('assets/frameworks.json')
   }
 
   getDataByField(domaine: string): Observable<Field[]> {
@@ -561,8 +563,19 @@ export class FieldService {
     return this.getField().pipe(
       map((data) => {
         return data.flatMap(item => item.languages
-          .filter(lang => lang.logoUrl)
-          .map(lang => lang.logoUrl))
+          .filter((lang:any) => lang.logoUrl)
+          .map((lang: any) => lang.logoUrl))
+      })
+    )
+  }
+
+
+  getAllImages(): Observable<string[]> {
+    return this.getField().pipe(
+      map((data: any) => {
+        return data.flatMap((item: any) => {
+          return item.logo
+        })
       })
     )
   }

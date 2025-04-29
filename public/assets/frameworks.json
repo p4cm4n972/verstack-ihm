@@ -1,0 +1,350 @@
+[
+  {
+    "name": "Angular",
+    "logo": "assets/images/angular.png"
+  },
+  {
+    "name": "Arduino",
+    "logo": "assets/images/arduino.png"
+  },
+  {
+    "name": "Astro",
+    "logo": "assets/images/astro.png"
+  },
+  {
+    "name": "Bootstrap",
+    "logo": "assets/images/bootstrap.png"
+  },
+  {
+    "name": "C",
+    "logo": "assets/images/c.png"
+  },
+  {
+    "name": "Chibios",
+    "logo": "assets/images/chibios.png"
+  },
+  {
+    "name": "Cordova",
+    "logo": "assets/images/cordova.png"
+  },
+  {
+    "name": "Cpp",
+    "logo": "assets/images/cpp.png"
+  },
+  {
+    "name": "Cs",
+    "logo": "assets/images/cs.png"
+  },
+  {
+    "name": "Css",
+    "logo": "assets/images/css.png"
+  },
+  {
+    "name": "Dart",
+    "logo": "assets/images/dart.png"
+  },
+  {
+    "name": "Deno",
+    "logo": "assets/images/deno.svg"
+  },
+  {
+    "name": "Django",
+    "logo": "assets/images/django.png"
+  },
+  {
+    "name": "Elixir",
+    "logo": "assets/images/elixir.png"
+  },
+  {
+    "name": "Erlang",
+    "logo": "assets/images/erlang.png"
+  },
+  {
+    "name": "Expressjs",
+    "logo": "assets/images/expressjs.png"
+  },
+  {
+    "name": "Flutter",
+    "logo": "assets/images/flutter.png"
+  },
+  {
+    "name": "Freertos",
+    "logo": "assets/images/freertos.png"
+  },
+  {
+    "name": "Fsharp",
+    "logo": "assets/images/fsharp.png"
+  },
+  {
+    "name": "Go",
+    "logo": "assets/images/go.jpg"
+  },
+  {
+    "name": "Go",
+    "logo": "assets/images/go.png"
+  },
+  {
+    "name": "H2o Logo",
+    "logo": "assets/images/h2o-logo.svg"
+  },
+  {
+    "name": "Haskell Logo",
+    "logo": "assets/images/haskell-logo.svg"
+  },
+  {
+    "name": "Html",
+    "logo": "assets/images/html.png"
+  },
+  {
+    "name": "J2me",
+    "logo": "assets/images/j2me.png"
+  },
+  {
+    "name": "Java",
+    "logo": "assets/images/java.png"
+  },
+  {
+    "name": "Javafx",
+    "logo": "assets/images/javafx.png"
+  },
+  {
+    "name": "Javascript",
+    "logo": "assets/images/javascript.png"
+  },
+  {
+    "name": "Jquery",
+    "logo": "assets/images/jquery.png"
+  },
+  {
+    "name": "Js",
+    "logo": "assets/images/js.png"
+  },
+  {
+    "name": "Julia",
+    "logo": "assets/images/julia.png"
+  },
+  {
+    "name": "Keras",
+    "logo": "assets/images/keras.png"
+  },
+  {
+    "name": "Kivy",
+    "logo": "assets/images/kivy.png"
+  },
+  {
+    "name": "Kotlin",
+    "logo": "assets/images/kotlin.png"
+  },
+  {
+    "name": "Matlab",
+    "logo": "assets/images/matlab.png"
+  },
+  {
+    "name": "Microej",
+    "logo": "assets/images/microej.jpeg"
+  },
+  {
+    "name": "Micropython",
+    "logo": "assets/images/micropython.png"
+  },
+  {
+    "name": "Mongodb",
+    "logo": "assets/images/mongodb.svg"
+  },
+  {
+    "name": "Msaml",
+    "logo": "assets/images/msaml.jpg"
+  },
+  {
+    "name": "Mxnet Logo",
+    "logo": "assets/images/mxnet_logo.png"
+  },
+  {
+    "name": "Nativescript",
+    "logo": "assets/images/nativescript.png"
+  },
+  {
+    "name": "Nerves",
+    "logo": "assets/images/nerves.svg"
+  },
+  {
+    "name": "Nextjs",
+    "logo": "assets/images/nextjs.png"
+  },
+  {
+    "name": "Nim",
+    "logo": "assets/images/nim.png"
+  },
+  {
+    "name": "Node",
+    "logo": "assets/images/node.png"
+  },
+  {
+    "name": "Node",
+    "logo": "assets/images/node.svg"
+  },
+  {
+    "name": "Nodejs",
+    "logo": "assets/images/nodejs.png"
+  },
+  {
+    "name": "Numpy",
+    "logo": "assets/images/numpy.svg"
+  },
+  {
+    "name": "Nuxt",
+    "logo": "assets/images/nuxt.png"
+  },
+  {
+    "name": "Objectivec",
+    "logo": "assets/images/objectivec.png"
+  },
+  {
+    "name": "Ocaml",
+    "logo": "assets/images/ocaml.png"
+  },
+  {
+    "name": "Pandas White",
+    "logo": "assets/images/pandas_white.svg"
+  },
+  {
+    "name": "Particle",
+    "logo": "assets/images/particle.png"
+  },
+  {
+    "name": "Perl",
+    "logo": "assets/images/perl.png"
+  },
+  {
+    "name": "Php",
+    "logo": "assets/images/php.png"
+  },
+  {
+    "name": "Pngegg 9",
+    "logo": "assets/images/pngegg-9.png"
+  },
+  {
+    "name": "Python",
+    "logo": "assets/images/python.png"
+  },
+  {
+    "name": "Pytorch",
+    "logo": "assets/images/pytorch.svg"
+  },
+  {
+    "name": "Qt",
+    "logo": "assets/images/qt.png"
+  },
+  {
+    "name": "Qwik",
+    "logo": "assets/images/qwik.png"
+  },
+  {
+    "name": "R",
+    "logo": "assets/images/r.png"
+  },
+  {
+    "name": "React",
+    "logo": "assets/images/react.png"
+  },
+  {
+    "name": "Reactnative",
+    "logo": "assets/images/reactnative.svg"
+  },
+  {
+    "name": "Reason",
+    "logo": "assets/images/reason.svg"
+  },
+  {
+    "name": "Rescript",
+    "logo": "assets/images/rescript.jpg"
+  },
+  {
+    "name": "Ruby",
+    "logo": "assets/images/ruby.png"
+  },
+  {
+    "name": "Rust Gris",
+    "logo": "assets/images/rust-gris.png"
+  },
+  {
+    "name": "Rust",
+    "logo": "assets/images/rust.jpg"
+  },
+  {
+    "name": "Rust",
+    "logo": "assets/images/rust.png"
+  },
+  {
+    "name": "Sas",
+    "logo": "assets/images/sas.jpg"
+  },
+  {
+    "name": "Scala",
+    "logo": "assets/images/scala.png"
+  },
+  {
+    "name": "Scikit Learn Logo Small",
+    "logo": "assets/images/scikit-learn-logo-small.png"
+  },
+  {
+    "name": "Solidjs",
+    "logo": "assets/images/solidjs.png"
+  },
+  {
+    "name": "Sql",
+    "logo": "assets/images/sql.png"
+  },
+  {
+    "name": "Swift",
+    "logo": "assets/images/swift.jpg"
+  },
+  {
+    "name": "Swift",
+    "logo": "assets/images/swift.png"
+  },
+  {
+    "name": "Swiftui",
+    "logo": "assets/images/swiftui.png"
+  },
+  {
+    "name": "Symfony",
+    "logo": "assets/images/symfony.png"
+  },
+  {
+    "name": "Tensorflow",
+    "logo": "assets/images/tensorflow.svg"
+  },
+  {
+    "name": "Theano",
+    "logo": "assets/images/theano.svg"
+  },
+  {
+    "name": "Ts",
+    "logo": "assets/images/ts.png"
+  },
+  {
+    "name": "Vlang",
+    "logo": "assets/images/vlang.png"
+  },
+  {
+    "name": "Vuejs",
+    "logo": "assets/images/vuejs.png"
+  },
+  {
+    "name": "Watson",
+    "logo": "assets/images/watson.png"
+  },
+  {
+    "name": "Xamarin",
+    "logo": "assets/images/xamarin.png"
+  },
+  {
+    "name": "Zephyr",
+    "logo": "assets/images/zephyr.svg"
+  },
+  {
+    "name": "Ziglang",
+    "logo": "assets/images/ziglang.jpg"
+  }
+]

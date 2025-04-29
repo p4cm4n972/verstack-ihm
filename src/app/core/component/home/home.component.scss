@@ -25,7 +25,10 @@
     padding: 20px;
   }
   
-  
+  .col.right {
+    position: relative;
+    min-height: 400px;
+  }
   
   .text-content {
     text-align: center;

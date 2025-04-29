@@ -6,10 +6,11 @@ import { LayoutComponent } from './ui/layout/layout.component';
 import { SidenavComponent } from './navigation/sidenav/sidenav.component';
 import { CommonModule } from '@angular/common';
 import { FooterComponent } from "./navigation/footer/footer.component";
+import { SharedModule } from './shared/shared.module';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, MatSidenavModule, RouterOutlet, LayoutComponent, HeaderComponent, SidenavComponent, FooterComponent],
+  imports: [CommonModule, MatSidenavModule, RouterOutlet, LayoutComponent, HeaderComponent, SidenavComponent, FooterComponent, SharedModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

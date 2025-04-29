@@ -4,10 +4,12 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
 import { Router, RouterModule } from '@angular/router';
 import { AuthenticationService } from '../../services/authentication.service';
+import { IsDesktopOnlyDirective } from '../../shared/is-desktop-only.directive';
+import { IsMobileOnlyDirective } from '../../shared/is-mobile-only.directive';
 
 @Component({
   selector: 'app-header',
-  imports: [MatToolbarModule, MatButtonModule, MatIconModule, RouterModule],
+  imports: [IsDesktopOnlyDirective, IsMobileOnlyDirective, MatToolbarModule, MatButtonModule, MatIconModule, RouterModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })

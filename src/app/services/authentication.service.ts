@@ -47,11 +47,22 @@ export class AuthenticationService {
     )
   }
 
+  verifyEmail(token: string): Observable<any> {
+    console.log(token)
+    return this.http.post(`${this.baseUrl}/verify-email`, { token }).pipe(
+      tap((response: any) => {
+        console.log(response)
+      })
+    )
+  }
+  
+
   logout() {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
     localStorage.removeItem('user');
     localStorage.removeItem('userId');
+    localStorage.removeItem('favoris')
     this.isAuthenticated$.next(false);
     // this.updateAuthStatus(false);
   }
@@ -116,6 +127,18 @@ export class AuthenticationService {
     // const userData = localStorage.getItem('user');
     return info.id ? info.id : '';
   }
+
+  forgotPassword(email: string) {
+    return this.http.post(`${this.baseUrl}/forgot-password`, { email });
+  }
+  
+  resetPassword(token: string, newPassword: string) {
+    return this.http.post(`${this.baseUrl}/reset-password`, {
+      token,
+      newPassword,
+    });
+  }
+  
 
   
 
