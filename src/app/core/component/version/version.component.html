@@ -39,7 +39,7 @@
                   <mat-progress-bar [mode]="getMode(version.supportDuration)" style="margin-bottom: 5px;"
                     [value]="getSupportPercentageFromDuration(version.releaseDate, version.supportDuration)"
                     [ngClass]="getSupportColor(version.releaseDate, version.supportDuration)"
-                    matTooltip="{{ getSupportTooltip(version.releaseDate, version.supportDuration) }}"
+                    matTooltip="{{ getSupportTooltip(version.releaseDate, version.supportDuration, version.type) }}"
                     matTooltipPosition="above">
                   </mat-progress-bar>}
                 </mat-card-content>

@@ -262,7 +262,7 @@ export class VersionComponent implements OnInit {
     }
   }
 
-  getSupportTooltip(releaseDate: string, supportTime: number): string {
+  getSupportTooltip(releaseDate: string, supportTime: number, type:string): string {
     const release = parseISO(releaseDate);
     const now = new Date();
     const monthsPassed = differenceInMonths(now, release);
@@ -273,11 +273,11 @@ export class VersionComponent implements OnInit {
     }
   
     if (monthsLeft <= 0) {
-      return 'Support terminé';
+      return `Support ${type} terminé`;
     } else if (monthsLeft === 1) {
-      return 'Dernier mois de support';
+      return `Dernier mois de support ${type} !`;
     } else {
-      return `${monthsLeft} mois restants avant la fin du support`;
+      return `${monthsLeft} mois restants avant la fin du support ${type}`;
     }
   }
 
