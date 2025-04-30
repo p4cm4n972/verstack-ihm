@@ -60,10 +60,10 @@ export class GlobeComponent implements OnInit, AfterViewInit {
       img.onload = () => {
         this.logos.push(img);
         this.loadedImages++;
-        const percent = (this.loadedImages / this.totalImages) * 100;
+        const percent = Math.round(this.loadedImages / this.totalImages) * 100;
         this.loadingProgress$.next(percent);
         if (this.loadedImages === this.totalImages) {
-         setTimeout(()=> this.onAllImagesLoaded(), 1000); ;
+          setTimeout(() => this.onAllImagesLoaded(), 1000);;
         }
       };
     });
