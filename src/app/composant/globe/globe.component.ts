@@ -70,7 +70,7 @@ export class GlobeComponent implements OnInit, AfterViewInit {
 
   private generatePoints(): void {
     const total = this.logos.length;
-    const radius = 250;
+    const radius = 240;
     this.points = this.logos.map((img, index) => {
       const phi = Math.acos(-1 + (2 * index) / total);
       const theta = Math.sqrt(total * Math.PI) * phi;
