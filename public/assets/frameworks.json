@@ -32,6 +32,10 @@
     "logo": "assets/images/cpp.png"
   },
   {
+    "name": "Crystal",
+    "logo": "assets/images/crystal.png"
+  },
+  {
     "name": "Cs",
     "logo": "assets/images/cs.png"
   },
@@ -49,11 +53,19 @@
   },
   {
     "name": "Deno",
+    "logo": "assets/images/deno.png"
+  },
+  {
+    "name": "Deno",
     "logo": "assets/images/deno.svg"
   },
   {
     "name": "Django",
     "logo": "assets/images/django.png"
+  },
+  {
+    "name": "Docker",
+    "logo": "assets/images/docker.png"
   },
   {
     "name": "Elixir",
@@ -74,10 +86,6 @@
   {
     "name": "Fortran",
     "logo": "assets/images/fortran.png"
-  },
-  {
-    "name": "Freertos",
-    "logo": "assets/images/freertos.png"
   },
   {
     "name": "Fsharp",
@@ -146,6 +154,10 @@
   {
     "name": "Lua",
     "logo": "assets/images/lua.png"
+  },
+  {
+    "name": "Mariadb",
+    "logo": "assets/images/mariadb.png"
   },
   {
     "name": "Matlab",
@@ -264,6 +276,10 @@
     "logo": "assets/images/reason.svg"
   },
   {
+    "name": "Redis",
+    "logo": "assets/images/redis.png"
+  },
+  {
     "name": "Rescript",
     "logo": "assets/images/rescript.png"
   },
@@ -310,6 +326,10 @@
   {
     "name": "Ts",
     "logo": "assets/images/ts.png"
+  },
+  {
+    "name": "Unity",
+    "logo": "assets/images/unity.png"
   },
   {
     "name": "Vba",
