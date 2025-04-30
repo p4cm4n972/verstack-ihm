@@ -164,10 +164,6 @@
     "logo": "assets/images/mongodb.png"
   },
   {
-    "name": "Msaml",
-    "logo": "assets/images/msaml.jpg"
-  },
-  {
     "name": "Mxnet Logo",
     "logo": "assets/images/mxnet_logo.png"
   },
@@ -186,10 +182,6 @@
   {
     "name": "Nim",
     "logo": "assets/images/nim.png"
-  },
-  {
-    "name": "Node",
-    "logo": "assets/images/node.png"
   },
   {
     "name": "Node",
@@ -273,23 +265,11 @@
   },
   {
     "name": "Rescript",
-    "logo": "assets/images/rescript.jpg"
-  },
-  {
-    "name": "Rescript",
     "logo": "assets/images/rescript.png"
   },
   {
     "name": "Ruby",
     "logo": "assets/images/ruby.png"
-  },
-  {
-    "name": "Rust Gris",
-    "logo": "assets/images/rust-gris.png"
-  },
-  {
-    "name": "Rust",
-    "logo": "assets/images/rust.jpg"
   },
   {
     "name": "Rust",
@@ -306,14 +286,6 @@
   {
     "name": "Solidjs",
     "logo": "assets/images/solidjs.png"
-  },
-  {
-    "name": "Sql",
-    "logo": "assets/images/sql.png"
-  },
-  {
-    "name": "Swift",
-    "logo": "assets/images/swift.jpg"
   },
   {
     "name": "Swift",
