@@ -16,7 +16,7 @@
         <mat-card class="language-card" appearance="outlined">
           <mat-card-header>
             <mat-card-title-group>
-              <mat-card-title>{{ language.name }}</mat-card-title>
+              <mat-card-title>{{ language.name }} </mat-card-title>
               @for(version of language.versions; track version) {
               <mat-card-subtitle>
                 <span> {{ version.type }}:</span>&nbsp; {{ version.label }} ({{ version.releaseDate | date:'MM/yyyy' }})
@@ -50,7 +50,7 @@
             <a [href]="language.documentation" target="_blank" class="doc-link">
               <button mat-raised-button color="primary">Documentation</button>
             </a>
-             @if(!authStatus && language.recommendations){<button mat-icon-button  matTooltip="Popularité *Tiobe" matBadgeDescription="Popularité" [matBadge]="language.recommendations" aria-label="Popularité" >🔥</button>}
+             @if(!authStatus && language.recommendations){<button style="margin-right: 20px;" mat-icon-button  matTooltip="Popularité *Stackoverflow" matBadgeDescription="Popularité" [matBadge]="language.recommendations" aria-label="Popularité" >🔥</button>}
 
             @if(authStatus){ <a mat-icon-button aria-label="épingler"
               matTooltip="{{(isPinned(language.name) ? 'Retirer ' : 'Ajouter ') + language.name + ' à votre board'}}"
