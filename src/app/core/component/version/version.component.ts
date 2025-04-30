@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Field } from '../../../models/field.model';
 import { LangagesService } from '../../../services/langages.service';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -14,6 +14,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { differenceInMonths, parseISO } from 'date-fns';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-version',
@@ -26,11 +27,14 @@ import { MatButtonModule } from '@angular/material/button';
     CommonModule,
     MatProgressBarModule,
     MatBadgeModule,
-    MatButtonModule
+    MatButtonModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './version.component.html',
   styleUrl: './version.component.scss',
+  // changeDetection: ChangeDetectionStrategy.OnPush
 })
+
 export class VersionComponent implements OnInit {
   langages: any[] = [];
   filteredLangages: any[] = [];
@@ -52,6 +56,8 @@ export class VersionComponent implements OnInit {
   authStatus: boolean = false;
   userData: any;
   userFavoris: any;
+
+  isLoading: boolean = true
 
   constructor(
     private _langagesService: LangagesService,
@@ -90,9 +96,16 @@ export class VersionComponent implements OnInit {
   }
 
   private loadLangages(): void {
-    this._langagesService.getAllLangages().subscribe((langages) => {
+    this._langagesService.getAllLangages().subscribe({
+      next: (langages) => {
       this.langages = langages;
       this.filteredLangages = langages;
+      this.isLoading = false
+  },
+      error: (err) => {
+        console.error('Erreur lors de la récupération des langages', err);
+        this.isLoading = false
+      }
     });
   }
 
@@ -290,5 +303,9 @@ export class VersionComponent implements OnInit {
       return 'determinate';
     } 
     return 'indeterminate';
+  }
+
+  trackByLangage(index: number, langage: any): string {
+    return langage._id || langage.name;
   }
 }
