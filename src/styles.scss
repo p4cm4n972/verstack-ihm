@@ -38,8 +38,8 @@ body { margin: 0; font-family: Doto, "Helvetica Neue", sans-serif; }
 
 :root {
   @include mat.snack-bar-overrides((
-    container-color: green,
-    supporting-text-color: white,
+    container-color: rgb(116, 245, 219),
+    supporting-text-color: green,
   ));
 }
 

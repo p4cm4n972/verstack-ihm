@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FieldService } from '../../services/field.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, filter, take } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -14,13 +14,15 @@ import { CommonModule } from '@angular/common';
 export class GlobeComponent implements OnInit, AfterViewInit {
 
   @ViewChild('globeCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
+  @ViewChild('bootScreen') bootScreenRef!: ElementRef<HTMLDivElement>;
+
   private ctx!: CanvasRenderingContext2D;
   private logos: HTMLImageElement[] = [];
   private points: { x: number, y: number, z: number, img: HTMLImageElement }[] = [];
   private angleY = 0;
   private images: any[] = []
-  loading = true;
   loading$ = new BehaviorSubject<boolean>(true);
+  loadingProgress$ = new BehaviorSubject<number>(0);
   loadedImages = 0;
   totalImages = 0;
   showBoot = false;
@@ -30,13 +32,15 @@ export class GlobeComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.loading$.pipe(
+      filter(done => !done), take(1)
+    ).subscribe(() => {
+      this.showBoot = true;
+    });
     this.loadImagesLogos();
-    // Simulation du boot
-    setTimeout(() => {
-      this.showBoot = false;
-      this.globeVisible = true;
-    }, 3500); // durée = animation terminalFadeOut
   }
+
+
   ngAfterViewInit(): void {
     const canvas = this.canvasRef.nativeElement;
     this.ctx = canvas.getContext('2d')!;
@@ -56,16 +60,19 @@ export class GlobeComponent implements OnInit, AfterViewInit {
       img.onload = () => {
         this.logos.push(img);
         this.loadedImages++;
+        const percent = (this.loadedImages / this.totalImages) * 100;
+        this.loadingProgress$.next(percent);
         if (this.loadedImages === this.totalImages) {
-          setTimeout(() => {
-            this.loading$.next(false)
-            this.showBoot = true;
-
-          }, 1000)
-          this.generatePoints();
+         setTimeout(()=> this.onAllImagesLoaded(), 1000); ;
         }
       };
     });
+  }
+
+
+  private onAllImagesLoaded(): void {
+    this.generatePoints();
+    this.loading$.next(false);
   }
 
   private generatePoints(): void {
@@ -141,4 +148,9 @@ export class GlobeComponent implements OnInit, AfterViewInit {
     return Math.round(time)
   }
 
+  onBootAnimationEnd() {
+    this.showBoot = false;
+    this.globeVisible = true;
+
+  }
 }

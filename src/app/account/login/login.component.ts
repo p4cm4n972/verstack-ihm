@@ -38,7 +38,7 @@ export class LoginComponent {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
           this.router.navigate(['/home']);
-          this.openSnackBar('Connexion réussie !')
+          this.openSnackBar('   ✅ Connexion réussie !')
         },
         error: (error) => {
           const message = error.error.message
