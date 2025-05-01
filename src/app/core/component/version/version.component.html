@@ -18,7 +18,7 @@
     </mat-tab-group>
 
     <div class="languages-grid">
-      @for(language of domainLangages(filteredLangages, selectedDomain, selectedDomainIndex) ; track trackByLangage)
+      @for(language of domainLangages(filteredLangages, selectedDomain, selectedDomainIndex) ; track language._id)
       {<ng-container>
         <mat-card class="language-card" appearance="outlined">
           <mat-card-header>

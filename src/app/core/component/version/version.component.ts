@@ -305,7 +305,4 @@ export class VersionComponent implements OnInit {
     return 'indeterminate';
   }
 
-  trackByLangage(index: number, langage: any): string {
-    return langage._id || langage.name;
-  }
 }
