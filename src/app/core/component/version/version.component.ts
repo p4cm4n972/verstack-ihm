@@ -33,7 +33,6 @@ import { Title, Meta } from '@angular/platform-browser';
   ],
   templateUrl: './version.component.html',
   styleUrl: './version.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class VersionComponent implements OnInit {
