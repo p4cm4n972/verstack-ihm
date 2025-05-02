@@ -25,8 +25,8 @@ export class HomeComponent {
   ngOnInit(): void {
     this.title.setTitle('Verstack.io – L’univers des stacks');
     this.meta.addTags([
-      { name: 'description', content: 'Référentiel des versions à jour pour tous les langages et frameworks.' },
-      { name: 'keywords', content: 'frameworks, langages, versions, verstack, Angular, React, Node.js' }
+      { name: 'description', content: 'Référentiel des dernières versions à jour pour tous les langages et frameworks.' },
+      { name: 'keywords', content: 'frameworks, langages, versions, verstack, Angular, React, Node.js, javascript, JS, JAVA, PHP' }
     ]);
     this.authService.getAuthStatus().subscribe((status) => {
       this.authStatus = status;
