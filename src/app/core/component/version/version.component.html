@@ -43,7 +43,7 @@
               <mat-card appearance="outlined">
                 <mat-card-content>
                   @for(version of language.versions; track version) {
-                  <mat-progress-bar [mode]="getMode(version.supportDuration)" style="margin-bottom: 5px;"
+                  <mat-progress-bar [mode]="getProgressMode(version.supportDuration)" style="margin-bottom: 5px;"
                     [value]="getSupportPercentageFromDuration(version.releaseDate, version.supportDuration)"
                     [ngClass]="getSupportColor(version.releaseDate, version.supportDuration)"
                     matTooltip="{{ getSupportTooltip(version.releaseDate, version.supportDuration, version.type) }}"

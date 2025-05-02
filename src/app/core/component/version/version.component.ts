@@ -15,6 +15,7 @@ import { differenceInMonths, parseISO } from 'date-fns';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress-spinner';
+import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-version',
@@ -32,7 +33,7 @@ import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress
   ],
   templateUrl: './version.component.html',
   styleUrl: './version.component.scss',
-  // changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class VersionComponent implements OnInit {
@@ -57,15 +58,21 @@ export class VersionComponent implements OnInit {
   userData: any;
   userFavoris: any;
 
-  isLoading: boolean = true
+  isLoading: boolean = true;
 
   constructor(
     private _langagesService: LangagesService,
     private authService: AuthenticationService,
-    private profileService: ProfileService
-  ) {}
+    private profileService: ProfileService,
+    private title: Title, private meta: Meta
+  ) { }
 
   ngOnInit(): void {
+    this.title.setTitle('Verstack.io – L’univers des stacks');
+    this.meta.addTags([
+      { name: 'description', content: 'Référentiel des versions à jour pour tous les langages et frameworks.' },
+      { name: 'keywords', content: 'frameworks, langages, versions, verstack, Angular, React, Node.js' }
+    ]);
     this.getAuthStatus().subscribe((status: any) => {
       if (status) {
         this.loadUserData();
@@ -98,10 +105,10 @@ export class VersionComponent implements OnInit {
   private loadLangages(): void {
     this._langagesService.getAllLangages().subscribe({
       next: (langages) => {
-      this.langages = langages;
-      this.filteredLangages = langages;
-      this.isLoading = false
-  },
+        this.langages = langages;
+        this.filteredLangages = langages;
+        this.isLoading = false
+      },
       error: (err) => {
         console.error('Erreur lors de la récupération des langages', err);
         this.isLoading = false
@@ -152,11 +159,9 @@ export class VersionComponent implements OnInit {
         this.userFavoris?.some((elm: any) => elm.name == language.name)) ||
       this.pinnedLangages.has(language.name)
     ) {
-      console.log('DELETE favoris');
       const index = this.userFavoris.findIndex(
         (elm: any) => elm.name == language.name
       );
-      console.log('delete', index);
       this.userFavoris.splice(index, 1);
       const updatedData = {
         favoris: [...this.userFavoris],
@@ -165,7 +170,6 @@ export class VersionComponent implements OnInit {
       this.pinnedLangages.delete(language);
     } else {
       const { name, logoUrl } = language;
-      console.log(...this.userData.favoris);
       this.userFavoris = [...this.userData.favoris, { name, logoUrl }];
       const updatedData = {
         favoris: [...this.userData.favoris, { name, logoUrl }],
@@ -240,23 +244,23 @@ export class VersionComponent implements OnInit {
   ): number {
     const releaseDate = new Date(releaseDateStr);
     const today = new Date();
-  
+
     const totalMonths = supportTimeMonths;
-  
+
     const diffInMonths =
       (today.getFullYear() - releaseDate.getFullYear()) * 12 +
       (today.getMonth() - releaseDate.getMonth());
-  
-    const remainingMonths = Math.max(0, totalMonths - diffInMonths);
-    const ratio = 100 - (remainingMonths / totalMonths) * 100 ;
 
-    if(ratio === 0) { return  1} 
-  
+    const remainingMonths = Math.max(0, totalMonths - diffInMonths);
+    const ratio = 100 - (remainingMonths / totalMonths) * 100;
+
+    if (ratio === 0) { return 1 }
+
     return ratio;
   }
-  
-  
-  
+
+
+
 
   getSupportColor(releaseDate: string, supportTime: number): string {
     const release = parseISO(releaseDate);
@@ -264,10 +268,10 @@ export class VersionComponent implements OnInit {
     const totalMonths = supportTime;
     const monthsPassed = differenceInMonths(now, release);
     const monthsLeft = totalMonths - monthsPassed;
-    if(supportTime ===  0 || supportTime === null || supportTime === undefined) {
+    if (supportTime == null || supportTime === 0) {
       return 'support-primary'; // 🟢 OK
     }
-    
+
     if (monthsLeft <= 0) {
       return 'support-warn'; // 🔴 Support terminé
     } else if (monthsLeft === 1) {
@@ -279,16 +283,16 @@ export class VersionComponent implements OnInit {
     }
   }
 
-  getSupportTooltip(releaseDate: string, supportTime: number, type:string): string {
+  getSupportTooltip(releaseDate: string, supportTime: number, type: string): string {
     const release = parseISO(releaseDate);
     const now = new Date();
     const monthsPassed = differenceInMonths(now, release);
     const monthsLeft = supportTime - monthsPassed;
 
-    if(supportTime ===  0 || supportTime === null || supportTime === undefined) {
+    if (supportTime === 0 || supportTime === null || supportTime === undefined) {
       return 'Living Standard';
     }
-  
+
     if (monthsLeft <= 0) {
       return `Support ${type} terminé`;
     } else if (monthsLeft === 1) {
@@ -298,10 +302,10 @@ export class VersionComponent implements OnInit {
     }
   }
 
-  getMode(duration: number): any {
-    if(duration > 0) {
+  getProgressMode(duration: number): any {
+    if (duration > 0) {
       return 'determinate';
-    } 
+    }
     return 'indeterminate';
   }
 
