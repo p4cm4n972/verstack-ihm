@@ -1,15 +1,24 @@
-import { AfterViewInit, Component, Input } from '@angular/core';
+import { AfterViewInit, Component, inject, Inject, Input } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-shopify-buy-button',
-  imports: [MatCardModule],
+  imports: [MatCardModule, MatButtonModule, MatIconModule],
   templateUrl: './shopify-buy-button.component.html',
-  styleUrl: './shopify-buy-button.component.scss'
+  styleUrl: './shopify-buy-button.component.scss',
+  standalone: true,
 })
 export class ShopifyBuyButtonComponent implements AfterViewInit {
   @Input() productId!: string; // <- ID produit Shopify
   @Input() componentId!: string; // <- ID DOM unique à ce produit
+  
+
+
+  constructor() {
+  }
 
   ngAfterViewInit(): void {
     this.initBuyButton();

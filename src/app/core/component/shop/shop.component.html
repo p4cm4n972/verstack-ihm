@@ -1,8 +1,44 @@
-<section class="products-grid">
- @for(product of products; track product.id;let i = $index){<div >
-    <app-shopify-buy-button
-      [productId]="product.id"
-      [componentId]="'product-component-' + product.component">
-    </app-shopify-buy-button>
-  </div>}
-</section>
+<section class="shop-container">
+  <!--  <div class="category-filter">
+      <mat-form-field appearance="fill">
+        <mat-label>Catégorie</mat-label>
+        <mat-select [(value)]="selectedCategory" (selectionChange)="applyFilter()">
+          <mat-option value="">Toutes</mat-option>
+          <mat-option *ngFor="let cat of categories" [value]="cat">{{ cat }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>-->
+  
+    <section class="products-grid">
+      <div *ngFor="let product of filteredProducts; trackBy: trackById" >
+          <!--<a active (click)="openProductModal(product)" color="primary" style="padding: 10px;">voir le produit 
+            </a>
+            <mat-divider style="margin: 20px;"></mat-divider>-->
+
+        <app-shopify-buy-button
+          [productId]="product.id"
+          [componentId]="'product-component-' + product.component" >
+        </app-shopify-buy-button>
+      </div>
+    </section>
+  </section>
+<!--<section class="shop-container">
+    <mat-tab-group animationDuration="2000ms">
+        <mat-tab label="Hommes">
+
+        </mat-tab>
+        <mat-tab label="Femmes">
+
+        </mat-tab>
+        <mat-tab label="Accessoires">
+
+        </mat-tab>
+        <mat-tab label="Maison et Déco">
+
+        </mat-tab>
+        <mat-tab label="Jouets">
+
+        </mat-tab>
+    </mat-tab-group>
+</section>-->
+  
