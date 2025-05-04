@@ -1,73 +1,100 @@
 .manifeste-container {
-    max-width: 800px;
-    margin: 80px auto;
-    padding: 48px 32px;
-    background-color: #121212;
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
-    font-family: 'Segoe UI', Roboto, sans-serif;
-    color: #e0e0e0;
-    animation: fadeInUp 0.8s ease-out both;
-  }
-  
-  .manifeste-title {
-    font-size: 2.6rem;
-    font-weight: 700;
-    text-align: center;
-    color: #7c4dff; /* violet accent */
-    margin-bottom: 36px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-  }
-  
-  .manifeste-container p {
-    font-size: 1.1rem;
-    line-height: 1.9;
-    margin-bottom: 24px;
-    color: #c7c7c7;
-  }
-  
-  .manifeste-container p strong {
-    color: #82b1ff;
-  }
-  
-  .slogan {
-    font-size: 1.4rem;
-    font-weight: bold;
-    text-align: center;
-    color: #ff5252;
-    margin: 48px 0 24px;
-    letter-spacing: 1px;
-  }
-  
-  .conclusion p {
-    font-size: 1.2rem;
-    font-weight: 600;
-    text-align: center;
-    margin: 14px 0;
-    color: #00e676;
-  }
-  
-  .signature {
-    margin-top: 40px;
-    text-align: center;
-  }
-  
-  .signature small {
-    font-size: 0.95rem;
+  max-width: 700px;
+  margin: 60px auto;
+  padding: 32px 24px;
+  background-color: #121212;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+  font-family: 'Press Start 2P', monospace;
+  color: #e0e0e0;
+  animation: fadeInUp 0.8s ease-out both;
+  text-align: left;
+}
+
+.manifeste-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  text-align: center;
+  color: #7c4dff;
+  margin-bottom: 32px;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+
+.manifeste-container p {
+  font-size: 0.95rem;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  color: #cfd8dc;
+  word-break: break-word;
+}
+
+.manifeste-container p strong {
+  color: #82b1ff;
+  font-weight: bold;
+}
+
+.slogan {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  color: #ff5252;
+  margin: 48px 0 24px;
+  letter-spacing: 1px;
+}
+
+.conclusion p {
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  margin: 14px 0;
+  color: #00e676;
+}
+
+.signature {
+  margin-top: 32px;
+  text-align: center;
+
+  small {
+    font-size: 0.85rem;
     color: #888;
     font-style: italic;
   }
-  
-  /* Animation */
-  @keyframes fadeInUp {
-    0% {
-      transform: translateY(30px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
+}
+
+/* Animation */
+@keyframes fadeInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
   }
-  
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .manifeste-container {
+    padding: 24px 16px;
+    margin: 40px 12px;
+  }
+
+  .manifeste-title {
+    font-size: 1.5rem;
+  }
+
+  .manifeste-container p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .slogan {
+    font-size: 1.1rem;
+  }
+
+  .conclusion p {
+    font-size: 1rem;
+  }
+}
