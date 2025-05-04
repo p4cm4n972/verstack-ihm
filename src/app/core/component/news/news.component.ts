@@ -16,6 +16,8 @@ import {
 } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { TapeTextConsoleComponent } from '../../../composant/tape-text-console/tape-text-console.component';
+import { Router } from '@angular/router';
 
 interface Article {
   title: string;
@@ -37,12 +39,15 @@ interface Article {
     CommonModule,
     MatBadgeModule,
     MatIconModule,
+    TapeTextConsoleComponent
   ],
   templateUrl: './news.component.html',
   styleUrl: './news.component.scss',
 })
 export class NewsComponent implements OnInit {
   readonly dialog = inject(MatDialog);
+    private readonly router = inject(Router);
+  
   defaultPicture: string = 'assets/images/bkg-home-old.jpg';
 
   actualiteType: string[] = ['tous', 'editorial', 'article', 'note', 'story'];
@@ -99,6 +104,11 @@ export class NewsComponent implements OnInit {
       // console.log(`Dialog result: ${result}`);
     });
   }
+
+  openArticlePage(article: any) {
+    this.router.navigate(['/news', article._id]);
+  }
+  
 
   filterByTag(elm: any) {}
 }

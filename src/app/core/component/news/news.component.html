@@ -2,51 +2,70 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3195351081459490"
         crossorigin="anonymous"></script>
 </head>
-<section>
-    <mat-toolbar color="secondary" class="mb-4">
-        <span>Derniers Articles ... </span>
-    </mat-toolbar>
+<div class="news-layout">
+    <aside class="ads-left">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3195351081459490"
+            data-ad-slot="1234567890" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    </aside>
+    <section>
+        <mat-toolbar color="secondary" class="mb-4" style="margin-bottom: 10px;">
+            <span><app-tape-text-console></app-tape-text-console></span>
+        </mat-toolbar>
 
-    <div class="articles-container">
-        <div class="filters">
-           <!-- <mat-form-field appearance="outline">
+        <div class="articles-container">
+            <div class="filters">
+                <!-- <mat-form-field appearance="outline">
                 <mat-label>Rechercher un article</mat-label>
                 <input matInput placeholder="Tapez un mot-clé">
             </mat-form-field>-->
 
-            @if(actualiteType.length > 0) {
-            <mat-chip-listbox>
-                @for(type of actualiteType; track type; let i = $index) {
-                <mat-chip-option (selectionChange)="filterByType(i)"> {{ type }}</mat-chip-option>
-                }
-            </mat-chip-listbox>}
+                @if(actualiteType.length > 0) {
+                <mat-chip-listbox>
+                    @for(type of actualiteType; track type; let i = $index) {
+                    <mat-chip-option (selectionChange)="filterByType(i)"> {{ type }}</mat-chip-option>
+                    }
+                </mat-chip-listbox>}
 
-        </div>
+            </div>
 
-        <div class="article-grid">
-            @for(article of filteredArticles; track article) { <ng-container>
-                <mat-card class="article-card" appearance="outlined">
-                    <mat-card-header>
-                        <div mat-card-avatar class="header-image"
-                            style="background-image: url({{article.img}}); background-size: cover; background-position: center;background-repeat: no-repeat;">
-                        </div>
-                        <mat-card-title>{{ article.title }}</mat-card-title>
-                        <mat-card-subtitle>[{{ article.category }}] - P4cm4n972</mat-card-subtitle>
-                    </mat-card-header>
-                    <img mat-card-image [src]="article.img || defaultPicture" [alt]="article.title">
-                    <mat-card-content>
-                        <div class="meta-row">
+            <div class="article-grid">
+                @for(article of filteredArticles; track article) { <ng-container>
+                    <mat-card class="article-card" appearance="outlined">
+                        <!-- Bouton "open in new" flottant -->
+                        <button mat-icon-button class="open-btn" aria-label="Voir l’article complet"
+                                (click)="openArticlePage(article)">
+                          <mat-icon>open_in_new</mat-icon>
+                        </button>
+                      
+                        <mat-card-header>
+                          <div mat-card-avatar class="header-image"
+                               style="background-image: url({{article.img}}); background-size: cover; background-position: center;">
+                          </div>
+                          <mat-card-title>{{ article.title }}</mat-card-title>
+                          <mat-card-subtitle>[{{ article.category }}] - P4cm4n972</mat-card-subtitle>
+                        </mat-card-header>
+                      
+                        <img mat-card-image [src]="article.img || defaultPicture" [alt]="article.title" />
+                        
+                        <mat-card-content>
+                          <div class="meta-row">
                             <p class="article-date">{{ article.date }}</p>
-                           <!-- <mat-icon [matBadge]="article.recommendations" aria-hidden="false"
+                                <!-- <mat-icon [matBadge]="article.recommendations" aria-hidden="false"
                                 aria-label="recommendations">thumb_up</mat-icon> -->
-                        </div>
-                    </mat-card-content>
-                    <mat-card-actions>
-                        <button mat-raised-button color="accent"
-                            (click)="openArticleContentDialog(article.content)">Lire la suite</button>
-                    </mat-card-actions>
-                </mat-card>
-            </ng-container>}
+                            </div>
+                        </mat-card-content>
+                      
+                        <mat-card-actions>
+                          <button mat-raised-button color="accent"
+                                  (click)="openArticleContentDialog(article.content)">Lire la suite</button>
+                        </mat-card-actions>
+                      </mat-card>
+                </ng-container>}
+            </div>
         </div>
-    </div>
-</section>
+    </section>
+    <aside class="ads-right">
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3195351081459490"
+            data-ad-slot="0987654321" data-ad-format="auto" data-full-width-responsive="true"></ins>
+    </aside>
+</div>

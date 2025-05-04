@@ -124,7 +124,6 @@ export class VersionComponent implements OnInit {
   }
 
   private loadUserProfile(): void {
-    console.log('userData', this.userData);
     if (this.userData?.id) {
       this.profileService.getUserProfile(this.userData.id).subscribe({
         next: (data) => {

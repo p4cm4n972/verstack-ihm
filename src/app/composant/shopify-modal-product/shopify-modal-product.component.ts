@@ -2,11 +2,12 @@ import { AfterViewInit, ApplicationRef, Component, inject, Injector, Input, OnIn
 import { ShopifyBuyButtonComponent } from '../shopify-buy-button/shopify-buy-button.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-shopify-modal-product',
-  imports: [ MatCardModule],
+  imports: [ MatCardModule, MatIconModule, RouterModule],
   templateUrl: './shopify-modal-product.component.html',
   styleUrl: './shopify-modal-product.component.scss',
 })
@@ -110,7 +111,7 @@ export class ShopifyModalProductComponent implements AfterViewInit, OnInit {
       },
       "width": "100%",
       "text": {
-        "button": "Add to cart"
+        "button": "Ajouter au panier",
       }
     },
     "productSet": {
@@ -163,14 +164,20 @@ export class ShopifyModalProductComponent implements AfterViewInit, OnInit {
         }
       },
       "text": {
-        "button": "Add to cart"
+        "button": "Ajouter au panier",
       }
     },
     "option": {},
     "cart": {
       "text": {
-        "total": "Subtotal",
-        "button": "Checkout"
+        "total": "Sous-total",
+        "notice": "Les frais de port et d'autres frais seront calculés à l'étape de paiement.",
+        "button": "Payer",
+        "empty": "Votre panier est vide.",
+        "title": "Panier",
+        "header": "Panier",
+        "close": "Fermer",
+        "remove": "Supprimer",
       }
     },
     "toggle": {}

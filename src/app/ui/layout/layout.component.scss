@@ -1,28 +1,52 @@
-
-.layout-wrapper {
+:host {
+    display: block;
     height: 100%;
+  }
+  
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .layout-wrapper {
+    min-height: 100vh;
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    background-image: url('../../../../public/assets/bkg/bkg-home-optimized-1920x1080.webp');
-    background-size: cover;
+    flex-direction: column;
+    //background: url('/assets/images/bg.jpg') no-repeat center center;
+    background: radial-gradient(#000 0%, #0f0f2f 100%);
+    background-size: cover;background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    /* Empêche la répétition de l'image */
-}
-
-.flex-wrapper {
-    height: 100%;
-    width: 100%;
-}
-
+    min-height: 100vh;
+  }
   
+  
+  .flex-wrapper {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+  }
+  
+ /* .layout-wrapper {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-size: cover;
+    background-position: center;
+  }*/
 
-
-@media (max-width: 1200px) {
-
-    .flex-wrapper {
-        width: 100%;
-    }
-}
+  :host {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  main {
+    flex: 1 0 auto;
+  }
+  
+  footer, app-footer {
+    flex-shrink: 0;
+  }
+  

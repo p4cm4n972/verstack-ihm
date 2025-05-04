@@ -17,6 +17,7 @@ import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { MatListModule } from '@angular/material/list';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {MatDividerModule} from '@angular/material/divider';
 
 @Component({
   selector: 'app-profile',
@@ -29,6 +30,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatListModule,
     MatChipsModule,
     ReactiveFormsModule,
+    MatDividerModule
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',

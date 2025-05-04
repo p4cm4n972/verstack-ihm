@@ -1,4 +1,12 @@
-<section class="shop-container">
+<div class="shop-layout">
+  <aside class="ads-left">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-3195351081459490"
+         data-ad-slot="1111111111"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </aside>
   <!--  <div class="category-filter">
       <mat-form-field appearance="fill">
         <mat-label>Catégorie</mat-label>
@@ -10,18 +18,30 @@
     </div>-->
   
     <section class="products-grid">
-      <div *ngFor="let product of filteredProducts; trackBy: trackById" >
-          <a active (click)="gotoItems(product)" color="primary" style="padding: 10px;">voir le produit 
-            </a>
-            <mat-divider style="margin: 20px;"></mat-divider>
-
+      <div class="product-wrapper" *ngFor="let product of filteredProducts; trackBy: trackById">
+        
+        <button mat-icon-button class="open-btn" aria-label="Ouvrir dans un nouvel onglet"
+          (click)="gotoItems(product)">
+          <mat-icon>open_in_new</mat-icon>
+        </button>
+    
         <app-shopify-buy-button
           [productId]="product.id"
-          [componentId]="'product-component-' + product.component" >
+          [componentId]="'product-component-' + product.component">
         </app-shopify-buy-button>
+    
       </div>
     </section>
-  </section>
+    
+  <aside class="ads-right">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-3195351081459490"
+         data-ad-slot="2222222222"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </aside>
+</div>
 <!--<section class="shop-container">
     <mat-tab-group animationDuration="2000ms">
         <mat-tab label="Hommes">

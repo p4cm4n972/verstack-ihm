@@ -1,4 +1,32 @@
-<div class="product-detail-container">
-    <div class="shopify-placeholder " [id]="component"></div>
+<div class="product-detail-layout">
+  <!-- Pub gauche -->
+  <aside class="ads-left">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-3195351081459490"
+         data-ad-slot="1111111111"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </aside>
+
+  <!-- Zone centrale -->
+  <div class="product-detail-container">
+    <div class="product-detail-header">
+      <button mat-stroked-button color="accent" routerLink="/shop">
+        <mat-icon>arrow_back</mat-icon> Retour à la boutique
+      </button>
+    </div>
+
+    <div class="shopify-placeholder" [id]="component"></div>
   </div>
-  
+
+  <!-- Pub droite -->
+  <aside class="ads-right">
+    <ins class="adsbygoogle"
+         style="display:block"
+         data-ad-client="ca-pub-3195351081459490"
+         data-ad-slot="2222222222"
+         data-ad-format="auto"
+         data-full-width-responsive="true"></ins>
+  </aside>
+</div>

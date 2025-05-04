@@ -1,55 +1,46 @@
-<!-- Code: Page de profile de l'utilisateur -->
-<title>votre page de profile</title>
 <div class="profile-container">
-    @if(userData ){
-    <mat-card appearance="outlined">
-        <mat-card-header>
-            <mat-card-title-group>
-                <mat-icon>account_circle</mat-icon>
-                <mat-card-subtitle>{{ userData.pseudo }}</mat-card-subtitle>
-                <img mat-card-sm-image [src]="userData.profilePicture || defaultProfilePicture" alt="Avatar" />
-            </mat-card-title-group>
-        </mat-card-header>
-
-        <mat-card-content>
-            <mat-list>
-                @if(userData.favoris.length != 0 ){<mat-list-item>Stack:
-                    <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="liste stack favoris">
-                        @for(favoris of userData.favoris; track favoris.name){<mat-chip-option selectable="false" chipListSelectable="false">
-                            <img matChipAvatar [src]="favoris.logoUrl" [alt]="favoris.name" />
-                            {{favoris.name}}
-                        </mat-chip-option>}
-                    </mat-chip-listbox>
-                </mat-list-item>
-                <mat-divider></mat-divider>}
-                <mat-list-item>Projets:&nbsp; {{userData.projets || " vous n'avez aucun projet connecté ! --- (non implémenté)" }}</mat-list-item>
-                <mat-divider></mat-divider>
-                <mat-list-item>Amis:&nbsp; {{userData.friends || "votre liste d'amis est vide ! --- (non implémenté)" }} </mat-list-item>
-                <mat-divider></mat-divider>
-
-            </mat-list>
-
-            <!--   @if(isEditMode) {<div class="upload-section">
-                    <label for="fileInput">
-                        <mat-icon>cloud_upload</mat-icon>
-                        <span>Changer votre photo de profil</span>
-                    </label>
-                    <input id="fileInput" type="file" (change)="onFileSelected($event)" hidden />
-                </div>}-->
-
-            <div class="actions">
-                <button mat-icon-button color="primary" aria-label="Modifier le profil"
-                    (click)="openEditProfileDialog()">
-                    <mat-icon>edit</mat-icon>
-                </button>
-                <!-- @if(!isEditMode){<button mat-raised-button color="primary" (click)="enableEditMode()">Modifier le
-                        profil</button>}
-                    @if(isEditMode){<button mat-raised-button color="accent"
-                        (click)="saveProfile()">Enregistrer</button>}
-                    @if(isEditMode){<button mat-button color="warn" (click)="cancelEdit()">Annuler</button>}-->
-
-            </div>
-
-        </mat-card-content>
+    @if(userData) {
+    <mat-card appearance="outlined" class="profile-card">
+      <mat-card-header class="profile-header">
+        <div class="profile-title">
+          <mat-icon class="profile-icon">account_circle</mat-icon>
+          <div>
+            <h2 class="pseudo">{{ userData.pseudo }}</h2>
+            <span class="role">Super user</span>
+          </div>
+        </div>
+        <img class="profile-avatar" [src]="userData.profilePicture || defaultProfilePicture" alt="Avatar" />
+      </mat-card-header>
+  
+      <mat-card-content>
+        <mat-list>
+          @if(userData.favoris.length !== 0) {
+            <strong>Stack :</strong>
+            <mat-chip-set class="stack-chips" aria-label="liste stack favoris" style="margin: 10px;">
+              @for(favoris of userData.favoris; track favoris.name){
+              <mat-chip>
+                <img matChipAvatar [src]="favoris.logoUrl" [alt]="favoris.name" />
+                {{ favoris.name }}
+              </mat-chip>}
+            </mat-chip-set>
+          <mat-divider></mat-divider>
+          }
+          <mat-list-item>
+            <strong>Projets :</strong> {{ userData.projets || "Vous n'avez aucun projet connecté ! --- (non implémenté)" }}
+          </mat-list-item>
+          <mat-divider></mat-divider>
+          <mat-list-item>
+            <strong>Amis :</strong> {{ userData.friends || "Votre liste d'amis est vide ! --- (non implémenté)" }}
+          </mat-list-item>
+          <mat-divider></mat-divider>
+        </mat-list>
+  
+        <div class="actions">
+          <button mat-icon-button color="primary" (click)="openEditProfileDialog()" aria-label="Modifier le profil">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+      </mat-card-content>
     </mat-card>}
-</div>
+  </div>
+  

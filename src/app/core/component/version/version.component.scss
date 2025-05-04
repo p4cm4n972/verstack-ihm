@@ -1,21 +1,66 @@
 @use '@angular/material' as mat;
 
-*section {
+.version-layout {
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr; // pub | contenu | pub
+  gap: 16px;
+  padding: 16px;
+  align-items: start;
+}
+
+/* pub gauche / droite */
+.ads-left, .ads-right {
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+  min-width: 120px;
+}
+
+/* container principal */
+.language-container {
+  display: flex;
+  flex-direction: column;
   width: 100%;
 }
-.language-container {
-    display: flex;
-    flex-direction: column;
-    padding: 16px;
-    width: 1200px;
+
+/* grille principale */
+.languages-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  padding-top: 32px;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+  .version-layout {
+    grid-template-columns: 1fr 4fr;
   }
-  
+
+  .ads-right {
+    display: none;
+  }
+
   .languages-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 16px;
-    padding-top: 32px;
+    grid-template-columns: repeat(2, 1fr);
   }
+}
+
+@media (max-width: 768px) {
+  .version-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .ads-left, .ads-right {
+    display: none;
+  }
+
+  .languages-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
   
   .language-card {
     height: 100%;
@@ -111,5 +156,4 @@
     color: #00ff00;
   }
   
-
   

@@ -14,11 +14,15 @@ interface Article {
 })
 export class ArticlesService {
 
-  private apiUrl = 'api/news/all';
+  private apiUrl = 'api/news';
   
   constructor(private http: HttpClient) { }
 
   getArticles(): Observable<Article[]> {
-    return this.http.get<Article[]>(this.apiUrl);
+    return this.http.get<Article[]>(`${this.apiUrl}/all`);
+  }
+
+  getArticleById(id: string): Observable<Article> {
+    return this.http.get<Article>(`${this.apiUrl}/${id}`);
   }
 }

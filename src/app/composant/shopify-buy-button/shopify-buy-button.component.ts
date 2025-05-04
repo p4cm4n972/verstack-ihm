@@ -153,6 +153,8 @@ export class ShopifyBuyButtonComponent implements AfterViewInit {
       "notice": "Les frais de port et les taxes sont calculés lors de la validation de la commande.", 
       "header": "Panier",
       "title": "Panier",
+        "close": "Fermer",
+        "remove": "Supprimer",
     }
   },
   "toggle": {}

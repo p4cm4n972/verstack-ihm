@@ -2,7 +2,13 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3195351081459490"
     crossorigin="anonymous"></script>
 </head>
-
+<div class="version-layout">
+  <aside class="ads-left">
+     <!-- Pub gauche -->
+     <ins class="adsbygoogle" style="display:block"
+     data-ad-client="ca-pub-XXXX" data-ad-slot="YYYY"
+     data-ad-format="auto"></ins>
+  </aside>
 @if(isLoading){<div class="retro-loader">
   <div class="dots">
     <span>.</span><span>.</span><span>.</span><span>.</span><span>.</span>
@@ -10,7 +16,7 @@
   <p class="retro-text">Chargement des langages...</p>
 </div>}
 <section>
-  @if(!isLoading){<div class="language-container">
+  @if(!isLoading){<div>
     <mat-tab-group [(selectedIndex)]="selectedDomainIndex">
       @for(domain of domaines; track domain; let i = $index ){<mat-tab (click)="selectedDomain = domain">
         <ng-template mat-tab-label>{{ domain }}</ng-template>
@@ -79,7 +85,13 @@
     </div>
   </div>}
 </section>
-
+<aside class="ads-right">
+  <!-- Pub droite -->
+  <ins class="adsbygoogle" style="display:block"
+  data-ad-client="ca-pub-ZZZZ" data-ad-slot="AAAA"
+  data-ad-format="auto"></ins>
+</aside>
+</div>
 
 <!-- <section>
     <mat-tab-group mat-align-tabs="start" class="vertical-tab-group" (selectedTabChange)="filterLangages($event)">

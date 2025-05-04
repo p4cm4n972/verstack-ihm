@@ -10,7 +10,7 @@ import { SharedModule } from './shared/shared.module';
 
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, MatSidenavModule, RouterOutlet, LayoutComponent, HeaderComponent, SidenavComponent, FooterComponent, SharedModule],
+  imports: [CommonModule, MatSidenavModule, RouterOutlet, LayoutComponent, HeaderComponent, SidenavComponent, SharedModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

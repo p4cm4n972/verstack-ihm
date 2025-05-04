@@ -1,35 +1,79 @@
 :host {
-    width: 1600px;
-    display: block;
-    min-height: 100vh;
-    padding: 1rem;
-    background: radial-gradient(#000 0%, #0f0f2f 100%);
-    color: white;
-  }
-  
-  .product-detail-container {
-    width: 1400px;
-    max-width: none; // retire la limite de largeur
-    background: rgba(0, 0, 0, 0.75);
-    padding: 2rem;
-    border-radius: 16px;
-    box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
-  }
-  
-  .shopify-placeholder {
-    width: 1400px;
-    min-height: 700px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  background: radial-gradient(#000 0%, #0f0f2f 100%);
+  color: white;
+  min-height: 100vh;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
+/* Layout 3 colonnes : pub | contenu | pub */
+.product-detail-layout {
+  display: grid;
+  grid-template-columns: 1fr 8fr 1fr;
+  gap: 24px;
+  max-width: 1600px;
+  width: 100%;
+  align-items: flex-start;
+}
+
+.product-detail-container {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.75);
+  padding: 2rem;
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+}
+
+/* Conteneur du widget Shopify */
+.shopify-placeholder {
+  width: 100%;
+  min-height: 700px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Bouton de retour */
+.product-detail-header {
+  margin-bottom: 1rem;
+
+  button {
     display: flex;
     align-items: center;
-    justify-content: center;
+    gap: 8px;
+    font-weight: bold;
+  }
+}
+
+/* Pubs */
+.ads-left, .ads-right {
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+  min-width: 140px;
+}
+
+@media (max-width: 1200px) {
+  .product-detail-layout {
+    grid-template-columns: 1fr 10fr;
+  }
+  .ads-right {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .product-detail-layout {
+    grid-template-columns: 1fr;
+  }
+  .ads-left, .ads-right {
+    display: none;
   }
 
-
-  .variant-img {
-    transition: transform 0.3s ease;
-    cursor: zoom-in;
-    &:hover {
-      transform: scale(1.05);
-      z-index: 10;
-    }
+  .product-detail-container {
+    padding: 1rem;
+  }
 }
