@@ -18,6 +18,7 @@ import { MobileNotAllowedComponent } from './core/mobile-not-allowed/mobile-not-
 import { ManisfesteComponent } from './core/manisfeste/manisfeste.component';
 import { ShopifyModalProductComponent } from './composant/shopify-modal-product/shopify-modal-product.component';
 import { NewsDetailComponent } from './composant/news-detail/news-detail.component';
+import { PolitiqueComponent } from './composant/politique/politique.component';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [mobileNotAllowedGuard] },
@@ -33,6 +34,7 @@ export const routes: Routes = [
   { path: 'news/:id', component: NewsDetailComponent, canActivate: [mobileNotAllowedGuard] },
   { path: 'signup', component: SignupComponent, canActivate: [mobileNotAllowedGuard] },
   { path: 'mentions', component: MentionsComponent },
+  { path: 'privacy-policy', component: PolitiqueComponent },
   { path: 'release', component: ReleaseComponent, canActivate: [mobileNotAllowedGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [mobileNotAllowedGuard] },
   { path: 'confirm-email', component: VerifyEmailComponent, canActivate: [mobileNotAllowedGuard] },

@@ -1,21 +1,55 @@
-h1, h2, h3 {
-    font-size: 18px; /* Taille de police pour les titres */
-  }
-  
-  h1 {
-    color: #ffcc00; /* Couleur jaune pour le titre principal */
-  }
+.about-container {
+  max-width: 1000px;
+  margin: 50px auto;
+  padding: 32px;
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 16px;
+  color: #e0e0e0;
+  font-family: 'Press Start 2P', monospace;
+  line-height: 1.8;
+  box-shadow: 0 0 20px rgba(0, 255, 0, 0.15);
+}
 
-  h2, h3 {
-    color: #00ff00; /* Couleur verte pour les sous-titres */
-  }
+h1, h2, h3 {
+  font-family: inherit;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  color: #ffcc00;
+  font-size: 1.8rem;
+  text-align: center;
+}
+
+h2 {
+  color: #00ff00;
+  font-size: 1.4rem;
+  margin-top: 2rem;
+}
+
+h3 {
+  color: #42a5f5;
+  font-size: 1.1rem;
+}
+
+.highlight {
+  color: #00ffcc;
+}
+
 p {
-  font-size: 20px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
   color: aliceblue;
 }
 
-section {
-    background-color: rgba($color: #000000, $alpha: 0.5);
-    max-width: 1200px;
+.feature, .engagement, .contact {
+  margin-bottom: 2rem;
+}
 
+.final {
+  text-align: center;
+  font-weight: bold;
+  color: #00ffcc;
+  margin-top: 40px;
 }

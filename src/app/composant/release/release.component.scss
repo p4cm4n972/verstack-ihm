@@ -1,0 +1,43 @@
+.release-notes-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 2rem;
+    font-family: 'Press Start 2P', monospace;
+    color: #e0e0e0;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 12px;
+    box-shadow: 0 0 12px #00ff88;
+  }
+  
+  .release-note {
+    margin-bottom: 3rem;
+    
+    h2 {
+      color: #00ff88;
+      margin-bottom: 0.5rem;
+    }
+  
+    p {
+      line-height: 1.6;
+      margin: 0.5rem 0;
+    }
+  
+    ul {
+      list-style: none;
+      padding-left: 1rem;
+  
+      li::before {
+        content: "⚙️ ";
+        margin-right: 0.5rem;
+        color: #ffcc00;
+      }
+    }
+  }
+  
+  .release-footer {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.8rem;
+    color: #888;
+  }
+  

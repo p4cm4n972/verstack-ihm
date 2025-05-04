@@ -1,0 +1,31 @@
+.privacy-dialog {
+    font-family: 'Press Start 2P', monospace;
+    color: aliceblue;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 12px;
+    padding: 24px;
+    max-height: 70vh;
+    overflow-y: auto;
+  
+    h3 {
+      color: #00ff88;
+      margin-top: 20px;
+      font-size: 1.1rem;
+    }
+  
+    p, ul {
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+  
+    ul {
+      list-style-type: none;
+      padding-left: 0;
+      
+      li::before {
+        content: '➤ ';
+        color: #ffcc00;
+      }
+    }
+  }
+  
