@@ -2,6 +2,7 @@ import { AfterViewInit, ApplicationRef, Component, inject, Injector, Input, OnIn
 import { ShopifyBuyButtonComponent } from '../shopify-buy-button/shopify-buy-button.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-shopify-modal-product',
@@ -9,13 +10,39 @@ import { MatCardModule } from '@angular/material/card';
   templateUrl: './shopify-modal-product.component.html',
   styleUrl: './shopify-modal-product.component.scss',
 })
-export class ShopifyModalProductComponent {
+export class ShopifyModalProductComponent implements AfterViewInit, OnInit {
+
+  private readonly route = inject(ActivatedRoute);
+
+  data: any = {
+    id: '',
+    component: ''
+  };
+  productId!: string | null;
+  componentId!: string | null;
+  component!: string;
+  constructor() {
+  }
+
+
+  ngOnInit(): void {
+    this.productId = this.route.snapshot.paramMap.get('id');
+    this.componentId = this.route.snapshot.queryParams['component'];
+    this.component = `product-component-${this.componentId}`;
+    console.log(this.component)
+    console.log('on init');
+    if (this.productId && this.componentId) {
+      this.data = {
+        id: this.productId,
+        component: this.componentId
+      };
+    }
+  }
  
-    data = inject(MAT_DIALOG_DATA);
-    componentId = `product-component-${this.data.component}`;
 
 
     ngAfterViewInit(): void {
+      console.log('ngAfterViewInit');
       this.initBuyButton();
 }
   
@@ -49,7 +76,7 @@ export class ShopifyModalProductComponent {
       ShopifyBuy.UI.onReady(client).then( (ui: any) => {
         ui.createComponent('product', {
           id: `${this.data.id}`,
-          node: document.getElementById(`product-component-${this.data.component}`),
+          node: document.getElementById(`${this.component}`),
           moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
           options: {
     "product": {
@@ -79,11 +106,11 @@ export class ShopifyModalProductComponent {
       "contents": {
         "img": false,
         "imgWithCarousel": true,
-        "description":  false
+        "description": true
       },
       "width": "100%",
       "text": {
-        "button": "Ajouter au panier",
+        "button": "Add to cart"
       }
     },
     "productSet": {
@@ -100,8 +127,7 @@ export class ShopifyModalProductComponent {
         "img": false,
         "imgWithCarousel": true,
         "button": false,
-        "buttonWithQuantity": true,
-
+        "buttonWithQuantity": true
       },
       "styles": {
         "product": {
@@ -137,19 +163,14 @@ export class ShopifyModalProductComponent {
         }
       },
       "text": {
-        "button": "Ajouter au panier",
+        "button": "Add to cart"
       }
     },
     "option": {},
     "cart": {
       "text": {
-        "total": "Sous-total",
-        "button": "Passer à la caisse",
-        "empty": "Votre panier est vide",
-        "notice": "Les frais de port et les taxes sont calculés lors de la validation de la commande.", 
-        "header": "Panier",
-        "title": "Panier",
-       
+        "total": "Subtotal",
+        "button": "Checkout"
       }
     },
     "toggle": {}
@@ -157,6 +178,4 @@ export class ShopifyModalProductComponent {
         });
       });
     }
-
-
-}
+  }

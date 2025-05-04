@@ -8,6 +8,7 @@ import { MatDialog,  MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 import { ShopifyModalProductComponent } from '../../../composant/shopify-modal-product/shopify-modal-product.component';
 import { MatDividerModule } from '@angular/material/divider';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   imports: [MatFormFieldModule,CommonModule, MatIconModule, MatSelectModule, ShopifyBuyButtonComponent, MatDialogModule, MatDividerModule], 
@@ -22,7 +23,10 @@ export class ShopComponent implements AfterViewInit, OnInit {
   selectedCategory: string = '';
   categories: string[] = ['Hommes', 'Femmes', 'Accessoires', 'Maison & Déco', 'Jouets'];
 
-   dialog = inject(MatDialog);
+  // dialog = inject(MatDialog);
+
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
   constructor() {}
 
@@ -53,11 +57,14 @@ export class ShopComponent implements AfterViewInit, OnInit {
     return product.id;
   }
 
-  openProductModal(product: any): void {
+  /*openProductModal(product: any): void {
     this.dialog.open(ShopifyModalProductComponent, {
       data: { id: product.id, component: product.component },
       width: '80%',
       height: '80%',
     });
+  }*/
+ gotoItems(product: any): void {
+    this.router.navigate(['/shop', product.id], { queryParams: { component: product.component } });
   }
 }

@@ -1,0 +1,35 @@
+:host {
+    width: 1600px;
+    display: block;
+    min-height: 100vh;
+    padding: 1rem;
+    background: radial-gradient(#000 0%, #0f0f2f 100%);
+    color: white;
+  }
+  
+  .product-detail-container {
+    width: 1400px;
+    max-width: none; // retire la limite de largeur
+    background: rgba(0, 0, 0, 0.75);
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 0 20px rgba(255, 0, 0, 0.3);
+  }
+  
+  .shopify-placeholder {
+    width: 1400px;
+    min-height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+
+  .variant-img {
+    transition: transform 0.3s ease;
+    cursor: zoom-in;
+    &:hover {
+      transform: scale(1.05);
+      z-index: 10;
+    }
+}

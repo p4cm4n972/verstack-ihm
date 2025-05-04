@@ -11,9 +11,9 @@
   
     <section class="products-grid">
       <div *ngFor="let product of filteredProducts; trackBy: trackById" >
-          <!--<a active (click)="openProductModal(product)" color="primary" style="padding: 10px;">voir le produit 
+          <a active (click)="gotoItems(product)" color="primary" style="padding: 10px;">voir le produit 
             </a>
-            <mat-divider style="margin: 20px;"></mat-divider>-->
+            <mat-divider style="margin: 20px;"></mat-divider>
 
         <app-shopify-buy-button
           [productId]="product.id"
