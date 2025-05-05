@@ -1,12 +1,12 @@
-/* Conteneur général */
-.shop-grid-layout {
+/* Layout principal avec grid */
+.shop-layout {
   display: grid;
-  place-items: center;
+  grid-template-columns: 1fr minmax(0, 1200px) 1fr;
+  gap: 24px;
   padding: 2rem;
-  min-height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
   box-sizing: border-box;
-  border-radius: 12px;
+  align-items: start;
+  width: 100%;
 }
 
 /* Grille de produits */
@@ -15,10 +15,14 @@
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 2rem;
   width: 100%;
-  max-width: 1200px;
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-sizing: border-box;
 }
 
-/* Carte produit */
+/* Chaque carte produit */
 .product-wrapper {
   position: relative;
   display: flex;
@@ -40,4 +44,41 @@
 
 .open-btn:hover {
   background-color: rgba(0, 0, 0, 0.85);
+}
+
+/* Asides pubs */
+.ads-left, .ads-right {
+  position: sticky;
+  top: 80px;
+  height: fit-content;
+  min-width: 140px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Responsive : masquage des ads sur petits écrans */
+@media (max-width: 1200px) {
+  .shop-layout {
+    grid-template-columns: 1fr minmax(0, 100%) 0;
+  }
+
+  .ads-right {
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .shop-layout {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .ads-left, .ads-right {
+    display: none;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
 }
