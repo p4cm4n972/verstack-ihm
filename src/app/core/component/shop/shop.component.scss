@@ -33,12 +33,12 @@ section.products-grid {
   min-width: 260px;
 }
 
-/* Responsif */
-@media (max-width: 1200px) {
+@media (max-width: 1400px) {
   .shop-layout {
-    grid-template-columns: 1fr 5fr;
+    grid-template-columns: 1fr 6fr; // conserve les asides mais avec + de place pour le centre
   }
 }
+
 
 @media (max-width: 768px) {
   .shop-layout {
