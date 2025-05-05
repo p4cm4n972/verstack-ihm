@@ -1,48 +1,42 @@
 .shop-layout {
   display: grid;
-  grid-template-columns: minmax(140px, 1fr) minmax(0, 1200px) minmax(140px, 1fr);
+  grid-template-columns: minmax(100px, 1fr) minmax(0, 1200px) minmax(100px, 1fr);
   gap: 24px;
   padding: 2rem;
-  justify-content: center; /* aligne au centre horizontalement */
-  align-items: start;
-  box-sizing: border-box;
+  justify-content: center;
   width: 100%;
+  box-sizing: border-box;
 }
 
-section {
+/* Partie centrale */
+section.products-grid {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
-  width: 100%;
   padding: 1.5rem;
-  min-height: 100vh;
   box-sizing: border-box;
-  overflow-x: hidden;
+  min-height: 100vh;
 }
 
+/* Grille produits */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 2rem;
+  width: 100%;
 }
 
-/* Ads */
-.ads-left, .ads-right {
-  position: sticky;
-  top: 80px;
-  height: fit-content;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: start;
+/* Empêche les produits d'être écrasés en une colonne */
+.product-wrapper {
+  min-width: 260px;
 }
 
-/* Responsive */
+/* Responsif */
 @media (max-width: 1200px) {
   .shop-layout {
     grid-template-columns: 1fr 5fr;
-  }
-  .ads-right {
-    display: none;
   }
 }
 
@@ -59,4 +53,22 @@ section {
   .products-grid {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
+}
+
+
+/* Bouton flottant */
+.open-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  border-radius: 50%;
+  color: white;
+  transition: background-color 0.3s;
+}
+
+.open-btn:hover {
+  background-color: rgba(0, 0, 0, 0.85);
 }
