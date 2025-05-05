@@ -1,38 +1,16 @@
 .shop-layout {
   display: grid;
-  grid-template-columns: 1fr 5fr 1fr; // par défaut : mobile (1 colonne)
+  grid-template-columns: 1fr 6fr 1fr;
+  grid-template-areas: "ads-left section ads-right";
+  grid-template-rows: auto;
   gap: 24px;
   padding: 2rem;
   align-items: start;
 }
 
-/* TABLETTES - layout avec une colonne centrale + pub gauche */
-@media (max-width: 768px) {
-  .shop-layout {
-    grid-template-columns: 1fr 3fr 1fr;
-  }
 
-  .ads-left {
-    visibility: visible;
-    height: auto;
-    overflow: visible;
-  }
-}
 
-/* DESKTOP - layout complet avec deux asides */
-@media (min-width: 1200px) {
-  .shop-layout {
-    grid-template-columns: 1fr 5fr 1fr;
-  }
 
-  .ads-right {
-    visibility: visible;
-    height: auto;
-    overflow: visible;
-  }
-}
-
-/* Asides cachés par défaut */
 .ads-left,
 .ads-right {
   visibility: visible;
