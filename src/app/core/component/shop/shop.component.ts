@@ -21,7 +21,7 @@ export class ShopComponent implements AfterViewInit, OnInit {
   products: any[] = [];
   filteredProducts: any[] = [];
   selectedCategory: string = '';
-  categories: string[] = ['Hommes', 'Femmes', 'Accessoires', 'Maison & Déco', 'Jouets'];
+  categories: string[] = ['Hommes', 'Femmes', 'Accessoires', 'Maison', 'Jouets'];
 
   // dialog = inject(MatDialog);
 
@@ -37,6 +37,9 @@ export class ShopComponent implements AfterViewInit, OnInit {
       {component: '1746294248466', id: '9879805395291', category: 'femmes'},
       {component: '1746294331847', id: '9879808672091', category: 'hommes'},
       {component: '1746404732790', id: '9881257574747', category: 'hommes'},
+      {component: '1746428728561', id: '9881395429723', category: 'Maison'},
+      {component: '1746430266071', id: '9881414271323', category: 'Maison'},
+      {component: '1746430349878', id: '9881411813723', category: 'Maison'},
     ]
      this.applyFilter();
   }
