@@ -3,7 +3,7 @@
   grid-template-columns: 1fr 6fr 1fr;
   grid-template-areas: "ads-left section ads-right";
   grid-template-rows: auto;
-  gap: 24px;
+  grid-gap: 24px;
   padding: 2rem;
   align-items: start;
 }
