@@ -1,113 +1,72 @@
 .shop-layout {
   display: grid;
-  grid-template-columns: minmax(100px, 1fr) minmax(0, 1200px) minmax(100px, 1fr);
+  grid-template-columns: 1fr; // par défaut : mobile (1 colonne)
   gap: 24px;
   padding: 2rem;
-  justify-content: center;
-  width: 100%;
-  box-sizing: border-box;
+  align-items: start;
 }
 
-/* Partie centrale */
-section.products-grid {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
+/* TABLETTES - layout avec une colonne centrale + pub gauche */
+@media (min-width: 768px) {
+  .shop-layout {
+    grid-template-columns: 1fr 5fr;
+  }
+
+  .ads-left {
+    visibility: visible;
+    height: auto;
+    overflow: visible;
+  }
+}
+
+/* DESKTOP - layout complet avec deux asides */
+@media (min-width: 1200px) {
+  .shop-layout {
+    grid-template-columns: 1fr 5fr 1fr;
+  }
+
+  .ads-right {
+    visibility: visible;
+    height: auto;
+    overflow: visible;
+  }
+}
+
+/* Asides cachés par défaut */
+.ads-left,
+.ads-right {
+  visibility: hidden;
+  height: 0;
+  overflow: hidden;
+  position: sticky;
+  top: 80px;
+  min-width: 140px;
+}
+
+/* Zone centrale */
+section {
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
+  width: 100%;
   padding: 1.5rem;
-  box-sizing: border-box;
   min-height: 100vh;
 }
 
-/* Grille produits */
+/* Grille des produits */
 .products-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 2rem;
-  width: 100%;
 }
 
-/* Empêche les produits d'être écrasés en une colonne */
+/* Chaque carte produit */
 .product-wrapper {
-  min-width: 260px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
-@media (max-width: 1400px) {
-  .shop-layout {
-    grid-template-columns: 1fr 6fr; // conserve les asides mais avec + de place pour le centre
-  }
-
-  .ads-right {
-    visibility: hidden;
-    height: 0;
-    overflow: hidden;
-  }
-}
-@media (max-width: 1200px) {
-  .shop-layout {
-    grid-template-columns: 1fr 4fr; // conserve les asides mais avec + de place pour le centre
-  }
-
-  .ads-right {
-    visibility: hidden;
-    height: 0;
-    overflow: hidden;
-  }
-}
-@media (max-width: 992px) {
-  .shop-layout {
-    grid-template-columns: 1fr 3fr; // conserve les asides mais avec + de place pour le centre
-  }
-
-  .ads-right {
-    visibility: hidden;
-    height: 0;
-    overflow: hidden;
-  }
-}
-@media (max-width: 768px) {
-  .shop-layout {
-    grid-template-columns: 1fr 2fr; // conserve les asides mais avec + de place pour le centre
-  }
-
-  .ads-right {
-    visibility: hidden;
-    height: 0;
-    overflow: hidden;
-  }
-}
-@media (max-width: 576px) {
-  .shop-layout {
-    grid-template-columns: 1fr; // conserve les asides mais avec + de place pour le centre
-  }
-
-  .ads-right {
-    visibility: hidden;
-    height: 0;
-    overflow: hidden;
-  }
-}
-/* Ads */
-
-/*@media (max-width: 768px) {
-  .shop-layout {
-    grid-template-columns: 1fr;
-    padding: 1rem;
-  }
-
-  .ads-left,
-  .ads-right {
-    display: none;
-  }
-
-  .products-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  }
-}*/
-
-
-/* Bouton flottant */
+/* Bouton "ouvrir dans un onglet" */
 .open-btn {
   position: absolute;
   top: 8px;
