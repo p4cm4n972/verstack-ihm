@@ -65,3 +65,13 @@ body { margin: 0; font-family: Doto, "Helvetica Neue", sans-serif; }
     text-color: red,
   ));
 }
+
+aside {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+  .ads-left, .ads-right {
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
