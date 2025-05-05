@@ -36,6 +36,7 @@ export class ShopComponent implements AfterViewInit, OnInit {
       {component: '1746258121419', id: '9879512351067', category: 'femmes'},
       {component: '1746294248466', id: '9879805395291', category: 'femmes'},
       {component: '1746294331847', id: '9879808672091', category: 'hommes'},
+      {component: '1746404732790', id: '9881257574747', category: 'hommes'},
     ]
      this.applyFilter();
   }
