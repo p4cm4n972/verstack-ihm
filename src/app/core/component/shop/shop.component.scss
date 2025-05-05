@@ -1,51 +1,41 @@
 .shop-layout {
-  display: grid;
-  grid-template-columns: minmax(140px, 1fr) 6fr minmax(140px, 1fr);
-  grid-gap: 16px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
   padding: 2rem;
-  align-items: start;
+  gap: 2rem;
+  flex-wrap: nowrap;
 }
 
-/* Zone centrale */
-section {
-  background-color: rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
-  width: 100%;
-  padding: 1.5rem;
-  min-height: 100vh;
+/* Centre (contenu) */
+.shop-content {
+  flex: 1 1 1000px;
+  min-width: 0;
 }
 
-.ads-left,
-.ads-right {
-  position: sticky;
-  top: 80px;
-  min-width: 140px;
-  height: fit-content;
-}
-
-
-/* Grille des produits */
+/* Produits */
 .products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: 2rem;
 }
 
-/* Chaque carte produit */
 .product-wrapper {
+  flex: 0 1 260px;
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: 24px;
 }
 
-/* Bouton "ouvrir dans un onglet" */
+/* Bouton flottant */
 .open-btn {
   position: absolute;
   top: 8px;
   right: 8px;
   z-index: 10;
   background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
   border-radius: 50%;
   color: white;
   transition: background-color 0.3s;
@@ -53,4 +43,25 @@ section {
 
 .open-btn:hover {
   background-color: rgba(0, 0, 0, 0.85);
+}
+
+/* Asides */
+.ads-left, .ads-right {
+  flex: 0 0 140px;
+  position: sticky;
+  top: 80px;
+  height: fit-content;
+}
+
+/* Responsive : on cache les pubs sur petits écrans */
+@media (max-width: 1024px) {
+  .ads-left,
+  .ads-right {
+    display: none;
+  }
+
+  .shop-layout {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 }
