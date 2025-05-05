@@ -1,52 +1,46 @@
 .shop-layout {
   display: grid;
-  grid-template-columns: 1fr 6fr 1fr;
+  grid-template-columns: minmax(140px, 1fr) minmax(0, 1200px) minmax(140px, 1fr);
   gap: 24px;
   padding: 2rem;
+  justify-content: center; /* aligne au centre horizontalement */
   align-items: start;
+  box-sizing: border-box;
+  width: 100%;
 }
 
-/* Zone centrale */
 section {
   background-color: rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   width: 100%;
   padding: 1.5rem;
   min-height: 100vh;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
-/* Asides pub */
-.ads-left, .ads-right {
-  position: sticky;
-  top: 80px;
-  min-width: 140px;
-  height: fit-content;
-}
-
-/* Contenu boutique */
-.shop-container {
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
-}
-
-/* Grille produits */
 .products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 2rem;
 }
 
-/* Filtres */
-.category-filter {
-  max-width: 300px;
+/* Ads */
+.ads-left, .ads-right {
+  position: sticky;
+  top: 80px;
+  height: fit-content;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: start;
 }
 
+/* Responsive */
 @media (max-width: 1200px) {
   .shop-layout {
     grid-template-columns: 1fr 5fr;
   }
-
   .ads-right {
     display: none;
   }
@@ -55,44 +49,14 @@ section {
 @media (max-width: 768px) {
   .shop-layout {
     grid-template-columns: 1fr;
+    padding: 1rem;
   }
 
   .ads-left, .ads-right {
     display: none;
   }
 
-  .shop-container {
-    padding: 1rem;
-  }
-
   .products-grid {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
-
-  .category-filter {
-    width: 100%;
-  }
-}
-
-.product-wrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Bouton flottant */
-.open-btn {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  z-index: 10;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
-  border-radius: 50%;
-  color: white;
-  transition: background-color 0.3s;
-}
-
-.open-btn:hover {
-  background-color: rgba(0, 0, 0, 0.85);
 }
