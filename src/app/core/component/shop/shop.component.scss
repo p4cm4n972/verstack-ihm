@@ -1,41 +1,38 @@
-.shop-layout {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: flex-start;
+/* Conteneur général */
+.shop-grid-layout {
+  display: grid;
+  place-items: center;
   padding: 2rem;
-  gap: 2rem;
-  flex-wrap: nowrap;
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+  border-radius: 12px;
 }
 
-/* Centre (contenu) */
-.shop-content {
-  flex: 1 1 1000px;
-  min-width: 0;
-}
-
-/* Produits */
+/* Grille de produits */
 .products-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 2rem;
+  width: 100%;
+  max-width: 1200px;
 }
 
+/* Carte produit */
 .product-wrapper {
-  flex: 0 1 260px;
   position: relative;
   display: flex;
   flex-direction: column;
 }
 
-/* Bouton flottant */
+/* Bouton "ouvrir dans nouvel onglet" */
 .open-btn {
   position: absolute;
   top: 8px;
   right: 8px;
   z-index: 10;
   background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
   border-radius: 50%;
   color: white;
   transition: background-color 0.3s;
@@ -43,25 +40,4 @@
 
 .open-btn:hover {
   background-color: rgba(0, 0, 0, 0.85);
-}
-
-/* Asides */
-.ads-left, .ads-right {
-  flex: 0 0 140px;
-  position: sticky;
-  top: 80px;
-  height: fit-content;
-}
-
-/* Responsive : on cache les pubs sur petits écrans */
-@media (max-width: 1024px) {
-  .ads-left,
-  .ads-right {
-    display: none;
-  }
-
-  .shop-layout {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
 }

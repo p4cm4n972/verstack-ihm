@@ -2,32 +2,22 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3195351081459490"
       crossorigin="anonymous"></script>
 </head>
-<div class="shop-layout">
-  <aside class="ads-left">
-    <img src="assets/icons/logo-red-squiggly-01.png" alt="logo Red Squiggly" width="150" />
-    <!-- Google AdSense -->
-    
-  </aside>
+<section class="shop-grid-layout">
+  <div class="products-grid">
+    <div class="product-wrapper" *ngFor="let product of filteredProducts; trackBy: trackById">
+      <button mat-icon-button class="open-btn" (click)="gotoItems(product)">
+        <mat-icon>open_in_new</mat-icon>
+      </button>
 
-  <section class="shop-content">
-    <div class="products-grid">
-      <div class="product-wrapper" *ngFor="let product of filteredProducts; trackBy: trackById">
-        <button mat-icon-button class="open-btn" (click)="gotoItems(product)">
-          <mat-icon>open_in_new</mat-icon>
-        </button>
-
-        <app-shopify-buy-button
-          [productId]="product.id"
-          [componentId]="'product-component-' + product.component">
-        </app-shopify-buy-button>
-      </div>
+      <app-shopify-buy-button
+        [productId]="product.id"
+        [componentId]="'product-component-' + product.component">
+      </app-shopify-buy-button>
     </div>
-  </section>
+  </div>
+</section>
 
-  <aside class="ads-right">
-    
-  </aside>
-</div>
+
 
 
  <!--  <div class="category-filter">
