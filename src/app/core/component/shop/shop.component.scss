@@ -1,15 +1,15 @@
 .shop-layout {
   display: grid;
-  grid-template-columns: 1fr; // par défaut : mobile (1 colonne)
+  grid-template-columns: 1fr 5fr 1fr; // par défaut : mobile (1 colonne)
   gap: 24px;
   padding: 2rem;
   align-items: start;
 }
 
 /* TABLETTES - layout avec une colonne centrale + pub gauche */
-@media (min-width: 768px) {
+@media (max-width: 768px) {
   .shop-layout {
-    grid-template-columns: 1fr 5fr;
+    grid-template-columns: 1fr 3fr 1fr;
   }
 
   .ads-left {
@@ -35,9 +35,9 @@
 /* Asides cachés par défaut */
 .ads-left,
 .ads-right {
-  visibility: hidden;
+  visibility: visible;
   height: 0;
-  overflow: hidden;
+  overflow: auto;
   position: sticky;
   top: 80px;
   min-width: 140px;
