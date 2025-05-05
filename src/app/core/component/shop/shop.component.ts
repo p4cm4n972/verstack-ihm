@@ -3,15 +3,11 @@ import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ShopifyBuyButtonComponent } from '../../../composant/shopify-buy-button/shopify-buy-button.component';
-import { CommonModule } from '@angular/common';
-import { MatDialog,  MatDialogModule } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { ShopifyModalProductComponent } from '../../../composant/shopify-modal-product/shopify-modal-product.component';
-import { MatDividerModule } from '@angular/material/divider';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  imports: [MatFormFieldModule,CommonModule, MatIconModule, MatSelectModule, ShopifyBuyButtonComponent, MatDialogModule, MatDividerModule], 
+  imports: [MatFormFieldModule, MatIconModule, MatSelectModule, ShopifyBuyButtonComponent], 
   selector: 'app-shop',
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.scss'],

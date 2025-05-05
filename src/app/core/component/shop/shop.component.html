@@ -14,7 +14,7 @@
   </aside>
 
   <section class="products-grid">
-    <div class="product-wrapper" *ngFor="let product of filteredProducts; trackBy: trackById">
+  @for(product of filteredProducts; track trackById) {<div class="product-wrapper" >
       <button mat-icon-button class="open-btn" (click)="gotoItems(product)">
         <mat-icon>open_in_new</mat-icon>
       </button>
@@ -23,7 +23,7 @@
         [productId]="product.id"
         [componentId]="'product-component-' + product.component">
       </app-shopify-buy-button>
-    </div>
+    </div>}
   </section>
 
   <aside class="ads-right">
