@@ -47,18 +47,22 @@ export class ShopComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
-    const aside = document.querySelector('aside') as HTMLElement;
-    if (!aside) return;
+    const asides = document.querySelectorAll('aside');
+    if (!asides) return;
   
-    aside.style.setProperty('display', 'block', 'important');
-  
-    const observer = new MutationObserver(() => {
-      if (aside.style.display === 'none') {
-        aside.style.setProperty('display', 'block', 'important');
-      }
-    });
-  
-    observer.observe(aside, { attributes: true, attributeFilter: ['style'] });
+    asides.forEach((aside: any) => {
+      const el = aside as HTMLElement;
+     el.style.setProperty('display', 'block', 'important');
+
+     
+     const observer = new MutationObserver(() => {
+       if (el.style.display === 'none') {
+         el.style.setProperty('display', 'block', 'important');
+        }
+      });
+      
+      observer.observe(el, { attributes: true, attributeFilter: ['style'] });
+    })
   }
   
 
