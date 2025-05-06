@@ -4,10 +4,11 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-shopify-modal-product',
-  imports: [ MatCardModule, MatIconModule, RouterModule],
+  imports: [ MatCardModule, MatIconModule, RouterModule, MatButtonModule],
   templateUrl: './shopify-modal-product.component.html',
   styleUrl: './shopify-modal-product.component.scss',
 })

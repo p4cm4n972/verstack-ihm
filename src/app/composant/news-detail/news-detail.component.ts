@@ -3,10 +3,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ArticlesService } from '../../services/articles.service';
 import { CommonModule } from '@angular/common';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-news-detail',
-  imports: [MatIconModule, CommonModule, RouterModule],
+  imports: [MatIconModule, CommonModule, RouterModule, MatButtonModule],
   templateUrl: './news-detail.component.html',
   styleUrl: './news-detail.component.scss'
 })

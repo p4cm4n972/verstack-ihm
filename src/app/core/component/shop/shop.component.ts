@@ -8,9 +8,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
-  imports: [MatFormFieldModule,MatCardModule, MatToolbarModule, MatIconModule, MatSelectModule, ShopifyBuyButtonComponent], 
+  imports: [MatFormFieldModule,MatCardModule, MatButtonModule,  MatToolbarModule, MatIconModule, MatSelectModule, ShopifyBuyButtonComponent], 
   selector: 'app-shop',
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.scss'],

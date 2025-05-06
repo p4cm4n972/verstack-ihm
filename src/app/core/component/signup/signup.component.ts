@@ -3,10 +3,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTabsModule } from '@angular/material/tabs';
 import { SigninComponent } from '../../../account/signin/signin.component';
 import { LoginComponent } from '../../../account/login/login.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @Component({
   selector: 'app-signup',
-  imports: [MatCardModule, MatTabsModule, SigninComponent, LoginComponent],
+  imports: [MatCardModule, MatTabsModule, SigninComponent, LoginComponent, MatButtonModule],
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss',
 })
