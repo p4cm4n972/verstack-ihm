@@ -84,3 +84,9 @@
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   }
 }
+
+#main-aside {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
