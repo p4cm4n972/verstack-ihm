@@ -60,7 +60,7 @@
 /* Responsive : masquage des ads sur petits écrans */
 @media (max-width: 1200px) {
   .shop-layout {
-    grid-template-columns: 1fr minmax(0, 100%) 0;
+    grid-template-columns: 1fr minmax(0, 100%) 1fr;
   }
 
   .ads-right {
@@ -72,7 +72,7 @@
 
 @media (max-width: 768px) {
   .shop-layout {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr minmax(0, 100%) 1fr;
     padding: 1rem;
   }
 
