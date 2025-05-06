@@ -2,16 +2,17 @@
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3195351081459490"
       crossorigin="anonymous"></script>
 </head>
-<div class="shop-layout">
-  <div class="ads-left main-aside">
+@if(products){<div class="shop-layout">
+  <aside class="ads-left">
     <img src="assets/icons/logo-red-squiggly-01.png" alt="logo Red Squiggly" width="150" />
+    <p>code it - wear it !</p>
     <ins class="adsbygoogle"
          style="display:block"
          data-ad-client="ca-pub-3195351081459490"
-         data-ad-slot="1111111111"
+         data-ad-slot="1234567890"
          data-ad-format="auto"
          data-full-width-responsive="true"></ins>
-  </div>
+  </aside>
 
   <section class="products-grid">
   @for(product of filteredProducts; track trackById) {<div class="product-wrapper" >
@@ -26,15 +27,15 @@
     </div>}
   </section>
 
-  <div class="ads-right main-aside">
+  <aside class="ads-right main-aside">
     <ins class="adsbygoogle"
          style="display:block"
          data-ad-client="ca-pub-3195351081459490"
          data-ad-slot="2222222222"
          data-ad-format="auto"
          data-full-width-responsive="true"></ins>
-  </div>
-</div>
+  </aside>
+</div>}
 
 
 

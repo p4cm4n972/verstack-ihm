@@ -1,12 +1,21 @@
+:host {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  background: radial-gradient(#000 0%, #0f0f2f 100%);
+  color: white;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
 /* Layout principal avec grid */
 .shop-layout {
-/*display: grid;
-  grid-template-columns: 1fr minmax(0, 1200px) 1fr;
-  gap: 24px;*/
-  padding: 2rem;
-  box-sizing: border-box;
-  align-items: start;
+  display: grid;
+  grid-template-columns: 1fr 6fr 1fr;
+  gap: 24px;
   width: 100%;
+  max-width: 1600px;
+  align-items: start;
 }
 
 /* Grille de produits */
