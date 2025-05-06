@@ -5,6 +5,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { ShopifyBuyButtonComponent } from '../../../composant/shopify-buy-button/shopify-buy-button.component';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   imports: [MatFormFieldModule, MatIconModule, MatSelectModule, ShopifyBuyButtonComponent], 
@@ -24,9 +25,31 @@ export class ShopComponent implements AfterViewInit, OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
-  constructor() {}
+  constructor(private titleService: Title, private metaService: Meta) {}
 
   ngOnInit(): void {
+    this.titleService.setTitle('Red Squiggly – La geek Boutique');
+
+    this.metaService.addTags([
+      { name: 'description', content: 'Découvrez la boutique Red Squiggly – vêtements et accessoires pour développeurs. Codez avec style.' },
+      { name: 'keywords', content: 'boutique développeur, vêtements développeur, Red Squiggly, t-shirts code, mode geek, hoodie dev' },
+      { name: 'author', content: 'Red Squiggly' },
+      { name: 'robots', content: 'index, follow' },
+
+      // Open Graph
+     /* { property: 'og:title', content: 'Red Squiggly – Boutique développeur' },
+      { property: 'og:description', content: 'Mode pour développeurs et geeks. Découvrez nos vêtements stylés et techniques.' },
+      { property: 'og:image', content: 'https://verstack.io/assets/images/og-image-boutique.png' },
+      { property: 'og:url', content: 'https://verstack.io/boutique' },
+      { property: 'og:type', content: 'website' },*/
+
+      // Twitter Card
+      /*{ name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:title', content: 'Red Squiggly – Boutique développeur' },
+      { name: 'twitter:description', content: 'T-shirts, hoodies et accessoires pour développeurs. Code & style.' },
+      { name: 'twitter:image', content: 'https://verstack.io/assets/images/twitter-image-boutique.png' }*/
+    ]);
+
     this.products = [
       {component: '1746262304851', id: '9698056798555', category: 'hommes'},
       {component: '1746258121419', id: '9879512351067', category: 'femmes'},
