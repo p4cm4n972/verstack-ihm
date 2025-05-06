@@ -61,32 +61,18 @@ export class ShopifyBuyButtonComponent implements AfterViewInit {
     "styles": {
       "product": {
         "@media (min-width: 601px)": {
-          "max-width": "100%",
-          "margin-left": "0",
+          "max-width": "calc(25% - 20px)",
+          "margin-left": "20px",
           "margin-bottom": "50px"
         },
-        "text-align": "left"
       },
-      "title": {
-        "font-size": "26px"
-      },
-      "price": {
-        "font-size": "18px"
-      },
-      "compareAt": {
-        "font-size": "15.299999999999999px"
-      },
-      "unitPrice": {
-        "font-size": "15.299999999999999px"
-      }
+     
+    
+  
     },
-    "layout": "horizontal",
     "contents": {
-      "img": false,
-      "imgWithCarousel": true,
-      "description":  false
+      "options": false,
     },
-    "width": "100%",
     "text": {
       "button": "Ajouter au panier",
     }
