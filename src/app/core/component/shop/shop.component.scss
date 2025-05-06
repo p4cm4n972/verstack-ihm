@@ -1,58 +1,20 @@
-:host {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  min-height: 100vh;
-  background: radial-gradient(#000 0%, #0f0f2f 100%);
-  color: white;
-  padding: 2rem 1rem;
-  box-sizing: border-box;
-}
+
 /* Layout principal avec grid */
 .shop-layout {
   display: grid;
-  grid-template-columns: 1fr 6fr 1fr;
-  gap: 24px;
-  width: 100%;
-  //max-width: 1600px;
+  grid-template-columns: 1fr 5fr 1fr;
+  gap: 16px;
+  padding: 20px;
   align-items: start;
 }
 
-/* Grille de produits */
-.products-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 2rem;
-  width: 100%;
-  min-height: 100vh;
+section {
   background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   border-radius: 10px;
-  padding: 1.5rem;
-  box-sizing: border-box;
-}
-
-/* Chaque carte produit */
-.product-wrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-}
-
-/* Bouton "ouvrir dans nouvel onglet" */
-.open-btn {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  z-index: 10;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(4px);
-  border-radius: 50%;
-  color: white;
-  transition: background-color 0.3s;
-}
-
-.open-btn:hover {
-  background-color: rgba(0, 0, 0, 0.85);
+  width: 100%;
+  padding: 16px;
+  min-height: 100vh;
 }
 
 /* Asides pubs */
@@ -61,10 +23,41 @@
   top: 80px;
   height: fit-content;
   min-width: 140px;
+}
+
+
+/* Grille de produits */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* Chaque carte produit */
+.product-wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  }
+  
+  
+  /* Bouton "ouvrir dans nouvel onglet" */
+.open-btn {
+  position: absolute;
+  top: 11px;
+  right: 10px;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  color: white;
+  transition: background-color 0.3s;
 }
+
+.open-btn:hover {
+  background-color: rgba(0, 0, 0, 0.85);
+}
+
+
 
 /* Responsive : masquage des ads sur petits écrans */
 @media (max-width: 1200px) {
