@@ -12,7 +12,7 @@
             <span><app-tape-text-console></app-tape-text-console></span>
         </mat-toolbar>
 
-        <div class="articles-container">
+        <div class="articles-wrapper">
             <div class="filters">
                 <!-- <mat-form-field appearance="outline">
                 <mat-label>Rechercher un article</mat-label>
@@ -29,7 +29,8 @@
             </div>
 
             <div class="article-grid">
-                @for(article of filteredArticles; track article) { <ng-container>
+                @for(article of filteredArticles; track article) {
+                    <ng-container>
                     <mat-card class="article-card" appearance="outlined">
                         <!-- Bouton "open in new" flottant -->
                         <button mat-icon-button class="open-btn" aria-label="Voir l’article complet"

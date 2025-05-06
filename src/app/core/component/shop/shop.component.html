@@ -1,45 +1,44 @@
 <head>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3195351081459490"
-      crossorigin="anonymous"></script>
+    crossorigin="anonymous"></script>
 </head>
-@if(products){<div class="shop-layout">
+<div class="shop-layout">
   <aside class="ads-left">
     <img src="assets/icons/logo-red-squiggly-01.png" alt="logo Red Squiggly" width="150" />
     <p>code it - wear it !</p>
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-3195351081459490"
-         data-ad-slot="1234567890"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3195351081459490" data-ad-slot="1234567890"
+      data-ad-format="auto" data-full-width-responsive="true"></ins>
   </aside>
 
-  <section class="products-grid">
-  @for(product of filteredProducts; track trackById) {<div class="product-wrapper" >
+  <section>
+    <div  class="products-wrapper">
+
+      <div class="product-grid">
+    @for(product of filteredProducts; track product) {
+      <ng-container class="">
+        <mat-card class="product-card" appearance="outlined">
       <button mat-icon-button class="open-btn" (click)="gotoItems(product)">
         <mat-icon>open_in_new</mat-icon>
       </button>
 
-      <app-shopify-buy-button
-        [productId]="product.id"
-        [componentId]="'product-component-' + product.component">
+      <app-shopify-buy-button class="product-card" [productId]="product.id" [componentId]="'product-component-' + product.component">
       </app-shopify-buy-button>
-    </div>}
+        </mat-card>
+      </ng-container>
+    }
+    </div>
+    </div>
   </section>
 
   <aside class="ads-right main-aside">
-    <ins class="adsbygoogle"
-         style="display:block"
-         data-ad-client="ca-pub-3195351081459490"
-         data-ad-slot="2222222222"
-         data-ad-format="auto"
-         data-full-width-responsive="true"></ins>
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-3195351081459490" data-ad-slot="2222222222"
+      data-ad-format="auto" data-full-width-responsive="true"></ins>
   </aside>
-</div>}
+</div>
 
 
 
- <!--  <div class="category-filter">
+<!--  <div class="category-filter">
       <mat-form-field appearance="fill">
         <mat-label>Catégorie</mat-label>
         <mat-select [(value)]="selectedCategory" (selectionChange)="applyFilter()">
@@ -67,4 +66,3 @@
         </mat-tab>
     </mat-tab-group>
 </section>-->
-  

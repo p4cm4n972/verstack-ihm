@@ -18,11 +18,11 @@ section {
 .ads-left, .ads-right {
   position: sticky;
   top: 80px;
-  min-width: 140px;
   height: fit-content;
+  min-width: 140px;
 }
 
-.articles-container {
+.articles-wrapper {
   display: flex;
   flex-direction: column;
   gap: 24px;

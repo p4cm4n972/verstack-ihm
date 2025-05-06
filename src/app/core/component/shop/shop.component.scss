@@ -25,20 +25,29 @@ section {
   min-width: 140px;
 }
 
+/* Chaque carte produit */
+.products-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  }
 
 /* Grille de produits */
-.products-grid {
+.product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 20px;
 }
+ 
 
-/* Chaque carte produit */
-.product-wrapper {
+.product-card {
   position: relative;
   display: flex;
   flex-direction: column;
-  }
+  justify-content: space-between;
+  height: 100%;
+}
+
   
   
   /* Bouton "ouvrir dans nouvel onglet" */
@@ -62,33 +71,20 @@ section {
 /* Responsive : masquage des ads sur petits écrans */
 @media (max-width: 1200px) {
   .shop-layout {
-    grid-template-columns: 1fr minmax(0, 100%) 1fr;
+    grid-template-columns: 1fr 4fr;
   }
 
   .ads-right {
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s, opacity 0.5s linear;
+    display: none;
   }
 }
 
 @media (max-width: 768px) {
   .shop-layout {
-    grid-template-columns: 1fr minmax(0, 100%) 1fr;
-    padding: 1rem;
+    grid-template-columns: 1fr ;
   }
 
   .ads-left, .ads-right {
     display: none;
   }
-
-  .products-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  }
-}
-
-#main-aside {
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
 }

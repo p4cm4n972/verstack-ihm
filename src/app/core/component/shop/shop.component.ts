@@ -6,9 +6,10 @@ import { ShopifyBuyButtonComponent } from '../../../composant/shopify-buy-button
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
-  imports: [MatFormFieldModule, MatIconModule, MatSelectModule, ShopifyBuyButtonComponent], 
+  imports: [MatFormFieldModule,MatCardModule, MatIconModule, MatSelectModule, ShopifyBuyButtonComponent], 
   selector: 'app-shop',
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.scss'],
