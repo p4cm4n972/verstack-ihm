@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
     this.authService.updateAuthStatus(false);
 
     this.authService.logout();
-    this.router.navigate(['/signup']);
+    this.router.navigate(['/home']);
   }
 
   public onToggleSidenav = () => {

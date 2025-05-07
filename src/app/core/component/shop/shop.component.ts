@@ -22,6 +22,11 @@ export class ShopComponent implements AfterViewInit, OnInit {
   filteredProducts: any[] = [];
   selectedCategory: string = '';
   categories: string[] = ['hommes', 'femmes', 'accessoires', 'maison', 'jouets'];
+  themes = ['angular', 'react', 'Vue', 'Svelte', 'Node.js', 'Python'];
+activeTheme: string | null = null;
+
+
+
   activeCategory = 'Tous';
   // dialog = inject(MatDialog);
 
@@ -35,14 +40,14 @@ export class ShopComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
 
     this.products = [
-      {component: '1746262304851', id: '9698056798555', category: 'hommes'},
-      {component: '1746258121419', id: '9879512351067', category: 'hommes'},
-      {component: '1746294248466', id: '9879805395291', category: 'femmes'},
-      {component: '1746294331847', id: '9879808672091', category: 'hommes'},
-      {component: '1746404732790', id: '9881257574747', category: 'hommes'},
-      {component: '1746428728561', id: '9881395429723', category: 'maison'},
-      {component: '1746430266071', id: '9881414271323', category: 'maison'},
-      {component: '1746430349878', id: '9881411813723', category: 'maison'},
+      {component: '1746262304851', id: '9698056798555', category: 'hommes', theme: 'angular'},
+      {component: '1746258121419', id: '9879512351067', category: 'hommes', theme: 'react'},
+      {component: '1746294248466', id: '9879805395291', category: 'femmes', theme: 'angular'},
+      {component: '1746294331847', id: '9879808672091', category: 'hommes', theme: 'angular'},
+      {component: '1746404732790', id: '9881257574747', category: 'hommes', theme: 'angular'},
+      {component: '1746428728561', id: '9881395429723', category: 'maison', theme: 'angular'},
+      {component: '1746430266071', id: '9881414271323', category: 'maison', theme: 'angular'},
+      {component: '1746430349878', id: '9881411813723', category: 'maison', theme: 'angular'},
     ]
      this.applyFilter();
   }
@@ -91,12 +96,20 @@ export class ShopComponent implements AfterViewInit, OnInit {
   }
 
   get produitsFiltres() {
-    if (this.activeCategory === 'Tous') return this.products;
-    return this.products.filter(p => p.category === this.activeCategory);
+    if (this.activeCategory === 'Tous' && this.activeTheme == null) return this.products;
+    this.products.filter(p => p.category === this.activeCategory);
+    if(this.activeTheme) {
+      return this.products.filter(p => p.theme === this.activeTheme);
+    }
+    return this.products.filter(p => p.category === this.activeCategory && p.theme === this.activeTheme); 
   }
 
   setCategorie(cat: string) {
     console.log(cat);
     this.activeCategory = cat;
+  }
+
+  setTheme(theme: string | null) {
+    this.activeTheme = theme;
   }
 }
