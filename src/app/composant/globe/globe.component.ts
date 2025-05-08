@@ -35,7 +35,8 @@ export class GlobeComponent implements OnInit, AfterViewInit {
     this.loading$.pipe(
       filter(done => !done), take(1)
     ).subscribe(() => {
-      this.showBoot = true;
+      //this.showBoot = true;
+      this.globeVisible = true;
     });
     this.loadImagesLogos();
   }
@@ -63,7 +64,8 @@ export class GlobeComponent implements OnInit, AfterViewInit {
         const percent = Math.round(this.loadedImages / this.totalImages) * 100;
         this.loadingProgress$.next(percent);
         if (this.loadedImages === this.totalImages) {
-          setTimeout(() => this.onAllImagesLoaded(), 1000);;
+         // setTimeout(() => this.onAllImagesLoaded(), 1000);
+          this.onAllImagesLoaded();
         }
       };
     });
