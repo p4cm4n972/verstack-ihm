@@ -1,27 +1,27 @@
 <mat-nav-list>
     <a mat-list-item routerLink="/home" (click)="onSidenavClose()" *isDesktopOnly>
-        <mat-icon>home</mat-icon> <span class="nav-caption">Home</span>
+        <mat-icon>home</mat-icon> <span class="nav-caption">accueil</span>
     </a>
     <a mat-list-item routerLink="/version" (click)="onSidenavClose()" *isDesktopOnly>
-        <mat-icon>devices</mat-icon> <span class="nav-caption">Stack</span>
+        <mat-icon>devices</mat-icon> <span class="nav-caption">stack</span>
     </a>
 
     <a mat-list-item routerLink="/stat" (click)="onSidenavClose()" *isDesktopOnly>
-        <mat-icon>insert_chart</mat-icon> <span class="nav-caption">Evolution</span>
+        <mat-icon>insert_chart</mat-icon> <span class="nav-caption">évolution</span>
     </a>
 
 
     <a mat-list-item routerLink="/news" (click)="onSidenavClose()" *isDesktopOnly>
-        <mat-icon>newspaper</mat-icon> <span class="nav-caption">Actualités</span>
+        <mat-icon>newspaper</mat-icon> <span class="nav-caption">actualités</span>
     </a>
     
     <a mat-list-item routerLink="/manifeste" (click)="onSidenavClose()" *isMobileOnly>
         <mat-icon>history_edu</mat-icon> <span class="nav-caption">Le Manifeste</span>
     </a>
 
-    <!-- <a mat-list-item routerLink="/shop" (click)="onSidenavClose()">
-        <mat-icon>storefront</mat-icon> <span class="nav-caption">Boutique</span>
-    </a> -->
+    <a mat-list-item routerLink="/shop" (click)="onSidenavClose()">
+        <mat-icon>storefront</mat-icon> <span class="nav-caption">boutique</span>
+    </a>
 
 
     @if(isAuthenticated){<a mat-list-item routerLink="/profile" (click)="onSidenavClose()" *isDesktopOnly>
