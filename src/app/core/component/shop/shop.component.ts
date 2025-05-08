@@ -42,7 +42,7 @@ export class ShopComponent implements AfterViewInit, OnInit {
     this.products = [
       { component: '1746262304851', id: '9698056798555', category: 'hommes', theme: ['angular'], prioritary: true },
       { component: '1746258121419', id: '9879512351067', category: 'hommes', theme: ['angular'], prioritary: false },
-      { component: '1746294248466', id: '9879805395291', category: 'femmes', theme: ['angular'], prioritary: true },
+      { component: '1746294248466', id: '9879805395291', category: 'hommes', theme: ['angular'], prioritary: true },
       { component: '1746294331847', id: '9879808672091', category: 'hommes', theme: ['angular'], prioritary: true },
       { component: '1746404732790', id: '9881257574747', category: 'hommes', theme: ['angular'], prioritary: true },
       { component: '1746428728561', id: '9881395429723', category: 'maison', theme: ['angular'], prioritary: true },
@@ -50,7 +50,8 @@ export class ShopComponent implements AfterViewInit, OnInit {
       { component: '1746430349878', id: '9881411813723', category: 'maison', theme: ['angular'], prioritary: true },
       { component: '1746610575301', id: '9887484674395', category: 'maison', theme: ['hello kitty'], prioritary: false },
       { component: '1746611752322', id: '9887524094299', category: 'femmes', theme: ['hello kitty'], prioritary: true },
-      { component: '1746631566087', id: '9888226017627', category: 'femmes', theme: ['rs'], prioritary: true },
+
+      { component: '1746732417993', id: '9891635495259', category: 'femmes', theme: ['rs'], prioritary: true },
       { component: '1746633268270', id: '9888303579483', category: 'femmes', theme: ['rs'], prioritary: true },
       { component: '1746634547276', id: '9888352928091', category: 'hommes', theme: ['angular', 'pokemon'], prioritary: true },
       { component: '1746635517652', id: '9888386646363', category: 'hommes', theme: ['c++', 'pokemon'], prioritary: true },
@@ -59,8 +60,13 @@ export class ShopComponent implements AfterViewInit, OnInit {
       { component: '1746636647498', id: '9888436650331', category: 'hommes', theme: ['react', 'pokemon'], prioritary: true },
       { component: '1746637225107', id: '9888452084059', category: 'hommes', theme: ['react', 'DBZ'], prioritary: true },
       { component: '1746638162277', id: '9888477086043', category: 'hommes', theme: ['angular', 'DBZ'], prioritary: true },
+
       { component: '1746639225893', id: '9888504545627', category: 'hommes', theme: ['rs'], prioritary: true },
       { component: '1746640097726', id: '9888527090011', category: 'hommes', theme: ['rs'], prioritary: true },
+      { component: '1746736407663', id: '9891805528411', category: 'hommes', theme: ['rs'], prioritary: true },
+      { component: '1746736872758', id: '9891827188059', category: 'hommes', theme: ['rs'], prioritary: true },
+      { component: '1746737527729', id: '9891855565147', category: 'hommes', theme: ['rs'], prioritary: true },
+      { component: '1746738378281', id: '9891901276507', category: 'hommes', theme: ['rs'], prioritary: true },
     ]
    // this.applyFilter();
   }
