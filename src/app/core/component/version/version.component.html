@@ -1,97 +1,103 @@
 <head>
   <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3195351081459490"
     crossorigin="anonymous"></script>
-    
+
 </head>
 <div class="version-layout">
   <aside class="ads-left">
-     <!-- Pub gauche -->
-     <ins class="adsbygoogle" style="display:block"
-     data-ad-client="ca-pub-XXXX" data-ad-slot="YYYY"
-     data-ad-format="auto"></ins>
+    <!-- Pub gauche -->
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-XXXX" data-ad-slot="YYYY"
+      data-ad-format="auto"></ins>
   </aside>
-@if(isLoading){<div class="retro-loader">
-  <div class="dots">
-    <span>.</span><span>.</span><span>.</span><span>.</span><span>.</span>
-  </div>
-  <p class="retro-text">Chargement des langages...</p>
-</div>}
-<section>
-  @if(!isLoading){<div>
-    <mat-tab-group [(selectedIndex)]="selectedDomainIndex">
-      @for(domain of domaines; track domain; let i = $index ){<mat-tab (click)="selectedDomain = domain">
-        <ng-template mat-tab-label>{{ domain }}</ng-template>
-      </mat-tab>}
-    </mat-tab-group>
-
-    <div class="languages-grid">
-      @for(language of domainLangages(filteredLangages, selectedDomain, selectedDomainIndex) ; track language._id)
-      {<ng-container>
-        <mat-card class="language-card" appearance="outlined">
-          <mat-card-header>
-            <mat-card-title-group>
-              <mat-card-title>{{ language.name }} </mat-card-title>
-              @for(version of language.versions; track version) {
-              <mat-card-subtitle>
-                <span> {{ version.type }}:</span>&nbsp; {{ version.label }} ({{ version.releaseDate | date:'MM/yyyy' }})
-              </mat-card-subtitle>
-              }
-              <img loading="lazy" mat-card-sm-image [src]="language.logoUrl" [alt]="language.name">
-            </mat-card-title-group>
-          </mat-card-header>
-          @if(!authStatus){
-          <ng-container>
-            <mat-card-content>
-              {{ language.description }}
-            </mat-card-content>
-          </ng-container>} @else {
-          <ng-container>
-            <mat-card-content style="margin: 10px;">
-              <mat-card appearance="outlined">
-                <mat-card-content>
-                  @for(version of language.versions; track version) {
-                  <mat-progress-bar [mode]="getProgressMode(version.supportDuration)" style="margin-bottom: 5px;"
-                    [value]="getSupportPercentageFromDuration(version.releaseDate, version.supportDuration)"
-                    [ngClass]="getSupportColor(version.releaseDate, version.supportDuration)"
-                    matTooltip="{{ getSupportTooltip(version.releaseDate, version.supportDuration, version.type) }}"
-                    matTooltipPosition="above">
-                  </mat-progress-bar>}
-                </mat-card-content>
-              </mat-card>
-            </mat-card-content>
-          </ng-container>}
-          <mat-card-actions class="card-actions">
-            <a [href]="language.documentation" target="_blank" class="doc-link">
-              <button mat-raised-button color="primary">Documentation</button>
-            </a>
-             @if(!authStatus && language.recommendations){<button style="margin-right: 20px;" mat-icon-button  matTooltip="Popularité *Stackoverflow" matBadgeDescription="Popularité" [matBadge]="language.recommendations" aria-label="Popularité" >🔥</button>}
-
-            @if(authStatus){ <a mat-icon-button aria-label="épingler"
-              matTooltip="{{(isPinned(language.name) ? 'Retirer ' : 'Ajouter ') + language.name + ' à votre board'}}"
-              aria-label="Bouton qui ajoute la carte au tableau personnalisé" (click)="pinLanguage(language)">
-              <mat-icon aria-hidden="true" aria-label="épingle icone"
-                [fontIcon]="isPinned(language.name) ? 'beenhere' : 'new_label'"
-                [ngClass]="{ 'pinned-icon': isPinned(language.name) }"></mat-icon>
-            </a>}
-          </mat-card-actions>
-        </mat-card>
-
-
-
-
-
-
-
-      </ng-container>}
+  @if(isLoading){<div class="retro-loader">
+    <div class="dots">
+      <span>.</span><span>.</span><span>.</span><span>.</span><span>.</span>
     </div>
+    <p class="retro-text">Chargement des langages...</p>
   </div>}
-</section>
-<aside class="ads-right">
-  <!-- Pub droite -->
-  <ins class="adsbygoogle" style="display:block"
-  data-ad-client="ca-pub-ZZZZ" data-ad-slot="AAAA"
-  data-ad-format="auto"></ins>
-</aside>
+  <section>
+    @if(!isLoading){<div>
+      <mat-tab-group [(selectedIndex)]="selectedDomainIndex">
+        @for(domain of domaines; track domain; let i = $index ){<mat-tab (click)="selectedDomain = domain">
+          <ng-template mat-tab-label>{{ domain }}</ng-template>
+        </mat-tab>}
+      </mat-tab-group>
+
+      <div class="languages-grid">
+        @for(language of domainLangages(filteredLangages, selectedDomain, selectedDomainIndex) ; track language._id)
+        {<ng-container>
+          <mat-card class="language-card" appearance="outlined">
+            <mat-card-header>
+              <mat-card-title-group>
+                <mat-card-title>{{ language.name }} </mat-card-title>
+                <mat-card-subtitle>
+                  <mat-icon [ngClass]="getIconColor(language.domain)">
+                    {{getIconType(language.domain)}}
+                  </mat-icon>
+                </mat-card-subtitle>
+                @for(version of language.versions; track version) {
+                <mat-card-subtitle>
+                  <span> {{ version.type }}:</span>&nbsp; {{ version.label }} ({{ version.releaseDate | date:'MM/yyyy'
+                  }})
+                </mat-card-subtitle>
+                }
+                <img loading="lazy" mat-card-sm-image [src]="language.logoUrl" [alt]="language.name">
+              </mat-card-title-group>
+            </mat-card-header>
+            @if(!authStatus){
+            <ng-container>
+              <mat-card-content>
+                {{ language.description }}
+              </mat-card-content>
+            </ng-container>} @else {
+            <ng-container>
+              <mat-card-content style="margin: 10px;">
+                <mat-card appearance="outlined">
+                  <mat-card-content>
+                    @for(version of language.versions; track version) {
+                    <mat-progress-bar [mode]="getProgressMode(version.supportDuration)" style="margin-bottom: 5px;"
+                      [value]="getSupportPercentageFromDuration(version.releaseDate, version.supportDuration)"
+                      [ngClass]="getSupportColor(version.releaseDate, version.supportDuration)"
+                      matTooltip="{{ getSupportTooltip(version.releaseDate, version.supportDuration, version.type) }}"
+                      matTooltipPosition="above">
+                    </mat-progress-bar>}
+                  </mat-card-content>
+                </mat-card>
+              </mat-card-content>
+            </ng-container>}
+            <mat-card-actions class="card-actions">
+              <a [href]="language.documentation" target="_blank" class="doc-link">
+                <button mat-raised-button color="primary">Documentation</button>
+              </a>
+              @if(!authStatus && language.recommendations){<button style="margin-right: 20px;" mat-icon-button
+                matTooltip="Popularité *Stackoverflow" matBadgeDescription="Popularité"
+                [matBadge]="language.recommendations" aria-label="Popularité">🔥</button>}
+
+              @if(authStatus){ <a mat-icon-button aria-label="épingler"
+                matTooltip="{{(isPinned(language.name) ? 'Retirer ' : 'Ajouter ') + language.name + ' à votre board'}}"
+                aria-label="Bouton qui ajoute la carte au tableau personnalisé" (click)="pinLanguage(language)">
+                <mat-icon aria-hidden="true" aria-label="épingle icone"
+                  [fontIcon]="isPinned(language.name) ? 'beenhere' : 'new_label'"
+                  [ngClass]="{ 'pinned-icon': isPinned(language.name) }"></mat-icon>
+              </a>}
+            </mat-card-actions>
+          </mat-card>
+
+
+
+
+
+
+
+        </ng-container>}
+      </div>
+    </div>}
+  </section>
+  <aside class="ads-right">
+    <!-- Pub droite -->
+    <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-ZZZZ" data-ad-slot="AAAA"
+      data-ad-format="auto"></ins>
+  </aside>
 </div>
 
 <!-- <section>

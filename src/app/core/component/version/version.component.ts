@@ -139,15 +139,27 @@ export class VersionComponent implements OnInit {
     }
   }
 
-  domainLangages(langages: any[], selectedDomain: string, index: number) {
-    let filtered: any[] = [];
-    langages.forEach((langage) => {
-      if (langage.domain.includes(this.domaines[index])) {
-        filtered = [...filtered, langage];
-      }
-    });
-    return filtered;
-  }
+  domainLangages(langages: any[], selectedDomain: string, index: number): any[] {
+  const filtered = langages.filter(langage =>
+    langage.domain.includes(this.domaines[index])
+  );
+
+  const order = ['language', 'framework', 'tools', 'database'];
+
+  return filtered.sort((a, b) => {
+    const aIndex = order.findIndex(type => a.domain.includes(type));
+    const bIndex = order.findIndex(type => b.domain.includes(type));
+
+    // Si un élément n’a aucun des types, on lui attribue un index très élevé
+    const scoreA = aIndex === -1 ? 999 : aIndex;
+    const scoreB = bIndex === -1 ? 999 : bIndex;
+
+    return scoreA - scoreB;
+  });
+}
+
+
+
 
   pinnedLangages: Set<string> = new Set();
 
@@ -279,6 +291,35 @@ export class VersionComponent implements OnInit {
     } else {
       return 'support-primary'; // 🟢 OK
     }
+  }
+
+  getIconType(domain: string[]): string | undefined {
+    if (domain.includes('language')) {
+      return 'code_blocks';
+    } else if (domain.includes('framework')) {
+      return 'home_repair_service';
+    } else if (domain.includes('tools')) {
+      return 'construction';
+    } else if (domain.includes('database')) {
+      return 'storage';
+    }
+    return undefined;
+
+  }
+
+  getIconColor(domain: string[]): string {
+    if (domain.includes('language')) {
+      return 'icon-language';
+    } else if (domain.includes('framework')) {
+      return 'icon-framework';
+    }
+    else if (domain.includes('tools')) {
+      return 'icon-tools';
+    }
+    else if (domain.includes('database')) {
+      return 'icon-database';
+    }
+    return '';
   }
 
   getSupportTooltip(releaseDate: string, supportTime: number, type: string): string {

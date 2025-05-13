@@ -9,26 +9,89 @@ import { Meta, Title } from '@angular/platform-browser';
 import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatPaginatorModule, PageEvent, MatPaginatorIntl } from '@angular/material/paginator';
+import { set } from 'date-fns';
+import { CommonModule } from '@angular/common';
+
+export function getFrenchPaginatorIntl(): MatPaginatorIntl {
+  const paginatorIntl = new MatPaginatorIntl();
+
+  paginatorIntl.itemsPerPageLabel = 'Éléments par page :';
+  paginatorIntl.nextPageLabel = 'Page suivante';
+  paginatorIntl.previousPageLabel = 'Page précédente';
+  paginatorIntl.firstPageLabel = 'Première page';
+  paginatorIntl.lastPageLabel = 'Dernière page';
+  paginatorIntl.getRangeLabel = (page: number, pageSize: number, length: number) => {
+    if (length === 0 || pageSize === 0) {
+      return `0 sur ${length}`;
+    }
+    const startIndex = page * pageSize;
+    const endIndex = Math.min(startIndex + pageSize, length);
+    return `${startIndex + 1} – ${endIndex} sur ${length}`;
+  };
+
+  return paginatorIntl;
+}
 
 @Component({
-  imports: [MatFormFieldModule, MatCardModule, MatButtonModule, MatToolbarModule, MatIconModule, MatSelectModule, ShopifyBuyButtonComponent],
+  imports: [CommonModule, MatFormFieldModule,  MatCardModule, MatButtonModule, MatToolbarModule, MatIconModule, MatSelectModule, ShopifyBuyButtonComponent, MatPaginatorModule],
   selector: 'app-shop',
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.scss'],
   standalone: true,
+  providers: [
+    { provide: MatPaginatorIntl, useValue: getFrenchPaginatorIntl() }
+  ]
 })
+/**
+ * @class ShopComponent
+ * @implements {AfterViewInit}
+ * @implements {OnInit}
+ * 
+ * The ShopComponent is responsible for displaying and managing a list of products in a shop interface.
+ * It provides filtering by category and theme, supports pagination, and handles navigation to product details.
+ * 
+ * @property {any[]} products - The complete list of products available in the shop.
+ * @property {any[]} filteredProducts - The list of products after applying filters (not currently used).
+ * @property {string} selectedCategory - The currently selected category for filtering (not currently used).
+ * @property {string[]} categories - The available product categories.
+ * @property {string[]} themes - The available product themes.
+ * @property {string | null} activeTheme - The currently selected theme for filtering.
+ * @property {number} pageSize - The number of products displayed per page.
+ * @property {number} currentPage - The current page index for pagination.
+ * @property {any[]} pagedProducts - The list of products to display on the current page.
+ * @property {string} activeCategory - The currently selected category for filtering.
+ * 
+ * @constructor
+ * @param {Title} titleService - Angular service for managing the document title.
+ * @param {Meta} metaService - Angular service for managing meta tags.
+ * 
+ * @method ngOnInit Initializes the component, sets up the product list, and updates the paged products.
+ * @method ngAfterViewInit Ensures that all <aside> elements remain visible by observing style changes.
+ * @method trackById Used for Angular's ngFor trackBy to optimize rendering by product id.
+ * @method gotoItems Navigates to the product detail page for a given product.
+ * @method getProduitsFiltres Returns the filtered list of products based on priority, category, and theme.
+ * @method updatePagedProducts Updates the pagedProducts array based on the current filters and pagination.
+ * @method onPageChange Handles pagination events and updates the displayed products.
+ * @method setCategorie Sets the active category for filtering.
+ * @method setTheme Sets the active theme for filtering.
+ */
 export class ShopComponent implements AfterViewInit, OnInit {
+  isLoading = true;
+
   products: any[] = [];
   filteredProducts: any[] = [];
   selectedCategory: string = '';
   categories: string[] = ['hommes', 'femmes', 'accessoires', 'maison', 'jouets'];
   themes = ['angular', 'react', 'Vue', 'Svelte', 'Node.js', 'Python'];
   activeTheme: string | null = null;
-
+  // pagination
+  pageSize = 25;
+  currentPage = 0;
+  pagedProducts: any[] = [];
 
 
   activeCategory = 'Tous';
-  // dialog = inject(MatDialog);
 
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
@@ -38,7 +101,8 @@ export class ShopComponent implements AfterViewInit, OnInit {
   constructor(private titleService: Title, private metaService: Meta) { }
 
   ngOnInit(): void {
-
+    this.isLoading = true;
+setTimeout(() => {
     this.products = [
       { component: '1746262304851', id: '9698056798555', category: 'hommes', theme: ['angular'], prioritary: true },
       { component: '1746258121419', id: '9879512351067', category: 'hommes', theme: ['angular'], prioritary: false },
@@ -68,10 +132,16 @@ export class ShopComponent implements AfterViewInit, OnInit {
       { component: '1746737527729', id: '9891855565147', category: 'hommes', theme: ['rs'], prioritary: true },
       { component: '1746738378281', id: '9891901276507', category: 'hommes', theme: ['rs'], prioritary: true },
     ]
-   // this.applyFilter();
+    
+    this.updatePagedProducts();
+    this.isLoading = false;
+  },1000);
+
+
   }
 
   ngAfterViewInit() {
+
     const asides = document.querySelectorAll('aside');
     if (!asides) return;
 
@@ -87,12 +157,8 @@ export class ShopComponent implements AfterViewInit, OnInit {
       });
 
       observer.observe(el, { attributes: true, attributeFilter: ['style'] });
-    })
-  }
+    });
 
-
-  trackById(index: number, product: any): number {
-    return product.id;
   }
 
   /*openProductModal(product: any): void {
@@ -102,21 +168,54 @@ export class ShopComponent implements AfterViewInit, OnInit {
       height: '80%',
     });
   }*/
+  trackById(index: number, product: any): number {
+    return product.id;
+  }
+
+
   gotoItems(product: any): void {
     this.router.navigate(['/shop', product.id], { queryParams: { component: product.component } });
   }
 
-  get produitsFiltres() {
-    if (this.activeCategory === 'Tous') return this.products.filter(p => p.prioritary);
-    return this.products.filter(p => p.category === this.activeCategory);
+  getProduitsFiltres(): any[] {
+    let result = this.products.filter(p => p.prioritary);
+
+    if (this.activeCategory !== 'Tous') {
+      result = result.filter(p => p.category === this.activeCategory);
+    }
+
+    if (this.activeTheme) {
+      result = result.filter(p => p.theme.includes(this.activeTheme));
+    }
+
+    return result;
   }
 
+  updatePagedProducts() {
+    const all = this.getProduitsFiltres();
+    const start = this.currentPage * this.pageSize;
+    const end = start + this.pageSize;
+    this.pagedProducts = all.slice(start, end);
+  }
+
+  onPageChange(event: PageEvent) {
+    this.pageSize = event.pageSize;
+    this.currentPage = event.pageIndex;
+    this.updatePagedProducts();
+  }
+
+
+
+
   setCategorie(cat: string) {
-    console.log(cat);
     this.activeCategory = cat;
+    this.currentPage = 0;
+    this.updatePagedProducts();
   }
 
   setTheme(theme: string | null) {
     this.activeTheme = theme;
+    this.currentPage = 0;
+    this.updatePagedProducts();
   }
 }
