@@ -34,7 +34,7 @@ export function getFrenchPaginatorIntl(): MatPaginatorIntl {
 }
 
 @Component({
-  imports: [CommonModule, MatFormFieldModule,  MatCardModule, MatButtonModule, MatToolbarModule, MatIconModule, MatSelectModule, ShopifyBuyButtonComponent, MatPaginatorModule],
+  imports: [CommonModule, MatFormFieldModule, MatCardModule, MatButtonModule, MatToolbarModule, MatIconModule, MatSelectModule, ShopifyBuyButtonComponent, MatPaginatorModule],
   selector: 'app-shop',
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.scss'],
@@ -77,7 +77,10 @@ export function getFrenchPaginatorIntl(): MatPaginatorIntl {
  * @method setTheme Sets the active theme for filtering.
  */
 export class ShopComponent implements AfterViewInit, OnInit {
-  isLoading = true;
+  isLoadingAll = false;
+  loadedCount = 0;
+  expectedCount = 0;
+
 
   products: any[] = [];
   filteredProducts: any[] = [];
@@ -101,7 +104,7 @@ export class ShopComponent implements AfterViewInit, OnInit {
   constructor(private titleService: Title, private metaService: Meta) { }
 
   ngOnInit(): void {
-    this.isLoading = true;
+
 setTimeout(() => {
     this.products = [
       { component: '1746262304851', id: '9698056798555', category: 'hommes', theme: ['angular'], prioritary: true },
@@ -134,8 +137,10 @@ setTimeout(() => {
     ]
     
     this.updatePagedProducts();
-    this.isLoading = false;
-  },1000);
+    }, 1000);
+
+
+    
 
 
   }
@@ -157,17 +162,19 @@ setTimeout(() => {
       });
 
       observer.observe(el, { attributes: true, attributeFilter: ['style'] });
+
     });
+
+   
+
+
+
 
   }
 
-  /*openProductModal(product: any): void {
-    this.dialog.open(ShopifyModalProductComponent, {
-      data: { id: product.id, component: product.component },
-      width: '80%',
-      height: '80%',
-    });
-  }*/
+ 
+
+
   trackById(index: number, product: any): number {
     return product.id;
   }
@@ -196,7 +203,20 @@ setTimeout(() => {
     const start = this.currentPage * this.pageSize;
     const end = start + this.pageSize;
     this.pagedProducts = all.slice(start, end);
+
+    // Initialisation du suivi de chargement
+    this.expectedCount = this.pagedProducts.length;
+    this.loadedCount = 0;
   }
+
+   onProductLoaded() {
+    this.loadedCount++;
+    if (this.loadedCount >= this.expectedCount) {
+    this.isLoadingAll = true;
+    }
+  }
+
+  
 
   onPageChange(event: PageEvent) {
     this.pageSize = event.pageSize;
