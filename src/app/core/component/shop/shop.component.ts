@@ -89,7 +89,7 @@ export class ShopComponent implements AfterViewInit, OnInit {
   themes = ['angular', 'react', 'Vue', 'Svelte', 'Node.js', 'Python'];
   activeTheme: string | null = null;
   // pagination
-  pageSize = 25;
+  pageSize = 28;
   currentPage = 0;
   pagedProducts: any[] = [];
 
@@ -105,7 +105,6 @@ export class ShopComponent implements AfterViewInit, OnInit {
 
   ngOnInit(): void {
 
-setTimeout(() => {
     this.products = [
       { component: '1746262304851', id: '9698056798555', category: 'hommes', theme: ['angular'], prioritary: true },
       { component: '1746258121419', id: '9879512351067', category: 'hommes', theme: ['angular'], prioritary: false },
@@ -113,7 +112,7 @@ setTimeout(() => {
       { component: '1746294331847', id: '9879808672091', category: 'hommes', theme: ['angular'], prioritary: true },
       { component: '1746404732790', id: '9881257574747', category: 'hommes', theme: ['angular'], prioritary: true },
       { component: '1746428728561', id: '9881395429723', category: 'maison', theme: ['angular'], prioritary: true },
-      { component: '1746430266071', id: '9881414271323', category: 'maison', theme: ['angular'], prioritary: true },
+      { component: '1746430266071', id: '9881414271323', category: 'maison', theme: ['angular'], prioritary: false },
       { component: '1746430349878', id: '9881411813723', category: 'maison', theme: ['angular'], prioritary: true },
       { component: '1746610575301', id: '9887484674395', category: 'maison', theme: ['hello kitty'], prioritary: false },
       { component: '1746611752322', id: '9887524094299', category: 'femmes', theme: ['hello kitty'], prioritary: true },
@@ -128,16 +127,28 @@ setTimeout(() => {
       { component: '1746637225107', id: '9888452084059', category: 'hommes', theme: ['react', 'DBZ'], prioritary: true },
       { component: '1746638162277', id: '9888477086043', category: 'hommes', theme: ['angular', 'DBZ'], prioritary: true },
 
-      { component: '1746639225893', id: '9888504545627', category: 'hommes', theme: ['rs'], prioritary: true },
+      { component: '1746639225893', id: '9888504545627', category: 'hommes', theme: ['rs'], prioritary: false },
       { component: '1746640097726', id: '9888527090011', category: 'hommes', theme: ['rs'], prioritary: true },
       { component: '1746736407663', id: '9891805528411', category: 'hommes', theme: ['rs'], prioritary: true },
       { component: '1746736872758', id: '9891827188059', category: 'hommes', theme: ['rs'], prioritary: true },
       { component: '1746737527729', id: '9891855565147', category: 'hommes', theme: ['rs'], prioritary: true },
       { component: '1746738378281', id: '9891901276507', category: 'hommes', theme: ['rs'], prioritary: true },
+      { component: '1747328163472', id: '9900459426139', category: 'hommes', theme: ['rs'], prioritary: true },
+      { component: '1747339188142', id: '9900517884251', category: 'hommes', theme: ['rs'], prioritary: true },
+      { component: '1747339375388', id: '9900525420891', category: 'femmes', theme: ['rs'], prioritary: true },
+      { component: '1747341061013', id: '9900662587739', category: 'femmes', theme: ['rs'], prioritary: false },
+      { component: '1747342008257', id: '9900671828315', category: 'femmes', theme: ['rs'], prioritary: false },
+      { component: '1747343258833', id: '9900683002203', category: 'hommes', theme: ['rs'], prioritary: false },
+      { component: '1747344026376', id: '9900693225819', category: 'hommes', theme: ['rs'], prioritary: false },
+      { component: '1747344345473', id: '9900695847259', category: 'hommes', theme: ['rs'], prioritary: true },
+      { component: '1747344830170', id: '9900701843803', category: 'hommes', theme: ['rs'], prioritary: true },
+      { component: '1747345308316', id: '9900705743195', category: 'hommes', theme: ['rs'], prioritary: false },
+      { component: '1747345922328', id: '9900711379291', category: 'hommes', theme: ['rs'], prioritary: true },
+
+
     ]
     
     this.updatePagedProducts();
-    }, 1000);
 
 
     
@@ -185,10 +196,13 @@ setTimeout(() => {
   }
 
   getProduitsFiltres(): any[] {
-    let result = this.products.filter(p => p.prioritary);
+    let result = [...this.products];
+    //this.products.filter(p => p.prioritary);
 
     if (this.activeCategory !== 'Tous') {
       result = result.filter(p => p.category === this.activeCategory);
+    } else {
+      result = result.filter(p => p.prioritary);
     }
 
     if (this.activeTheme) {

@@ -1,4 +1,3 @@
-
 /* Layout principal avec grid */
 .shop-layout {
   display: grid;
@@ -18,7 +17,8 @@ section {
 }
 
 /* Asides pubs */
-.ads-left, .ads-right {
+.ads-left,
+.ads-right {
   position: sticky;
   top: 80px;
   height: fit-content;
@@ -30,7 +30,7 @@ section {
   display: flex;
   flex-direction: column;
   gap: 24px;
-  }
+}
 
 /* Grille de produits */
 .product-grid {
@@ -38,7 +38,7 @@ section {
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 20px;
 }
- 
+
 
 .product-card {
   position: relative;
@@ -46,12 +46,12 @@ section {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
- // width: auto;
+  // width: auto;
 }
 
-  
-  
-  /* Bouton "ouvrir dans nouvel onglet" */
+
+
+/* Bouton "ouvrir dans nouvel onglet" */
 .open-btn {
   position: absolute;
   top: 10px;
@@ -82,10 +82,11 @@ section {
 
 @media (max-width: 768px) {
   .shop-layout {
-    grid-template-columns: 1fr ;
+    grid-template-columns: 1fr;
   }
 
-  .ads-left, .ads-right {
+  .ads-left,
+  .ads-right {
     display: none !important;
   }
 }
@@ -144,49 +145,69 @@ section {
 .retro-loader.red .retro-text {
   color: #ff0033;
 }
+
 .retro-loader {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 120px;
-    font-family: 'Press Start 2P', monospace;
-    color: #00ff00;
-    text-align: center;
-    padding: 20px;
-    border: 2px solid #00ff00;
-    background-color: rgba(0, 0, 0, 0.8); /* fond semi-transparent noir */
-    box-shadow: 0 0 20px #00ff00;
-    border-radius: 8px;
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  
-  .dots span {
-    display: inline-block;
-    animation: blink 1s infinite;
-    font-size: 24px;
-    margin: 0 2px;
-    color: #00ff00;
-  }
-  
-  .dots span:nth-child(2) { animation-delay: 0.2s; }
-  .dots span:nth-child(3) { animation-delay: 0.4s; }
-  .dots span:nth-child(4) { animation-delay: 0.6s; }
-  .dots span:nth-child(5) { animation-delay: 0.8s; }
-  
-  @keyframes blink {
-    0%, 100% { opacity: 0.1; }
-    50% { opacity: 1; }
-  }
-  
-  .retro-text {
-    font-size: 10px;
-    margin-top: 12px;
-    color: #00ff00;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 120px;
+  font-family: 'Press Start 2P', monospace;
+  color: #00ff00;
+  text-align: center;
+  padding: 20px;
+  border: 2px solid #00ff00;
+  background-color: rgba(0, 0, 0, 0.8);
+  /* fond semi-transparent noir */
+  box-shadow: 0 0 20px #00ff00;
+  border-radius: 8px;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dots span {
+  display: inline-block;
+  animation: blink 1s infinite;
+  font-size: 24px;
+  margin: 0 2px;
+  color: #00ff00;
+}
+
+.dots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.dots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+.dots span:nth-child(4) {
+  animation-delay: 0.6s;
+}
+
+.dots span:nth-child(5) {
+  animation-delay: 0.8s;
+}
+
+@keyframes blink {
+
+  0%,
+  100% {
+    opacity: 0.1;
   }
 
-  .loader-overlay {
+  50% {
+    opacity: 1;
+  }
+}
+
+.retro-text {
+  font-size: 10px;
+  margin-top: 12px;
+  color: #00ff00;
+}
+
+.loader-overlay {
   position: fixed;
   top: 0;
   left: 0;
