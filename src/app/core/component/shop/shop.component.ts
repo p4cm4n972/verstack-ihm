@@ -10,7 +10,6 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent, MatPaginatorIntl } from '@angular/material/paginator';
-import { set } from 'date-fns';
 import { CommonModule } from '@angular/common';
 
 export function getFrenchPaginatorIntl(): MatPaginatorIntl {
@@ -121,9 +120,9 @@ export class ShopComponent implements AfterViewInit, OnInit {
       { component: '1746633268270', id: '9888303579483', category: 'femmes', theme: ['rs'], prioritary: true },
       { component: '1746634547276', id: '9888352928091', category: 'hommes', theme: ['angular', 'pokemon'], prioritary: true },
       { component: '1746635517652', id: '9888386646363', category: 'hommes', theme: ['c++', 'pokemon'], prioritary: true },
-      { component: '1746635660529', id: '9888396902747', category: 'hommes', theme: ['docker', 'pokemon'], prioritary: true },
+      { component: '1746635660529', id: '9888396902747', category: 'hommes', theme: ['docker', 'pokemon'], prioritary: false },
       { component: '1746636120006', id: '9888421118299', category: 'hommes', theme: ['java', 'pokemon'], prioritary: true },
-      { component: '1746636647498', id: '9888436650331', category: 'hommes', theme: ['react', 'pokemon'], prioritary: true },
+      { component: '1746636647498', id: '9888436650331', category: 'hommes', theme: ['react', 'pokemon'], prioritary: false },
       { component: '1746637225107', id: '9888452084059', category: 'hommes', theme: ['react', 'DBZ'], prioritary: true },
       { component: '1746638162277', id: '9888477086043', category: 'hommes', theme: ['angular', 'DBZ'], prioritary: true },
 
@@ -144,6 +143,10 @@ export class ShopComponent implements AfterViewInit, OnInit {
       { component: '1747344830170', id: '9900701843803', category: 'hommes', theme: ['rs'], prioritary: true },
       { component: '1747345308316', id: '9900705743195', category: 'hommes', theme: ['rs'], prioritary: false },
       { component: '1747345922328', id: '9900711379291', category: 'hommes', theme: ['rs'], prioritary: true },
+      { component: '1747495353961', id: '9903723250011', category: 'hommes', theme: ['rs'], prioritary: true },
+      { component: '1747496440258', id: '9903731540315', category: 'hommes', theme: ['rs'], prioritary: true },
+      { component: '1747497459133', id: '9903743369563', category: 'hommes', theme: ['rs'], prioritary: true },
+      { component: '1747497993907', id: '9903746515291', category: 'hommes', theme: ['rs'], prioritary: true },
 
 
     ]

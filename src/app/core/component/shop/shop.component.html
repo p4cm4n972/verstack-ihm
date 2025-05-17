@@ -21,9 +21,7 @@
   <ng-container id="image-wrapper" [class.dimmed]="isLoadingAll">
 
     <section>
-      <mat-paginator class="pagination" [length]="getProduitsFiltres().length" [pageSize]="pageSize"
-        [pageSizeOptions]="[28, 56, 84, 100]" (page)="onPageChange($event)" aria-label="Select page">
-      </mat-paginator>
+
 
       <div class="products-wrapper">
 
@@ -43,6 +41,9 @@
           }
         </div>
       </div>
+      <mat-paginator class="pagination" [length]="getProduitsFiltres().length" [pageSize]="pageSize"
+        [pageSizeOptions]="[28, 56, 84, 100]" (page)="onPageChange($event)" aria-label="Select page">
+      </mat-paginator>
     </section>
   </ng-container>
 
