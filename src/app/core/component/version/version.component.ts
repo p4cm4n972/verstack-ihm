@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { Field } from '../../../models/field.model';
 import { LangagesService } from '../../../services/langages.service';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -16,10 +16,21 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress-spinner';
 import { Title, Meta } from '@angular/platform-browser';
+import { RouterModule } from '@angular/router';
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogModule,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-version',
   imports: [
+    RouterModule,
     MatTabsModule,
     MatCardModule,
     MatGridListModule,
@@ -29,13 +40,17 @@ import { Title, Meta } from '@angular/platform-browser';
     MatProgressBarModule,
     MatBadgeModule,
     MatButtonModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    
   ],
   templateUrl: './version.component.html',
   styleUrl: './version.component.scss',
 })
 
 export class VersionComponent implements OnInit {
+
+   readonly dialog = inject(MatDialog); 
+   
   langages: any[] = [];
   filteredLangages: any[] = [];
   selectedDomainIndex: number = 0;
@@ -237,6 +252,10 @@ export class VersionComponent implements OnInit {
     window.open(url, '_blank');
   }
 
+  needLoginDialog(): void {
+    const dialogRef = this.dialog.open(DialogContent);
+  }
+
   toggler() {
     this.toggle = !this.toggle;
   }
@@ -349,3 +368,11 @@ export class VersionComponent implements OnInit {
   }
 
 }
+
+@Component({
+  selector: 'dialog',
+  templateUrl: 'dialog.html',
+  imports: [MatDialogModule, MatButtonModule, RouterModule],
+  //changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DialogContent {}
