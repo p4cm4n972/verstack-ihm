@@ -47,8 +47,8 @@
     </section>
   </ng-container>
 
-  <aside class="ads-right main-aside">
-    <div class="tabs">
+  <aside class="ads-right">
+    <div class="tabs" >
       @for(cat of categories; track cat){
       <div class="tab" [class.active]="cat === activeCategory" (click)="setCategorie(cat)">
         {{ cat }}

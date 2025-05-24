@@ -17,11 +17,11 @@
   </div>}
   <section>
     @if(!isLoading){<div>
-      <mat-tab-group [(selectedIndex)]="selectedDomainIndex">
+     @if(!favorisFromHome){<mat-tab-group [(selectedIndex)]="selectedDomainIndex">
         @for(domain of domaines; track domain; let i = $index ){<mat-tab (click)="selectedDomain = domain">
           <ng-template mat-tab-label>{{ domain }}</ng-template>
         </mat-tab>}
-      </mat-tab-group>
+      </mat-tab-group>}
 
       <div class="languages-grid">
         @for(language of domainLangages(filteredLangages, selectedDomain, selectedDomainIndex) ; track language._id)
@@ -75,7 +75,7 @@
                 matTooltip="Popularité *Stackoverflow" matBadgeDescription="Popularité"
                 [matBadge]="language.recommendations" aria-label="Popularité">🔥</button>}
 
-              @if(authStatus){ <a mat-icon-button aria-label="épingler"
+              @if(authStatus && favorisFromHome.length == 0 ){ <a mat-icon-button aria-label="épingler"
                 matTooltip="{{(isPinned(language.name) ? 'Retirer ' : 'Ajouter ') + language.name + ' à votre board'}}"
                 aria-label="Bouton qui ajoute la carte au tableau personnalisé" (click)="pinLanguage(language)">
                 <mat-icon aria-hidden="true" aria-label="épingle icone"

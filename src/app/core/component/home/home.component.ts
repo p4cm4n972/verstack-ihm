@@ -5,21 +5,30 @@ import { TapeTextConsoleComponent } from '../../../composant/tape-text-console/t
 import { Router, RouterModule } from '@angular/router';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { Title, Meta } from '@angular/platform-browser';
+import { MatCardModule } from '@angular/material/card';
+import { CommonModule } from '@angular/common';
+import { VersionComponent } from '../version/version.component';
+import { LangagesService } from '../../../services/langages.service';
+import { ProfileService } from '../../../services/profile.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule, MatTabsModule, GlobeComponent],
+  imports: [RouterModule, CommonModule, MatTabsModule, GlobeComponent, MatCardModule, VersionComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
 export class HomeComponent {
   authStatus: boolean = false;
   userData: any;
+  userFavoris: any;
+
   constructor(
     private authService: AuthenticationService,
     private router: Router,
-    private title: Title, private meta: Meta
+    private title: Title, private meta: Meta,
+    private _langagesService: LangagesService,
+    private profileService: ProfileService,
   ) { }
 
   ngOnInit(): void {
@@ -29,7 +38,11 @@ export class HomeComponent {
       { name: 'keywords', content: 'frameworks, langages, versions, verstack, Angular, React, Node.js, javascript, JS, JAVA, PHP' }
     ]);
     this.authService.getAuthStatus().subscribe((status) => {
-      this.authStatus = status;
+      if (status) {
+        this.authStatus = status;
+        this.loadUserProfile()
+        this.loadUserFavoris();
+      }
     });
     const storedUserData = localStorage.getItem('user');
     if (storedUserData) {
@@ -37,6 +50,36 @@ export class HomeComponent {
     } else {
       this.userData = null;
     }
+  }
+
+  private loadUserProfile(): void {
+    if (this.userData?.id) {
+      this.profileService.getUserProfile(this.userData.id).subscribe({
+        next: (data) => {
+          this.userData = data;
+          this.storeUserData(data);
+        },
+        error: (err) =>
+          console.error(
+            'Erreur lors de la récupération des données utilisateur',
+            err
+          ),
+      });
+    }
+  }
+
+  private loadUserFavoris(): void {
+    const storedUserFavoris = localStorage.getItem('favoris');
+
+    if (storedUserFavoris && storedUserFavoris.length !== 0) {
+      this.userFavoris = JSON.parse(localStorage.getItem('favoris') || '[]');
+    } else {
+      this.userFavoris = null;
+    }
+  }
+
+  private storeUserData(response: any) {
+    localStorage.setItem('favoris', JSON.stringify(response.favoris));
   }
 
 

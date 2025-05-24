@@ -10,9 +10,11 @@
           pour rester à jour
         </p>}
         @if(authStatus){
+        <hr>
+        <h2>Tableau de Bord</h2>
         <p class="pixel-art-subtitle">
           @let userName = (userData.pseudo ) ?? 'Guest';
-          Bienvenue<br> dans ton univers<br> <em>{{userName}}</em><br>
+          <em>{{userName}}</em><br>
         </p>}
         <!--<app-tape-text-console></app-tape-text-console> -->
         @if(!authStatus){<div class="button-container">
@@ -21,8 +23,13 @@
         </div>}
       </div>
     </div>
-    <div class="col right hide-on-small">
+    @if(!authStatus || userFavoris.length === 0){<div class="col right hide-on-small">
       <app-globe></app-globe>
+    </div>} @else if(userFavoris.length > 0) {
+    <div class="col right">
+      <app-version [favorisFromHome]="userFavoris"></app-version>
     </div>
+
+    }
   </div>
 </div>

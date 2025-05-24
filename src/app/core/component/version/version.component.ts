@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit } from '@angular/core';
 import { Field } from '../../../models/field.model';
 import { LangagesService } from '../../../services/langages.service';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -14,7 +14,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { differenceInMonths, parseISO } from 'date-fns';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinnerModule, MatSpinner } from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { Title, Meta } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import {
@@ -41,16 +41,17 @@ import {
     MatBadgeModule,
     MatButtonModule,
     MatProgressSpinnerModule,
-    
+
   ],
   templateUrl: './version.component.html',
   styleUrl: './version.component.scss',
 })
 
 export class VersionComponent implements OnInit {
+  @Input() favorisFromHome: any[] = [];
 
-   readonly dialog = inject(MatDialog); 
-   
+  readonly dialog = inject(MatDialog);
+
   langages: any[] = [];
   filteredLangages: any[] = [];
   selectedDomainIndex: number = 0;
@@ -62,7 +63,7 @@ export class VersionComponent implements OnInit {
     'ia',
     'game',
     'devops',
-    'backend',
+    //'backend',
   ];
   toggle: boolean = false;
   fields: Field[] = [];
@@ -116,19 +117,26 @@ export class VersionComponent implements OnInit {
     }
   }
 
-  private loadLangages(): void {
-    this._langagesService.getAllLangages().subscribe({
-      next: (langages) => {
+ private loadLangages(): void {
+  this._langagesService.getAllLangages().subscribe({
+    next: (langages) => {
+      if (this.favorisFromHome && this.favorisFromHome.length > 0) {
+        const favorisNames = this.favorisFromHome.map(f => f.name);
+        this.langages = langages.filter(l => favorisNames.includes(l.name));
+      } else {
         this.langages = langages;
-        this.filteredLangages = langages;
-        this.isLoading = false
-      },
-      error: (err) => {
-        console.error('Erreur lors de la récupération des langages', err);
-        this.isLoading = false
       }
-    });
-  }
+
+      this.filteredLangages = this.langages;
+      this.isLoading = false;
+    },
+    error: (err) => {
+      console.error('Erreur lors de la récupération des langages', err);
+      this.isLoading = false;
+    }
+  });
+}
+
 
   private getAuthStatus(): Observable<boolean> {
     return this.authService.getAuthStatus().pipe(
@@ -155,23 +163,23 @@ export class VersionComponent implements OnInit {
   }
 
   domainLangages(langages: any[], selectedDomain: string, index: number): any[] {
-  const filtered = langages.filter(langage =>
-    langage.domain.includes(this.domaines[index])
-  );
+    const filtered = langages.filter(langage =>
+      langage.domain.includes(this.domaines[index])
+    );
 
-  const order = ['language', 'framework', 'tools', 'database'];
+    const order = ['language', 'framework', 'tools', 'database'];
 
-  return filtered.sort((a, b) => {
-    const aIndex = order.findIndex(type => a.domain.includes(type));
-    const bIndex = order.findIndex(type => b.domain.includes(type));
+    return filtered.sort((a, b) => {
+      const aIndex = order.findIndex(type => a.domain.includes(type));
+      const bIndex = order.findIndex(type => b.domain.includes(type));
 
-    // Si un élément n’a aucun des types, on lui attribue un index très élevé
-    const scoreA = aIndex === -1 ? 999 : aIndex;
-    const scoreB = bIndex === -1 ? 999 : bIndex;
+      // Si un élément n’a aucun des types, on lui attribue un index très élevé
+      const scoreA = aIndex === -1 ? 999 : aIndex;
+      const scoreB = bIndex === -1 ? 999 : bIndex;
 
-    return scoreA - scoreB;
-  });
-}
+      return scoreA - scoreB;
+    });
+  }
 
 
 
@@ -375,4 +383,4 @@ export class VersionComponent implements OnInit {
   imports: [MatDialogModule, MatButtonModule, RouterModule],
   //changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DialogContent {}
+export class DialogContent { }
