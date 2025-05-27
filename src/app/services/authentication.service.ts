@@ -12,7 +12,7 @@ export class AuthenticationService {
 
   private isAuthenticated$ = new BehaviorSubject<boolean>(this.hasValidAccessToken());
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   signup(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/signup`, data, {
@@ -28,9 +28,23 @@ export class AuthenticationService {
       .pipe(
         tap((response: any) => {
           if (response.accessToken && response.refreshToken) {
+            console.log('Login successful:', response);
             this.storeUserData(response);
             this.isAuthenticated$.next(true);
-            // this.updateAuthStatus(true);
+            this.updateAuthStatus(true);
+            const decodedToken = this.getDecodedToken();
+            const userId = decodedToken ? decodedToken.id : '';
+            if (userId) {
+              this.http.get(`api/users/${userId}`).subscribe({
+                next: (profile: any) => {
+                  const favoris = profile.favoris ?? [];
+                  localStorage.setItem('favoris', JSON.stringify(favoris));
+                }
+                , error: (error) => {
+                  console.error('Error fetching user data:', error);
+                }
+              });
+            }
           }
         }),
         shareReplay()
@@ -55,7 +69,7 @@ export class AuthenticationService {
       })
     )
   }
-  
+
 
   logout() {
     localStorage.removeItem('access_token');
@@ -64,7 +78,8 @@ export class AuthenticationService {
     localStorage.removeItem('userId');
     localStorage.removeItem('favoris')
     this.isAuthenticated$.next(false);
-    // this.updateAuthStatus(false);
+    localStorage.clear();
+    this.updateAuthStatus(false);
   }
 
   storeUserData(response: any) {
@@ -87,7 +102,7 @@ export class AuthenticationService {
 
   private hasValidAccessToken(): boolean {
     const token = this.getAccessToken();
-    if (!token) { 
+    if (!token) {
       return false;
     }
     try {
@@ -118,7 +133,7 @@ export class AuthenticationService {
     const info = this.getDecodedToken();
 
     // const userData = localStorage.getItem('user');
-    return  info.pseudo ? info.pseudo : '';
+    return info.pseudo ? info.pseudo : '';
   }
 
   getUserId(): string {
@@ -131,16 +146,16 @@ export class AuthenticationService {
   forgotPassword(email: string) {
     return this.http.post(`${this.baseUrl}/forgot-password`, { email });
   }
-  
+
   resetPassword(token: string, newPassword: string) {
     return this.http.post(`${this.baseUrl}/reset-password`, {
       token,
       newPassword,
     });
   }
-  
 
-  
 
-  
+
+
+
 }

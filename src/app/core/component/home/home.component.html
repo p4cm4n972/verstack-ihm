@@ -1,34 +1,70 @@
+@let isAuth = authStatus$ | async;
+
 <div class="container">
   <div class="row">
     <div class="col left">
       <div class="text-content">
-        <h1 class="pixel-art-title">verstack.io </h1>
-        @if(!authStatus){<p class="pixel-art-subtitle">
+        <h1 class="pixel-art-title">verstack.io</h1>
+
+        @if (!isAuth) {
+        <p class="pixel-art-subtitle">
           L'univers<br>
           des stacks :<br>
           Versions, Références et Tendances<br>
           pour rester à jour
-        </p>}
-        @if(authStatus){
-        <hr>
-        <h2>Tableau de Bord</h2>
-        <p class="pixel-art-subtitle">
-          @let userName = (userData.pseudo ) ?? 'Guest';
-          <em>{{userName}}</em><br>
-        </p>}
-        <!--<app-tape-text-console></app-tape-text-console> -->
-        @if(!authStatus){<div class="button-container">
+        </p>
+        }
+
+        @if (isAuth) {
+        <ng-container>
+          <hr />
+          <div class="space-console">
+            <mat-card class="console-card" appearance="outlined">
+              <mat-card-title>🛰️ Tableau de bord</mat-card-title>
+              <mat-card-content>
+                <p class="console-line">
+                  👤 Utilisateur : <span class="console-data">{{ userData?.pseudo ?? 'Guest' }}</span>
+                </p>
+                <p class="console-line">
+                  👾 Amis en ligne :
+                  <span class="console-data">
+                    {{ userData?.friendsOnline ?? 0 }} / {{ userData?.totalFriends ?? 0 }}
+                  </span>
+                </p>
+                <p class="console-line">
+                  🧑‍💻 Projets : <span class="console-data">{{ userData?.projects?.length ?? 0 }}</span>
+                </p>
+                <p class="console-line">
+                  💬 Messages non lus : <span class="console-data">{{ userData?.unreadMessages ?? 0 }}</span>
+                </p>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </ng-container>
+        }
+
+        @if (!isAuth) {
+        <div class="button-container">
           <a class="btn" href="/version">Découvrir</a>
           <a class="btn" routerLink="/signup" routerLinkActive="active">Connexion</a>
-        </div>}
+        </div>
+        }
       </div>
     </div>
-    @if(!authStatus || userFavoris.length === 0){<div class="col right hide-on-small">
-      <app-globe></app-globe>
-    </div>} @else if(userFavoris.length > 0) {
-    <div class="col right">
-      <app-version [favorisFromHome]="userFavoris"></app-version>
-    </div>
+
+    @if (!isAuth || userFavoris.length == 0 ) {
+    <ng-container>
+      <div class="col right hide-on-small">
+        <app-globe></app-globe>
+      </div>
+    </ng-container>
+    } @else {
+    <ng-container>
+
+      <div class="col right">
+        <app-version [favorisFromHome]="userFavoris"></app-version>
+      </div>
+    </ng-container>
 
     }
   </div>

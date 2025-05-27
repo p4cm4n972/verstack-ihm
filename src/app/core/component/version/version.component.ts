@@ -379,6 +379,10 @@ export class VersionComponent implements OnInit {
     return 'indeterminate';
   }
 
+  trackP(index: number, item: any) {
+  return item.id ?? index; // fallback si id absent
+}
+
 }
 
 @Component({
