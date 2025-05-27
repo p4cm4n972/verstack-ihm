@@ -11,6 +11,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent, MatPaginatorIntl } from '@angular/material/paginator';
 import { CommonModule } from '@angular/common';
+import { SeoService } from '../../../services/seo.service';
 
 export function getFrenchPaginatorIntl(): MatPaginatorIntl {
   const paginatorIntl = new MatPaginatorIntl();
@@ -100,9 +101,16 @@ export class ShopComponent implements AfterViewInit, OnInit {
 
 
 
-  constructor(private titleService: Title, private metaService: Meta) { }
+  constructor(private titleService: Title, private metaService: Meta, private seo: SeoService) { }
 
   ngOnInit(): void {
+    this.seo.updateMetaData({
+    title: 'Boutique – Red Squiggly',
+    description: 'Découvrez la mode geek, inspirée des stacks.',
+    keywords: 'verstack, langages, outils, développeurs, Angular, React, style, mode, geek',
+    image: 'public/assets/slider/slider-1.jpg',
+    url: 'https://verstack.io/shop'
+  });
 
     this.products = [
       { component: '1746262304851', id: '9698056798555', category: 'hommes', theme: ['angular'], prioritary: true },

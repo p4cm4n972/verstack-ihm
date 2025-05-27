@@ -38,8 +38,8 @@ export class HomeComponent {
     title: 'Accueil – Verstack.io',
     description: 'Découvrez les meilleurs outils et stacks pour développeurs modernes.',
     keywords: 'verstack, langages, outils, développeurs, Angular, React',
-    image: 'public/assets/slider/slider-1.jpg',
-    url: 'https://verstack.io'
+    image: `${window.location.origin}/assets/slider/slider-1.jpg`,
+    url: 'https://verstack.io/home'
   });
     this.authService.getAuthStatus().subscribe((status) => {
       if (status) {

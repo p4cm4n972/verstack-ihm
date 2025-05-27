@@ -26,6 +26,7 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from '@angular/material/dialog';
+import { SeoService } from '../../../services/seo.service';
 
 @Component({
   selector: 'app-version',
@@ -79,15 +80,18 @@ export class VersionComponent implements OnInit {
     private _langagesService: LangagesService,
     private authService: AuthenticationService,
     private profileService: ProfileService,
-    private title: Title, private meta: Meta
+    private title: Title, private meta: Meta,
+    private seo: SeoService,
   ) { }
 
   ngOnInit(): void {
-    this.title.setTitle('Verstack.io – L’univers des stacks');
-    this.meta.addTags([
-      { name: 'description', content: 'Référentiel des versions à jour pour tous les langages et frameworks.' },
-      { name: 'keywords', content: 'frameworks, langages, versions, verstack, Angular, React, Node.js' }
-    ]);
+    this.seo.updateMetaData({
+    title: 'Stack – Verstack.io',
+    description: 'Découvrez les meilleurs outils et stacks pour développeurs modernes.',
+    keywords: 'verstack, langages, outils, développeurs, Angular, React',
+    image: 'https://verstack.io/assets/slider/slider-2.jpg',
+    url: 'https://verstack.io/version'
+  });
     this.getAuthStatus().subscribe((status: any) => {
       if (status) {
         this.loadUserData();
