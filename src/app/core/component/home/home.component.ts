@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 import { VersionComponent } from '../version/version.component';
 import { LangagesService } from '../../../services/langages.service';
 import { ProfileService } from '../../../services/profile.service';
+import { SeoService } from '../../../services/seo.service';
 
 @Component({
   selector: 'app-home',
@@ -29,14 +30,17 @@ export class HomeComponent {
     private title: Title, private meta: Meta,
     private _langagesService: LangagesService,
     private profileService: ProfileService,
+    private seo: SeoService
   ) { }
 
   ngOnInit(): void {
-    this.title.setTitle('Verstack.io – L’univers des stacks');
-    this.meta.addTags([
-      { name: 'description', content: 'Référentiel des dernières versions à jour pour tous les langages et frameworks.' },
-      { name: 'keywords', content: 'frameworks, langages, versions, verstack, Angular, React, Node.js, javascript, JS, JAVA, PHP' }
-    ]);
+    this.seo.updateMetaData({
+    title: 'Accueil – Verstack.io',
+    description: 'Découvrez les meilleurs outils et stacks pour développeurs modernes.',
+    keywords: 'verstack, langages, outils, développeurs, Angular, React',
+    image: 'public/assets/slider/slider-1.jpg',
+    url: 'https://verstack.io'
+  });
     this.authService.getAuthStatus().subscribe((status) => {
       if (status) {
         this.authStatus = status;
