@@ -17,7 +17,7 @@
   </div>}
   <section>
     @if(!isLoading){<div>
-     @if(!favorisFromHome){<mat-tab-group [(selectedIndex)]="selectedDomainIndex">
+     @if(origin !== 'home'){<mat-tab-group [(selectedIndex)]="selectedDomainIndex">
         @for(domain of domaines; track domain; let i = $index ){<mat-tab (click)="selectedDomain = domain">
           <ng-template mat-tab-label>{{ domain }}</ng-template>
         </mat-tab>}

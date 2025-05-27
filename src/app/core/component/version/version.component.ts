@@ -50,6 +50,7 @@ import { SeoService } from '../../../services/seo.service';
 
 export class VersionComponent implements OnInit {
   @Input() favorisFromHome: any[] = [];
+  @Input() origin: string = '';
 
   readonly dialog = inject(MatDialog);
 
