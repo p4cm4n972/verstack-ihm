@@ -158,6 +158,9 @@ export class ShopComponent implements AfterViewInit, OnInit {
       { component: '1748109198345', id: '9905642209627', category: 'hommes', theme: ['rs'], prioritary: true },
       { component: '1748109259742', id: '9917987979611', category: 'hommes', theme: ['rs'], prioritary: true },
       { component: '1748109335109', id: '9909646885211', category: 'femmes', theme: ['rs'], prioritary: true },
+      { component: '1748462162689', id: '9924947280219', category: 'hommes', theme: ['rs'], prioritary: true },
+      { component: '1748462908324', id: '9924964680027', category: 'hommes', theme: ['rs'], prioritary: true },
+
 
 
 
