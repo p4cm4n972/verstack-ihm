@@ -18,6 +18,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { TapeTextConsoleComponent } from '../../../composant/tape-text-console/tape-text-console.component';
 import { Router } from '@angular/router';
+import { SeoService } from '../../../services/seo.service';
 
 interface Article {
   title: string;
@@ -57,10 +58,18 @@ export class NewsComponent implements OnInit {
 
   constructor(
     private articlesService: ArticlesService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private seo: SeoService
   ) {}
 
   ngOnInit(): void {
+    this.seo.updateMetaData({
+      title: 'Actualité – Verstack.io',
+      description: 'Découvrez les meilleurs outils et stacks pour développeurs modernes.',
+      keywords: 'verstack, langages, outils, développeurs, Angular, React',
+      image: `${window.location.origin}/assets/slider/slider-1.jpg`,
+      url: 'https://verstack.io/news'
+    });
     this.loadArticles();
   }
 
