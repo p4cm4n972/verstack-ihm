@@ -17,10 +17,12 @@ export class HeaderComponent implements OnInit {
   constructor(private authService: AuthenticationService, private router: Router) { }
   @Output() public sidenavToggle = new EventEmitter();
   authStatus: boolean = false;
+  isAdmin: boolean = false;
 
   ngOnInit(): void {
     this.authService.getAuthStatus().subscribe(status => {
       this.authStatus = status;
+      this.isAdmin = status && this.authService.getUserRole() === 'admin';
     });
   }
 

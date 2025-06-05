@@ -29,7 +29,7 @@
             <li class="" *isDesktopOnly>
                 <a class="" routerLink="/shop" routerLinkActive="active">boutique</a>
             </li>
-            <li class="" *isDesktopOnly>
+            <li class="" *isDesktopOnly [hidden]="!isAdmin">
                 <a class="" routerLink="/admin" routerLinkActive="active">admin</a>
             </li>
         </ul>

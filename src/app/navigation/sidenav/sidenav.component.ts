@@ -17,6 +17,7 @@ export class SidenavComponent implements OnInit {
   isAuthenticated: boolean = false;
   @Output() sidenavClose = new EventEmitter();
   authStatus: boolean = false;
+  isAdmin: boolean = false;
 
 
   constructor(
@@ -29,6 +30,7 @@ export class SidenavComponent implements OnInit {
   ngOnInit(): void {
     this.authService.getAuthStatus().subscribe((status) => {
       this.isAuthenticated = status;
+      this.isAdmin = status && this.authService.getUserRole() === 'admin';
     });
   }
 

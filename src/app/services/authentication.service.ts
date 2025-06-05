@@ -143,6 +143,11 @@ export class AuthenticationService {
     return info.id ? info.id : '';
   }
 
+  getUserRole(): string {
+    const info = this.getDecodedToken();
+    return info.role ? info.role : '';
+  }
+
   forgotPassword(email: string) {
     return this.http.post(`${this.baseUrl}/forgot-password`, { email });
   }

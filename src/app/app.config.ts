@@ -8,6 +8,7 @@ import { AuthenticationService } from './services/authentication.service';
 import { JwtInterceptorService } from './services/jwt-interceptor.service';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { mobileNotAllowedGuard } from './guards/mobile-not-allowed.guard';
+import { AdminGuard } from './guards/admin.guard';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
     AuthenticationService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true},
-    mobileNotAllowedGuard
+    mobileNotAllowedGuard,
+    AdminGuard
   ],
 };
