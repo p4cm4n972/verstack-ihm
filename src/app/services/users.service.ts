@@ -10,6 +10,20 @@ export class UsersService {
 
   constructor(private http: HttpClient) { }
 
+  getAllUsers(): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl);
+  }
+
+  createUser(data: any): Observable<any> {
+    return this.http.post(this.baseUrl, data, {
+      headers: new HttpHeaders({ 'Content-Type': 'application/json' })
+    });
+  }
+
+  deleteUser(id: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+
   update(userId: any, updatedData: any[]): Observable<any> {
     const formData = new FormData();
     for (const key in updatedData) {
