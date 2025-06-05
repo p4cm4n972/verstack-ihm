@@ -22,6 +22,9 @@
     <a mat-list-item routerLink="/shop" (click)="onSidenavClose()">
         <mat-icon>storefront</mat-icon> <span class="nav-caption">boutique</span>
     </a>
+    <a mat-list-item routerLink="/admin" (click)="onSidenavClose()" *isDesktopOnly>
+        <mat-icon>admin_panel_settings</mat-icon> <span class="nav-caption">admin</span>
+    </a>
 
 
     @if(isAuthenticated){<a mat-list-item routerLink="/profile" (click)="onSidenavClose()" *isDesktopOnly>
