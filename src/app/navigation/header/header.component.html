@@ -29,9 +29,9 @@
             <li class="" *isDesktopOnly>
                 <a class="" routerLink="/shop" routerLinkActive="active">boutique</a>
             </li>
-            <li class="" *isDesktopOnly [hidden]="!isAdmin">
+           @if(isAdmin){ <li class="" *isDesktopOnly >
                 <a class="" routerLink="/admin" routerLinkActive="active">admin</a>
-            </li>
+            </li>}
         </ul>
     </div>
 

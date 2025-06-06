@@ -5,3 +5,28 @@ mat-card {
 mat-form-field {
   margin-right: 1rem;
 }
+
+section {
+  background-color: rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  width: 100%;
+  padding: 16px;
+  min-height: 100vh;
+}
+.version-layout {
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr; // pub | contenu | pub
+  gap: 16px;
+  padding: 16px;
+  align-items: start;
+}
+
+/* pub gauche / droite */
+.ads-left,
+.ads-right {
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+  min-width: 120px;
+}
