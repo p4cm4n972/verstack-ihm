@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { FieldService } from '../../services/field.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { BehaviorSubject, filter, take } from 'rxjs';
@@ -21,6 +22,7 @@ export class GlobeComponent implements OnInit, AfterViewInit {
   private points: { x: number, y: number, z: number, img: HTMLImageElement }[] = [];
   private angleY = 0;
   private images: any[] = []
+  private isBrowser: boolean;
   loading$ = new BehaviorSubject<boolean>(true);
   loadingProgress$ = new BehaviorSubject<number>(0);
   loadedImages = 0;
@@ -28,7 +30,8 @@ export class GlobeComponent implements OnInit, AfterViewInit {
   showBoot = false;
   globeVisible: boolean = false;
 
-  constructor(private _fieldService: FieldService) {
+  constructor(private _fieldService: FieldService, @Inject(PLATFORM_ID) platformId: Object) {
+    this.isBrowser = isPlatformBrowser(platformId);
   }
 
   ngOnInit(): void {
@@ -38,22 +41,27 @@ export class GlobeComponent implements OnInit, AfterViewInit {
       //this.showBoot = true;
       this.globeVisible = true;
     });
-    this.loadImagesLogos();
+    if (this.isBrowser) {
+      this.loadImagesLogos();
+    }
   }
 
 
   ngAfterViewInit(): void {
-    const canvas = this.canvasRef.nativeElement;
-    this.ctx = canvas.getContext('2d')!;
-    canvas.width = 600;
-    canvas.height = 600;
-    this.animate();
+    if (this.isBrowser) {
+      const canvas = this.canvasRef.nativeElement;
+      this.ctx = canvas.getContext('2d')!;
+      canvas.width = 600;
+      canvas.height = 600;
+      this.animate();
+    }
   }
 
 
 
 
   private loadImages(urls: string[]): void {
+    if (!this.isBrowser) return;
     urls.forEach(url => {
       const img = new Image();
       this.totalImages = urls.length;
@@ -61,10 +69,10 @@ export class GlobeComponent implements OnInit, AfterViewInit {
       img.onload = () => {
         this.logos.push(img);
         this.loadedImages++;
-        const percent = Math.round(this.loadedImages / this.totalImages) * 100;
+        const percent = Math.round((this.loadedImages / this.totalImages) * 100);
         this.loadingProgress$.next(percent);
         if (this.loadedImages === this.totalImages) {
-         // setTimeout(() => this.onAllImagesLoaded(), 1000);
+          // setTimeout(() => this.onAllImagesLoaded(), 1000);
           this.onAllImagesLoaded();
         }
       };
@@ -128,6 +136,7 @@ export class GlobeComponent implements OnInit, AfterViewInit {
 
 
   private loadImagesLogos(): void {
+    if (!this.isBrowser) return;
 
     this._fieldService.getAllImages().subscribe({
       next: (logos: string[]) => {
