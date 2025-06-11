@@ -9,6 +9,7 @@ import { JwtInterceptorService } from './services/jwt-interceptor.service';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { mobileNotAllowedGuard } from './guards/mobile-not-allowed.guard';
 import { AdminGuard } from './guards/admin.guard';
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,6 +20,6 @@ export const appConfig: ApplicationConfig = {
     AuthenticationService,
     {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptorService, multi: true},
     mobileNotAllowedGuard,
-    AdminGuard
+    AdminGuard, provideClientHydration(withEventReplay())
   ],
 };
