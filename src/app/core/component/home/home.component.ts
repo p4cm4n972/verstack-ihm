@@ -25,6 +25,7 @@ export class HomeComponent {
   authStatus$: Observable<boolean>;
   userData: any;
   userFavoris: any = [];
+  bgLoaded = false;
 
 
 
@@ -44,7 +45,30 @@ export class HomeComponent {
     this.authStatus$ = this.authService.getAuthStatus();
   }
 
+  private getLocalStorageItem(key: string): string | null {
+    return this.isBrowser ? localStorage.getItem(key) : null;
+  }
+
+  private setLocalStorageItem(key: string, value: string): void {
+    if (this.isBrowser) {
+      localStorage.setItem(key, value);
+    }
+  }
+
+  private getJson<T>(key: string, defaultValue: T): T {
+    const item = this.getLocalStorageItem(key);
+    if (!item) {
+      return defaultValue;
+    }
+    try {
+      return JSON.parse(item) as T;
+    } catch {
+      return defaultValue;
+    }
+  }
+
   ngOnInit(): void {
+    this.preloadBackgroundImage();
     this.seo.updateMetaData({
       title: 'Accueil – Verstack.io',
       description: 'Découvrez les meilleurs outils et stacks pour développeurs modernes.',
@@ -53,39 +77,20 @@ export class HomeComponent {
       url: 'https://verstack.io/home'
     });
 
-    this.authService.getAuthStatus().subscribe((status) => {
-      if (status) {
-        console.log('Utilisateur authentifié');
-        this.authStatus = status;
-        this.loadUserProfile().subscribe({
-          next: () => {
-            this.loadUserFavoris();
-          },
-          error: (err) => {
-            console.error('Erreur lors du chargement du profil utilisateur', err);
-          }
-        });
+    this.authStatus$.subscribe((status) => {
+      if (!status) {
+        return;
       }
+      console.log('Utilisateur authentifié');
+      this.authStatus = status;
+      this.loadUserProfile().subscribe({
+        next: () => this.loadUserFavoris(),
+        error: (err) => console.error('Erreur lors du chargement du profil utilisateur', err)
+      });
     });
 
-    const storedUserData = this.isBrowser ? localStorage.getItem('user') : null;
-    if (storedUserData) {
-      this.userData = JSON.parse(storedUserData);
-    } else {
-      this.userData = null;
-    }
-
-    // Always initialize userFavoris as an array to avoid null issues
-    const storedUserFavoris = this.isBrowser ? localStorage.getItem('favoris') : null;
-    if (storedUserFavoris) {
-      try {
-        this.userFavoris = JSON.parse(storedUserFavoris) || [];
-      } catch {
-        this.userFavoris = [];
-      }
-    } else {
-      this.userFavoris = [];
-    }
+    this.userData = this.getJson<any>('user', null);
+    this.userFavoris = this.getJson<any[]>('favoris', []);
   }
 
 
@@ -101,19 +106,23 @@ export class HomeComponent {
   }
 
   private loadUserFavoris(): void {
-    const storedUserFavoris = this.isBrowser ? localStorage.getItem('favoris') : null;
-
-    if (storedUserFavoris && storedUserFavoris.length !== 0) {
-      this.userFavoris = JSON.parse(storedUserFavoris || '[]');
-    } else {
-      this.userFavoris = JSON.parse(storedUserFavoris || '[]');
-    }
+    this.userFavoris = this.getJson<any[]>('favoris', []);
   }
 
   private storeUserData(response: any) {
-    if (this.isBrowser) {
-      localStorage.setItem('favoris', JSON.stringify(response.favoris));
+    this.setLocalStorageItem('favoris', JSON.stringify(response.favoris));
+  }
+
+  private preloadBackgroundImage(): void {
+    if (!this.isBrowser) {
+      this.bgLoaded = true;
+      return;
     }
+    const img = new Image();
+    img.src = '/assets/bkg/bkg-home-optimized-1920x1080.webp';
+    img.onload = () => {
+      this.bgLoaded = true;
+    };
   }
 
 
