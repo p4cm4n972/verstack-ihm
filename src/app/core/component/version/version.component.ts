@@ -77,6 +77,13 @@ export class VersionComponent implements OnInit {
 
   isLoading: boolean = true;
 
+  private readonly iconMap: Record<string, { type: string; color: string }> = {
+    language: { type: 'code_blocks', color: 'icon-language' },
+    framework: { type: 'home_repair_service', color: 'icon-framework' },
+    tools: { type: 'construction', color: 'icon-tools' },
+    database: { type: 'storage', color: 'icon-database' },
+  };
+
   constructor(
     private _langagesService: LangagesService,
     private authService: AuthenticationService,
@@ -280,21 +287,24 @@ export class VersionComponent implements OnInit {
     return endSupport;
   }
 
+  private getMonthsLeft(releaseDate: string, supportTime: number): number {
+    if (!supportTime) {
+      return Infinity;
+    }
+    const release = parseISO(releaseDate);
+    const now = new Date();
+    return supportTime - differenceInMonths(now, release);
+  }
+
   getSupportPercentageFromDuration(
     releaseDateStr: string,
     supportTimeMonths: number
   ): number {
     const releaseDate = new Date(releaseDateStr);
-    const today = new Date();
+    const diffInMonths = differenceInMonths(new Date(), releaseDate);
 
-    const totalMonths = supportTimeMonths;
-
-    const diffInMonths =
-      (today.getFullYear() - releaseDate.getFullYear()) * 12 +
-      (today.getMonth() - releaseDate.getMonth());
-
-    const remainingMonths = Math.max(0, totalMonths - diffInMonths);
-    const ratio = 100 - (remainingMonths / totalMonths) * 100;
+    const remainingMonths = Math.max(0, supportTimeMonths - diffInMonths);
+    const ratio = 100 - (remainingMonths / supportTimeMonths) * 100;
 
     if (ratio === 0) { return 1 }
 
@@ -305,11 +315,8 @@ export class VersionComponent implements OnInit {
 
 
   getSupportColor(releaseDate: string, supportTime: number): string {
-    const release = parseISO(releaseDate);
-    const now = new Date();
-    const totalMonths = supportTime;
-    const monthsPassed = differenceInMonths(now, release);
-    const monthsLeft = totalMonths - monthsPassed;
+    const monthsLeft = this.getMonthsLeft(releaseDate, supportTime);
+
     if (supportTime == null || supportTime === 0) {
       return 'support-primary'; // 🟢 OK
     }
@@ -326,39 +333,21 @@ export class VersionComponent implements OnInit {
   }
 
   getIconType(domain: string[]): string | undefined {
-    if (domain.includes('language')) {
-      return 'code_blocks';
-    } else if (domain.includes('framework')) {
-      return 'home_repair_service';
-    } else if (domain.includes('tools')) {
-      return 'construction';
-    } else if (domain.includes('database')) {
-      return 'storage';
-    }
-    return undefined;
-
+    return domain
+      .map((d) => this.iconMap[d]?.type)
+      .find((v) => !!v);
   }
 
   getIconColor(domain: string[]): string {
-    if (domain.includes('language')) {
-      return 'icon-language';
-    } else if (domain.includes('framework')) {
-      return 'icon-framework';
-    }
-    else if (domain.includes('tools')) {
-      return 'icon-tools';
-    }
-    else if (domain.includes('database')) {
-      return 'icon-database';
-    }
-    return '';
+    return (
+      domain
+        .map((d) => this.iconMap[d]?.color)
+        .find((v) => !!v) || ''
+    );
   }
 
   getSupportTooltip(releaseDate: string, supportTime: number, type: string): string {
-    const release = parseISO(releaseDate);
-    const now = new Date();
-    const monthsPassed = differenceInMonths(now, release);
-    const monthsLeft = supportTime - monthsPassed;
+    const monthsLeft = this.getMonthsLeft(releaseDate, supportTime);
 
     if (supportTime === 0 || supportTime === null || supportTime === undefined) {
       return 'Living Standard';
