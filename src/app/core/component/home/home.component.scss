@@ -3,11 +3,18 @@
   flex-direction: column;
   min-height: 100vh;
   color: white;
+  opacity: 0;
+  transition: opacity 0.8s ease-in;
   background-image: url('/assets/bkg/bkg-home-optimized-1920x1080.webp');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+}
+
+.container.bg-loaded {
+  opacity: 1;
+  background-image: url('/assets/bkg/bkg-home-optimized-1920x1080.webp');
 }
 
 .row {
