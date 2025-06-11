@@ -1,4 +1,5 @@
-import { inject, Injectable } from '@angular/core';
+import { inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import {
   HttpErrorResponse,
   HttpEvent,
@@ -13,11 +14,12 @@ import { AuthenticationService } from '../services/authentication.service';
 
 export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>>{
 
-
+  const platformId = inject(PLATFORM_ID);
+  const isBrowser = isPlatformBrowser(platformId);
   const refresh = inject(AuthenticationService).refreshToken();
- 
-    
-    const accessToken = localStorage.getItem('access_token');
+
+
+    const accessToken = isBrowser ? localStorage.getItem('access_token') : null;
 
     let request = req;
     if (accessToken) {

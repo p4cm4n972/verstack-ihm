@@ -1,5 +1,6 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -7,10 +8,14 @@ import { Observable } from 'rxjs';
 })
 export class JwtInterceptorService implements HttpInterceptor {
 
-  constructor() { }
+  private isBrowser: boolean;
+
+  constructor(@Inject(PLATFORM_ID) platformId: Object) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem('access_token'); // Assure-toi de stocker correctement le token
+    const token = this.isBrowser ? localStorage.getItem('access_token') : null; // Assure-toi de stocker correctement le token
 
     if (token) {
       req = req.clone({
