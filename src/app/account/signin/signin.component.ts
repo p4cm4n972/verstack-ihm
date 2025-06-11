@@ -15,7 +15,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
-import { Component, EventEmitter, inject, Output, ViewEncapsulation } from '@angular/core';
+import { Component, EventEmitter, inject, Output, ViewEncapsulation, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TermesComponent } from '../../composant/termes/termes.component';
@@ -23,6 +23,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import {MatRadioModule} from '@angular/material/radio';
+import { JobListService } from '../../services/job-list.service';
 
 @Component({
   selector: 'app-signin',
@@ -44,7 +45,7 @@ import {MatRadioModule} from '@angular/material/radio';
   styleUrl: './signin.component.scss',
   encapsulation: ViewEncapsulation.None,
 })
-export class SigninComponent {
+export class SigninComponent implements OnInit {
   @Output() signUpComplete = new EventEmitter<void>();
   
   readonly dialog = inject(MatDialog);
@@ -63,89 +64,16 @@ export class SigninComponent {
   }
 
   signupForm: FormGroup;
-  jobList: string[] = [
-    'Développeur Frontend',
-    'Développeur Backend',
-    'Développeur Fullstack',
-    'Développeur Mobile',
-    'Développeur JavaScript',
-    'Développeur Python',
-    'Développeur Java',
-    'Développeur .NET',
-    'Développeur PHP',
-    'Développeur Go',
-    'Développeur Rust',
-    'Développeur C/C++',
-    'Développeur Swift',
-    'Développeur Kotlin',
-    'Développeur Blockchain',
-    'Développeur Smart Contract',
-    'Ingénieur DevOps',
-    'Architecte Cloud',
-    'Ingénieur Cloud',
-    'Architecte Logiciel',
-    'Data Scientist',
-    'Data Engineer',
-    'Data Analyst',
-    'Machine Learning Engineer',
-    'Consultant Big Data',
-    'Ingénieur IA (Intelligence Artificielle)',
-    'Administrateur Système et Réseaux',
-    'Ingénieur Sécurité Informatique',
-    "Pentester (Testeur d'intrusion)",
-    'Consultant Cybersécurité',
-    'Administrateur Base de Données',
-    'Analyste Sécurité',
-    'Product Owner',
-    'Scrum Master',
-    'Chef de Projet IT',
-    'UX/UI Designer',
-    'Designer Graphique',
-    'Spécialiste Accessibilité Web',
-    'Webmaster',
-    'Expert SEO',
-    'Ingénieur Réseaux',
-    'Responsable Support Informatique',
-    'Analyste Fonctionnel',
-    'Testeur Logiciel',
-    'Automatisation des Tests QA',
-    'Ingénieur Virtualisation',
-    'Ingénieur IoT (Internet des Objets)',
-    'Technicien Informatique',
-    'Rédacteur Technique',
-    'Community Manager',
-    'Growth Hacker',
-    'Spécialiste No-Code/Low-Code',
-    'Game Developer',
-    'Concepteur de Jeux Vidéo',
-    'Ingénieur VR/AR (Réalité Virtuelle/Augmentée)',
-    'Spécialiste IT Freelance',
-  ];
-  experienceList: string[] = [
-    '0-1 an',
-    '2-3 ans',
-    '4-5 ans',
-    '6-10 ans',
-    '10 ans et plus',
-  ];
-  ageRanges: string[] = [
-    '18-25 ans',
-    '26-35 ans',
-    '36-45 ans',
-    '46 ans et plus',
-  ];
-  salaryRanges: string[] = [
-    '20k€ - 30k€',
-    '31k€ - 40k€',
-    '41k€ - 50k€',
-    '51k€ - 70k€',
-    '70k€ et plus',
-  ];
+  jobList: string[] = [];
+  experienceList: string[] = [];
+  ageRanges: string[] = [];
+  salaryRanges: string[] = [];
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private jobListService: JobListService
   ) {
     this.signupForm = this.fb.group(
       {
@@ -171,6 +99,15 @@ export class SigninComponent {
       },
       { validators: passwordMatchValidator }
     );
+  }
+
+  ngOnInit(): void {
+    this.jobListService.getAllData().subscribe((data) => {
+      this.jobList = data.jobList;
+      this.experienceList = data.experienceList;
+      this.ageRanges = data.ageRanges;
+      this.salaryRanges = data.salaryRanges;
+    });
   }
 
   onSignup() {
