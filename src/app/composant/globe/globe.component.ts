@@ -21,7 +21,7 @@ export class GlobeComponent implements OnInit, AfterViewInit {
   private logos: HTMLImageElement[] = [];
   private points: { x: number, y: number, z: number, img: HTMLImageElement }[] = [];
   private angleY = 0;
-  private images: any[] = []
+  private images: string[] = [];
   private isBrowser: boolean;
   loading$ = new BehaviorSubject<boolean>(true);
   loadingProgress$ = new BehaviorSubject<number>(0);
@@ -62,21 +62,28 @@ export class GlobeComponent implements OnInit, AfterViewInit {
 
   private loadImages(urls: string[]): void {
     if (!this.isBrowser) return;
-    urls.forEach(url => {
+
+    this.totalImages = urls.length;
+
+    const createImage = (url: string) => new Promise<HTMLImageElement>((resolve, reject) => {
       const img = new Image();
-      this.totalImages = urls.length;
       img.src = url;
-      img.onload = () => {
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+    });
+
+    const promises = urls.map(url =>
+      createImage(url).then(img => {
         this.logos.push(img);
         this.loadedImages++;
         const percent = Math.round((this.loadedImages / this.totalImages) * 100);
         this.loadingProgress$.next(percent);
-        if (this.loadedImages === this.totalImages) {
-          // setTimeout(() => this.onAllImagesLoaded(), 1000);
-          this.onAllImagesLoaded();
-        }
-      };
-    });
+        return img;
+      })
+    );
+
+    Promise.all(promises).then(() => this.onAllImagesLoaded())
+      .catch(err => console.error('Error loading images', err));
   }
 
 
