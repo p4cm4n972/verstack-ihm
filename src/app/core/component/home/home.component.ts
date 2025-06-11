@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { MatTabsModule } from '@angular/material/tabs';
 import { GlobeComponent } from '../../../composant/globe/globe.component';
 import { Router, RouterModule } from '@angular/router';
@@ -28,14 +29,18 @@ export class HomeComponent {
 
 
 
+  private isBrowser: boolean;
+
   constructor(
     private authService: AuthenticationService,
     private router: Router,
     private title: Title, private meta: Meta,
     private _langagesService: LangagesService,
     private profileService: ProfileService,
-    private seo: SeoService
-  ) { 
+    private seo: SeoService,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
     this.authStatus$ = this.authService.getAuthStatus();
   }
 
@@ -44,7 +49,7 @@ export class HomeComponent {
       title: 'Accueil – Verstack.io',
       description: 'Découvrez les meilleurs outils et stacks pour développeurs modernes.',
       keywords: 'verstack, langages, outils, développeurs, Angular, React',
-      image: `${window.location.origin}/assets/slider/slider-1.jpg`,
+      image: this.isBrowser ? `${window.location.origin}/assets/slider/slider-1.jpg` : undefined,
       url: 'https://verstack.io/home'
     });
 
@@ -63,7 +68,7 @@ export class HomeComponent {
       }
     });
 
-    const storedUserData = localStorage.getItem('user');
+    const storedUserData = this.isBrowser ? localStorage.getItem('user') : null;
     if (storedUserData) {
       this.userData = JSON.parse(storedUserData);
     } else {
@@ -71,7 +76,7 @@ export class HomeComponent {
     }
 
     // Always initialize userFavoris as an array to avoid null issues
-    const storedUserFavoris = localStorage.getItem('favoris');
+    const storedUserFavoris = this.isBrowser ? localStorage.getItem('favoris') : null;
     if (storedUserFavoris) {
       try {
         this.userFavoris = JSON.parse(storedUserFavoris) || [];
@@ -96,17 +101,19 @@ export class HomeComponent {
   }
 
   private loadUserFavoris(): void {
-    const storedUserFavoris = localStorage.getItem('favoris');
+    const storedUserFavoris = this.isBrowser ? localStorage.getItem('favoris') : null;
 
     if (storedUserFavoris && storedUserFavoris.length !== 0) {
-      this.userFavoris = JSON.parse(localStorage.getItem('favoris') || '[]');
+      this.userFavoris = JSON.parse(storedUserFavoris || '[]');
     } else {
-      this.userFavoris = JSON.parse(localStorage.getItem('favoris') || '[]');
+      this.userFavoris = JSON.parse(storedUserFavoris || '[]');
     }
   }
 
   private storeUserData(response: any) {
-    localStorage.setItem('favoris', JSON.stringify(response.favoris));
+    if (this.isBrowser) {
+      localStorage.setItem('favoris', JSON.stringify(response.favoris));
+    }
   }
 
 
