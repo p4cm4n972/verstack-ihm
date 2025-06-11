@@ -8,20 +8,19 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "generate-version": "ts-node src/scripts/set-version.js"
-
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "^19.1.0",
-    "@angular/cdk": "^19.1.1",
-    "@angular/common": "^19.1.0",
-    "@angular/compiler": "^19.1.0",
-    "@angular/core": "^19.1.0",
-    "@angular/forms": "^19.1.0",
-    "@angular/material": "^19.1.1",
-    "@angular/platform-browser": "^19.1.0",
-    "@angular/platform-browser-dynamic": "^19.1.0",
-    "@angular/router": "^19.1.0",
+    "@angular/animations": "^20.0.2",
+    "@angular/cdk": "^20.0.3",
+    "@angular/common": "^20.0.2",
+    "@angular/compiler": "^20.0.2",
+    "@angular/core": "^20.0.2",
+    "@angular/forms": "^20.0.2",
+    "@angular/material": "^20.0.3",
+    "@angular/platform-browser": "^20.0.2",
+    "@angular/platform-browser-dynamic": "^20.0.2",
+    "@angular/router": "^20.0.2",
     "chart.js": "^4.4.7",
     "date-fns": "^4.1.0",
     "jwt-decode": "^4.0.0",
@@ -30,9 +29,9 @@
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^19.1.4",
-    "@angular/cli": "^19.1.4",
-    "@angular/compiler-cli": "^19.1.0",
+    "@angular-devkit/build-angular": "^20.0.1",
+    "@angular/cli": "^20.0.1",
+    "@angular/compiler-cli": "^20.0.2",
     "@types/date-fns": "^2.5.3",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.5.0",
@@ -41,6 +40,6 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.7.2"
+    "typescript": "~5.8.3"
   }
 }

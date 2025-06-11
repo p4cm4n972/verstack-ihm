@@ -8,7 +8,7 @@
 ## 🌐 Technologies
 
 ### Frontend
-- Angular 17
+- Angular 20
 - Angular Material
 - RxJS
 - CSS pur (thème rétro-console)
@@ -121,7 +121,7 @@ app.use('/assets', express.static(join(__dirname, '..', 'public/assets')));
 - `<app-shopify-buy-button>`
 - `<app-globe>`
 - `<mat-paginator>`
-- `@if`, `@let` (Angular 17+ syntaxe déclarative)
+- `@if`, `@let` (Angular 20+ syntaxe déclarative)
 
 ---
 
