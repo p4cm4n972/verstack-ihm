@@ -1,14 +1,28 @@
-module.exports = function(config) {
-    config.set({
-        frameworks: ['jasmine'],
-        files: [
-            'src/app/hello-world.component.spec.ts'
-        ],
-        preprocessors: {
-            'src/app/hello-world.component.spec.ts': ['webpack']
-        },
-        reporters: ['progress'],
-        browsers: ['Chrome'],
-        singleRun: true
-    });
+module.exports = function (config) {
+  config.set({
+    basePath: '',
+    frameworks: ['jasmine', '@angular-devkit/build-angular'],
+    plugins: [
+      require('karma-jasmine'),
+      require('karma-chrome-launcher'),
+      require('karma-jasmine-html-reporter'),
+      require('karma-coverage'),
+      require('@angular-devkit/build-angular/plugins/karma')
+    ],
+    client: {
+      jasmine: {}
+    },
+    jasmineHtmlReporter: {
+      suppressAll: true
+    },
+    coverageReporter: {
+      dir: require('path').join(__dirname, 'coverage'),
+      subdir: '.',
+      reporters: [{ type: 'html' }, { type: 'text-summary' }]
+    },
+    reporters: ['progress', 'kjhtml'],
+    browsers: ['ChromeHeadless'],
+    singleRun: true,
+    restartOnFileChange: true
+  });
 };

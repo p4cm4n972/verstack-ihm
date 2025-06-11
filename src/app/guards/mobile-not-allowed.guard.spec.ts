@@ -1,17 +1,33 @@
 import { TestBed } from '@angular/core/testing';
-import { CanActivateFn } from '@angular/router';
+import { Router } from '@angular/router';
+import { PLATFORM_ID } from '@angular/core';
 
 import { mobileNotAllowedGuard } from './mobile-not-allowed.guard';
 
 describe('mobileNotAllowedGuard', () => {
-  const executeGuard: CanActivateFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => mobileNotAllowedGuard(...guardParameters));
+  let guard: mobileNotAllowedGuard;
+  let router: jasmine.SpyObj<Router>;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    router = jasmine.createSpyObj('Router', ['navigate']);
+    TestBed.configureTestingModule({
+      providers: [
+        mobileNotAllowedGuard,
+        { provide: Router, useValue: router },
+        { provide: PLATFORM_ID, useValue: 'browser' }
+      ]
+    });
+    guard = TestBed.inject(mobileNotAllowedGuard);
   });
 
-  it('should be created', () => {
-    expect(executeGuard).toBeTruthy();
+  it('should allow desktop navigation', () => {
+    spyOnProperty(window.navigator, 'userAgent', 'get').and.returnValue('Mozilla');
+    expect(guard.canActivate()).toBeTrue();
+  });
+
+  it('should block mobile navigation', () => {
+    spyOnProperty(window.navigator, 'userAgent', 'get').and.returnValue('iPhone');
+    expect(guard.canActivate()).toBeFalse();
+    expect(router.navigate).toHaveBeenCalledWith(['/mobile-not-allowed']);
   });
 });
