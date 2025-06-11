@@ -13,4 +13,12 @@ describe('DeviceService', () => {
   it('should be created', () => {
     expect(service).toBeTruthy();
   });
+
+  it('should detect mobile user agent', () => {
+    Object.defineProperty(window.navigator, 'userAgent', {
+      value: 'iPhone',
+      configurable: true,
+    });
+    expect(service.isMobile()).toBeTrue();
+  });
 });
