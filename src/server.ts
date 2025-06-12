@@ -13,6 +13,13 @@ const app = express();
 const angularApp = new AngularNodeAppEngine();
 
 /**
+ * Explicitly expose the ads.txt file at the root
+ */
+app.get('/ads.txt', (_req, res) => {
+  res.sendFile(join(browserDistFolder, 'ads.txt'));
+});
+
+/**
  * Example Express Rest API endpoints can be defined here.
  * Uncomment and define endpoints as necessary.
  *
