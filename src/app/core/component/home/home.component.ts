@@ -71,7 +71,7 @@ export class HomeComponent {
     this.preloadBackgroundImage();
     this.seo.updateMetaData({
       title: 'Accueil – Verstack.io',
-      description: 'Découvrez les meilleurs outils et stacks pour développeurs modernes.',
+      description: 'Découvrez les meilleurs outils et stacks pour développeurs modernes.Maintenez vos applications: suivez régulièrement les versions de langage et de framework ',
       keywords: 'verstack, langages, outils, développeurs, Angular, React',
       image: this.isBrowser ? `${window.location.origin}/assets/slider/slider-1.jpg` : undefined,
       url: 'https://verstack.io/home'
