@@ -6,11 +6,20 @@ import {
 } from '@angular/ssr/node';
 import express from 'express';
 import { join } from 'node:path';
+import { existsSync } from 'node:fs';
 
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
 const angularApp = new AngularNodeAppEngine();
+
+/**
+ * Explicitly expose the ads.txt file at the root
+ */
+app.get('/ads.txt', (_req, res) => {
+  const file = join(browserDistFolder, 'ads.txt');
+  res.sendFile(existsSync(file) ? file : join(import.meta.dirname, '../..', 'ads.txt'));
+});
 
 /**
  * Example Express Rest API endpoints can be defined here.
