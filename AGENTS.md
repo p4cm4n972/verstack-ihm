@@ -4,6 +4,7 @@ This project uses Angular and TypeScript.
 
 ## Setup
 - Ensure Angular CLI is installed globally. If `ng` is missing, run `npm install -g @angular/cli` before testing.
+- Ensure `google-chrome-stable` is installed on your system. On Ubuntu, you can install it with `sudo apt install google-chrome-stable`.
 - Make sure `firefox` and `karma-firefox-launcher` are installed for running tests in Firefox. Install the launcher with `npm install --save-dev karma-firefox-launcher`.
 - Ensure `karma-chrome-launcher` is installed for running tests in Chrome. Install it with `npm install --save-dev karma-chrome-launcher`.
 - Ensure the Chrome browser binary is accessible on your system. If you encounter issues running tests in Chrome, verify that Chrome is installed and its path is available in your system's environment variables.
