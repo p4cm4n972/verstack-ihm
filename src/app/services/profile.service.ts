@@ -1,5 +1,6 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ErrorMessageStrategy, DefaultErrorStrategy, strategyMap } from '../shared/strategies/error-message.strategy';
 import { catchError, Observable, tap, throwError } from 'rxjs';
 
 @Injectable({
@@ -38,39 +39,19 @@ export class ProfileService {
         }
       }),
       catchError((error: HttpErrorResponse) => {
-        console.error('erreur')
+        console.error('erreur');
         let errorMessage = 'Une erreur inconnue est survenue.';
-    
-    if (error.error instanceof ErrorEvent) {
-      // Erreur côté client
-      errorMessage = `Erreur client : ${error.error.message}`;
-    } else {
-      // Erreur côté serveur
-      switch (error.status) {
-        case 400:
-          errorMessage = 'Requête invalide. Vérifiez les données envoyées.';
-          break;
-        case 401:
-          errorMessage = 'Non autorisé. Veuillez vous connecter.';
-          break;
-        case 403:
-          errorMessage = 'Accès refusé.';
-          break;
-        case 404:
-          errorMessage = "Utilisateur introuvable.";
-          break;
-        case 500:
-          errorMessage = 'Erreur serveur. Veuillez réessayer plus tard.';
-          break;
-        default:
-          errorMessage = `Erreur ${error.status}: ${error.message}`;
-      }
-    }
 
-    // Affichage d'une alerte ou d'un message d'erreur dans l'UI
-    alert(errorMessage);
+        if (error.error instanceof ErrorEvent) {
+          errorMessage = `Erreur client : ${error.error.message}`;
+        } else {
+          const strategy: ErrorMessageStrategy =
+            strategyMap.get(error.status) || new DefaultErrorStrategy();
+          errorMessage = strategy.getMessage(error);
+        }
 
-    return throwError(() => new Error(errorMessage));
+        alert(errorMessage);
+        return throwError(() => new Error(errorMessage));
       })
       
     );
