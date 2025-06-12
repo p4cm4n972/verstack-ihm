@@ -19,6 +19,8 @@ const angularApp = new AngularNodeAppEngine();
 app.get('/ads.txt', (_req, res) => {
   const file = join(browserDistFolder, 'ads.txt');
   res.sendFile(existsSync(file) ? file : join(import.meta.dirname, '../..', 'ads.txt'));
+  res.sendFile(join(browserDistFolder, 'ads.txt'));
+
 });
 
 /**
