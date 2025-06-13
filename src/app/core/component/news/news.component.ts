@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, PLATFORM_ID, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, PLATFORM_ID, inject, OnInit } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -64,6 +64,7 @@ export class NewsComponent implements OnInit {
     private articlesService: ArticlesService,
     private sanitizer: DomSanitizer,
     private seo: SeoService,
+    private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -85,6 +86,7 @@ export class NewsComponent implements OnInit {
       next: (data) => {
         this.articles = data;
         this.filteredArticles = data;
+        this.cdr.markForCheck();
       },
       error: (err) =>
         console.error('Erreur lors du chargement des articles : ', err),
