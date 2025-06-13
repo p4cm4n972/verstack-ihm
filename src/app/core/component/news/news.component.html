@@ -24,7 +24,11 @@
             </div>
 
             <div class="article-grid">
+<<<<<<< oooq65-codex/optimiser-le-composant-news
+                @for(article of filteredArticles; track trackById) {
+=======
                 @for(article of filteredArticles; track trackById(i, article); let i = $index) {
+>>>>>>> master
                     <ng-container>
                     <mat-card class="article-card" appearance="outlined">
                         <!-- Bouton "open in new" flottant -->

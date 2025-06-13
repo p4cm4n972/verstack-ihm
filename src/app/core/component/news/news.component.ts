@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, PLATFORM_ID, inject, OnInit } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -57,19 +58,24 @@ export class NewsComponent implements OnInit {
   articles: any[] = [];
   filteredArticles: any[] = [];
 
+  private isBrowser: boolean;
+
   constructor(
     private articlesService: ArticlesService,
     private sanitizer: DomSanitizer,
-    private seo: SeoService
-  ) {}
+    private seo: SeoService,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
+  }
 
   ngOnInit(): void {
     this.seo.updateMetaData({
       title: 'Actualités & Articles – Verstack.io',
       description: 'Explorez les dernières actualités, articles, notes et stories sur les outils et stacks pour développeurs modernes. Restez informé avec Verstack.io.',
       keywords: 'verstack, actualités, articles, outils, développeurs, Angular, React, stacks, frameworks, programmation',
-      image: `${window.location.origin}/assets/slider/slider-1.jpg`,
-      url: `${window.location.origin}/news`
+      image: this.isBrowser ? `${window.location.origin}/assets/slider/slider-1.jpg` : undefined,
+      url: 'https://verstack.io/news'
     });
     this.loadArticles();
   }
