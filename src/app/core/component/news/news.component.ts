@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -44,6 +44,7 @@ interface Article {
   ],
   templateUrl: './news.component.html',
   styleUrl: './news.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewsComponent implements OnInit {
   readonly dialog = inject(MatDialog);
@@ -117,7 +118,11 @@ export class NewsComponent implements OnInit {
   openArticlePage(article: any) {
     this.router.navigate(['/news', article._id]);
   }
-  
+
+  trackById(index: number, article: any): string {
+    return article._id;
+  }
+
 
   filterByTag(elm: any) {}
 }
