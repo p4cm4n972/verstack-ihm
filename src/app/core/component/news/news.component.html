@@ -24,7 +24,8 @@
             </div>
 
             <div class="article-grid">
-                @for(article of filteredArticles; track trackById) {
+
+                @for(article of filteredArticles; track trackById(i, article); let i = $index) {
                     <ng-container>
                     <mat-card class="article-card" appearance="outlined">
                         <!-- Bouton "open in new" flottant -->

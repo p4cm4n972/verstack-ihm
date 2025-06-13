@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, Inject, PLATFORM_ID } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FieldService } from '../../services/field.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -12,7 +12,7 @@ import { CommonModule } from '@angular/common';
   styleUrl: './globe.component.scss',
   standalone: true
 })
-export class GlobeComponent implements OnInit, AfterViewInit {
+export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('globeCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
   @ViewChild('bootScreen') bootScreenRef!: ElementRef<HTMLDivElement>;
@@ -21,6 +21,7 @@ export class GlobeComponent implements OnInit, AfterViewInit {
   private logos: HTMLImageElement[] = [];
   private points: { x: number, y: number, z: number, img: HTMLImageElement }[] = [];
   private angleY = 0;
+  private animationFrameId: number | null = null;
   private images: string[] = [];
   private isBrowser: boolean;
   loading$ = new BehaviorSubject<boolean>(true);
@@ -53,7 +54,7 @@ export class GlobeComponent implements OnInit, AfterViewInit {
       this.ctx = canvas.getContext('2d')!;
       canvas.width = 600;
       canvas.height = 600;
-      this.animate();
+      this.animationFrameId = requestAnimationFrame(() => this.animate());
     }
   }
 
@@ -107,7 +108,7 @@ export class GlobeComponent implements OnInit, AfterViewInit {
 
 
   private animate(): void {
-    requestAnimationFrame(() => this.animate());
+    this.animationFrameId = requestAnimationFrame(() => this.animate());
     this.draw();
     this.angleY += 0.005;
   }
@@ -164,6 +165,12 @@ export class GlobeComponent implements OnInit, AfterViewInit {
 
   displayLoadingLevel(time: any) {
     return Math.round(time)
+  }
+
+  ngOnDestroy(): void {
+    if (this.animationFrameId !== null) {
+      cancelAnimationFrame(this.animationFrameId);
+    }
   }
 
   onBootAnimationEnd() {
