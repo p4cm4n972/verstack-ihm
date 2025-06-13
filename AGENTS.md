@@ -1,9 +1,11 @@
 # AGENT INSTRUCTIONS
 
+
 This project uses Angular and TypeScript.
 
 ## Setup
 - Ensure Angular CLI is installed globally. If `ng` is missing, run `npm install -g @angular/cli` before testing.
+- If you see the error "Could not find the '@angular-devkit/build-angular:karma' builder", install it with `npm install --save-dev @angular-devkit/build-angular`.
 - Ensure `google-chrome-stable` is installed on your system. On Ubuntu, you can install it with `sudo apt install google-chrome-stable`.
 - Make sure `firefox` and `karma-firefox-launcher` are installed for running tests in Firefox. Install the launcher with `npm install --save-dev karma-firefox-launcher`.
 - Ensure `karma-chrome-launcher` is installed for running tests in Chrome. Install it with `npm install --save-dev karma-chrome-launcher`.
