@@ -1,11 +1,10 @@
-import { AfterViewInit, ApplicationRef, Component, inject, Injector, Input, OnInit, runInInjectionContext, Inject, PLATFORM_ID } from '@angular/core';
+import { AfterViewInit, ApplicationRef, Component, inject, Injector, Input, OnInit, runInInjectionContext } from '@angular/core';
 import { ShopifyBuyButtonComponent } from '../shopify-buy-button/shopify-buy-button.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-shopify-modal-product',
@@ -24,7 +23,8 @@ export class ShopifyModalProductComponent implements AfterViewInit, OnInit {
   productId!: string | null;
   componentId!: string | null;
   component!: string;
-  constructor(@Inject(PLATFORM_ID) private platformId: Object, @Inject(DOCUMENT) private document: Document) {}
+  constructor() {
+  }
 
 
   ngOnInit(): void {
@@ -43,44 +43,33 @@ export class ShopifyModalProductComponent implements AfterViewInit, OnInit {
  
 
 
-  ngAfterViewInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
+    ngAfterViewInit(): void {
       console.log('ngAfterViewInit');
       this.initBuyButton();
-    }
-  }
+}
   
-  private initBuyButton() {
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
-    if ((window as any).ShopifyBuy) {
-      if ((window as any).ShopifyBuy.UI) {
-        this.createComponent();
+    private initBuyButton() {
+      if ((window as any).ShopifyBuy) {
+        if ((window as any).ShopifyBuy.UI) {
+          this.createComponent();
+        } else {
+          this.loadScript();
+        }
       } else {
         this.loadScript();
       }
-    } else {
-      this.loadScript();
     }
-  }
   
-  private loadScript() {
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
+    private loadScript() {
+      const script = document.createElement('script');
+      script.async = true;
+      script.src = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
+      script.onload = () => this.createComponent();
+      document.head.appendChild(script);
     }
-    const script = this.document.createElement('script');
-    script.async = true;
-    script.src = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
-    script.onload = () => this.createComponent();
-    this.document.head.appendChild(script);
-  }
   
-  private createComponent() {
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
-    const ShopifyBuy = (window as any).ShopifyBuy;
+    private createComponent() {
+      const ShopifyBuy = (window as any).ShopifyBuy;
       const client = ShopifyBuy.buildClient({
         domain: 's8h1eq-f8.myshopify.com',
         storefrontAccessToken: '232f9b875a9e591cc075e509677c130e',
@@ -89,7 +78,7 @@ export class ShopifyModalProductComponent implements AfterViewInit, OnInit {
       ShopifyBuy.UI.onReady(client).then( (ui: any) => {
         ui.createComponent('product', {
           id: `${this.data.id}`,
-          node: this.document.getElementById(`${this.component}`),
+          node: document.getElementById(`${this.component}`),
           moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
           options: {
     "product": {

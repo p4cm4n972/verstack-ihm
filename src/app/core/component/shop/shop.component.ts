@@ -1,5 +1,5 @@
 // shop.component.ts
-import { AfterViewInit, Component, inject, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ShopifyBuyButtonComponent } from '../../../composant/shopify-buy-button/shopify-buy-button.component';
@@ -10,10 +10,9 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent, MatPaginatorIntl } from '@angular/material/paginator';
-import { CommonModule, isPlatformBrowser, DOCUMENT } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { SeoService } from '../../../services/seo.service';
 import { ProductsService } from '../../../services/products.service';
-import { ShopifyLoaderService } from '../../../services/shopify-loader.service';
 
 export function getFrenchPaginatorIntl(): MatPaginatorIntl {
   const paginatorIntl = new MatPaginatorIntl();
@@ -69,7 +68,7 @@ export function getFrenchPaginatorIntl(): MatPaginatorIntl {
  * @param {Meta} metaService - Angular service for managing meta tags.
  * 
  * @method ngOnInit Initializes the component, sets up the product list, and updates the paged products.
- * @method ngAfterViewInit Loads the Shopify script and ensures that all <aside> elements remain visible by observing style changes.
+ * @method ngAfterViewInit Ensures that all <aside> elements remain visible by observing style changes.
  * @method trackById Used for Angular's ngFor trackBy to optimize rendering by product id.
  * @method gotoItems Navigates to the product detail page for a given product.
  * @method getProduitsFiltres Returns the filtered list of products based on priority, category, and theme.
@@ -103,11 +102,7 @@ export class ShopComponent implements AfterViewInit, OnInit {
 
 
 
-  constructor(private titleService: Title, private metaService: Meta, private seo: SeoService,
-              private productsService: ProductsService,
-              private shopifyLoader: ShopifyLoaderService,
-              @Inject(PLATFORM_ID) private platformId: Object,
-              @Inject(DOCUMENT) private document: Document) { }
+  constructor(private titleService: Title, private metaService: Meta, private seo: SeoService, private productsService: ProductsService) { }
 
   ngOnInit(): void {
     this.seo.updateMetaData({
@@ -119,29 +114,18 @@ export class ShopComponent implements AfterViewInit, OnInit {
   });
     this.products = this.productsService.getProducts();
 
-
+    
     this.updatePagedProducts();
 
-    if (isPlatformBrowser(this.platformId)) {
-      setTimeout(() => {
-        if (!this.isLoadingAll) {
-          this.isLoadingAll = true;
-        }
-      }, 1000);
-    }
 
+    
 
 
   }
 
   ngAfterViewInit() {
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
 
-    this.shopifyLoader.load().catch(() => {});
-
-    const asides = this.document.querySelectorAll('aside');
+    const asides = document.querySelectorAll('aside');
     if (!asides) return;
 
     asides.forEach((aside: any) => {
