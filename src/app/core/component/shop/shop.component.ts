@@ -1,5 +1,5 @@
 // shop.component.ts
-import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ShopifyBuyButtonComponent } from '../../../composant/shopify-buy-button/shopify-buy-button.component';
@@ -10,7 +10,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent, MatPaginatorIntl } from '@angular/material/paginator';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { SeoService } from '../../../services/seo.service';
 import { ProductsService } from '../../../services/products.service';
 
@@ -102,7 +102,8 @@ export class ShopComponent implements AfterViewInit, OnInit {
 
 
 
-  constructor(private titleService: Title, private metaService: Meta, private seo: SeoService, private productsService: ProductsService) { }
+  constructor(private titleService: Title, private metaService: Meta, private seo: SeoService, private productsService: ProductsService,
+              @Inject(PLATFORM_ID) private platformId: Object, @Inject(DOCUMENT) private document: Document) { }
 
   ngOnInit(): void {
     this.seo.updateMetaData({
@@ -124,8 +125,11 @@ export class ShopComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
 
-    const asides = document.querySelectorAll('aside');
+    const asides = this.document.querySelectorAll('aside');
     if (!asides) return;
 
     asides.forEach((aside: any) => {

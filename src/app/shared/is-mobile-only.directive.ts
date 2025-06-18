@@ -16,7 +16,7 @@ export class IsMobileOnlyDirective {
   ) { }
 
   ngOnInit() {
-    if (this.deviceService.isMobile()) {
+    if (isPlatformBrowser(this.platformId) && this.deviceService.isMobile()) {
       this.viewContainer.createEmbeddedView(this.templateRef);
     } else {
       this.viewContainer.clear();

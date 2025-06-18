@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { isPlatformServer } from '@angular/common';
 
 interface Article {
   title: string;
@@ -15,14 +16,20 @@ interface Article {
 export class ArticlesService {
 
   private apiUrl = 'api/news';
-  
-  constructor(private http: HttpClient) { }
+
+  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) { }
 
   getArticles(): Observable<Article[]> {
+    if (isPlatformServer(this.platformId)) {
+      return of([]);
+    }
     return this.http.get<Article[]>(`${this.apiUrl}/all`);
   }
 
   getArticleById(id: string): Observable<Article> {
+    if (isPlatformServer(this.platformId)) {
+      return of({} as Article);
+    }
     return this.http.get<Article>(`${this.apiUrl}/${id}`);
   }
 
