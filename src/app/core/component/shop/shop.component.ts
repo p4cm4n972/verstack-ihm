@@ -13,6 +13,7 @@ import { MatPaginatorModule, PageEvent, MatPaginatorIntl } from '@angular/materi
 import { CommonModule, isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { SeoService } from '../../../services/seo.service';
 import { ProductsService } from '../../../services/products.service';
+import { ShopifyLoaderService } from '../../../services/shopify-loader.service';
 
 export function getFrenchPaginatorIntl(): MatPaginatorIntl {
   const paginatorIntl = new MatPaginatorIntl();
@@ -102,10 +103,11 @@ export class ShopComponent implements AfterViewInit, OnInit {
 
 
 
-  constructor(private titleService: Title, private metaService: Meta, private seo: SeoService, private productsService: ProductsService,
+  constructor(private titleService: Title, private metaService: Meta, private seo: SeoService, private productsService: ProductsService, private shopifyLoader: ShopifyLoaderService,
               @Inject(PLATFORM_ID) private platformId: Object, @Inject(DOCUMENT) private document: Document) { }
 
   ngOnInit(): void {
+    this.shopifyLoader.load().catch(() => {});
     this.seo.updateMetaData({
     title: 'Boutique – Red Squiggly',
     description: 'Découvrez la mode geek, inspirée des stacks.',
