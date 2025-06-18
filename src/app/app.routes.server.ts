@@ -12,7 +12,9 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'mentions', renderMode: RenderMode.Prerender },
   { path: 'privacy-policy', renderMode: RenderMode.Prerender },
   { path: 'release', renderMode: RenderMode.Prerender },
-  { path: 'mobile-not-allowed', renderMode: RenderMode.Prerender },
+  // Material components used on this page rely on browser APIs, so we avoid
+  // prerendering to prevent SSR build failures.
+  { path: 'mobile-not-allowed', renderMode: RenderMode.Server },
   { path: 'manifeste', renderMode: RenderMode.Prerender },
   {
     path: '**',
