@@ -7,7 +7,7 @@ import { catchError, Observable, tap, throwError } from 'rxjs';
   providedIn: 'root',
 })
 export class ProfileService {
-  private baseUrl = 'api/users';
+  private baseUrl = '/api/users';
   private header = new HttpHeaders({ 'content-type': 'application/json' });
   
 

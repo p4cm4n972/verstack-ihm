@@ -8,7 +8,7 @@ import { jwtDecode } from 'jwt-decode';
   providedIn: 'root',
 })
 export class AuthenticationService {
-  private baseUrl = 'api/authentication';
+  private baseUrl = '/api/authentication';
   // authStatusSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
 
   private isAuthenticated$ = new BehaviorSubject<boolean>(this.hasValidAccessToken());
@@ -42,7 +42,7 @@ export class AuthenticationService {
             const decodedToken = this.getDecodedToken();
             const userId = decodedToken ? decodedToken.id : '';
             if (userId) {
-              this.http.get(`api/users/${userId}`).subscribe({
+              this.http.get(`/api/users/${userId}`).subscribe({
                 next: (profile: any) => {
                   const favoris = profile.favoris ?? [];
                   this.storage?.setItem('favoris', JSON.stringify(favoris));
@@ -121,8 +121,12 @@ export class AuthenticationService {
   }
 
   getDecodedToken(): any {
+    if (!this.isBrowser) {
+      return {};
+    }
+
     const token = this.getAccessToken();
-    const decodedToken: any = token ? jwtDecode(token) : null;
+    const decodedToken: any = token ? jwtDecode(token) : {};
     this.storage?.setItem('user', decodedToken ? JSON.stringify(decodedToken) : '');
     this.storage?.setItem('userId', decodedToken ? decodedToken.id : '');
     return decodedToken;
@@ -138,21 +142,17 @@ export class AuthenticationService {
 
   getUserData(): string {
     const info = this.getDecodedToken();
-
-    // const userData = localStorage.getItem('user');
-    return info.pseudo ? info.pseudo : '';
+    return info?.pseudo || '';
   }
 
   getUserId(): string {
     const info = this.getDecodedToken();
-
-    // const userData = localStorage.getItem('user');
-    return info.id ? info.id : '';
+    return info?.id || '';
   }
 
   getUserRole(): string {
     const info = this.getDecodedToken();
-    return info.role ? info.role : '';
+    return info?.role || '';
   }
 
   forgotPassword(email: string) {

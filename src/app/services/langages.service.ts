@@ -8,7 +8,7 @@ import { map, Observable } from 'rxjs';
 
 export class LangagesService {
 
-  private apiLangagesUrl = 'api/langages';
+  private apiLangagesUrl = '/api/langages';
 
   constructor(private http: HttpClient) { }
 

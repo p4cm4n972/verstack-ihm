@@ -1,5 +1,13 @@
-import { AfterViewInit, Component, EventEmitter, Inject, Input, Output, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Inject,
+  Input,
+  Output,
+  PLATFORM_ID,
+} from '@angular/core';
+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,8 +28,10 @@ export class ShopifyBuyButtonComponent implements AfterViewInit {
 
 
 
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-  }
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(DOCUMENT) private document: Document,
+  ) {}
 
   ngAfterViewInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -42,11 +52,11 @@ export class ShopifyBuyButtonComponent implements AfterViewInit {
   }
 
   private loadScript() {
-    const script = document.createElement('script');
+    const script = this.document.createElement('script');
     script.async = true;
     script.src = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
     script.onload = () => this.createComponent();
-    document.head.appendChild(script);
+    this.document.head.appendChild(script);
   }
 
   private createComponent() {
@@ -59,7 +69,7 @@ export class ShopifyBuyButtonComponent implements AfterViewInit {
     ShopifyBuy.UI.onReady(client).then((ui: any) => {
       ui.createComponent('product', {
         id: `${this.productId}`,
-        node: document.getElementById(`${this.componentId}`),
+        node: this.document.getElementById(`${this.componentId}`),
         moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
         options: {
           "product": {
@@ -151,7 +161,7 @@ export class ShopifyBuyButtonComponent implements AfterViewInit {
           "toggle": {}
         },
       });
-      const container = document.getElementById(`${this.componentId}`);
+      const container = this.document.getElementById(`${this.componentId}`);
 
       const observer = new MutationObserver(() => {
         const iframe = container?.querySelector('iframe');

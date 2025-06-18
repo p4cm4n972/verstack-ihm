@@ -19,21 +19,24 @@ const angularApp = new AngularNodeAppEngine();
 app.get('/ads.txt', (_req, res) => {
   const file = join(browserDistFolder, 'ads.txt');
   res.sendFile(existsSync(file) ? file : join(import.meta.dirname, '../..', 'ads.txt'));
-  res.sendFile(join(browserDistFolder, 'ads.txt'));
-
 });
 
 /**
- * Example Express Rest API endpoints can be defined here.
- * Uncomment and define endpoints as necessary.
- *
- * Example:
- * ```ts
- * app.get('/api/{*splat}', (req, res) => {
- *   // Handle API request
- * });
- * ```
+ * Basic API endpoints used during server-side rendering.
+ * These stubs prevent errors when the real backend is not
+ * available during the build process.
  */
+app.get('/api/news/all', (_req, res) => {
+  res.json([]);
+});
+
+app.get('/api/news/:id', (_req, res) => {
+  res.json({});
+});
+
+app.get('/api/langages/all', (_req, res) => {
+  res.json([]);
+});
 
 /**
  * Serve static files from /browser

@@ -1,5 +1,6 @@
 // shop.component.ts
-import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ShopifyBuyButtonComponent } from '../../../composant/shopify-buy-button/shopify-buy-button.component';
@@ -102,7 +103,14 @@ export class ShopComponent implements AfterViewInit, OnInit {
 
 
 
-  constructor(private titleService: Title, private metaService: Meta, private seo: SeoService, private productsService: ProductsService) { }
+  constructor(
+    private titleService: Title,
+    private metaService: Meta,
+    private seo: SeoService,
+    private productsService: ProductsService,
+    @Inject(DOCUMENT) private document: Document,
+    @Inject(PLATFORM_ID) private platformId: Object,
+  ) {}
 
   ngOnInit(): void {
     this.seo.updateMetaData({
@@ -124,8 +132,11 @@ export class ShopComponent implements AfterViewInit, OnInit {
   }
 
   ngAfterViewInit() {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
 
-    const asides = document.querySelectorAll('aside');
+    const asides = this.document.querySelectorAll('aside');
     if (!asides) return;
 
     asides.forEach((aside: any) => {
