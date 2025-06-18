@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, EventEmitter, inject, Inject, Input, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, inject, Inject, Input, Output, PLATFORM_ID } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-shopify-buy-button',
@@ -20,14 +21,18 @@ export class ShopifyBuyButtonComponent implements AfterViewInit {
 
 
 
-  constructor() {
-  }
+  constructor(@Inject(PLATFORM_ID) private platformId: Object, @Inject(DOCUMENT) private document: Document) {}
 
   ngAfterViewInit(): void {
-    this.initBuyButton();
+    if (isPlatformBrowser(this.platformId)) {
+      this.initBuyButton();
+    }
   }
 
   private initBuyButton() {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
     if ((window as any).ShopifyBuy) {
       if ((window as any).ShopifyBuy.UI) {
         this.createComponent();
@@ -40,14 +45,20 @@ export class ShopifyBuyButtonComponent implements AfterViewInit {
   }
 
   private loadScript() {
-    const script = document.createElement('script');
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+    const script = this.document.createElement('script');
     script.async = true;
     script.src = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
     script.onload = () => this.createComponent();
-    document.head.appendChild(script);
+    this.document.head.appendChild(script);
   }
 
   private createComponent() {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
     const ShopifyBuy = (window as any).ShopifyBuy;
     const client = ShopifyBuy.buildClient({
       domain: 's8h1eq-f8.myshopify.com',
@@ -57,7 +68,7 @@ export class ShopifyBuyButtonComponent implements AfterViewInit {
     ShopifyBuy.UI.onReady(client).then((ui: any) => {
       ui.createComponent('product', {
         id: `${this.productId}`,
-        node: document.getElementById(`${this.componentId}`),
+        node: this.document.getElementById(`${this.componentId}`),
         moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
         options: {
           "product": {
@@ -149,7 +160,7 @@ export class ShopifyBuyButtonComponent implements AfterViewInit {
           "toggle": {}
         },
       });
-      const container = document.getElementById(`${this.componentId}`);
+      const container = this.document.getElementById(`${this.componentId}`);
 
       const observer = new MutationObserver(() => {
         const iframe = container?.querySelector('iframe');

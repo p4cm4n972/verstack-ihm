@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Field } from '../../../models/field.model';
 import { LangagesService } from '../../../services/langages.service';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -8,7 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ProfileService } from '../../../services/profile.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Observable, tap } from 'rxjs';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { differenceInMonths, parseISO } from 'date-fns';
@@ -88,9 +88,11 @@ export class VersionComponent implements OnInit {
     private _langagesService: LangagesService,
     private authService: AuthenticationService,
     private profileService: ProfileService,
-    private title: Title, private meta: Meta,
+    private title: Title,
+    private meta: Meta,
     private seo: SeoService,
-  ) { }
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   ngOnInit(): void {
     this.seo.updateMetaData({
@@ -111,21 +113,25 @@ export class VersionComponent implements OnInit {
   }
 
   private loadUserData(): void {
-    const storedUserData = localStorage.getItem('user');
-    if (storedUserData) {
-      this.userData = JSON.parse(storedUserData);
-    } else {
-      this.userData = null;
+    if (isPlatformBrowser(this.platformId)) {
+      const storedUserData = localStorage.getItem('user');
+      if (storedUserData) {
+        this.userData = JSON.parse(storedUserData);
+      } else {
+        this.userData = null;
+      }
     }
   }
 
   private loadUserFavoris(): void {
-    const storedUserFavoris = localStorage.getItem('favoris');
+    if (isPlatformBrowser(this.platformId)) {
+      const storedUserFavoris = localStorage.getItem('favoris');
 
-    if (storedUserFavoris && storedUserFavoris.length !== 0) {
-      this.userFavoris = JSON.parse(localStorage.getItem('favoris') || '[]');
-    } else {
-      this.userFavoris = null;
+      if (storedUserFavoris && storedUserFavoris.length !== 0) {
+        this.userFavoris = JSON.parse(localStorage.getItem('favoris') || '[]');
+      } else {
+        this.userFavoris = null;
+      }
     }
   }
 
@@ -225,8 +231,10 @@ export class VersionComponent implements OnInit {
     }
   }
   private storeUserData(response: any) {
-    // localStorage.setItem('user', JSON.stringify(response));
-    localStorage.setItem('favoris', JSON.stringify(response.favoris));
+    if (isPlatformBrowser(this.platformId)) {
+      // localStorage.setItem('user', JSON.stringify(response));
+      localStorage.setItem('favoris', JSON.stringify(response.favoris));
+    }
   }
 
   private updateUserFavoris(updatedData: any): void {
@@ -269,7 +277,9 @@ export class VersionComponent implements OnInit {
   }
 
   redirectTo(url: string): void {
-    window.open(url, '_blank');
+    if (isPlatformBrowser(this.platformId)) {
+      window.open(url, '_blank');
+    }
   }
 
   needLoginDialog(): void {

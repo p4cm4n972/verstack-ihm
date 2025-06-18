@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -6,10 +7,12 @@ import { Injectable } from '@angular/core';
 export class DeviceService {
   private readonly mobileRegex = /iPhone|iPad|iPod|Android/i;
 
-  
-  
-  isMobile() {
-   return this.mobileRegex.test(navigator.userAgent);
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
+  isMobile(): boolean {
+    if (isPlatformBrowser(this.platformId)) {
+      return this.mobileRegex.test(navigator.userAgent);
+    }
+    return false;
   }
 }
