@@ -127,7 +127,7 @@ export class ShopComponent implements AfterViewInit, OnInit {
         if (!this.isLoadingAll) {
           this.isLoadingAll = true;
         }
-      }, 10000);
+      }, 1000);
     }
 
 
