@@ -1,5 +1,5 @@
 // shop.component.ts
-import { AfterViewInit, Component, inject, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit, Inject, PLATFORM_ID, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ShopifyBuyButtonComponent } from '../../../composant/shopify-buy-button/shopify-buy-button.component';
@@ -41,43 +41,12 @@ export function getFrenchPaginatorIntl(): MatPaginatorIntl {
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.scss'],
   standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     { provide: MatPaginatorIntl, useValue: getFrenchPaginatorIntl() }
   ]
 })
-/**
- * @class ShopComponent
- * @implements {AfterViewInit}
- * @implements {OnInit}
- * 
- * The ShopComponent is responsible for displaying and managing a list of products in a shop interface.
- * It provides filtering by category and theme, supports pagination, and handles navigation to product details.
- * 
- * @property {any[]} products - The complete list of products available in the shop.
- * @property {any[]} filteredProducts - The list of products after applying filters (not currently used).
- * @property {string} selectedCategory - The currently selected category for filtering (not currently used).
- * @property {string[]} categories - The available product categories.
- * @property {string[]} themes - The available product themes.
- * @property {string | null} activeTheme - The currently selected theme for filtering.
- * @property {number} pageSize - The number of products displayed per page.
- * @property {number} currentPage - The current page index for pagination.
- * @property {any[]} pagedProducts - The list of products to display on the current page.
- * @property {string} activeCategory - The currently selected category for filtering.
- * 
- * @constructor
- * @param {Title} titleService - Angular service for managing the document title.
- * @param {Meta} metaService - Angular service for managing meta tags.
- * 
- * @method ngOnInit Initializes the component, sets up the product list, and updates the paged products.
- * @method ngAfterViewInit Loads the Shopify script and ensures that all <aside> elements remain visible by observing style changes.
- * @method trackById Used for Angular's ngFor trackBy to optimize rendering by product id.
- * @method gotoItems Navigates to the product detail page for a given product.
- * @method getProduitsFiltres Returns the filtered list of products based on priority, category, and theme.
- * @method updatePagedProducts Updates the pagedProducts array based on the current filters and pagination.
- * @method onPageChange Handles pagination events and updates the displayed products.
- * @method setCategorie Sets the active category for filtering.
- * @method setTheme Sets the active theme for filtering.
- */
+
 export class ShopComponent implements AfterViewInit, OnInit {
   isLoadingAll = false;
   loadedCount = 0;
@@ -101,13 +70,16 @@ export class ShopComponent implements AfterViewInit, OnInit {
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
 
-
+ private isBrowser: boolean;
 
   constructor(private titleService: Title, private metaService: Meta, private seo: SeoService,
               private productsService: ProductsService,
               private shopifyLoader: ShopifyLoaderService,
+              private cdr: ChangeDetectorRef,
               @Inject(PLATFORM_ID) private platformId: Object,
-              @Inject(DOCUMENT) private document: Document) { }
+              @Inject(DOCUMENT) private document: Document) { 
+                this.isBrowser = isPlatformBrowser(platformId);
+              }
 
   ngOnInit(): void {
     this.seo.updateMetaData({
@@ -117,18 +89,26 @@ export class ShopComponent implements AfterViewInit, OnInit {
     image: 'public/assets/slider/slider-1.jpg',
     url: 'https://verstack.io/shop'
   });
-    this.products = this.productsService.getProducts();
-
-
-    this.updatePagedProducts();
-
-    if (isPlatformBrowser(this.platformId)) {
-      setTimeout(() => {
-        if (!this.isLoadingAll) {
-          this.isLoadingAll = true;
-        }
-      }, 1000);
+  this.productsService.getProducts().subscribe({
+    next: (products) => {
+      this.products = products;
+      this.filteredProducts = products;
+      if (!this.isLoadingAll) {
+        this.isLoadingAll = true;
+      }// Notifier Angular que les données ont changé
+      this.cdr.markForCheck(); 
+      this.updatePagedProducts();
+      if (this.isBrowser) {
+        this.shopifyLoader.load().catch(() => {});
+      }
+    },
+    error: (err) => {
+      console.error('Erreur lors du chargement des produits:', err);
     }
+  })
+
+
+   
 
 
 

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 export interface Product {
   component: string;
@@ -63,8 +64,8 @@ export class ProductsService {
       { component: '1748593579957', id: '9922103050587', category: 'jouets', theme: ['retro'], prioritary: true },
   ];
 
-  getProducts(): Product[] {
-    return this.products;
+  getProducts(): Observable<Product[]> {
+    return of(this.products);
   }
 }
 
