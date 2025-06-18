@@ -1,6 +1,6 @@
-import { AfterViewInit, ApplicationRef, Component, inject, Injector, Input, OnInit, runInInjectionContext } from '@angular/core';
+import { AfterViewInit, Component, Inject, inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { ShopifyBuyButtonComponent } from '../shopify-buy-button/shopify-buy-button.component';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -23,7 +23,7 @@ export class ShopifyModalProductComponent implements AfterViewInit, OnInit {
   productId!: string | null;
   componentId!: string | null;
   component!: string;
-  constructor() {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
   }
 
 
@@ -45,7 +45,9 @@ export class ShopifyModalProductComponent implements AfterViewInit, OnInit {
 
     ngAfterViewInit(): void {
       console.log('ngAfterViewInit');
-      this.initBuyButton();
+      if (isPlatformBrowser(this.platformId)) {
+        this.initBuyButton();
+      }
 }
   
     private initBuyButton() {

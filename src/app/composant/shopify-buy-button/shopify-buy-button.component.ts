@@ -1,7 +1,7 @@
-import { AfterViewInit, Component, EventEmitter, inject, Inject, Input, Output } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Inject, Input, Output, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 
 @Component({
@@ -20,11 +20,13 @@ export class ShopifyBuyButtonComponent implements AfterViewInit {
 
 
 
-  constructor() {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
   }
 
   ngAfterViewInit(): void {
-    this.initBuyButton();
+    if (isPlatformBrowser(this.platformId)) {
+      this.initBuyButton();
+    }
   }
 
   private initBuyButton() {
