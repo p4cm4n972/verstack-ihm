@@ -21,7 +21,7 @@
       <div class="products-wrapper">
 
         <div class="product-grid">
-          @for(product of pagedProducts; track product) {
+          @for(product of pagedProducts; track product.id) {
           <ng-container class="">
             <mat-card class="product-card" appearance="outlined">
               <button mat-icon-button class="open-btn" (click)="gotoItems(product)">

@@ -1,7 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { map, Observable, of } from 'rxjs';
-import { isPlatformServer } from '@angular/common';
+import { Injectable } from '@angular/core';
+import { map, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +10,9 @@ export class LangagesService {
 
   private apiLangagesUrl = 'api/langages';
 
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) { }
+  constructor(private http: HttpClient) { }
 
   getAllLangages(): Observable<any[]> {
-    if (isPlatformServer(this.platformId)) {
-      return of([]);
-    }
     return this.http.get<any[]>(`${this.apiLangagesUrl}/all`).pipe(
       map((langages: any) => {
         return langages.sort((a: any, b: any) => (b.recommendations ?? 0) - (a.recommendations ?? 0));
