@@ -32,17 +32,25 @@ export class MobileNotAllowedComponent {
     }
   ];
 
-  constructor( private router:Router) {
-    this.startAutoplay();
+  constructor(
+    private router: Router,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    if (isPlatformBrowser(this.platformId)) {
+      this.startAutoplay();
+    }
   }
 
   redirectToDesktop() {
     this.router.navigate(['/manifeste']);
   }
+
   startAutoplay() {
-    this.autoplayInterval = setInterval(() => {
-      this.selectedIndex = (this.selectedIndex + 1) % this.slides.length;
-    }, 4000); // changement toutes les 4 secondes
+    if (isPlatformBrowser(this.platformId)) {
+      this.autoplayInterval = setInterval(() => {
+        this.selectedIndex = (this.selectedIndex + 1) % this.slides.length;
+      }, 4000);
+    }
   }
 
   stopAutoplay() {
@@ -51,7 +59,6 @@ export class MobileNotAllowedComponent {
     }
   }
 
-  // Pour éviter les fuites mémoire
   ngOnDestroy(): void {
     this.stopAutoplay();
   }

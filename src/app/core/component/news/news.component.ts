@@ -71,11 +71,15 @@ export class NewsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let imageUrl: string | undefined = undefined;
+    if (this.isBrowser) {
+      imageUrl = `${window.location.origin}/assets/slider/slider-1.jpg`;
+    }
     this.seo.updateMetaData({
       title: 'Actualités & Articles – Verstack.io',
       description: 'Explorez les dernières actualités, articles, notes et stories sur les outils et stacks pour développeurs modernes. Restez informé avec Verstack.io.',
       keywords: 'verstack, actualités, articles, outils, développeurs, Angular, React, stacks, frameworks, programmation',
-      image: this.isBrowser ? `${window.location.origin}/assets/slider/slider-1.jpg` : undefined,
+      image: imageUrl,
       url: 'https://verstack.io/news'
     });
     this.loadArticles();

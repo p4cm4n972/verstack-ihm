@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { Field } from '../../../models/field.model';
 import { LangagesService } from '../../../services/langages.service';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -27,6 +27,7 @@ import {
   MatDialogTitle,
 } from '@angular/material/dialog';
 import { SeoService } from '../../../services/seo.service';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-version',
@@ -76,6 +77,7 @@ export class VersionComponent implements OnInit {
   userFavoris: any;
 
   isLoading: boolean = true;
+  isBrowser: boolean;
 
   private readonly iconMap: Record<string, { type: string; color: string }> = {
     language: { type: 'code_blocks', color: 'icon-language' },
@@ -90,7 +92,10 @@ export class VersionComponent implements OnInit {
     private profileService: ProfileService,
     private title: Title, private meta: Meta,
     private seo: SeoService,
-  ) { }
+    @Inject(PLATFORM_ID) private platformId: Object,
+  ) {
+    this.isBrowser = isPlatformBrowser(this.platformId);
+  }
 
   ngOnInit(): void {
     this.seo.updateMetaData({
@@ -111,19 +116,20 @@ export class VersionComponent implements OnInit {
   }
 
   private loadUserData(): void {
-    const storedUserData = localStorage.getItem('user');
-    if (storedUserData) {
-      this.userData = JSON.parse(storedUserData);
+    if (this.isBrowser) {
+      const storedUserData = localStorage.getItem('user');
+      this.userData = storedUserData ? JSON.parse(storedUserData) : null;
     } else {
       this.userData = null;
     }
   }
 
   private loadUserFavoris(): void {
-    const storedUserFavoris = localStorage.getItem('favoris');
-
-    if (storedUserFavoris && storedUserFavoris.length !== 0) {
-      this.userFavoris = JSON.parse(localStorage.getItem('favoris') || '[]');
+    if (this.isBrowser) {
+      const storedUserFavoris = localStorage.getItem('favoris');
+      this.userFavoris = (storedUserFavoris && storedUserFavoris.length !== 0)
+        ? JSON.parse(storedUserFavoris)
+        : null;
     } else {
       this.userFavoris = null;
     }
@@ -225,8 +231,10 @@ export class VersionComponent implements OnInit {
     }
   }
   private storeUserData(response: any) {
-    // localStorage.setItem('user', JSON.stringify(response));
-    localStorage.setItem('favoris', JSON.stringify(response.favoris));
+    if (this.isBrowser) {
+      // localStorage.setItem('user', JSON.stringify(response));
+      localStorage.setItem('favoris', JSON.stringify(response.favoris));
+    }
   }
 
   private updateUserFavoris(updatedData: any): void {
