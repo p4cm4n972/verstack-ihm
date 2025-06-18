@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { Chart, ChartItem, ChartOptions, ChartType, registerables } from 'chart.js';
 
 Chart.register(...registerables);
@@ -11,9 +12,13 @@ Chart.register(...registerables);
   templateUrl: './chart.component.html',
   styleUrl: './chart.component.scss'
 })
-export class ChartComponent {
+export class ChartComponent implements OnInit {
   chart: Chart | undefined;
-  chartItem: ChartItem = document.getElementById('languageChart') as ChartItem
+  constructor(
+    private http: HttpClient,
+    @Inject(PLATFORM_ID) private platformId: object,
+    @Inject(DOCUMENT) private document: Document,
+  ) {}
 
   // Données du graphique
   chartColors: string[] = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
@@ -51,10 +56,6 @@ export class ChartComponent {
   labels = ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'];
   fullData: any[] = [];
 
-  constructor(private http: HttpClient) {
-
-  }
-
   ngOnInit(): void {
     this.loadTrendsData();
   }
@@ -68,6 +69,9 @@ export class ChartComponent {
 
 
   updateChart(filter: string): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
     const chartType = filter === 'animation' ? 'line' : 'bar';
 
     let datasets: any[];
@@ -172,13 +176,21 @@ export class ChartComponent {
   }
 
   // Fonction pour afficher les sources en dessous du graphique
-addSourcesToPage(sources: string[]): void {
-  const sourcesContainer = document.getElementById('sources-container');
-  const regex = /https:\/\/([^ ]+)/g;
-  if (sourcesContainer) {
-    sourcesContainer.innerHTML = '<em>Sources utilisées :</em>' + sources.map(source => {  return`<p><a href='${source.match(regex)} ' target=_blank>${source}</a></p>`; }).join('');
-  
+  addSourcesToPage(sources: string[]): void {
+    if (!isPlatformBrowser(this.platformId)) {
+      return;
+    }
+    const sourcesContainer = this.document.getElementById('sources-container');
+    const regex = /https:\/\/([^ ]+)/g;
+    if (sourcesContainer) {
+      sourcesContainer.innerHTML =
+        '<em>Sources utilisées :</em>' +
+        sources
+          .map((source) => {
+            return `<p><a href='${source.match(regex)} ' target=_blank>${source}</a></p>`;
+          })
+          .join('');
+    }
   }
-}
 
 }

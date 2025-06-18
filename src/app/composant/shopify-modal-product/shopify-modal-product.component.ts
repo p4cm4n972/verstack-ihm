@@ -1,5 +1,12 @@
-import { AfterViewInit, Component, Inject, inject, OnInit, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import {
+  AfterViewInit,
+  Component,
+  Inject,
+  inject,
+  OnInit,
+  PLATFORM_ID,
+} from '@angular/core';
+import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { ShopifyBuyButtonComponent } from '../shopify-buy-button/shopify-buy-button.component';
 import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
@@ -23,8 +30,10 @@ export class ShopifyModalProductComponent implements AfterViewInit, OnInit {
   productId!: string | null;
   componentId!: string | null;
   component!: string;
-  constructor(@Inject(PLATFORM_ID) private platformId: Object) {
-  }
+  constructor(
+    @Inject(PLATFORM_ID) private platformId: Object,
+    @Inject(DOCUMENT) private document: Document,
+  ) {}
 
 
   ngOnInit(): void {
@@ -63,11 +72,11 @@ export class ShopifyModalProductComponent implements AfterViewInit, OnInit {
     }
   
     private loadScript() {
-      const script = document.createElement('script');
+      const script = this.document.createElement('script');
       script.async = true;
       script.src = 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js';
       script.onload = () => this.createComponent();
-      document.head.appendChild(script);
+      this.document.head.appendChild(script);
     }
   
     private createComponent() {
@@ -80,7 +89,7 @@ export class ShopifyModalProductComponent implements AfterViewInit, OnInit {
       ShopifyBuy.UI.onReady(client).then( (ui: any) => {
         ui.createComponent('product', {
           id: `${this.data.id}`,
-          node: document.getElementById(`${this.component}`),
+          node: this.document.getElementById(`${this.component}`),
           moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
           options: {
     "product": {
