@@ -115,11 +115,17 @@ export class ShopComponent implements AfterViewInit, OnInit {
   });
     this.products = this.productsService.getProducts();
 
-    
+
     this.updatePagedProducts();
 
+    if (isPlatformBrowser(this.platformId)) {
+      setTimeout(() => {
+        if (!this.isLoadingAll) {
+          this.isLoadingAll = true;
+        }
+      }, 10000);
+    }
 
-    
 
 
   }
