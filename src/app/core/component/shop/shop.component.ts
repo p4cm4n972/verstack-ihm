@@ -69,7 +69,7 @@ export function getFrenchPaginatorIntl(): MatPaginatorIntl {
  * @param {Meta} metaService - Angular service for managing meta tags.
  * 
  * @method ngOnInit Initializes the component, sets up the product list, and updates the paged products.
- * @method ngAfterViewInit Ensures that all <aside> elements remain visible by observing style changes.
+ * @method ngAfterViewInit Loads the Shopify script and ensures that all <aside> elements remain visible by observing style changes.
  * @method trackById Used for Angular's ngFor trackBy to optimize rendering by product id.
  * @method gotoItems Navigates to the product detail page for a given product.
  * @method getProduitsFiltres Returns the filtered list of products based on priority, category, and theme.
@@ -103,11 +103,13 @@ export class ShopComponent implements AfterViewInit, OnInit {
 
 
 
-  constructor(private titleService: Title, private metaService: Meta, private seo: SeoService, private productsService: ProductsService, private shopifyLoader: ShopifyLoaderService,
-              @Inject(PLATFORM_ID) private platformId: Object, @Inject(DOCUMENT) private document: Document) { }
+  constructor(private titleService: Title, private metaService: Meta, private seo: SeoService,
+              private productsService: ProductsService,
+              private shopifyLoader: ShopifyLoaderService,
+              @Inject(PLATFORM_ID) private platformId: Object,
+              @Inject(DOCUMENT) private document: Document) { }
 
   ngOnInit(): void {
-    this.shopifyLoader.load().catch(() => {});
     this.seo.updateMetaData({
     title: 'Boutique – Red Squiggly',
     description: 'Découvrez la mode geek, inspirée des stacks.',
@@ -136,6 +138,8 @@ export class ShopComponent implements AfterViewInit, OnInit {
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
+
+    this.shopifyLoader.load().catch(() => {});
 
     const asides = this.document.querySelectorAll('aside');
     if (!asides) return;
