@@ -30,5 +30,6 @@ jobs:
             npm run build --production
             rm -rf /var/www/html/verstack/*
             cp -r dist/verstack-ihm/* /var/www/html/verstack
+            cp ads.txt /var/www/html/verstack
             sudo systemctl restart nginx
           EOF
