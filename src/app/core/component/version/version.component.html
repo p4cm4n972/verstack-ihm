@@ -69,7 +69,7 @@
                 matTooltip="Popularité *Stackoverflow" matBadgeDescription="Popularité"
                 [matBadge]="language.recommendations" aria-label="Popularité">🔥</button>}
 
-              @if(authStatus && favorisFromHome?.length == 0 ){ <a mat-icon-button aria-label="épingler"
+              @if(authStatus && favorisFromHome.length == 0 ){ <a mat-icon-button aria-label="épingler"
                 matTooltip="{{(isPinned(language.name) ? 'Retirer ' : 'Ajouter ') + language.name + ' à votre board'}}"
                 aria-label="Bouton qui ajoute la carte au tableau personnalisé" (click)="pinLanguage(language)">
                 <mat-icon aria-hidden="true" aria-label="épingle icone"
