@@ -38,6 +38,15 @@ app.get('/api/langages/all', (_req, res) => {
   res.json([]);
 });
 
+// Basic /api/users stubs for SSR
+app.get('/api/users', (_req, res) => {
+  res.json([]);
+});
+
+app.get('/api/users/:id', (_req, res) => {
+  res.json({});
+});
+
 /**
  * Serve static files from /browser
  */
