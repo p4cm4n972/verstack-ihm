@@ -1,4 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import {
   FormBuilder,
   FormGroup,
@@ -43,12 +44,16 @@ export class ProfileComponent implements OnInit {
   userData: any;
 
 
+  private isBrowser: boolean;
+
   constructor(
     private fb: FormBuilder,
     private profileService: ProfileService,
     private authService: AuthenticationService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    @Inject(PLATFORM_ID) platformId: Object
   ) {
+    this.isBrowser = isPlatformBrowser(platformId);
     this.profileForm = this.fb.group({
       pseudo: ['', Validators.required],
       firstName: ['', Validators.required],
@@ -98,8 +103,10 @@ export class ProfileComponent implements OnInit {
   }
 
   private storeUserData(response: any) {
-    localStorage.setItem('user', JSON.stringify(response));
-    localStorage.setItem('favoris', JSON.stringify(response.favoris))
+    if (this.isBrowser) {
+      localStorage.setItem('user', JSON.stringify(response));
+      localStorage.setItem('favoris', JSON.stringify(response.favoris));
+    }
   }
 
   toggleEditMode(): void {
