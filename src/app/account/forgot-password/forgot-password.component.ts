@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -26,8 +27,14 @@ export class ForgotPasswordComponent {
     private _snackBar = inject(MatSnackBar);
     durationInSeconds = 5;
     selected: number = 0
+  private isBrowser: boolean;
 
-  constructor(private fb: FormBuilder, private authService: AuthenticationService) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthenticationService,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
     this.forgotPasswordForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
     });
@@ -53,6 +60,7 @@ export class ForgotPasswordComponent {
   }
 
   openSnackBar(message: string) {
+    if (!this.isBrowser) return;
     this._snackBar.open(message, '', {
       duration: this.durationInSeconds * 1000,
       horizontalPosition: 'center',

@@ -1,4 +1,5 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
@@ -23,9 +24,16 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class LoginComponent {
   loginForm: FormGroup;
   private _snackBar = inject(MatSnackBar);
+  private isBrowser: boolean;
 
 
-  constructor(private fb: FormBuilder, private readonly authService: AuthenticationService, private router: Router) {
+  constructor(
+    private fb: FormBuilder,
+    private readonly authService: AuthenticationService,
+    private router: Router,
+    @Inject(PLATFORM_ID) platformId: Object
+  ) {
+    this.isBrowser = isPlatformBrowser(platformId);
 
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -53,6 +61,7 @@ export class LoginComponent {
   durationInSeconds = 5;
 
   openSnackBar(message: string) {
+    if (!this.isBrowser) return;
     this._snackBar.open(message, '', {
       duration: this.durationInSeconds * 1000,
       horizontalPosition: 'center',
