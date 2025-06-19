@@ -14,7 +14,7 @@
                 <input matInput placeholder="Tapez un mot-clé">
             </mat-form-field>-->
 
-                @if(actualiteType.length > 0) {
+                @if(actualiteType?.length > 0) {
                 <mat-chip-listbox>
                     @for(type of actualiteType; track type; let i = $index) {
                     <mat-chip-option (selectionChange)="filterByType(i)"> {{ type }}</mat-chip-option>

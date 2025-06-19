@@ -14,7 +14,7 @@
   
       <mat-card-content>
         <mat-list>
-          @if(userData.favoris.length !== 0) {
+          @if(userData.favoris?.length !== 0) {
             <strong>Stack :</strong>
             <mat-chip-set class="stack-chips" aria-label="liste stack favoris" style="margin: 10px;">
               @for(favoris of userData.favoris; track favoris.name){
