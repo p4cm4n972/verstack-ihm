@@ -171,6 +171,7 @@ export class ProfileComponent implements OnInit {
   durationInSeconds = 5;
 
   openSnackBar(message: string) {
+    if (!this.isBrowser) return;
     this._snackBar.open(message, '', {
       duration: this.durationInSeconds * 1000,
       horizontalPosition: 'center',

@@ -15,7 +15,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
-import { Component, EventEmitter, inject, Output, ViewEncapsulation, OnInit } from '@angular/core';
+import { Component, EventEmitter, inject, Output, ViewEncapsulation, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { TermesComponent } from '../../composant/termes/termes.component';
@@ -52,6 +53,7 @@ export class SigninComponent implements OnInit {
   private _snackBar = inject(MatSnackBar);
   durationInSeconds = 5;
   selected: number = 0
+  private isBrowser: boolean;
 
   openPrivacyTermeDialog() {
     const dialogRef = this.dialog.open(TermesComponent);
@@ -73,8 +75,10 @@ export class SigninComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthenticationService,
     private router: Router,
-    private jobListService: JobListService
+    private jobListService: JobListService,
+    @Inject(PLATFORM_ID) platformId: Object
   ) {
+    this.isBrowser = isPlatformBrowser(platformId);
     this.signupForm = this.fb.group(
       {
         sexe: [''],
@@ -148,6 +152,7 @@ export class SigninComponent implements OnInit {
 
 
   openSnackBar(message: string) {
+    if (!this.isBrowser) return;
     this._snackBar.open(message, '', {
       duration: this.durationInSeconds * 1000,
       horizontalPosition: 'center',
