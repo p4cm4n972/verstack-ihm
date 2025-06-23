@@ -35,7 +35,6 @@ export class AuthenticationService {
       .pipe(
         tap((response: any) => {
           if (response.accessToken && response.refreshToken) {
-            console.log('Login successful:', response);
             this.storeUserData(response);
             this.isAuthenticated$.next(true);
             this.updateAuthStatus(true);
