@@ -23,9 +23,9 @@ export class AboutComponent {
       version GitHub Actions, version Travis CI, version CircleCI, version Webpack, version Babel, version ESLint, version Prettier, version Nginx,
       version Apache, version PostgreSQL, version MySQL, version MongoDB, version Redis, version GraphQL, version Firebase, version Supabase,
       version Netlify, version Vercel, version AWS, version Azure, version GCP`,
-    image: 'https://verstack.io/assets/slider/slider-2.jpg',
+    image: 'https://verstack.io/assets/slider/slide1.png',
     url: 'https://verstack.io/about'
-  });
+    });
   }
 
 }

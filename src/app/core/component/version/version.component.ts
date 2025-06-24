@@ -109,7 +109,7 @@ export class VersionComponent implements OnInit {
       version GitHub Actions, version Travis CI, version CircleCI, version Webpack, version Babel, version ESLint, version Prettier, version Nginx,
       version Apache, version PostgreSQL, version MySQL, version MongoDB, version Redis, version GraphQL, version Firebase, version Supabase,
       version Netlify, version Vercel, version AWS, version Azure, version GCP`,
-    image: 'https://verstack.io/assets/slider/slider-2.jpg',
+    image: 'https://verstack.io/assets/slider/slide2.png',
     url: 'https://verstack.io/version'
   });
     this.getAuthStatus().subscribe((status: any) => {

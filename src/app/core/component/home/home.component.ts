@@ -84,7 +84,7 @@ export class HomeComponent {
       développement logiciel, développement mobile, développement backend, développement frontend, outils de productivité, gestion de projet,
       collaboration en équipe, intégration continue, déploiement continu , DevOps, meilleures pratiques de développement, ressources pour développeurs,
       communauté de développeurs`,
-      image: this.isBrowser ? `${window.location.origin}/assets/slider/slider-1.jpg` : undefined,
+      image: this.isBrowser ? `${window.location.origin}/assets/slider/slider1.png` : undefined,
       url: 'https://verstack.io/home'
     });
 
