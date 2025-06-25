@@ -48,11 +48,11 @@ h1 {
 .slide-content {
   text-align: center;
   img {
-    max-width: 120px;
-    width: 100%;
-    height: auto;
-    margin: 0 auto 12px auto;
     display: block;
+    margin: 0 auto 12px auto;
+    width: 120px; // valeur par défaut desktop
+    max-width: 100%;
+    height: auto;
   }
 }
 
@@ -100,6 +100,8 @@ h1 {
     width: 110px;
   }
   .slide-content img {
-    max-width: 80px;
+    width: 50vw;      // 50% de la largeur de l'écran sur mobile
+    max-width: 90vw;  // sécurité pour éviter le débordement
+    min-width: 100px; // optionnel, pour éviter trop petit
   }
 }
