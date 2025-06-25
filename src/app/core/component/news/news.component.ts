@@ -174,16 +174,30 @@ export class NewsComponent implements OnInit {
     this.articlesService.unrecommendArticle(article._id, this.currentUser.id).subscribe({
       next: (res) => {
         article.recommendations = res.recommendations;
+        // Retire l'utilisateur du tableau likedBy côté front
+        if (Array.isArray(article.likedBy)) {
+          article.likedBy = article.likedBy.filter((id: string) => id !== this.currentUser.id);
+        }
         this.unmarkRecommended(article._id);
         this.cdr.markForCheck();
       }
     });
   }
 
-  hasRecommended(articleId: string): boolean {
-    if (!this.isBrowser) return false;
-    const recommended = JSON.parse(localStorage.getItem('recommendedArticles') || '[]');
-    return recommended.includes(articleId);
+  hasRecommended(article: any): boolean {
+    if (!this.currentUser) return false;
+
+    // 1. Vérifie dans le localStorage (pour la réactivité immédiate)
+    if (this.isBrowser) {
+      const recommended = JSON.parse(localStorage.getItem('recommendedArticles') || '[]');
+      if (recommended.includes(article._id)) {
+        return true;
+      }
+    }
+
+    // 2. Vérifie dans les données de l'article (source de vérité backend)
+    // Si likedBy n'existe pas, retourne false
+    return Array.isArray(article.likedBy) && article.likedBy.includes(this.currentUser.id);
   }
 
   markRecommended(articleId: string): void {

@@ -47,17 +47,17 @@
                             <div class="meta-row">
                                 <span class="article-date">{{ article.date }}</span>
 
-                                <button mat-icon-button *ngIf="currentUser && hasRecommended(article._id); else likeBtn"
+                                <button mat-icon-button *ngIf="currentUser && hasRecommended(article); else likeBtn"
                                     (click)="unrecommend(article)" aria-label="Retirer la recommandation" class="liked"
                                     [matBadge]="article.recommendations" [matBadgeColor]="'primary'"
                                     [matBadgePosition]="'above after'">
                                     <mat-icon>thumb_up</mat-icon>
                                 </button>
                                 <ng-template #likeBtn>
-                                    <button mat-icon-button *ngIf="currentUser" [disabled]="hasRecommended(article._id)"
+                                    <button mat-icon-button *ngIf="currentUser" [disabled]="hasRecommended(article)"
                                         [matBadge]="article.recommendations" [matBadgeColor]="'primary'"
                                         [matBadgePosition]="'above after'"
-                                        [matTooltip]="hasRecommended(article._id) ? 'Tu as déjà recommandé cet article' : 'Recommander cet article'"
+                                        [matTooltip]="hasRecommended(article) ? 'Tu as déjà recommandé cet article' : 'Recommander cet article'"
                                         (click)="recommend(article)" aria-label="Recommander cet article">
                                         <mat-icon>thumb_up</mat-icon>
                                     </button>
