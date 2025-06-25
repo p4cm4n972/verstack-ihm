@@ -19,7 +19,7 @@
         <mat-icon>history_edu</mat-icon> <span class="nav-caption">Le Manifeste</span>
     </a>
 
-    <a mat-list-item routerLink="/shop" (click)="onSidenavClose()">
+    <a mat-list-item routerLink="/shop" (click)="onSidenavClose()" *isDesktopOnly>
         <mat-icon>storefront</mat-icon> <span class="nav-caption">boutique</span>
     </a>
     <a mat-list-item routerLink="/admin" (click)="onSidenavClose()" *isDesktopOnly [hidden]="!isAdmin">
