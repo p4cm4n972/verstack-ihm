@@ -21,6 +21,8 @@ export class AuthenticationService {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
 
+
+
   signup(data: any): Observable<any> {
     return this.http.post(`${this.baseUrl}/signup`, data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -163,6 +165,17 @@ export class AuthenticationService {
       token,
       newPassword,
     });
+  }
+
+  getCurrentUser(): any {
+    if (!this.isBrowser) return null;
+    const user = localStorage.getItem('user');
+    return user ? JSON.parse(user) : null;
+  }
+
+  checkAuthOnStartup() {
+    const user = this.getCurrentUser();
+    this.updateAuthStatus(!!user && !!user.id);
   }
 
 

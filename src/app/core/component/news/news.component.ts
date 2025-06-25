@@ -20,6 +20,9 @@ import { CommonModule } from '@angular/common';
 import { TapeTextConsoleComponent } from '../../../composant/tape-text-console/tape-text-console.component';
 import { Router } from '@angular/router';
 import { SeoService } from '../../../services/seo.service';
+// import { AuthService } from '../../../services/authentication.service';
+import { AuthenticationService } from '../../../services/authentication.service';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 interface Article {
   title: string;
@@ -41,7 +44,8 @@ interface Article {
     CommonModule,
     MatBadgeModule,
     MatIconModule,
-    TapeTextConsoleComponent
+    TapeTextConsoleComponent,
+    MatTooltipModule
   ],
   templateUrl: './news.component.html',
   styleUrl: './news.component.scss',
@@ -59,11 +63,13 @@ export class NewsComponent implements OnInit {
   filteredArticles: any[] = [];
 
   private isBrowser: boolean;
+  currentUser: any;
 
   constructor(
     private articlesService: ArticlesService,
     private sanitizer: DomSanitizer,
     private seo: SeoService,
+    private authService: AuthenticationService, // <-- Ajoute ici
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
@@ -71,6 +77,9 @@ export class NewsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.isBrowser) {
+      this.currentUser = this.authService.getCurrentUser();
+    }
     let imageUrl: string | undefined = undefined;
     if (this.isBrowser) {
       imageUrl = `${window.location.origin}/assets/slider/slider-1.jpg`;
@@ -144,6 +153,54 @@ export class NewsComponent implements OnInit {
 
 
   filterByTag(elm: any) {}
+
+  recommend(article: any) {
+    if (!this.currentUser) {
+      // Optionnel : affiche un message ou ouvre le dialogue de connexion
+      return;
+    }
+    if (this.hasRecommended(article._id)) return;
+    this.articlesService.recommendArticle(article._id, this.currentUser.id).subscribe({
+      next: (res) => {
+        article.recommendations = res.recommendations;
+        this.markRecommended(article._id);
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
+  unrecommend(article: any) {
+    if (!this.currentUser) return;
+    this.articlesService.unrecommendArticle(article._id, this.currentUser.id).subscribe({
+      next: (res) => {
+        article.recommendations = res.recommendations;
+        this.unmarkRecommended(article._id);
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
+  hasRecommended(articleId: string): boolean {
+    if (!this.isBrowser) return false;
+    const recommended = JSON.parse(localStorage.getItem('recommendedArticles') || '[]');
+    return recommended.includes(articleId);
+  }
+
+  markRecommended(articleId: string): void {
+    if (!this.isBrowser) return;
+    const recommended = JSON.parse(localStorage.getItem('recommendedArticles') || '[]');
+    if (!recommended.includes(articleId)) {
+      recommended.push(articleId);
+      localStorage.setItem('recommendedArticles', JSON.stringify(recommended));
+    }
+  }
+
+  unmarkRecommended(articleId: string): void {
+    if (!this.isBrowser) return;
+    let recommended = JSON.parse(localStorage.getItem('recommendedArticles') || '[]');
+    recommended = recommended.filter((id: string) => id !== articleId);
+    localStorage.setItem('recommendedArticles', JSON.stringify(recommended));
+  }
 }
 @Component({
   selector: 'dialog-data-articles',

@@ -37,4 +37,18 @@ export class ArticlesService {
   updateArticle(id: string, data: any): Observable<any> {
     return this.http.patch(`${this.apiUrl}/${id}`, data);
   }
+
+  recommendArticle(id: string, userId: string) {
+    return this.http.post<{ recommendations: number }>(
+      `/api/news/${id}/recommend`,
+      { userId }
+    );
+  }
+
+  unrecommendArticle(id: string, userId: string) {
+    return this.http.post<{ recommendations: number }>(
+      `/api/news/${id}/unrecommend`,
+      { userId }
+    );
+  }
 }
