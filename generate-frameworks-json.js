@@ -18,7 +18,7 @@ fs.readdir(imagesDir, (err, files) => {
   }
 
   const frameworks = files
-    .filter(file => /\.(png|jpg|jpeg|svg|webp)$/i.test(file))
+    .filter(file => /\.(webp)$/i.test(file))
     .map(file => ({
       name: formatName(file),
       logo: `assets/images/${file}`
