@@ -12,7 +12,7 @@ export class mobileNotAllowedGuard implements CanActivate {
   canActivate(): boolean {
     if (isPlatformBrowser(this.platformId)) {
       const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-      if (!isMobile) {
+      if (isMobile) {
         this.router.navigate(['/mobile-not-allowed']);
         return false;
       }
