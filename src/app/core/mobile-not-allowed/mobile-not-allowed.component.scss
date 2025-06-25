@@ -35,6 +35,7 @@ h1 {
 
 .intro-carousel {
   margin-top: 30px;
+  width: 100%;
 }
 
 .slide-content {
@@ -109,5 +110,50 @@ h1 {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .intro-text {
+    font-size: 1rem;
+  }
+
+  .illustration img {
+    width: 120px;
+  }
+
+  .slide-content {
+    padding: 16px;
+
+    img {
+      width: 160px;
+    }
+
+    h2 {
+      font-size: 1.1rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+    }
+  }
+
+  .manifeste-button {
+    padding: 8px 16px;
+  }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+  .message {
+    max-width: 540px;
+  }
+
+  .slide-content img {
+    width: 180px;
   }
 }
