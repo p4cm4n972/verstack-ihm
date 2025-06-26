@@ -8,10 +8,9 @@
 
         @if (!isAuth) {
         <p class="pixel-art-subtitle">
-          L'univers<br>
-          des stacks :<br>
-          Versions, Références et Tendances<br>
-          pour rester à jour
+          L'univers des stacks :<br>
+          Explore les dernières versions, références et tendances<br>
+          pour rester à jour.
         </p>
         }
 
@@ -20,22 +19,22 @@
           <hr />
           <div class="space-console">
             <mat-card class="console-card" appearance="outlined">
-              <mat-card-title>🛰️ Tableau de bord</mat-card-title>
+              <mat-card-title>Tableau de bord</mat-card-title>
               <mat-card-content>
                 <p class="console-line">
-                  👤 Utilisateur : <span class="console-data">{{ userData?.pseudo ?? 'Guest' }}</span>
+                  Utilisateur : <span class="console-data">{{ userData?.pseudo ?? 'Guest' }}</span>
                 </p>
                 <p class="console-line">
-                  👾 Amis en ligne :
+                  Amis en ligne :
                   <span class="console-data">
                     {{ userData?.friendsOnline ?? 0 }} / {{ userData?.totalFriends ?? 0 }}
                   </span>
                 </p>
                 <p class="console-line">
-                  🧑‍💻 Projets : <span class="console-data">{{ userData?.projects?.length ?? 0 }}</span>
+                   Projets : <span class="console-data">{{ userData?.projects?.length ?? 0 }}</span>
                 </p>
                 <p class="console-line">
-                  💬 Messages non lus : <span class="console-data">{{ userData?.unreadMessages ?? 0 }}</span>
+                   Messages non lus : <span class="console-data">{{ userData?.unreadMessages ?? 0 }}</span>
                 </p>
               </mat-card-content>
             </mat-card>
