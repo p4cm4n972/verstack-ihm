@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Inject, OnInit, PLATFORM_ID, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID, inject, input } from '@angular/core';
 import { Field } from '../../../models/field.model';
 import { LangagesService } from '../../../services/langages.service';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -11,8 +11,8 @@ import { ProfileService } from '../../../services/profile.service';
 import { CommonModule } from '@angular/common';
 import { Observable, tap } from 'rxjs';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { differenceInMonths, parseISO, formatDistanceToNow } from 'date-fns';
-import { fr } from 'date-fns/locale';
+import { differenceInMonths, parseISO, formatDistanceToNow, differenceInHours } from 'date-fns';
+import { fr, th } from 'date-fns/locale';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -94,6 +94,7 @@ export class VersionComponent implements OnInit {
     private profileService: ProfileService,
     private title: Title, private meta: Meta,
     private seo: SeoService,
+    private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
@@ -156,6 +157,7 @@ export class VersionComponent implements OnInit {
 
       this.filteredLangages = this.langages;
       this.isLoading = false;
+      this.cdr.markForCheck(); // Notifier Angular que les données ont changé
     },
     error: (err) => {
       console.error('Erreur lors de la récupération des langages', err);
@@ -349,27 +351,27 @@ export class VersionComponent implements OnInit {
     }
   }
 
-  isDataUpToDate(releaseDate: string | undefined): boolean {
-    if (!releaseDate) {
+  isDataUpToDate(updatedAt: string | undefined): boolean {
+    if (!updatedAt) {
       return false;
     }
-    const release = parseISO(releaseDate);
-    return differenceInMonths(new Date(), release) <= 12;
+    const release = parseISO(updatedAt);
+    return differenceInHours(new Date(), release) <= 24;
   }
 
-  getDataStatusClass(releaseDate: string | undefined): string {
-    return this.isDataUpToDate(releaseDate) ? 'status-ok' : 'status-ko';
+  getDataStatusClass(updatedAt: string | undefined): string {
+    return this.isDataUpToDate(updatedAt) ? 'status-ok' : 'status-ko';
   }
 
-  getDataStatusTooltip(releaseDate: string | undefined): string {
-    if (!releaseDate) {
+  getDataStatusTooltip(updatedAt: string | undefined): string {
+    if (!updatedAt) {
       return 'Date de release inconnue';
     }
-    const release = parseISO(releaseDate);
+    const release = parseISO(updatedAt);
     const distance = formatDistanceToNow(release, { addSuffix: true, locale: fr });
-    return this.isDataUpToDate(releaseDate)
-      ? `Données à jour \u2014 dernière release ${distance}`
-      : `Mise à jour nécessaire \u2014 dernière release ${distance}`;
+    return this.isDataUpToDate(updatedAt)
+      ? `Données à jour \u2014 dernière maj ${distance}`
+      : `Mise à jour des données nécessaire \u2014 dernière maj ${distance}`;
   }
 
   getIconType(domain: string[]): string | undefined {
