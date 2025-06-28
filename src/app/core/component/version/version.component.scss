@@ -117,6 +117,22 @@
   /* vert material */
 }
 
+.status-indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 4px;
+}
+
+.status-ok {
+  background-color: #4caf50;
+}
+
+.status-ko {
+  background-color: #f44336;
+}
+
 
 .support-primary {
   @include mat.progress-bar-overrides((active-indicator-color: green,

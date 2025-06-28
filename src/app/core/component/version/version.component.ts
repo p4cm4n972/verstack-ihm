@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, inject, Input, OnInit, Inject, PLATFORM_ID } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, OnInit, PLATFORM_ID, inject, input } from '@angular/core';
 import { Field } from '../../../models/field.model';
 import { LangagesService } from '../../../services/langages.service';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -11,7 +11,8 @@ import { ProfileService } from '../../../services/profile.service';
 import { CommonModule } from '@angular/common';
 import { Observable, tap } from 'rxjs';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { differenceInMonths, parseISO } from 'date-fns';
+import { differenceInMonths, parseISO, formatDistanceToNow } from 'date-fns';
+import { fr } from 'date-fns/locale';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -47,11 +48,12 @@ import { isPlatformBrowser } from '@angular/common';
   ],
   templateUrl: './version.component.html',
   styleUrl: './version.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 export class VersionComponent implements OnInit {
-  @Input() favorisFromHome: any[] = [];
-  @Input() origin: string = '';
+  readonly favorisFromHome = input<unknown[]>([]);
+  readonly origin = input('');
 
   readonly dialog = inject(MatDialog);
 
@@ -145,8 +147,8 @@ export class VersionComponent implements OnInit {
  private loadLangages(): void {
   this._langagesService.getAllLangages().subscribe({
     next: (langages) => {
-      if (this.favorisFromHome && this.favorisFromHome.length > 0) {
-        const favorisNames = this.favorisFromHome.map(f => f.name);
+      if (this.favorisFromHome() && this.favorisFromHome().length > 0) {
+        const favorisNames = this.favorisFromHome().map((f: any) => f.name);
         this.langages = langages.filter(l => favorisNames.includes(l.name));
       } else {
         this.langages = langages;
@@ -345,6 +347,29 @@ export class VersionComponent implements OnInit {
     } else {
       return 'support-primary'; // 🟢 OK
     }
+  }
+
+  isDataUpToDate(releaseDate: string | undefined): boolean {
+    if (!releaseDate) {
+      return false;
+    }
+    const release = parseISO(releaseDate);
+    return differenceInMonths(new Date(), release) <= 12;
+  }
+
+  getDataStatusClass(releaseDate: string | undefined): string {
+    return this.isDataUpToDate(releaseDate) ? 'status-ok' : 'status-ko';
+  }
+
+  getDataStatusTooltip(releaseDate: string | undefined): string {
+    if (!releaseDate) {
+      return 'Date de release inconnue';
+    }
+    const release = parseISO(releaseDate);
+    const distance = formatDistanceToNow(release, { addSuffix: true, locale: fr });
+    return this.isDataUpToDate(releaseDate)
+      ? `Données à jour \u2014 dernière release ${distance}`
+      : `Mise à jour nécessaire \u2014 dernière release ${distance}`;
   }
 
   getIconType(domain: string[]): string | undefined {
