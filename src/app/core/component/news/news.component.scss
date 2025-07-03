@@ -150,12 +150,23 @@ button.liked mat-icon {
   }
 }
 
+/* Responsive : masquage des ads sur petits écrans */
+@media (max-width: 1200px) {
+  .news-layout {
+    grid-template-columns: 1fr 4fr;
+  }
+
+  .ads-right {
+    display: none !important;
+  }
+}
+
 @media (max-width: 768px) {
   .news-layout {
     grid-template-columns: 1fr;
   }
   .ads-left, .ads-right {
-    display: none;
+    display: none !important;
   }
 
   .filters {
