@@ -1,7 +1,7 @@
 <div class="version-layout">
   <aside class="ads-left">
     <!-- Pub gauche -->
-    <ins class="adsbygoogle" style="display:block" ></ins>
+    <ins class="adsbygoogle" style="display:block"></ins>
   </aside>
   @if(isLoading){<div class="retro-loader">
     <div class="dots">
@@ -11,24 +11,24 @@
   </div>}
   <section>
     @if(!isLoading){<div>
-     @if(origin() !== 'home'){<mat-tab-group [(selectedIndex)]="selectedDomainIndex">
+      @if(origin() !== 'home'){<mat-tab-group [(selectedIndex)]="selectedDomainIndex">
         @for(domain of domaines; track domain; let i = $index ){<mat-tab (click)="selectedDomain = domain">
           <ng-template mat-tab-label>{{ domain }}</ng-template>
         </mat-tab>}
       </mat-tab-group>}
 
       <div class="languages-grid">
-        @for(language of domainLangages(filteredLangages, selectedDomain, selectedDomainIndex) ; track trackP(language, i); let i = $index) 
+        @for(language of domainLangages(filteredLangages, selectedDomain, selectedDomainIndex) ; track trackP(language,
+        i); let i = $index)
         {<ng-container>
           <mat-card class="language-card" appearance="outlined">
             <mat-card-header>
               <mat-card-title-group>
                 <mat-card-title class="language-title">
                   {{ language.name }}
-                  <span class="status-indicator"
-                        [ngClass]="getDataStatusClass(language.versions[0]?.updatedAt)"
-                        [matTooltip]="getDataStatusTooltip(language.versions[0]?.updatedAt)"
-                        matTooltipPosition="above"></span>
+                  <span class="status-indicator" [ngClass]="getDataStatusClass(language.versions[0]?.updatedAt)"
+                    [matTooltip]="getDataStatusTooltip(language.versions[0]?.updatedAt)"
+                    matTooltipPosition="above"></span>
                 </mat-card-title>
                 <mat-card-subtitle>
                   <mat-icon [ngClass]="getIconColor(language.domain)">
@@ -40,16 +40,16 @@
                   <span> {{ version.type }}:</span>&nbsp; {{ version.label }}
                 </mat-card-subtitle>
                 }
-                <img loading="lazy" mat-card-sm-image [src]="language.logoUrl" [alt]="language.name" 
+                <img loading="lazy" mat-card-sm-image [src]="language.logoUrl" [alt]="language.name"
                   class="language-logo" />
               </mat-card-title-group>
             </mat-card-header>
             @if(!authStatus){
             <ng-container>
               <mat-card-content>
-              <p class="description"> {{ language.description }} <br>
-               <small> <a (click)="needLoginDialog()" class="more-link" >voir plus</a></small>
-               </p>
+                <p class="description"> {{ language.description }} <br>
+                  <small> <a (click)="needLoginDialog()" class="more-link">voir plus</a></small>
+                </p>
               </mat-card-content>
             </ng-container>} @else {
             <ng-container>
@@ -71,9 +71,11 @@
               <a [href]="language.documentation" target="_blank" class="doc-link">
                 <button mat-raised-button color="primary">Documentation</button>
               </a>
-              @if(!authStatus && language.recommendations){<button style="margin-right: 20px;" mat-icon-button
+              @if(!authStatus && language.recommendations){<mat-icon style="margin-right: 20px;"
                 matTooltip="Popularité *Stackoverflow" matBadgeDescription="Popularité"
-                [matBadge]="language.recommendations" aria-label="Popularité">🔥</button>}
+                [matBadge]="language.recommendations" aria-label="Popularité" aria-hidden="true"
+                 fontIcon="bar_chart">
+              </mat-icon>}
 
               @if(authStatus && favorisFromHome()!.length == 0 ){ <a mat-icon-button aria-label="épingler"
                 matTooltip="{{(isPinned(language.name) ? 'Retirer ' : 'Ajouter ') + language.name + ' à votre board'}}"
