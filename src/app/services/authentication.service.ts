@@ -175,7 +175,13 @@ export class AuthenticationService {
 
   checkAuthOnStartup() {
     const user = this.getCurrentUser();
-    this.updateAuthStatus(!!user && !!user.id);
+    const isValidToken = this.hasValidAccessToken();
+    if (!isValidToken) {
+      this.logout();
+      this.updateAuthStatus(false);
+    } else {
+      this.updateAuthStatus(!!user && !!user.id);
+    }
   }
 
 
