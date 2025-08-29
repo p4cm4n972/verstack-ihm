@@ -16,28 +16,89 @@
 
         @if (isAuth) {
         <ng-container>
-          <hr />
-          <div class="space-console">
-            <mat-card class="console-card" appearance="outlined">
-              <mat-card-title>Tableau de bord</mat-card-title>
-              <mat-card-content>
-                <p class="console-line">
-                  Utilisateur : <span class="console-data">{{ userData?.pseudo ?? 'Guest' }}</span>
-                </p>
-                <p class="console-line">
-                  Amis en ligne :
-                  <span class="console-data">
-                    {{ userData?.friendsOnline ?? 0 }} / {{ userData?.totalFriends ?? 0 }}
-                  </span>
-                </p>
-                <p class="console-line">
-                   Projets : <span class="console-data">{{ userData?.projects?.length ?? 0 }}</span>
-                </p>
-                <p class="console-line">
-                   Messages non lus : <span class="console-data">{{ userData?.unreadMessages ?? 0 }}</span>
-                </p>
-              </mat-card-content>
-            </mat-card>
+          <hr class="divider" />
+          <div class="dashboard-container">
+            <div class="dashboard-header">
+              <h2 class="dashboard-title">
+                <span class="title-icon">▶</span>
+                TABLEAU DE BORD
+                <span class="title-decoration">_</span>
+              </h2>
+              <div class="status-indicator">
+                <span class="status-dot online"></span>
+                <span class="status-text">ONLINE</span>
+              </div>
+            </div>
+            
+            <div class="dashboard-grid">
+              <div class="dashboard-card user-card">
+                <div class="card-header">
+                  <span class="card-icon">👤</span>
+                  <span class="card-title">UTILISATEUR</span>
+                </div>
+                <div class="card-content">
+                  <div class="stat-line">
+                    <span class="stat-label">NOM:</span>
+                    <span class="stat-value">{{ userData?.pseudo ?? 'GUEST' }}</span>
+                  </div>
+                  <div class="stat-line">
+                    <span class="stat-label">NIVEAU:</span>
+                    <span class="stat-value level">PRO</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dashboard-card social-card">
+                <div class="card-header">
+                  <span class="card-icon">👥</span>
+                  <span class="card-title">RÉSEAU</span>
+                </div>
+                <div class="card-content">
+                  <div class="stat-line">
+                    <span class="stat-label">EN LIGNE:</span>
+                    <span class="stat-value online-count">{{ userData?.friendsOnline ?? 0 }}</span>
+                  </div>
+                  <div class="stat-line">
+                    <span class="stat-label">TOTAL:</span>
+                    <span class="stat-value">{{ userData?.totalFriends ?? 0 }}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dashboard-card projects-card">
+                <div class="card-header">
+                  <span class="card-icon">📁</span>
+                  <span class="card-title">PROJETS</span>
+                </div>
+                <div class="card-content">
+                  <div class="stat-line">
+                    <span class="stat-label">ACTIFS:</span>
+                    <span class="stat-value projects-count">{{ userData?.projects?.length ?? 0 }}</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-fill" [style.width.%]="(userData?.projects?.length ?? 0) * 10"></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="dashboard-card messages-card">
+                <div class="card-header">
+                  <span class="card-icon">📧</span>
+                  <span class="card-title">MESSAGES</span>
+                </div>
+                <div class="card-content">
+                  <div class="stat-line">
+                    <span class="stat-label">NON LUS:</span>
+                    <span class="stat-value messages-count" [class.has-messages]="(userData?.unreadMessages ?? 0) > 0">
+                      {{ userData?.unreadMessages ?? 0 }}
+                    </span>
+                  </div>
+                  @if((userData?.unreadMessages ?? 0) > 0) {
+                    <div class="notification-pulse"></div>
+                  }
+                </div>
+              </div>
+            </div>
           </div>
         </ng-container>
         }

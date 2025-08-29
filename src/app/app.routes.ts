@@ -21,6 +21,7 @@ import { NewsDetailComponent } from './composant/news-detail/news-detail.compone
 import { PolitiqueComponent } from './composant/politique/politique.component';
 import { AdminComponent } from './core/component/admin/admin.component';
 import { AdminGuard } from './guards/admin.guard';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [mobileNotAllowedGuard] },
@@ -39,7 +40,7 @@ export const routes: Routes = [
   { path: 'privacy-policy', component: PolitiqueComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
   { path: 'release', component: ReleaseComponent, canActivate: [mobileNotAllowedGuard] },
-  { path: 'profile', component: ProfileComponent, canActivate: [mobileNotAllowedGuard] },
+  { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard, mobileNotAllowedGuard] },
   { path: 'confirm-email', component: VerifyEmailComponent, canActivate: [mobileNotAllowedGuard] },
   { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [mobileNotAllowedGuard] },
   { path: 'reset-password', component: ResetPasswordComponent, canActivate: [mobileNotAllowedGuard] },

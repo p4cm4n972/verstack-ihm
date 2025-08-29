@@ -42,7 +42,7 @@ export class ProfileComponent implements OnInit {
   defaultProfilePicture: string = 'https://placehold.co/10x10';
   favoris: string[] = [];
   userData: any;
-
+  activeTab: string = 'overview';
 
   private isBrowser: boolean;
 
@@ -177,5 +177,212 @@ export class ProfileComponent implements OnInit {
       horizontalPosition: 'center',
       verticalPosition: 'top',
     });
+  }
+
+  // Navigation methods
+  setActiveTab(tab: string) {
+    this.activeTab = tab;
+  }
+
+  // Profile utility methods
+  getUserRole(): string {
+    if (this.userData?.role) {
+      return this.userData.role;
+    }
+    // Détermine le rôle basé sur les données utilisateur
+    const techCount = this.userData?.favoris?.length || 0;
+    if (techCount >= 10) return 'Expert Développeur';
+    if (techCount >= 5) return 'Développeur Senior';
+    if (techCount >= 2) return 'Développeur';
+    return 'Débutant';
+  }
+
+  formatDate(date: any): string {
+    if (!date) return 'Non renseigné';
+    return new Date(date).toLocaleDateString('fr-FR', {
+      year: 'numeric',
+      month: 'long'
+    });
+  }
+
+  getProjectCount(): number {
+    // Pour la démo, retourne un nombre basé sur les technologies
+    return Math.floor((this.userData?.favoris?.length || 0) / 2) + 2;
+  }
+
+  getFriendsCount(): number {
+    return this.userData?.friends?.length || Math.floor(Math.random() * 20) + 5;
+  }
+
+  getExperienceLevel(): number {
+    // Calcule le niveau d'expérience basé sur les données
+    const techCount = this.userData?.favoris?.length || 0;
+    return Math.min(Math.floor(techCount / 2) + 1, 10);
+  }
+
+  // Avatar methods
+  changeAvatar(): void {
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.accept = 'image/*';
+    input.onchange = (event: any) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e: any) => {
+          this.defaultProfilePicture = e.target.result;
+          // Ici vous pourriez aussi mettre à jour le profil via le service
+          this.openSnackBar('Avatar mis à jour !');
+        };
+        reader.readAsDataURL(file);
+      }
+    };
+    input.click();
+  }
+
+  shareProfile(): void {
+    if (navigator.share) {
+      navigator.share({
+        title: `Profil de ${this.userData?.pseudo}`,
+        text: `Découvrez le profil de ${this.userData?.pseudo} sur Verstack`,
+        url: window.location.href
+      });
+    } else {
+      // Fallback pour les navigateurs qui ne supportent pas l'API Share
+      navigator.clipboard.writeText(window.location.href);
+      this.openSnackBar('Lien du profil copié dans le presse-papiers !');
+    }
+  }
+
+  // Stack/Technology methods
+  addTechnology(): void {
+    this.openSnackBar('Fonction d\'ajout de technologie en développement');
+    // TODO: Implémenter un dialog pour ajouter une technologie
+  }
+
+  getTechLevel(techName: string): number {
+    // Simule un niveau de compétence pour la démo
+    const levels = ['Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS'];
+    const baseLevel = levels.includes(techName) ? 80 : 60;
+    return baseLevel + Math.floor(Math.random() * 20);
+  }
+
+  getLevelText(level: number): string {
+    if (level >= 90) return 'Expert';
+    if (level >= 70) return 'Avancé';
+    if (level >= 50) return 'Intermédiaire';
+    if (level >= 30) return 'Débutant';
+    return 'Novice';
+  }
+
+  // Project methods
+  addProject(): void {
+    this.openSnackBar('Fonction d\'ajout de projet en développement');
+    // TODO: Implémenter un dialog pour ajouter un projet
+  }
+
+  viewProject(projectId: string): void {
+    this.openSnackBar(`Consultation du projet ${projectId}`);
+    // TODO: Naviguer vers la page du projet
+  }
+
+  editProject(projectId: string): void {
+    this.openSnackBar(`Modification du projet ${projectId}`);
+    // TODO: Ouvrir le dialog d'édition du projet
+  }
+
+  // Utility methods for statistics
+  getProfileCompletion(): number {
+    let completion = 0;
+    const fields = ['pseudo', 'email', 'job', 'bio', 'favoris'];
+    
+    fields.forEach(field => {
+      if (field === 'favoris') {
+        if (this.userData?.favoris?.length > 0) completion += 20;
+      } else {
+        if (this.userData?.[field]) completion += 20;
+      }
+    });
+    
+    return completion;
+  }
+
+  getActivityScore(): number {
+    // Calcule un score d'activité basé sur diverses métriques
+    const techCount = this.userData?.favoris?.length || 0;
+    const projectCount = this.getProjectCount();
+    const profileCompletion = this.getProfileCompletion();
+    
+    return Math.min((techCount * 10) + (projectCount * 5) + profileCompletion, 100);
+  }
+
+  // Achievement methods
+  hasAchievement(achievementId: string): boolean {
+    // Logique simple pour déterminer si un achievement est débloqué
+    switch (achievementId) {
+      case 'first-code':
+        return (this.userData?.favoris?.length || 0) > 0;
+      case 'full-stack':
+        return (this.userData?.favoris?.length || 0) >= 5;
+      case 'progress':
+        return this.getProfileCompletion() >= 80;
+      case 'social':
+        return this.getFriendsCount() >= 10;
+      case 'expert':
+        return (this.userData?.favoris?.length || 0) >= 10;
+      case 'productive':
+        return this.getProjectCount() >= 20;
+      default:
+        return false;
+    }
+  }
+
+  getAchievementProgress(achievementId: string): string {
+    switch (achievementId) {
+      case 'social':
+        return `${this.getFriendsCount()}/10`;
+      case 'expert':
+        return `${this.userData?.favoris?.length || 0}/10`;
+      case 'productive':
+        return `${this.getProjectCount()}/20`;
+      default:
+        return '0/1';
+    }
+  }
+
+  // Settings/Preferences methods
+  toggleNotification(type: string): void {
+    this.openSnackBar(`Notifications ${type} mises à jour`);
+    // TODO: Mettre à jour les préférences utilisateur
+  }
+
+  togglePrivacy(setting: string): void {
+    this.openSnackBar(`Paramètre de confidentialité ${setting} mis à jour`);
+    // TODO: Mettre à jour les paramètres de confidentialité
+  }
+
+  // Data export methods
+  exportProfile(): void {
+    const profileData = {
+      user: this.userData,
+      stats: {
+        technologies: this.userData?.favoris?.length || 0,
+        projects: this.getProjectCount(),
+        friends: this.getFriendsCount(),
+        level: this.getExperienceLevel()
+      },
+      exportDate: new Date().toISOString()
+    };
+
+    const dataStr = JSON.stringify(profileData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `profil_${this.userData?.pseudo || 'user'}_${Date.now()}.json`;
+    link.click();
+    URL.revokeObjectURL(url);
+
+    this.openSnackBar('Profil exporté avec succès !');
   }
 }

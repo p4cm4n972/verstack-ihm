@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, Inject, PLATFORM_ID, OnDestroy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, Inject, PLATFORM_ID, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FieldService } from '../../services/field.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -10,7 +10,8 @@ import { CommonModule } from '@angular/common';
   imports: [MatProgressSpinnerModule, CommonModule],
   templateUrl: './globe.component.html',
   styleUrl: './globe.component.scss',
-  standalone: true
+  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -24,6 +25,13 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
   private animationFrameId: number | null = null;
   private images: string[] = [];
   private isBrowser: boolean;
+  private lastFrameTime = 0;
+  private targetFPS = 60;
+  private frameInterval = 1000 / this.targetFPS;
+  private static imageCache = new Map<string, HTMLImageElement>();
+  private isVisible = true;
+  private observer?: IntersectionObserver;
+  
   loading$ = new BehaviorSubject<boolean>(true);
   loadingProgress$ = new BehaviorSubject<number>(0);
   loadedImages = 0;
@@ -54,7 +62,41 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
       this.ctx = canvas.getContext('2d')!;
       canvas.width = 600;
       canvas.height = 600;
+      
+      this.setupIntersectionObserver();
       this.animationFrameId = requestAnimationFrame(() => this.animate());
+    }
+  }
+
+  private setupIntersectionObserver(): void {
+    if (!this.isBrowser || !('IntersectionObserver' in window)) {
+      return;
+    }
+
+    this.observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        this.isVisible = entry.isIntersecting;
+        if (!this.isVisible) {
+          this.pauseAnimation();
+        } else {
+          this.resumeAnimation();
+        }
+      });
+    }, { threshold: 0.1 });
+
+    this.observer.observe(this.canvasRef.nativeElement);
+  }
+
+  private pauseAnimation(): void {
+    if (this.animationFrameId !== null) {
+      cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = null;
+    }
+  }
+
+  private resumeAnimation(): void {
+    if (this.animationFrameId === null && this.isVisible) {
+      this.animationFrameId = requestAnimationFrame((time) => this.animate(time));
     }
   }
 
@@ -66,12 +108,22 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.totalImages = urls.length;
 
-    const createImage = (url: string) => new Promise<HTMLImageElement>((resolve, reject) => {
-      const img = new Image();
-      img.src = url;
-      img.onload = () => resolve(img);
-      img.onerror = reject;
-    });
+    const createImage = (url: string) => {
+      if (GlobeComponent.imageCache.has(url)) {
+        return Promise.resolve(GlobeComponent.imageCache.get(url)!);
+      }
+
+      return new Promise<HTMLImageElement>((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = 'anonymous';
+        img.src = url;
+        img.onload = () => {
+          GlobeComponent.imageCache.set(url, img);
+          resolve(img);
+        };
+        img.onerror = reject;
+      });
+    };
 
     const promises = urls.map(url =>
       createImage(url).then(img => {
@@ -107,38 +159,51 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
 
-  private animate(): void {
-    this.animationFrameId = requestAnimationFrame(() => this.animate());
-    this.draw();
-    this.angleY += 0.005;
+  private animate(currentTime: number = 0): void {
+    this.animationFrameId = requestAnimationFrame((time) => this.animate(time));
+    
+    if (!this.isVisible) return;
+    
+    if (currentTime - this.lastFrameTime >= this.frameInterval) {
+      this.draw();
+      this.angleY += 0.005;
+      this.lastFrameTime = currentTime;
+    }
   }
 
 
   private draw(): void {
     const ctx = this.ctx;
-    ctx.clearRect(0, 0, 600, 600);
-    const cx = 300, cy = 300;
+    const canvas = ctx.canvas;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const cx = canvas.width / 2, cy = canvas.height / 2;
+
+    const cosY = Math.cos(this.angleY);
+    const sinY = Math.sin(this.angleY);
 
     const rotated = this.points.map(({ x, y, z, img }) => {
-      const cosY = Math.cos(this.angleY);
-      const sinY = Math.sin(this.angleY);
       const xRot = x * cosY - z * sinY;
       const zRot = z * cosY + x * sinY;
       const scale = 500 / (500 + zRot);
       return {
         x: cx + xRot * scale,
         y: cy + y * scale,
-        size: scale * 30,
+        size: Math.max(scale * 30, 2),
         img,
         z: zRot
       };
     });
 
-    rotated.sort((a, b) => b.z - a.z); // draw farthest points first
+    rotated.sort((a, b) => b.z - a.z);
 
+    ctx.save();
     for (const p of rotated) {
-      ctx.drawImage(p.img, p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
+      if (p.size > 2 && p.x > -p.size && p.x < canvas.width + p.size && 
+          p.y > -p.size && p.y < canvas.height + p.size) {
+        ctx.drawImage(p.img, p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
+      }
     }
+    ctx.restore();
   }
 
 
@@ -170,6 +235,21 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.animationFrameId !== null) {
       cancelAnimationFrame(this.animationFrameId);
+      this.animationFrameId = null;
+    }
+    
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+    
+    this.loading$.complete();
+    this.loadingProgress$.complete();
+    
+    this.logos.length = 0;
+    this.points.length = 0;
+    
+    if (this.ctx && this.canvasRef?.nativeElement) {
+      this.ctx.clearRect(0, 0, this.canvasRef.nativeElement.width, this.canvasRef.nativeElement.height);
     }
   }
 

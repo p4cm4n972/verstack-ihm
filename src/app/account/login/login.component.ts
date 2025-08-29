@@ -1,4 +1,4 @@
-import { Component, inject, Inject, PLATFORM_ID } from '@angular/core';
+import { Component, inject, Inject, PLATFORM_ID, OnInit } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,7 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthenticationService } from '../../services/authentication.service';
-import { Router, RouterModule } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
@@ -21,16 +21,17 @@ import {MatSnackBar} from '@angular/material/snack-bar';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   private _snackBar = inject(MatSnackBar);
   private isBrowser: boolean;
-
+  private returnUrl: string = '/home';
 
   constructor(
     private fb: FormBuilder,
     private readonly authService: AuthenticationService,
     private router: Router,
+    private route: ActivatedRoute,
     @Inject(PLATFORM_ID) platformId: Object
   ) {
     this.isBrowser = isPlatformBrowser(platformId);
@@ -39,13 +40,27 @@ export class LoginComponent {
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
+
+    // Récupérer l'URL de retour depuis les paramètres de requête
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/home';
+  }
+
+  ngOnInit() {
+    // Afficher un message informatif si l'utilisateur a été redirigé
+    const message = this.route.snapshot.queryParams['message'];
+    if (message) {
+      this.openSnackBar(message);
+    } else if (this.returnUrl !== '/home') {
+      this.openSnackBar('Veuillez vous connecter pour accéder à cette page');
+    }
   }
 
   onLogin() {
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
-          this.router.navigate(['/home']);
+          // Rediriger vers l'URL de retour ou la page d'accueil par défaut
+          this.router.navigateByUrl(this.returnUrl);
           this.openSnackBar('   ✅ Connexion réussie !')
         },
         error: (error) => {
