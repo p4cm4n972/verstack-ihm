@@ -8,6 +8,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "generate-version": "ts-node src/scripts/set-version.js",
+    "generate-sitemap": "ts-node src/generate-sitemap.ts",
     "serve:ssr:verstack-ihm": "node dist/verstack-ihm/server/server.mjs"
   },
   "private": true,
@@ -46,6 +47,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "ts-node": "^10.9.2",
     "typescript": "~5.8.3"
   }
 }

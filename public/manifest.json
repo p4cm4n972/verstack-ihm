@@ -1,0 +1,38 @@
+{
+  "name": "Verstack - Langages et Frameworks",
+  "short_name": "Verstack",
+  "description": "Plateforme centralisée pour suivre les versions et tendances des langages de programmation, frameworks et outils dédiés au développement.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#00ff41",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "lang": "fr",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "16x16 32x32 48x48",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/assets/icons/logo-red-squiggly-01.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/assets/icons/logo-banniere-RS.png", 
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "categories": ["developer", "productivity", "technology"],
+  "screenshots": [
+    {
+      "src": "/assets/images/screenshot-home.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "label": "Page d'accueil Verstack"
+    }
+  ]
+}
