@@ -1,22 +1,14 @@
-import { Component, inject, Inject, PLATFORM_ID, OnInit } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SharedMaterialModule } from '../../shared/material.module';
+import { PlatformService } from '../../core/services/platform.service';
 
 @Component({
   selector: 'app-login',
-    imports: [RouterModule,MatButtonModule, MatToolbarModule,MatButtonModule, MatTabsModule,MatCheckboxModule, MatCardModule,MatFormFieldModule,MatInputModule, MatIconModule, MatSelectModule , ReactiveFormsModule],
+    imports: [RouterModule, ReactiveFormsModule, SharedMaterialModule],
   
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -24,7 +16,6 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   private _snackBar = inject(MatSnackBar);
-  private isBrowser: boolean;
   private returnUrl: string = '/home';
 
   constructor(
@@ -32,9 +23,8 @@ export class LoginComponent implements OnInit {
     private readonly authService: AuthenticationService,
     private router: Router,
     private route: ActivatedRoute,
-    @Inject(PLATFORM_ID) platformId: Object
+    private platformService: PlatformService
   ) {
-    this.isBrowser = isPlatformBrowser(platformId);
 
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -76,7 +66,7 @@ export class LoginComponent implements OnInit {
   durationInSeconds = 5;
 
   openSnackBar(message: string) {
-    if (!this.isBrowser) return;
+    if (!this.platformService.isBrowser) return;
     this._snackBar.open(message, '', {
       duration: this.durationInSeconds * 1000,
       horizontalPosition: 'center',

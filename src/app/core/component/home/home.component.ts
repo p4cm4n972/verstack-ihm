@@ -1,16 +1,14 @@
-import { Component, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { GlobeComponent } from '../../../composant/globe/globe.component';
-import { Router, RouterModule } from '@angular/router';
+import { RouterModule } from '@angular/router';
 import { AuthenticationService } from '../../../services/authentication.service';
-import { Title, Meta } from '@angular/platform-browser';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
 import { VersionComponent } from '../version/version.component';
-import { LangagesService } from '../../../services/langages.service';
 import { ProfileService } from '../../../services/profile.service';
 import { SeoService } from '../../../services/seo.service';
+import { PlatformService } from '../../services/platform.service';
 import { Observable, tap } from 'rxjs';
 
 @Component({
@@ -30,42 +28,15 @@ export class HomeComponent {
 
 
 
-  private isBrowser: boolean;
-
   constructor(
     private authService: AuthenticationService,
-    private router: Router,
-    private title: Title, private meta: Meta,
-    private _langagesService: LangagesService,
     private profileService: ProfileService,
     private seo: SeoService,
-    @Inject(PLATFORM_ID) platformId: Object
+    private platformService: PlatformService
   ) {
-    this.isBrowser = isPlatformBrowser(platformId);
     this.authStatus$ = this.authService.getAuthStatus();
   }
 
-  private getLocalStorageItem(key: string): string | null {
-    return this.isBrowser ? localStorage.getItem(key) : null;
-  }
-
-  private setLocalStorageItem(key: string, value: string): void {
-    if (this.isBrowser) {
-      localStorage.setItem(key, value);
-    }
-  }
-
-  private getJson<T>(key: string, defaultValue: T): T {
-    const item = this.getLocalStorageItem(key);
-    if (!item) {
-      return defaultValue;
-    }
-    try {
-      return JSON.parse(item) as T;
-    } catch {
-      return defaultValue;
-    }
-  }
 
   ngOnInit(): void {
     this.preloadBackgroundImage();
@@ -84,7 +55,7 @@ export class HomeComponent {
       développement logiciel, développement mobile, développement backend, développement frontend, outils de productivité, gestion de projet,
       collaboration en équipe, intégration continue, déploiement continu , DevOps, meilleures pratiques de développement, ressources pour développeurs,
       communauté de développeurs`,
-      image: this.isBrowser ? `${window.location.origin}/assets/slider/slider1.png` : undefined,
+      image: this.platformService.isBrowser ? `${this.platformService.getCurrentOrigin()}/assets/slider/slider1.png` : undefined,
       url: 'https://verstack.io/home'
     });
 
@@ -99,8 +70,8 @@ export class HomeComponent {
       });
     });
 
-    this.userData = this.getJson<any>('user', null);
-    this.userFavoris = this.getJson<any[]>('favoris', []);
+    this.userData = this.platformService.getJson<any>('user', null);
+    this.userFavoris = this.platformService.getJson<any[]>('favoris', []);
   }
 
 
@@ -116,15 +87,15 @@ export class HomeComponent {
   }
 
   private loadUserFavoris(): void {
-    this.userFavoris = this.getJson<any[]>('favoris', []);
+    this.userFavoris = this.platformService.getJson<any[]>('favoris', []);
   }
 
   private storeUserData(response: any) {
-    this.setLocalStorageItem('favoris', JSON.stringify(response.favoris));
+    this.platformService.setJson('favoris', response.favoris);
   }
 
   private preloadBackgroundImage(): void {
-    if (!this.isBrowser) {
+    if (!this.platformService.isBrowser) {
       this.bgLoaded = true;
       return;
     }

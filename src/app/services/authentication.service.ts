@@ -1,8 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, tap, shareReplay } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+import { PlatformService } from '../core/services/platform.service';
+import { LoginCredentials, SignupData, AuthResponse, DecodedToken, UserProfile } from '../models/user.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -11,31 +12,31 @@ export class AuthenticationService {
   private baseUrl = '/api/authentication';
   // authStatusSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
 
-  private isAuthenticated$ = new BehaviorSubject<boolean>(this.hasValidAccessToken());
-  private isBrowser: boolean;
-  private get storage(): Storage | null {
-    return this.isBrowser ? localStorage : null;
+  private isAuthenticated$ = new BehaviorSubject<boolean>(false);
+
+  constructor(
+    private http: HttpClient,
+    private platformService: PlatformService
+  ) {
+    // Initialiser le statut d'authentification après injection des dépendances
+    this.isAuthenticated$.next(this.hasValidAccessToken());
   }
 
-  constructor(private http: HttpClient, @Inject(PLATFORM_ID) private platformId: Object) {
-    this.isBrowser = isPlatformBrowser(this.platformId);
-  }
 
 
-
-  signup(data: any): Observable<any> {
-    return this.http.post(`${this.baseUrl}/signup`, data, {
+  signup(data: SignupData): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.baseUrl}/signup`, data, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
     });
   }
 
-  login(credentials: any): Observable<any> {
+  login(credentials: LoginCredentials): Observable<AuthResponse> {
     return this.http
-      .post(`${this.baseUrl}/signin`, credentials, {
+      .post<AuthResponse>(`${this.baseUrl}/signin`, credentials, {
         headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
       })
       .pipe(
-        tap((response: any) => {
+        tap((response: AuthResponse) => {
           if (response.accessToken && response.refreshToken) {
             this.storeUserData(response);
             this.isAuthenticated$.next(true);
@@ -43,10 +44,10 @@ export class AuthenticationService {
             const decodedToken = this.getDecodedToken();
             const userId = decodedToken ? decodedToken.id : '';
             if (userId) {
-              this.http.get(`/api/users/${userId}`).subscribe({
-                next: (profile: any) => {
+              this.http.get<UserProfile>(`/api/users/${userId}`).subscribe({
+                next: (profile: UserProfile) => {
                   const favoris = profile.favoris ?? [];
-                  this.storage?.setItem('favoris', JSON.stringify(favoris));
+                  this.platformService.setJson('favoris', favoris);
                 }
                 , error: (error) => {
                   console.error('Error fetching user data:', error);
@@ -59,20 +60,20 @@ export class AuthenticationService {
       );
   }
 
-  refreshToken(): Observable<any> {
-    const refreshToken = this.storage?.getItem('refresh_token');
-    return this.http.post(`${this.baseUrl}/refresh-tokens`, { refreshToken }).pipe(
-      tap((response: any) => {
+  refreshToken(): Observable<AuthResponse> {
+    const refreshToken = this.platformService.getLocalStorageItem('refresh_token');
+    return this.http.post<AuthResponse>(`${this.baseUrl}/refresh-tokens`, { refreshToken }).pipe(
+      tap((response: AuthResponse) => {
         this.storeUserData(response);
-        this.getDecodedToken()
+        this.getDecodedToken();
       })
-    )
+    );
   }
 
-  verifyEmail(token: string): Observable<any> {
+  verifyEmail(token: string): Observable<{ message: string }> {
     console.log(token)
-    return this.http.post(`${this.baseUrl}/verify-email`, { token }).pipe(
-      tap((response: any) => {
+    return this.http.post<{ message: string }>(`${this.baseUrl}/verify-email`, { token }).pipe(
+      tap((response: { message: string }) => {
         console.log(response)
       })
     )
@@ -80,28 +81,27 @@ export class AuthenticationService {
 
 
   logout() {
-    this.storage?.removeItem('access_token');
-    this.storage?.removeItem('refresh_token');
-    this.storage?.removeItem('user');
-    this.storage?.removeItem('userId');
-    this.storage?.removeItem('favoris');
+    this.platformService.removeLocalStorageItem('access_token');
+    this.platformService.removeLocalStorageItem('refresh_token');
+    this.platformService.removeLocalStorageItem('user');
+    this.platformService.removeLocalStorageItem('userId');
+    this.platformService.removeLocalStorageItem('favoris');
     this.isAuthenticated$.next(false);
-    this.storage?.clear();
     this.updateAuthStatus(false);
   }
 
-  storeUserData(response: any) {
-    this.storage?.setItem('access_token', response.accessToken);
-    this.storage?.setItem('refresh_token', response.refreshToken);
+  storeUserData(response: AuthResponse) {
+    this.platformService.setLocalStorageItem('access_token', response.accessToken);
+    this.platformService.setLocalStorageItem('refresh_token', response.refreshToken);
     this.getUserData();
-
   }
 
   getAccessToken(): string | null {
-    return this.storage?.getItem('access_token') || null;
+    return this.platformService.getLocalStorageItem('access_token');
   }
+  
   getRefreshToken(): string | null {
-    return this.storage?.getItem('refresh_token') || null;
+    return this.platformService.getLocalStorageItem('refresh_token');
   }
 
   isLoggedIn(): Observable<boolean> {
@@ -121,15 +121,17 @@ export class AuthenticationService {
     }
   }
 
-  getDecodedToken(): any {
-    if (!this.isBrowser) {
-      return {};
+  getDecodedToken(): DecodedToken | null {
+    if (!this.platformService.isBrowser) {
+      return null;
     }
 
     const token = this.getAccessToken();
-    const decodedToken: any = token ? jwtDecode(token) : {};
-    this.storage?.setItem('user', decodedToken ? JSON.stringify(decodedToken) : '');
-    this.storage?.setItem('userId', decodedToken ? decodedToken.id : '');
+    const decodedToken: DecodedToken | null = token ? jwtDecode<DecodedToken>(token) : null;
+    if (decodedToken) {
+      this.platformService.setJson('user', decodedToken);
+      this.platformService.setLocalStorageItem('userId', decodedToken.id);
+    }
     return decodedToken;
   }
 
@@ -167,10 +169,8 @@ export class AuthenticationService {
     });
   }
 
-  getCurrentUser(): any {
-    if (!this.isBrowser) return null;
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
+  getCurrentUser(): DecodedToken | null {
+    return this.platformService.getJson('user', null);
   }
 
   checkAuthOnStartup() {

@@ -1,4 +1,3 @@
-import { MatCardModule } from '@angular/material/card';
 import {
   ReactiveFormsModule,
   FormBuilder,
@@ -7,40 +6,22 @@ import {
   ValidatorFn,
   AbstractControl,
 } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatSelectModule } from '@angular/material/select';
-import { MatInputModule } from '@angular/material/input';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatCheckboxModule } from '@angular/material/checkbox';
 
-import { Component, EventEmitter, inject, Output, ViewEncapsulation, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { MatButtonModule } from '@angular/material/button';
-import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { Component, EventEmitter, inject, Output, ViewEncapsulation, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { TermesComponent } from '../../composant/termes/termes.component';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {MatRadioModule} from '@angular/material/radio';
 import { JobListService } from '../../services/job-list.service';
+import { SharedMaterialModule } from '../../shared/material.module';
+import { PlatformService } from '../../core/services/platform.service';
 
 @Component({
   selector: 'app-signin',
   imports: [
-    MatToolbarModule,
-    MatTabsModule,
-    MatCheckboxModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatSelectModule,
     ReactiveFormsModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatRadioModule
+    SharedMaterialModule
   ],
   templateUrl: './signin.component.html',
   styleUrl: './signin.component.scss',
@@ -52,8 +33,7 @@ export class SigninComponent implements OnInit {
   readonly dialog = inject(MatDialog);
   private _snackBar = inject(MatSnackBar);
   durationInSeconds = 5;
-  selected: number = 0
-  private isBrowser: boolean;
+  selected: number = 0;
 
   openPrivacyTermeDialog() {
     const dialogRef = this.dialog.open(TermesComponent);
@@ -76,9 +56,8 @@ export class SigninComponent implements OnInit {
     private authService: AuthenticationService,
     private router: Router,
     private jobListService: JobListService,
-    @Inject(PLATFORM_ID) platformId: Object
+    private platformService: PlatformService
   ) {
-    this.isBrowser = isPlatformBrowser(platformId);
     this.signupForm = this.fb.group(
       {
         sexe: [''],
@@ -152,7 +131,7 @@ export class SigninComponent implements OnInit {
 
 
   openSnackBar(message: string) {
-    if (!this.isBrowser) return;
+    if (!this.platformService.isBrowser) return;
     this._snackBar.open(message, '', {
       duration: this.durationInSeconds * 1000,
       horizontalPosition: 'center',
