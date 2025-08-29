@@ -132,7 +132,7 @@
   }
 
   .dashboard-title {
-    font-size: 10px;
+    font-size: 12px;
   }
 
   .dashboard-grid {
@@ -145,11 +145,11 @@
   }
 
   .card-title {
-    font-size: 7px;
+    font-size: 9px;
   }
 
   .stat-line {
-    font-size: 6px;
+    font-size: 8px;
   }
 
   .pixel-art-title {
@@ -172,7 +172,7 @@
   }
 
   .dashboard-title {
-    font-size: 11px;
+    font-size: 13px;
   }
 
   .dashboard-grid {
@@ -180,11 +180,11 @@
   }
 
   .card-title {
-    font-size: 7.5px;
+    font-size: 9.5px;
   }
 
   .stat-line {
-    font-size: 6.5px;
+    font-size: 8.5px;
   }
 }
 
@@ -212,7 +212,7 @@
   }
 
   .dashboard-title {
-    font-size: 9px;
+    font-size: 11px;
     flex-direction: column;
     text-align: center;
     gap: 4px;
@@ -240,11 +240,11 @@
   }
 
   .card-title {
-    font-size: 6px;
+    font-size: 8px;
   }
 
   .stat-line {
-    font-size: 5px;
+    font-size: 7px;
     margin-bottom: 6px;
   }
 
@@ -345,13 +345,14 @@
 }
 
 .dashboard-title {
-  font-size: 12px;
+  font-size: 14px;
   color: #00ff41;
   margin: 0;
   display: flex;
   align-items: center;
   gap: 8px;
   text-shadow: 0 0 10px #00ff41;
+  font-weight: bold;
 }
 
 .title-icon {
@@ -386,9 +387,10 @@
 }
 
 .status-text {
-  font-size: 8px;
+  font-size: 10px;
   color: #00ff41;
-  text-shadow: 0 0 5px #00ff41;
+  text-shadow: 0 0 8px #00ff41;
+  font-weight: bold;
 }
 
 @keyframes pulse-dot {
@@ -453,10 +455,10 @@
 }
 
 .card-title {
-  font-size: 8px;
+  font-size: 10px;
   color: #00ff41;
   font-weight: bold;
-  text-shadow: 0 0 5px #00ff41;
+  text-shadow: 0 0 8px #00ff41;
 }
 
 .card-content {
@@ -468,12 +470,14 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 8px;
-  font-size: 7px;
+  font-size: 9px;
 }
 
 .stat-label {
-  color: #a0a0a0;
+  color: #ffffff;
   text-transform: uppercase;
+  font-weight: bold;
+  text-shadow: 0 0 3px rgba(255, 255, 255, 0.5);
 }
 
 .stat-value {
