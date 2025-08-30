@@ -1,16 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatTableModule } from '@angular/material/table';
-import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatCardModule } from '@angular/material/card';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatDialogModule, MatDialog } from '@angular/material/dialog';
-import { MatSnackBarModule, MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { SharedMaterialModule } from '../../../shared/material.module';
 import { LangagesService } from '../../../services/langages.service';
 import { UsersService } from '../../../services/users.service';
 import { ArticlesService } from '../../../services/articles.service';
@@ -21,16 +14,7 @@ import { ArticlesService } from '../../../services/articles.service';
   imports: [
     CommonModule,
     FormsModule,
-    MatTableModule,
-    MatButtonModule,
-    MatIconModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatCardModule,
-    MatToolbarModule,
-    MatTooltipModule,
-    MatDialogModule,
-    MatSnackBarModule
+    SharedMaterialModule
   ],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
@@ -53,6 +37,7 @@ export class AdminComponent implements OnInit {
 
   // UI State
   activeTab: string = 'dashboard';
+  selectedTabIndex: number = 0;
   
   // Search terms
   userSearchTerm: string = '';
@@ -79,6 +64,12 @@ export class AdminComponent implements OnInit {
   // Navigation methods
   setActiveTab(tab: string) {
     this.activeTab = tab;
+  }
+
+  onTabChange(event: any): void {
+    this.selectedTabIndex = event.index;
+    const tabs = ['dashboard', 'users', 'langages', 'articles'];
+    this.activeTab = tabs[event.index] || 'dashboard';
   }
 
   // Data loading methods

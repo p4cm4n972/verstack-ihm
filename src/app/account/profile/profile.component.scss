@@ -1,949 +1,278 @@
-// Layout principal
-.profile-layout {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 2rem 0;
+@use '@angular/material' as mat;
+
+.version-layout {
+  display: grid;
+  grid-template-columns: 1fr 5fr 1fr; // pub | contenu | pub
+  gap: 16px;
+  padding: 16px;
+  align-items: start;
 }
 
-// Header du profil avec couverture
+/* pub gauche / droite */
+.ads-left,
+.ads-right {
+  position: sticky;
+  top: 100px;
+  height: fit-content;
+  min-width: 120px;
+}
+
+/* Header profil */
 .profile-header {
-  position: relative;
+  padding: 1rem 0;
   margin-bottom: 2rem;
-  
-  .cover-image {
-    height: 200px;
-    background: linear-gradient(45deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
-    border-radius: 20px 20px 0 0;
-    position: relative;
-    overflow: hidden;
-    
-    &::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: url('/assets/pattern.svg') repeat;
-      opacity: 0.1;
-    }
-  }
-  
-  .profile-info {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    border-radius: 0 0 20px 20px;
-    padding: 2rem;
-    margin: 0 2rem;
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-    transform: translateY(-50px);
-    position: relative;
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 2rem;
-    align-items: center;
-  }
 }
 
-// Section avatar
-.avatar-section {
-  position: relative;
-  
-  .profile-avatar-container {
-    position: relative;
-    display: inline-block;
-    
-    .profile-avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      border: 4px solid white;
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-      object-fit: cover;
-      transition: transform 0.3s ease;
-      
-      &:hover {
-        transform: scale(1.05);
-      }
-    }
-    
-    .online-indicator {
-      position: absolute;
-      bottom: 8px;
-      right: 8px;
-      width: 20px;
-      height: 20px;
-      background: #4ade80;
-      border: 3px solid white;
-      border-radius: 50%;
-      animation: pulse-online 2s infinite;
-    }
-  }
-  
-  .avatar-edit-btn {
-    position: absolute;
-    bottom: -5px;
-    right: -5px;
-    background: #667eea;
-    color: white;
-    width: 36px;
-    height: 36px;
-    
-    &:hover {
-      background: #5a67d8;
-    }
-  }
+.profile-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  background: rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(0, 188, 212, 0.3);
+  border-radius: 8px;
+  padding: 1.5rem;
 }
 
-@keyframes pulse-online {
-  0%, 100% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  50% {
-    transform: scale(1.1);
-    opacity: 0.8;
-  }
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 2px solid #00ff41;
 }
 
-// Détails du profil
 .profile-details {
-  .user-info {
-    .username {
-      margin: 0 0 0.5rem 0;
-      font-size: 2.5rem;
-      font-weight: 700;
-      color: #2d3748;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-    
-    .user-meta {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      margin-bottom: 1rem;
-      
-      .role-badge {
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 0.25rem 0.75rem;
-        border-radius: 15px;
-        font-size: 0.8rem;
-        font-weight: 500;
-      }
-      
-      .join-date {
-        color: #4a5568;
-        font-size: 0.9rem;
-        font-weight: 500;
-      }
-    }
-    
-    .user-bio {
-      color: #2d3748;
-      font-style: italic;
-      margin: 0;
-      font-weight: 500;
-    }
-  }
-  
-  .stats-overview {
-    display: flex;
-    gap: 2rem;
-    margin-top: 1.5rem;
-    
-    .stat-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 1rem;
-      background: rgba(102, 126, 234, 0.1);
-      border-radius: 15px;
-      transition: transform 0.3s ease;
-      
-      &:hover {
-        transform: translateY(-3px);
-      }
-      
-      .stat-number {
-        font-size: 2rem;
-        font-weight: 700;
-        color: #667eea;
-      }
-      
-      .stat-label {
-        font-size: 0.9rem;
-        color: #4a5568;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        font-weight: 600;
-      }
-    }
-  }
+  flex: 1;
 }
 
-// Actions du profil
+.username {
+  font-size: 18px;
+  color: white;
+  margin: 0 0 0.5rem 0;
+  font-weight: bold;
+}
+
+.user-role {
+  font-size: 12px;
+  color: #00ff41;
+  margin: 0 0 1rem 0;
+}
+
+.user-stats {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  font-size: 10px;
+  color: #00bcd4;
+  background: rgba(0, 188, 212, 0.1);
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+}
+
 .profile-actions {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-  
-  .edit-profile-btn {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    border-radius: 25px;
-    padding: 0.75rem 1.5rem;
-    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
-    transition: all 0.3s ease;
-    
-    &:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
-    }
-  }
-  
-  .share-profile-btn {
-    color: #667eea;
-    border: 2px solid #667eea;
-    border-radius: 25px;
-    transition: all 0.3s ease;
-    
-    &:hover {
-      background: #667eea;
-      color: white;
-    }
-  }
+  gap: 0.8rem;
 }
 
-// Contenu principal
-.profile-content {
-  margin: 0 2rem;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-
-// Navigation des onglets
-.profile-tabs {
-  display: flex;
-  background: #f7fafc;
-  border-bottom: 1px solid #e2e8f0;
-  
-  .tab-button {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem 1.5rem;
-    border: none;
-    background: transparent;
-    color: #4a5568;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-    
-    &:hover {
-      background: rgba(102, 126, 234, 0.1);
-      color: #667eea;
-    }
-    
-    &.active {
-      color: #667eea;
-      background: white;
-      
-      &::after {
-        content: '';
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 3px;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      }
-    }
-    
-    mat-icon {
-      font-size: 1.2rem;
-    }
-  }
-}
-
-// Contenu des onglets
-.tab-content {
-  padding: 2rem;
-  min-height: 500px;
-}
-
-// Vue d'ensemble
-.overview-grid {
+/* Grille de contenu comme la page version */
+.content-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  padding-top: 32px;
 }
 
-.info-card, .activity-card, .preferences-card {
-  background: white;
-  border-radius: 15px;
-  padding: 2rem;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(102, 126, 234, 0.1);
-  
-  h3 {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    margin: 0 0 1.5rem 0;
-    color: #2d3748;
-    font-weight: 600;
-    
-    mat-icon {
-      color: #667eea;
-    }
-  }
-}
-
-.info-list {
+.profile-card {
+  height: fit-content;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
-}
+  box-shadow: 0 4px 8px rgba(0, 255, 200, 0.2);
+  border: 1px solid rgba(0, 188, 212, 0.3);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
 
-.info-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem;
-  background: #f7fafc;
-  border-radius: 10px;
-  
-  .info-label {
-    color: #4a5568;
-    font-weight: 600;
-  }
-  
-  .info-value {
-    color: #2d3748;
-    font-weight: 600;
-  }
-}
-
-.activity-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.activity-item {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  background: #f7fafc;
-  border-radius: 10px;
-  
-  .activity-icon {
-    width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  ::ng-deep .mat-mdc-card-header .mat-mdc-card-title {
     color: white;
-    
-    &.new { background: #48bb78; }
-    &.update { background: #ed8936; }
-    &.project { background: #667eea; }
-  }
-  
-  .activity-content {
+    font-size: 14px;
+    font-weight: bold;
     display: flex;
-    flex-direction: column;
-    gap: 0.2rem;
-    
-    .activity-title {
-      color: #2d3748;
-      font-weight: 500;
-    }
-    
-    .activity-time {
-      color: #718096;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-  }
-}
-
-.preferences-list {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.preference-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 0.75rem;
-  background: #f7fafc;
-  border-radius: 10px;
-  
-  span {
-    color: #2d3748;
-    font-weight: 500;
-  }
-  
-  .toggle-on {
-    color: #48bb78;
-  }
-  
-  .toggle-off {
-    color: #a0aec0;
-  }
-}
-
-// Stack technique
-.stack-section {
-  .stack-header {
-    display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
-    
-    h3 {
-      margin: 0;
-      color: #2d3748;
-      font-weight: 600;
-    }
+    gap: 0.5rem;
   }
-}
 
-.stack-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1.5rem;
+  ::ng-deep .mat-mdc-card-subtitle {
+    color: #00ff41;
+  }
+
+  ::ng-deep .mat-mdc-card-content {
+    color: white;
+  }
 }
 
 .tech-card {
-  background: white;
-  border-radius: 15px;
-  padding: 1.5rem;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(102, 126, 234, 0.1);
-  transition: all 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
-  }
-  
-  .tech-header {
+  min-height: 200px;
+}
+
+.empty-card {
+  grid-column: 1 / -1;
+  text-align: center;
+}
+
+.info-list {
+  .info-item {
     display: flex;
-    align-items: center;
-    gap: 1rem;
+    justify-content: space-between;
     margin-bottom: 1rem;
-    
-    .tech-logo {
-      width: 40px;
-      height: 40px;
-      object-fit: contain;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
+    .label {
+      color: #888;
+      font-size: 12px;
     }
-    
-    .tech-info {
-      flex: 1;
-      
-      h5 {
-        margin: 0 0 0.5rem 0;
-        color: #2d3748;
-        font-weight: 600;
-      }
-      
-      .experience-level {
-        display: flex;
-        flex-direction: column;
-        gap: 0.3rem;
-        
-        .level-bar {
-          width: 100%;
-          height: 6px;
-          background: #e2e8f0;
-          border-radius: 3px;
-          overflow: hidden;
-          
-          .level-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #48bb78 0%, #38a169 100%);
-            border-radius: 3px;
-            transition: width 0.5s ease;
-          }
-        }
-        
-        .level-text {
-          font-size: 0.8rem;
-          color: #4a5568;
-          font-weight: 500;
-        }
-      }
+
+    .value {
+      color: #00ff41;
+      font-size: 12px;
+      font-weight: bold;
     }
   }
-  
-  .tech-actions {
-    display: flex;
-    gap: 0.5rem;
-    justify-content: flex-end;
+}
+
+.progress-item {
+  margin-bottom: 1.5rem;
+
+  > span {
+    font-size: 12px;
+    display: block;
+    margin-bottom: 0.5rem;
+    color: white;
   }
+
+  .progress-value {
+    color: #00ff41;
+    text-align: right;
+    margin-top: 0.3rem;
+    font-weight: bold;
+  }
+}
+
+.progress-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00ff41, #39ff14);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+}
+
+.tech-level {
+  margin-top: 1rem;
+}
+
+.level-bar {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.level-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #00ff41, #39ff14);
+  border-radius: 3px;
+  transition: width 0.3s ease;
 }
 
 .empty-state {
-  text-align: center;
   padding: 3rem;
-  
-  .empty-icon {
-    font-size: 4rem;
-    color: #a0aec0;
+  color: #666;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
     margin-bottom: 1rem;
+    color: #333;
   }
-  
-  h4 {
-    color: #2d3748;
-    margin-bottom: 0.5rem;
-  }
-  
+
   p {
-    color: #4a5568;
-    margin-bottom: 2rem;
-    font-weight: 500;
+    font-size: 14px;
+    margin-bottom: 1.5rem;
   }
 }
 
-// Projets
-.projects-section {
-  .projects-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-    
-    h3 {
-      margin: 0;
-      color: #2d3748;
-      font-weight: 600;
-    }
-  }
-}
-
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-  gap: 2rem;
-}
-
-.project-card {
-  background: white;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(102, 126, 234, 0.1);
-  transition: all 0.3s ease;
-  
-  &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
-  }
-  
-  .project-image {
-    height: 120px;
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    
-    .project-placeholder {
-      font-size: 3rem;
-      color: white;
-    }
-  }
-  
-  .project-content {
-    padding: 1.5rem;
-    
-    h4 {
-      margin: 0 0 0.5rem 0;
-      color: #2d3748;
-      font-weight: 600;
-    }
-    
-    p {
-      color: #4a5568;
-      margin: 0 0 1rem 0;
-      line-height: 1.5;
-      font-weight: 500;
-    }
-    
-    .project-tech {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      
-      .tech-tag {
-        background: rgba(102, 126, 234, 0.1);
-        color: #667eea;
-        padding: 0.25rem 0.75rem;
-        border-radius: 15px;
-        font-size: 0.8rem;
-        font-weight: 500;
-      }
-    }
-  }
-  
-  .project-actions {
-    padding: 1rem 1.5rem;
-    background: #f7fafc;
-    display: flex;
-    gap: 0.5rem;
-    justify-content: flex-end;
-  }
-}
-
-.add-project-card {
-  background: rgba(102, 126, 234, 0.1);
-  border: 2px dashed #667eea;
-  border-radius: 15px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding: 2rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  color: #4a5568;
-  font-weight: 600;
-  
-  &:hover {
-    background: rgba(102, 126, 234, 0.2);
-    transform: translateY(-2px);
-  }
-  
-  .add-icon {
-    font-size: 3rem;
-  }
-}
-
-// Timeline d'activités
-.activity-section {
-  .activity-timeline {
-    position: relative;
-    padding-left: 2rem;
-    
-    &::before {
-      content: '';
-      position: absolute;
-      left: 1rem;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
-    }
-  }
-}
-
-.timeline-item {
-  position: relative;
-  margin-bottom: 2rem;
-  
-  .timeline-marker {
-    position: absolute;
-    left: -2rem;
-    top: 0.5rem;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 50%;
-    border: 3px solid white;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-    
-    &.new { background: #48bb78; }
-    &.update { background: #ed8936; }
-    &.achievement { background: #9f7aea; }
-    &.social { background: #667eea; }
-  }
-  
-  .timeline-content {
-    background: white;
-    padding: 1.5rem;
-    border-radius: 15px;
-    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-    border: 1px solid rgba(102, 126, 234, 0.1);
-    
-    h4 {
-      margin: 0 0 0.5rem 0;
-      color: #2d3748;
-      font-weight: 600;
-    }
-    
-    p {
-      margin: 0 0 0.5rem 0;
-      color: #4a5568;
-      font-weight: 500;
-    }
-    
-    .timeline-date {
-      color: #718096;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-  }
-}
-
-// Réalisations
-.achievements-section {
-  .achievements-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-    gap: 1.5rem;
-  }
-}
-
-.achievement-card {
-  background: white;
-  border-radius: 15px;
-  padding: 2rem;
-  text-align: center;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-  border: 1px solid rgba(102, 126, 234, 0.1);
-  transition: all 0.3s ease;
-  
-  &.earned {
-    border-color: #48bb78;
-    
-    .achievement-icon {
-      background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
-      color: white;
-    }
-    
-    &:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 40px rgba(72, 187, 120, 0.3);
-    }
-  }
-  
-  &.locked {
-    opacity: 0.6;
-    
-    .achievement-icon {
-      background: #e2e8f0;
-      color: #a0aec0;
-    }
-  }
-  
-  .achievement-icon {
-    width: 4rem;
-    height: 4rem;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0 auto 1rem auto;
-    
-    mat-icon {
-      font-size: 2rem;
-    }
-  }
-  
-  .achievement-content {
-    h4 {
-      margin: 0 0 0.5rem 0;
-      color: #2d3748;
-      font-weight: 600;
-    }
-    
-    p {
-      margin: 0 0 0.5rem 0;
-      color: #4a5568;
-      font-weight: 500;
-    }
-    
-    .achievement-date {
-      color: #48bb78;
-      font-size: 0.9rem;
-      font-weight: 500;
-    }
-    
-    .achievement-progress {
-      color: #667eea;
-      font-size: 0.9rem;
-      font-weight: 600;
-    }
-  }
-}
-
-// État de chargement
 .loading-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   padding: 4rem;
-  color: white;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-  
-  .loading-icon {
-    font-size: 4rem;
+  color: #666;
+
+  mat-icon {
+    font-size: 64px;
+    width: 64px;
+    height: 64px;
     margin-bottom: 1rem;
-    animation: pulse 2s infinite;
-    filter: drop-shadow(0 2px 8px rgba(255, 255, 255, 0.3));
   }
-  
-  h3 {
-    margin: 0;
-    font-weight: 600;
-    font-size: 1.5rem;
+
+  p {
+    font-size: 16px;
   }
 }
 
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
+/* Responsive */
+@media (max-width: 1200px) {
+  .version-layout {
+    grid-template-columns: 1fr 4fr;
   }
-  50% {
-    opacity: 0.5;
-  }
-}
 
-// Responsive Design
-@media (max-width: 1024px) {
-  .profile-layout {
-    padding: 1rem 0;
+  .ads-right {
+    display: none;
   }
-  
-  // Améliorer le contraste sur tablette
-  .info-item, .activity-item, .preference-item {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-  }
-  
-  .profile-content, .profile-header .profile-info {
-    margin: 0 1rem;
-  }
-  
-  .profile-header .profile-info {
-    grid-template-columns: 1fr;
-    text-align: center;
-    gap: 1.5rem;
-  }
-  
-  .stats-overview {
-    justify-content: center;
-  }
-  
-  .profile-tabs {
-    .tab-button span {
-      display: none;
-    }
-  }
-  
-  .overview-grid {
-    grid-template-columns: 1fr;
+
+  .content-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (max-width: 768px) {
-  .profile-header {
-    .cover-image {
-      height: 150px;
-    }
-    
-    .profile-info {
-      padding: 1.5rem;
-      transform: translateY(-30px);
-      background: rgba(255, 255, 255, 0.98);
-    }
-  }
-  
-  // Contraste amélioré sur mobile
-  .info-item, .activity-item, .preference-item {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  }
-  
-  .tech-card, .project-card {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .stats-overview {
-    flex-wrap: wrap;
-    gap: 1rem;
-    
-    .stat-item {
-      flex: 1;
-      min-width: 120px;
-    }
-  }
-  
-  .profile-actions {
-    flex-direction: row;
-    gap: 0.5rem;
-    
-    .edit-profile-btn, .share-profile-btn {
-      flex: 1;
-      padding: 0.5rem;
-    }
-  }
-  
-  .tab-content {
-    padding: 1.5rem;
-  }
-  
-  .stack-grid, .projects-grid, .achievements-grid {
+  .version-layout {
     grid-template-columns: 1fr;
   }
-  
-  .profile-tabs {
-    flex-wrap: wrap;
-    
-    .tab-button {
-      flex: 1;
-      min-width: 60px;
-    }
-  }
-  
-  .activity-timeline {
-    padding-left: 1.5rem;
-    
-    &::before {
-      left: 0.75rem;
-    }
-  }
-  
-  .timeline-item .timeline-marker {
-    left: -1.5rem;
-  }
-}
 
-@media (max-width: 480px) {
-  .profile-header .profile-info {
-    padding: 1rem;
-    transform: translateY(-20px);
+  .ads-left,
+  .ads-right {
+    display: none;
   }
-  
-  .avatar-section .profile-avatar-container .profile-avatar {
-    width: 80px;
-    height: 80px;
+
+  .content-grid {
+    grid-template-columns: 1fr;
   }
-  
-  .profile-details .user-info .username {
-    font-size: 1.8rem;
+
+  .profile-info {
+    flex-direction: column;
+    text-align: center;
+    gap: 1rem;
   }
-  
-  .stats-overview .stat-item {
-    padding: 0.5rem;
-    
-    .stat-number {
-      font-size: 1.5rem;
-    }
+
+  .profile-actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .user-stats {
+    justify-content: center;
   }
 }

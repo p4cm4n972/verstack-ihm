@@ -239,3 +239,59 @@
 .icon-database {
   color: #8E24AA;
 }
+
+// Version badges with colors
+.version-badge {
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+  font-family: 'Courier New', monospace !important;
+  padding: 0.2rem 0.5rem !important;
+  border-radius: 4px !important;
+  text-align: left !important;
+  line-height: 1.2 !important;
+  margin: 0.1rem 0 !important;
+  display: inline-block !important;
+  border: 1px solid !important;
+  width: 140px !important;
+  min-width: 140px !important;
+  max-width: 140px !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+  box-sizing: border-box !important;
+}
+
+.version-current {
+  color: #00ff41 !important;
+  background: rgba(0, 255, 65, 0.1) !important;
+  border-color: rgba(0, 255, 65, 0.2) !important;
+  text-shadow: 0 0 5px rgba(0, 255, 65, 0.3) !important;
+}
+
+.version-lts {
+  color: #ffd700 !important;
+  background: rgba(255, 215, 0, 0.1) !important;
+  border-color: rgba(255, 215, 0, 0.2) !important;
+  text-shadow: 0 0 5px rgba(255, 215, 0, 0.3) !important;
+}
+
+.version-livingstandard {
+  color: #00bcd4 !important;
+  background: rgba(0, 188, 212, 0.1) !important;
+  border-color: rgba(0, 188, 212, 0.2) !important;
+  text-shadow: 0 0 5px rgba(0, 188, 212, 0.3) !important;
+}
+
+.version-edition {
+  color: #ff9800 !important;
+  background: rgba(255, 152, 0, 0.1) !important;
+  border-color: rgba(255, 152, 0, 0.2) !important;
+  text-shadow: 0 0 5px rgba(255, 152, 0, 0.3) !important;
+}
+
+.version-standard {
+  color: #ffffff !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.2) !important;
+  text-shadow: 0 0 5px rgba(255, 255, 255, 0.3) !important;
+}

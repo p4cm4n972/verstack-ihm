@@ -1,259 +1,295 @@
-<div class="admin-layout">
-  <!-- Header avec statistiques -->
-  <header class="admin-header">
-    <div class="header-title">
-      <mat-icon class="admin-icon">admin_panel_settings</mat-icon>
-      <h1>Panneau d'Administration</h1>
-    </div>
-    <div class="quick-stats">
-      <div class="stat-card users">
-        <div class="stat-icon">👥</div>
-        <div class="stat-info">
+<div class="version-layout">
+  <aside class="ads-left">
+    <!-- Pub gauche -->
+    <ins class="adsbygoogle" style="display:block"></ins>
+  </aside>
+
+  <section>
+    <!-- Navigation en onglets horizontaux -->
+    <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedTabChange)="onTabChange($event)">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>dashboard</mat-icon>
+          Tableau de bord
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>people</mat-icon>
+          Utilisateurs
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>code</mat-icon>
+          Langages
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>article</mat-icon>
+          Articles
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+
+    <!-- Header admin avec statistiques -->
+    <div class="admin-header">
+      <div class="admin-title">
+        <mat-icon class="admin-icon">admin_panel_settings</mat-icon>
+        <h1>Panneau d'Administration</h1>
+      </div>
+      <div class="quick-stats">
+        <div class="stat-card">
           <span class="stat-number">{{ users.length }}</span>
           <span class="stat-label">Utilisateurs</span>
         </div>
-      </div>
-      <div class="stat-card languages">
-        <div class="stat-icon">🔧</div>
-        <div class="stat-info">
+        <div class="stat-card">
           <span class="stat-number">{{ langages.length }}</span>
           <span class="stat-label">Langages</span>
         </div>
-      </div>
-      <div class="stat-card articles">
-        <div class="stat-icon">📝</div>
-        <div class="stat-info">
+        <div class="stat-card">
           <span class="stat-number">{{ articles.length }}</span>
           <span class="stat-label">Articles</span>
         </div>
       </div>
     </div>
-  </header>
 
-  <!-- Navigation par onglets -->
-  <nav class="admin-nav">
-    <button class="nav-tab" [class.active]="activeTab === 'dashboard'" (click)="setActiveTab('dashboard')">
-      <mat-icon>dashboard</mat-icon>
-      <span>Tableau de bord</span>
-    </button>
-    <button class="nav-tab" [class.active]="activeTab === 'users'" (click)="setActiveTab('users')">
-      <mat-icon>people</mat-icon>
-      <span>Utilisateurs</span>
-    </button>
-    <button class="nav-tab" [class.active]="activeTab === 'langages'" (click)="setActiveTab('langages')">
-      <mat-icon>code</mat-icon>
-      <span>Langages</span>
-    </button>
-    <button class="nav-tab" [class.active]="activeTab === 'articles'" (click)="setActiveTab('articles')">
-      <mat-icon>article</mat-icon>
-      <span>Articles</span>
-    </button>
-  </nav>
+    <!-- Contenu principal en grille -->
+    <div class="content-grid">
+      
+      <!-- Dashboard Tab -->
+      @if (activeTab === 'dashboard') {
+        <mat-card class="admin-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>analytics</mat-icon>
+              Activité Récente
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="activity-list">
+              <div class="activity-item">
+                <div class="activity-icon new">+</div>
+                <div class="activity-text">Nouvel utilisateur inscrit</div>
+                <div class="activity-time">il y a 2h</div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon edit">✏️</div>
+                <div class="activity-text">Article modifié</div>
+                <div class="activity-time">il y a 4h</div>
+              </div>
+              <div class="activity-item">
+                <div class="activity-icon delete">×</div>
+                <div class="activity-text">Langage supprimé</div>
+                <div class="activity-time">il y a 1j</div>
+              </div>
+            </div>
+          </mat-card-content>
+        </mat-card>
 
-  <!-- Contenu principal -->
-  <main class="admin-content">
-    
-    <!-- Dashboard Tab -->
-    @if (activeTab === 'dashboard') {
-      <div class="dashboard-grid">
-        <div class="dashboard-card analytics">
-          <h3><mat-icon>analytics</mat-icon>Activité Récente</h3>
-          <div class="activity-list">
-            <div class="activity-item">
-              <div class="activity-icon new">+</div>
-              <div class="activity-text">Nouvel utilisateur inscrit</div>
-              <div class="activity-time">il y a 2h</div>
+        <mat-card class="admin-card">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>trending_up</mat-icon>
+              Vue d'ensemble
+            </mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="overview-stats">
+              <div class="overview-item">
+                <span class="overview-label">Taux de croissance</span>
+                <span class="overview-value positive">+15%</span>
+              </div>
+              <div class="overview-item">
+                <span class="overview-label">Connexions actives</span>
+                <span class="overview-value">{{ Math.floor(users.length * 0.7) }}</span>
+              </div>
+              <div class="overview-item">
+                <span class="overview-label">Articles populaires</span>
+                <span class="overview-value">{{ Math.floor(articles.length * 0.3) }}</span>
+              </div>
             </div>
-            <div class="activity-item">
-              <div class="activity-icon edit">✏️</div>
-              <div class="activity-text">Article modifié</div>
-              <div class="activity-time">il y a 4h</div>
-            </div>
-            <div class="activity-item">
-              <div class="activity-icon delete">×</div>
-              <div class="activity-text">Langage supprimé</div>
-              <div class="activity-time">il y a 1j</div>
-            </div>
-          </div>
-        </div>
-        
-        <div class="dashboard-card overview">
-          <h3><mat-icon>trending_up</mat-icon>Vue d'ensemble</h3>
-          <div class="overview-stats">
-            <div class="overview-item">
-              <span class="overview-label">Taux de croissance</span>
-              <span class="overview-value positive">+15%</span>
-            </div>
-            <div class="overview-item">
-              <span class="overview-label">Connexions actives</span>
-              <span class="overview-value">{{ Math.floor(users.length * 0.7) }}</span>
-            </div>
-            <div class="overview-item">
-              <span class="overview-label">Articles populaires</span>
-              <span class="overview-value">{{ Math.floor(articles.length * 0.3) }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    }
+          </mat-card-content>
+        </mat-card>
+      }
 
-    <!-- Users Tab -->
-    @if (activeTab === 'users') {
-      <div class="management-section">
-        <div class="section-header">
-          <h2><mat-icon>people</mat-icon>Gestion des Utilisateurs</h2>
-          <button mat-raised-button color="primary" class="add-btn" (click)="openCreateUserDialog()">
-            <mat-icon>add</mat-icon>
-            Nouvel Utilisateur
-          </button>
-        </div>
-        
-        <div class="table-controls">
-          <mat-form-field appearance="outline" class="search-field">
-            <mat-label>Rechercher un utilisateur</mat-label>
-            <input matInput [(ngModel)]="userSearchTerm" (ngModelChange)="filterUsers()" placeholder="Email, nom...">
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
-        </div>
+      <!-- Users Tab -->
+      @if (activeTab === 'users') {
+        <mat-card class="admin-card full-width">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>people</mat-icon>
+              Gestion des Utilisateurs
+            </mat-card-title>
+            <button mat-raised-button color="primary" (click)="openCreateUserDialog()">
+              <mat-icon>add</mat-icon>
+              Nouvel Utilisateur
+            </button>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="table-controls">
+              <mat-form-field appearance="outline" class="search-field">
+                <mat-label>Rechercher un utilisateur</mat-label>
+                <input matInput [(ngModel)]="userSearchTerm" (ngModelChange)="filterUsers()" placeholder="Email, nom...">
+                <mat-icon matSuffix>search</mat-icon>
+              </mat-form-field>
+            </div>
 
-        <div class="table-container">
-          <table mat-table [dataSource]="filteredUsers" class="admin-table mat-elevation-z4">
-            <ng-container matColumnDef="avatar">
-              <th mat-header-cell *matHeaderCellDef></th>
-              <td mat-cell *matCellDef="let u">
-                <div class="user-avatar">{{ (u.email || 'U')[0].toUpperCase() }}</div>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="email">
-              <th mat-header-cell *matHeaderCellDef>Email</th>
-              <td mat-cell *matCellDef="let u">
-                <div class="user-info">
-                  <span class="primary-text">{{ u.email }}</span>
-                  <span class="secondary-text">{{ u.pseudo || 'Pas de pseudo' }}</span>
+            <div class="table-container">
+              <table mat-table [dataSource]="filteredUsers" class="admin-table">
+                <ng-container matColumnDef="avatar">
+                  <th mat-header-cell *matHeaderCellDef></th>
+                  <td mat-cell *matCellDef="let u">
+                    <div class="user-avatar">{{ (u.email || 'U')[0].toUpperCase() }}</div>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="email">
+                  <th mat-header-cell *matHeaderCellDef>Email</th>
+                  <td mat-cell *matCellDef="let u">
+                    <div class="user-info">
+                      <span class="primary-text">{{ u.email }}</span>
+                      <span class="secondary-text">{{ u.pseudo || 'Pas de pseudo' }}</span>
+                    </div>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef>Statut</th>
+                  <td mat-cell *matCellDef="let u">
+                    <span class="status-badge active">Actif</span>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="created">
+                  <th mat-header-cell *matHeaderCellDef>Inscription</th>
+                  <td mat-cell *matCellDef="let u">
+                    <span class="date-text">{{ formatDate(u.createdAt) }}</span>
+                  </td>
+                </ng-container>
+                <ng-container matColumnDef="actions">
+                  <th mat-header-cell *matHeaderCellDef>Actions</th>
+                  <td mat-cell *matCellDef="let u">
+                    <div class="action-buttons">
+                      <button mat-icon-button color="primary" matTooltip="Modifier" (click)="editUser(u)">
+                        <mat-icon>edit</mat-icon>
+                      </button>
+                      <button mat-icon-button color="warn" matTooltip="Supprimer" (click)="confirmDeleteUser(u)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                    </div>
+                  </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="['avatar', 'email', 'status', 'created', 'actions']"></tr>
+                <tr mat-row *matRowDef="let row; columns: ['avatar', 'email', 'status', 'created', 'actions'];"></tr>
+              </table>
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+
+      <!-- Languages Tab -->
+      @if (activeTab === 'langages') {
+        <mat-card class="admin-card full-width">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>code</mat-icon>
+              Gestion des Langages
+            </mat-card-title>
+            <button mat-raised-button color="primary" (click)="openCreateLanguageDialog()">
+              <mat-icon>add</mat-icon>
+              Nouveau Langage
+            </button>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="table-controls">
+              <mat-form-field appearance="outline" class="search-field">
+                <mat-label>Rechercher un langage</mat-label>
+                <input matInput [(ngModel)]="languageSearchTerm" (ngModelChange)="filterLanguages()" placeholder="Nom du langage...">
+                <mat-icon matSuffix>search</mat-icon>
+              </mat-form-field>
+            </div>
+
+            <div class="languages-grid">
+              @for (language of filteredLanguages; track language._id) {
+                <div class="language-card">
+                  <div class="language-header">
+                    <div class="language-icon">💻</div>
+                    <h4>{{ language.name }}</h4>
+                  </div>
+                  <div class="language-actions">
+                    <button mat-icon-button color="primary" matTooltip="Modifier" (click)="editLanguage(language)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" matTooltip="Supprimer" (click)="confirmDeleteLanguage(language)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
                 </div>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef>Statut</th>
-              <td mat-cell *matCellDef="let u">
-                <span class="status-badge active">Actif</span>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="created">
-              <th mat-header-cell *matHeaderCellDef>Inscription</th>
-              <td mat-cell *matCellDef="let u">
-                <span class="date-text">{{ formatDate(u.createdAt) }}</span>
-              </td>
-            </ng-container>
-            <ng-container matColumnDef="actions">
-              <th mat-header-cell *matHeaderCellDef>Actions</th>
-              <td mat-cell *matCellDef="let u">
-                <div class="action-buttons">
-                  <button mat-icon-button color="primary" matTooltip="Modifier" (click)="editUser(u)">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                  <button mat-icon-button color="warn" matTooltip="Supprimer" (click)="confirmDeleteUser(u)">
-                    <mat-icon>delete</mat-icon>
-                  </button>
-                </div>
-              </td>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="['avatar', 'email', 'status', 'created', 'actions']"></tr>
-            <tr mat-row *matRowDef="let row; columns: ['avatar', 'email', 'status', 'created', 'actions'];"></tr>
-          </table>
-        </div>
-      </div>
-    }
-
-    <!-- Languages Tab -->
-    @if (activeTab === 'langages') {
-      <div class="management-section">
-        <div class="section-header">
-          <h2><mat-icon>code</mat-icon>Gestion des Langages</h2>
-          <button mat-raised-button color="primary" class="add-btn" (click)="openCreateLanguageDialog()">
-            <mat-icon>add</mat-icon>
-            Nouveau Langage
-          </button>
-        </div>
-        
-        <div class="table-controls">
-          <mat-form-field appearance="outline" class="search-field">
-            <mat-label>Rechercher un langage</mat-label>
-            <input matInput [(ngModel)]="languageSearchTerm" (ngModelChange)="filterLanguages()" placeholder="Nom du langage...">
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
-        </div>
-
-        <div class="languages-grid">
-          @for (language of filteredLanguages; track language._id) {
-            <div class="language-card">
-              <div class="language-header">
-                <div class="language-icon">💻</div>
-                <h4>{{ language.name }}</h4>
-              </div>
-              <div class="language-actions">
-                <button mat-icon-button color="primary" matTooltip="Modifier" (click)="editLanguage(language)">
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button color="warn" matTooltip="Supprimer" (click)="confirmDeleteLanguage(language)">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
+              }
             </div>
-          }
-        </div>
-      </div>
-    }
+          </mat-card-content>
+        </mat-card>
+      }
 
-    <!-- Articles Tab -->
-    @if (activeTab === 'articles') {
-      <div class="management-section">
-        <div class="section-header">
-          <h2><mat-icon>article</mat-icon>Gestion des Articles</h2>
-          <button mat-raised-button color="primary" class="add-btn" (click)="openCreateArticleDialog()">
-            <mat-icon>add</mat-icon>
-            Nouvel Article
-          </button>
-        </div>
-        
-        <div class="table-controls">
-          <mat-form-field appearance="outline" class="search-field">
-            <mat-label>Rechercher un article</mat-label>
-            <input matInput [(ngModel)]="articleSearchTerm" (ngModelChange)="filterArticles()" placeholder="Titre, contenu...">
-            <mat-icon matSuffix>search</mat-icon>
-          </mat-form-field>
-        </div>
-
-        <div class="articles-list">
-          @for (article of filteredArticles; track article._id) {
-            <div class="article-card">
-              <div class="article-content">
-                <h4>{{ article.title }}</h4>
-                <p class="article-excerpt">{{ getArticleExcerpt(article.content) }}</p>
-                <div class="article-meta">
-                  <span class="meta-item">
-                    <mat-icon>schedule</mat-icon>
-                    {{ formatDate(article.createdAt) }}
-                  </span>
-                  <span class="meta-item">
-                    <mat-icon>visibility</mat-icon>
-                    {{ article.views || 0 }} vues
-                  </span>
-                </div>
-              </div>
-              <div class="article-actions">
-                <button mat-icon-button color="primary" matTooltip="Modifier" (click)="editArticle(article)">
-                  <mat-icon>edit</mat-icon>
-                </button>
-                <button mat-icon-button color="warn" matTooltip="Supprimer" (click)="confirmDeleteArticle(article)">
-                  <mat-icon>delete</mat-icon>
-                </button>
-              </div>
+      <!-- Articles Tab -->
+      @if (activeTab === 'articles') {
+        <mat-card class="admin-card full-width">
+          <mat-card-header>
+            <mat-card-title>
+              <mat-icon>article</mat-icon>
+              Gestion des Articles
+            </mat-card-title>
+            <button mat-raised-button color="primary" (click)="openCreateArticleDialog()">
+              <mat-icon>add</mat-icon>
+              Nouvel Article
+            </button>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="table-controls">
+              <mat-form-field appearance="outline" class="search-field">
+                <mat-label>Rechercher un article</mat-label>
+                <input matInput [(ngModel)]="articleSearchTerm" (ngModelChange)="filterArticles()" placeholder="Titre, contenu...">
+                <mat-icon matSuffix>search</mat-icon>
+              </mat-form-field>
             </div>
-          }
-        </div>
-      </div>
-    }
 
-  </main>
+            <div class="articles-list">
+              @for (article of filteredArticles; track article._id) {
+                <div class="article-card">
+                  <div class="article-content">
+                    <h4>{{ article.title }}</h4>
+                    <p class="article-excerpt">{{ getArticleExcerpt(article.content) }}</p>
+                    <div class="article-meta">
+                      <span class="meta-item">
+                        <mat-icon>schedule</mat-icon>
+                        {{ formatDate(article.createdAt) }}
+                      </span>
+                      <span class="meta-item">
+                        <mat-icon>visibility</mat-icon>
+                        {{ article.views || 0 }} vues
+                      </span>
+                    </div>
+                  </div>
+                  <div class="article-actions">
+                    <button mat-icon-button color="primary" matTooltip="Modifier" (click)="editArticle(article)">
+                      <mat-icon>edit</mat-icon>
+                    </button>
+                    <button mat-icon-button color="warn" matTooltip="Supprimer" (click)="confirmDeleteArticle(article)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              }
+            </div>
+          </mat-card-content>
+        </mat-card>
+      }
+
+    </div>
+
+  </section>
+
+  <aside class="ads-right">
+    <!-- Pub droite -->
+    <ins class="adsbygoogle" style="display:block"></ins>
+  </aside>
 </div>

@@ -36,7 +36,7 @@
                   </mat-icon>
                 </mat-card-subtitle>
                 @for(version of language.versions; track version) {
-                <mat-card-subtitle>
+                <mat-card-subtitle [class]="'version-badge version-' + version.type.toLowerCase()">
                   <span> {{ version.type }}:</span>&nbsp; {{ version.label }}
                 </mat-card-subtitle>
                 }

@@ -1,5 +1,4 @@
-import { Component, inject, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -8,30 +7,19 @@ import {
 } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ProfileService } from '../../services/profile.service';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
-import { MatListModule } from '@angular/material/list';
-import { MatChipsModule } from '@angular/material/chips';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import {MatDividerModule} from '@angular/material/divider';
+import { SharedMaterialModule } from '../../shared/material.module';
+import { PlatformService } from '../../core/services/platform.service';
+import { SeoService } from '../../services/seo.service';
+import { UserProfile } from '../../models/user.interface';
 
 @Component({
   selector: 'app-profile',
   imports: [
-    MatIconModule,
-    MatCardModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    MatListModule,
-    MatChipsModule,
     ReactiveFormsModule,
-    MatDividerModule
+    SharedMaterialModule
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
@@ -41,19 +29,18 @@ export class ProfileComponent implements OnInit {
   isEditMode: boolean = false;
   defaultProfilePicture: string = 'https://placehold.co/10x10';
   favoris: string[] = [];
-  userData: any;
+  userData: UserProfile | null = null;
   activeTab: string = 'overview';
-
-  private isBrowser: boolean;
+  selectedTabIndex: number = 0;
 
   constructor(
     private fb: FormBuilder,
     private profileService: ProfileService,
     private authService: AuthenticationService,
     private dialog: MatDialog,
-    @Inject(PLATFORM_ID) platformId: Object
+    private platformService: PlatformService,
+    private seoService: SeoService
   ) {
-    this.isBrowser = isPlatformBrowser(platformId);
     this.profileForm = this.fb.group({
       pseudo: ['', Validators.required],
       firstName: ['', Validators.required],
@@ -67,12 +54,23 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadUserProfile();
+    this.initSEO();
+  }
+
+  private initSEO(): void {
+    this.seoService.updateMetaData({
+      title: 'Mon Profil - Verstack.io',
+      description: 'Gérez votre profil développeur, vos technologies favorites et vos projets sur Verstack.io',
+      keywords: 'profil développeur, technologies, favoris, projets, compétences',
+      url: 'https://verstack.io/profile',
+      image: this.platformService.isBrowser ? `${this.platformService.getCurrentOrigin()}/assets/icons/logo-banniere-RS.png` : undefined
+    });
   }
 
   loadUserProfile() {
     const userId = this.authService.getUserId();
     this.profileService.getUserProfile(userId).subscribe({
-      next: (data) => {
+      next: (data: UserProfile) => {
         this.userData = data;
         this.storeUserData(data);
       },
@@ -86,6 +84,8 @@ export class ProfileComponent implements OnInit {
   }
 
   openEditProfileDialog(): void {
+    if (!this.userData) return;
+    
     const dialogRef = this.dialog.open(EditProfileComponent, {
       data: { ...this.userData },
     });
@@ -93,7 +93,7 @@ export class ProfileComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.profileService
-          .updateUserProfile(this.userData._id, result)
+          .updateUserProfile(this.userData!._id, result)
           .subscribe(() => {
             this.openSnackBar('Profil mis à jour avec succès !');
             this.loadUserProfile(); // Recharger les données utilisateur
@@ -102,11 +102,9 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  private storeUserData(response: any) {
-    if (this.isBrowser) {
-      localStorage.setItem('user', JSON.stringify(response));
-      localStorage.setItem('favoris', JSON.stringify(response.favoris));
-    }
+  private storeUserData(response: UserProfile) {
+    this.platformService.setJson('user', response);
+    this.platformService.setJson('favoris', response.favoris);
   }
 
   toggleEditMode(): void {
@@ -120,7 +118,9 @@ export class ProfileComponent implements OnInit {
 
   cancelEdit(): void {
     this.isEditMode = false;
-    this.profileForm.patchValue(this.userData); // Restaurer les anciennes données
+    if (this.userData) {
+      this.profileForm.patchValue(this.userData); // Restaurer les anciennes données
+    }
     this.profileForm.markAsPristine(); // Marque le formulaire comme inchangé
   }
 
@@ -142,7 +142,7 @@ export class ProfileComponent implements OnInit {
         profilePicture: this.defaultProfilePicture,
       };
       this.profileService
-        .updateUserProfile(this.userData._id, updatedData)
+        .updateUserProfile(this.userData!._id, updatedData)
         .subscribe({
           next: () => {
             this.openSnackBar('Profil mis à jour avec succès !');
@@ -151,7 +151,9 @@ export class ProfileComponent implements OnInit {
             this.userData = { ...this.userData, ...updatedData };
 
             // Synchronise le formulaire avec les nouvelles données
-            this.profileForm.patchValue(this.userData);
+            if (this.userData) {
+              this.profileForm.patchValue(this.userData);
+            }
 
             // Sort du mode édition
             this.isEditMode = false;
@@ -171,7 +173,7 @@ export class ProfileComponent implements OnInit {
   durationInSeconds = 5;
 
   openSnackBar(message: string) {
-    if (!this.isBrowser) return;
+    if (!this.platformService.isBrowser) return;
     this._snackBar.open(message, '', {
       duration: this.durationInSeconds * 1000,
       horizontalPosition: 'center',
@@ -182,6 +184,16 @@ export class ProfileComponent implements OnInit {
   // Navigation methods
   setActiveTab(tab: string) {
     this.activeTab = tab;
+  }
+
+  getTabIndex(): number {
+    return this.selectedTabIndex;
+  }
+
+  onTabChange(event: any): void {
+    this.selectedTabIndex = event.index;
+    const tabs = ['overview', 'stack', 'projects', 'activity'];
+    this.activeTab = tabs[event.index] || 'overview';
   }
 
   // Profile utility methods
@@ -211,7 +223,8 @@ export class ProfileComponent implements OnInit {
   }
 
   getFriendsCount(): number {
-    return this.userData?.friends?.length || Math.floor(Math.random() * 20) + 5;
+    // Simulation d'un nombre d'amis pour la démo
+    return Math.floor(Math.random() * 20) + 5;
   }
 
   getExperienceLevel(): number {
@@ -241,15 +254,18 @@ export class ProfileComponent implements OnInit {
   }
 
   shareProfile(): void {
+    if (!this.platformService.isBrowser) return;
+    
+    const currentUrl = this.platformService.getCurrentUrl();
     if (navigator.share) {
       navigator.share({
         title: `Profil de ${this.userData?.pseudo}`,
         text: `Découvrez le profil de ${this.userData?.pseudo} sur Verstack`,
-        url: window.location.href
+        url: currentUrl
       });
     } else {
       // Fallback pour les navigateurs qui ne supportent pas l'API Share
-      navigator.clipboard.writeText(window.location.href);
+      navigator.clipboard.writeText(currentUrl);
       this.openSnackBar('Lien du profil copié dans le presse-papiers !');
     }
   }
@@ -293,16 +309,17 @@ export class ProfileComponent implements OnInit {
 
   // Utility methods for statistics
   getProfileCompletion(): number {
+    if (!this.userData) return 0;
+    
     let completion = 0;
-    const fields = ['pseudo', 'email', 'job', 'bio', 'favoris'];
+    const fields: (keyof UserProfile)[] = ['pseudo', 'email', 'job'];
     
     fields.forEach(field => {
-      if (field === 'favoris') {
-        if (this.userData?.favoris?.length > 0) completion += 20;
-      } else {
-        if (this.userData?.[field]) completion += 20;
-      }
+      if (this.userData![field]) completion += 25;
     });
+    
+    // Vérification des favoris
+    if (this.userData.favoris?.length > 0) completion += 25;
     
     return completion;
   }

@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { MatCardModule } from '@angular/material/card';
 import { CommonModule } from '@angular/common';
-import { VersionComponent } from '../version/version.component';
+import { UserTechPreviewComponent } from '../user-tech-preview/user-tech-preview.component';
 import { ProfileService } from '../../../services/profile.service';
 import { SeoService } from '../../../services/seo.service';
 import { PlatformService } from '../../services/platform.service';
@@ -14,7 +14,7 @@ import { Observable, tap } from 'rxjs';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [RouterModule, CommonModule, MatTabsModule, GlobeComponent, MatCardModule, VersionComponent],
+  imports: [RouterModule, CommonModule, MatTabsModule, GlobeComponent, MatCardModule, UserTechPreviewComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })

@@ -1,430 +1,202 @@
-<div class="profile-layout">
-  @if(userData) {
-    
-    <!-- Header Profile avec couverture -->
-    <div class="profile-header">
-      <div class="cover-image"></div>
-      <div class="profile-info">
-        <div class="avatar-section">
-          <div class="profile-avatar-container">
-            <img class="profile-avatar" [src]="userData.profilePicture || defaultProfilePicture" alt="Avatar" />
-            <div class="online-indicator"></div>
-          </div>
-          <button mat-icon-button class="avatar-edit-btn" (click)="changeAvatar()">
-            <mat-icon>camera_alt</mat-icon>
-          </button>
-        </div>
-        
-        <div class="profile-details">
-          <div class="user-info">
+<div class="version-layout">
+  <aside class="ads-left">
+    <!-- Pub gauche -->
+    <ins class="adsbygoogle" style="display:block"></ins>
+  </aside>
+
+  <section>
+    @if(userData) {
+      <!-- Navigation en onglets horizontaux -->
+      <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedTabChange)="onTabChange($event)">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>dashboard</mat-icon>
+            Vue d'ensemble
+          </ng-template>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>code</mat-icon>
+            Stack technique
+          </ng-template>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>folder</mat-icon>
+            Projets
+          </ng-template>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <mat-icon>timeline</mat-icon>
+            Activité
+          </ng-template>
+        </mat-tab>
+      </mat-tab-group>
+
+      <!-- Header profil -->
+      <div class="profile-header">
+        <div class="profile-info">
+          <img class="profile-avatar" [src]="userData.profilePicture || defaultProfilePicture" alt="Avatar" />
+          <div class="profile-details">
             <h1 class="username">{{ userData.pseudo || 'Utilisateur' }}</h1>
-            <div class="user-meta">
-              <span class="role-badge">{{ getUserRole() }}</span>
-              <span class="join-date">Membre depuis {{ formatDate(userData.createdAt) }}</span>
-            </div>
-            <p class="user-bio">{{ userData.bio || 'Passionné de développement et de nouvelles technologies' }}</p>
-          </div>
-          
-          <div class="stats-overview">
-            <div class="stat-item">
-              <span class="stat-number">{{ userData.favoris?.length || 0 }}</span>
-              <span class="stat-label">Technologies</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number">{{ getProjectCount() }}</span>
-              <span class="stat-label">Projets</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number">{{ getFriendsCount() }}</span>
-              <span class="stat-label">Contacts</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-number">{{ getExperienceLevel() }}</span>
-              <span class="stat-label">Niveau</span>
+            <p class="user-role">{{ getUserRole() }}</p>
+            <div class="user-stats">
+              <span class="stat-item">{{ userData.favoris.length || 0 }} Technologies</span>
+              <span class="stat-item">{{ getProjectCount() }} Projets</span>
+              <span class="stat-item">{{ getFriendsCount() }} Contacts</span>
             </div>
           </div>
-        </div>
-        
-        <div class="profile-actions">
-          <button mat-raised-button color="primary" class="edit-profile-btn" (click)="openEditProfileDialog()">
-            <mat-icon>edit</mat-icon>
-            Modifier le profil
-          </button>
-          <button mat-button class="share-profile-btn" (click)="shareProfile()">
-            <mat-icon>share</mat-icon>
-            Partager
-          </button>
+          <div class="profile-actions">
+            <button mat-raised-button color="primary" (click)="openEditProfileDialog()">
+              <mat-icon>edit</mat-icon>
+              Modifier
+            </button>
+            <button mat-button (click)="shareProfile()">
+              <mat-icon>share</mat-icon>
+              Partager
+            </button>
+          </div>
         </div>
       </div>
-    </div>
 
-    <!-- Contenu principal avec onglets -->
-    <div class="profile-content">
-      
-      <!-- Navigation des onglets -->
-      <nav class="profile-tabs">
-        <button class="tab-button" [class.active]="activeTab === 'overview'" (click)="setActiveTab('overview')">
-          <mat-icon>dashboard</mat-icon>
-          <span>Vue d'ensemble</span>
-        </button>
-        <button class="tab-button" [class.active]="activeTab === 'stack'" (click)="setActiveTab('stack')">
-          <mat-icon>code</mat-icon>
-          <span>Stack technique</span>
-        </button>
-        <button class="tab-button" [class.active]="activeTab === 'projects'" (click)="setActiveTab('projects')">
-          <mat-icon>folder</mat-icon>
-          <span>Projets</span>
-        </button>
-        <button class="tab-button" [class.active]="activeTab === 'activity'" (click)="setActiveTab('activity')">
-          <mat-icon>timeline</mat-icon>
-          <span>Activités</span>
-        </button>
-        <button class="tab-button" [class.active]="activeTab === 'achievements'" (click)="setActiveTab('achievements')">
-          <mat-icon>emoji_events</mat-icon>
-          <span>Réalisations</span>
-        </button>
-      </nav>
-
-      <!-- Contenu des onglets -->
-      <div class="tab-content">
+      <!-- Contenu principal en grille -->
+      <div class="content-grid">
         
-        <!-- Onglet Vue d'ensemble -->
+        <!-- Vue d'ensemble -->
         @if (activeTab === 'overview') {
-          <div class="overview-grid">
-            
-            <div class="info-card">
-              <h3><mat-icon>person</mat-icon>Informations personnelles</h3>
+          <mat-card class="profile-card">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon>person</mat-icon>
+                Informations personnelles
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
               <div class="info-list">
                 <div class="info-item">
-                  <span class="info-label">Email:</span>
-                  <span class="info-value">{{ userData.email }}</span>
+                  <span class="label">Email:</span>
+                  <span class="value">{{ userData.email }}</span>
                 </div>
                 <div class="info-item">
-                  <span class="info-label">Poste:</span>
-                  <span class="info-value">{{ userData.job || 'Non renseigné' }}</span>
+                  <span class="label">Métier:</span>
+                  <span class="value">{{ userData.job || 'Non renseigné' }}</span>
                 </div>
                 <div class="info-item">
-                  <span class="info-label">Localisation:</span>
-                  <span class="info-value">{{ userData.location || 'Non renseigné' }}</span>
+                  <span class="label">Expérience:</span>
+                  <span class="value">{{ userData.experience || 'Non renseigné' }}</span>
                 </div>
                 <div class="info-item">
-                  <span class="info-label">Site web:</span>
-                  <span class="info-value">{{ userData.website || 'Non renseigné' }}</span>
+                  <span class="label">Membre depuis:</span>
+                  <span class="value">{{ formatDate(userData.createdAt) }}</span>
                 </div>
               </div>
-            </div>
+            </mat-card-content>
+          </mat-card>
 
-            <div class="activity-card">
-              <h3><mat-icon>trending_up</mat-icon>Activité récente</h3>
-              <div class="activity-list">
-                <div class="activity-item">
-                  <div class="activity-icon new">
-                    <mat-icon>add_circle</mat-icon>
-                  </div>
-                  <div class="activity-content">
-                    <span class="activity-title">Nouvelle technologie ajoutée</span>
-                    <span class="activity-time">il y a 2 heures</span>
-                  </div>
+          <mat-card class="profile-card">
+            <mat-card-header>
+              <mat-card-title>
+                <mat-icon>bar_chart</mat-icon>
+                Statistiques
+              </mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+              <div class="progress-item">
+                <span>Profil complété</span>
+                <div class="progress-bar">
+                  <div class="progress-fill" [style.width.%]="getProfileCompletion()"></div>
                 </div>
-                <div class="activity-item">
-                  <div class="activity-icon update">
-                    <mat-icon>update</mat-icon>
-                  </div>
-                  <div class="activity-content">
-                    <span class="activity-title">Profil mis à jour</span>
-                    <span class="activity-time">il y a 1 jour</span>
-                  </div>
-                </div>
-                <div class="activity-item">
-                  <div class="activity-icon project">
-                    <mat-icon>folder</mat-icon>
-                  </div>
-                  <div class="activity-content">
-                    <span class="activity-title">Nouveau projet créé</span>
-                    <span class="activity-time">il y a 3 jours</span>
-                  </div>
-                </div>
+                <span class="progress-value">{{ getProfileCompletion() }}%</span>
               </div>
-            </div>
-
-            <div class="preferences-card">
-              <h3><mat-icon>settings</mat-icon>Préférences</h3>
-              <div class="preferences-list">
-                <div class="preference-item">
-                  <span>Notifications par email</span>
-                  <mat-icon class="toggle-on">toggle_on</mat-icon>
+              <div class="progress-item">
+                <span>Niveau d'activité</span>
+                <div class="progress-bar">
+                  <div class="progress-fill" [style.width.%]="getActivityScore()"></div>
                 </div>
-                <div class="preference-item">
-                  <span>Profil public</span>
-                  <mat-icon class="toggle-on">toggle_on</mat-icon>
-                </div>
-                <div class="preference-item">
-                  <span>Afficher les projets</span>
-                  <mat-icon class="toggle-off">toggle_off</mat-icon>
-                </div>
+                <span class="progress-value">{{ getActivityScore() }}%</span>
               </div>
-            </div>
-
-          </div>
+            </mat-card-content>
+          </mat-card>
         }
 
-        <!-- Onglet Stack technique -->
+        <!-- Stack technique -->
         @if (activeTab === 'stack') {
-          <div class="stack-section">
-            <div class="stack-header">
-              <h3>Ma stack technique</h3>
-              <button mat-button color="primary" (click)="addTechnology()">
-                <mat-icon>add</mat-icon>
-                Ajouter une technologie
-              </button>
-            </div>
-            
-            @if(userData.favoris?.length > 0) {
-              <div class="stack-categories">
-                <div class="stack-category">
-                  <h4>Technologies maîtrisées</h4>
-                  <div class="stack-grid">
-                    @for(tech of userData.favoris; track tech.name) {
-                      <div class="tech-card">
-                        <div class="tech-header">
-                          <img [src]="tech.logoUrl" [alt]="tech.name" class="tech-logo" />
-                          <div class="tech-info">
-                            <h5>{{ tech.name }}</h5>
-                            <div class="experience-level">
-                              <div class="level-bar">
-                                <div class="level-fill" [style.width.%]="getTechLevel(tech.name)"></div>
-                              </div>
-                              <span class="level-text">{{ getLevelText(getTechLevel(tech.name)) }}</span>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="tech-actions">
-                          <button mat-icon-button color="primary" matTooltip="Modifier le niveau">
-                            <mat-icon>tune</mat-icon>
-                          </button>
-                          <button mat-icon-button color="warn" matTooltip="Retirer">
-                            <mat-icon>remove_circle</mat-icon>
-                          </button>
-                        </div>
-                      </div>
-                    }
+          @if (userData.favoris && userData.favoris.length > 0) {
+            @for (tech of userData.favoris; track tech) {
+              <mat-card class="profile-card tech-card">
+                <mat-card-header>
+                  <mat-card-title>
+                    <mat-icon>code</mat-icon>
+                    {{ tech }}
+                  </mat-card-title>
+                  <mat-card-subtitle>
+                    {{ getLevelText(getTechLevel(tech)) }}
+                  </mat-card-subtitle>
+                </mat-card-header>
+                <mat-card-content>
+                  <div class="tech-level">
+                    <div class="level-bar">
+                      <div class="level-fill" [style.width.%]="getTechLevel(tech)"></div>
+                    </div>
                   </div>
+                </mat-card-content>
+              </mat-card>
+            }
+          } @else {
+            <mat-card class="profile-card empty-card">
+              <mat-card-content>
+                <div class="empty-state">
+                  <mat-icon>code</mat-icon>
+                  <p>Aucune technologie favorite ajoutée</p>
+                  <button mat-raised-button color="primary" (click)="addTechnology()">
+                    Ajouter une technologie
+                  </button>
                 </div>
-              </div>
-            } @else {
+              </mat-card-content>
+            </mat-card>
+          }
+        }
+
+        <!-- Projets -->
+        @if (activeTab === 'projects') {
+          <mat-card class="profile-card empty-card">
+            <mat-card-content>
               <div class="empty-state">
-                <mat-icon class="empty-icon">code_off</mat-icon>
-                <h4>Aucune technologie ajoutée</h4>
-                <p>Commencez par ajouter vos technologies favorites pour construire votre profil.</p>
-                <button mat-raised-button color="primary" (click)="addTechnology()">
-                  <mat-icon>add</mat-icon>
-                  Ajouter ma première technologie
+                <mat-icon>folder_open</mat-icon>
+                <p>Aucun projet ajouté pour le moment</p>
+                <button mat-raised-button color="primary" (click)="addProject()">
+                  Ajouter un projet
                 </button>
               </div>
-            }
-          </div>
+            </mat-card-content>
+          </mat-card>
         }
 
-        <!-- Onglet Projets -->
-        @if (activeTab === 'projects') {
-          <div class="projects-section">
-            <div class="projects-header">
-              <h3>Mes projets</h3>
-              <button mat-button color="primary" (click)="addProject()">
-                <mat-icon>add</mat-icon>
-                Nouveau projet
-              </button>
-            </div>
-            
-            <div class="projects-grid">
-              <!-- Projets factices pour la démo -->
-              <div class="project-card">
-                <div class="project-image">
-                  <mat-icon class="project-placeholder">web</mat-icon>
-                </div>
-                <div class="project-content">
-                  <h4>Site Portfolio</h4>
-                  <p>Mon site portfolio personnel développé avec Angular et Node.js</p>
-                  <div class="project-tech">
-                    <span class="tech-tag">Angular</span>
-                    <span class="tech-tag">TypeScript</span>
-                    <span class="tech-tag">SCSS</span>
-                  </div>
-                </div>
-                <div class="project-actions">
-                  <button mat-icon-button matTooltip="Voir le projet">
-                    <mat-icon>visibility</mat-icon>
-                  </button>
-                  <button mat-icon-button matTooltip="Code source">
-                    <mat-icon>code</mat-icon>
-                  </button>
-                  <button mat-icon-button matTooltip="Modifier">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                </div>
-              </div>
-
-              <div class="project-card">
-                <div class="project-image">
-                  <mat-icon class="project-placeholder">mobile_friendly</mat-icon>
-                </div>
-                <div class="project-content">
-                  <h4>App Mobile</h4>
-                  <p>Application mobile cross-platform pour la gestion de tâches</p>
-                  <div class="project-tech">
-                    <span class="tech-tag">Flutter</span>
-                    <span class="tech-tag">Dart</span>
-                    <span class="tech-tag">Firebase</span>
-                  </div>
-                </div>
-                <div class="project-actions">
-                  <button mat-icon-button matTooltip="Voir le projet">
-                    <mat-icon>visibility</mat-icon>
-                  </button>
-                  <button mat-icon-button matTooltip="Code source">
-                    <mat-icon>code</mat-icon>
-                  </button>
-                  <button mat-icon-button matTooltip="Modifier">
-                    <mat-icon>edit</mat-icon>
-                  </button>
-                </div>
-              </div>
-
-              <div class="add-project-card" (click)="addProject()">
-                <mat-icon class="add-icon">add_circle_outline</mat-icon>
-                <span>Ajouter un projet</span>
-              </div>
-            </div>
-          </div>
-        }
-
-        <!-- Onglet Activités -->
+        <!-- Activité -->
         @if (activeTab === 'activity') {
-          <div class="activity-section">
-            <div class="activity-timeline">
-              <div class="timeline-item">
-                <div class="timeline-marker new"></div>
-                <div class="timeline-content">
-                  <h4>Nouveau projet ajouté</h4>
-                  <p>Création du projet "Site Portfolio" avec Angular</p>
-                  <span class="timeline-date">Aujourd'hui, 14:30</span>
-                </div>
+          <mat-card class="profile-card empty-card">
+            <mat-card-content>
+              <div class="empty-state">
+                <mat-icon>timeline</mat-icon>
+                <p>Aucune activité récente</p>
               </div>
-              
-              <div class="timeline-item">
-                <div class="timeline-marker update"></div>
-                <div class="timeline-content">
-                  <h4>Technologie maîtrisée</h4>
-                  <p>Niveau "Expert" atteint en TypeScript</p>
-                  <span class="timeline-date">Hier, 09:15</span>
-                </div>
-              </div>
-              
-              <div class="timeline-item">
-                <div class="timeline-marker achievement"></div>
-                <div class="timeline-content">
-                  <h4>Nouveau badge obtenu</h4>
-                  <p>Badge "Développeur Full-Stack" débloqué</p>
-                  <span class="timeline-date">Il y a 3 jours</span>
-                </div>
-              </div>
-              
-              <div class="timeline-item">
-                <div class="timeline-marker social"></div>
-                <div class="timeline-content">
-                  <h4>Profil mis à jour</h4>
-                  <p>Ajout de nouvelles informations de contact</p>
-                  <span class="timeline-date">Il y a 1 semaine</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        }
-
-        <!-- Onglet Réalisations -->
-        @if (activeTab === 'achievements') {
-          <div class="achievements-section">
-            <div class="achievements-grid">
-              
-              <div class="achievement-card earned">
-                <div class="achievement-icon">
-                  <mat-icon>code</mat-icon>
-                </div>
-                <div class="achievement-content">
-                  <h4>Premier Code</h4>
-                  <p>Premier projet créé</p>
-                  <span class="achievement-date">Obtenu le 15 Jan 2024</span>
-                </div>
-              </div>
-
-              <div class="achievement-card earned">
-                <div class="achievement-icon">
-                  <mat-icon>layers</mat-icon>
-                </div>
-                <div class="achievement-content">
-                  <h4>Full-Stack</h4>
-                  <p>5+ technologies maîtrisées</p>
-                  <span class="achievement-date">Obtenu le 28 Feb 2024</span>
-                </div>
-              </div>
-
-              <div class="achievement-card earned">
-                <div class="achievement-icon">
-                  <mat-icon>trending_up</mat-icon>
-                </div>
-                <div class="achievement-content">
-                  <h4>En Progression</h4>
-                  <p>Profile complété à 80%</p>
-                  <span class="achievement-date">Obtenu le 10 Mar 2024</span>
-                </div>
-              </div>
-
-              <div class="achievement-card locked">
-                <div class="achievement-icon">
-                  <mat-icon>group</mat-icon>
-                </div>
-                <div class="achievement-content">
-                  <h4>Social</h4>
-                  <p>10 contacts ajoutés</p>
-                  <span class="achievement-progress">7/10</span>
-                </div>
-              </div>
-
-              <div class="achievement-card locked">
-                <div class="achievement-icon">
-                  <mat-icon>star</mat-icon>
-                </div>
-                <div class="achievement-content">
-                  <h4>Expert</h4>
-                  <p>10 technologies niveau expert</p>
-                  <span class="achievement-progress">3/10</span>
-                </div>
-              </div>
-
-              <div class="achievement-card locked">
-                <div class="achievement-icon">
-                  <mat-icon>work</mat-icon>
-                </div>
-                <div class="achievement-content">
-                  <h4>Productif</h4>
-                  <p>20 projets terminés</p>
-                  <span class="achievement-progress">2/20</span>
-                </div>
-              </div>
-
-            </div>
-          </div>
+            </mat-card-content>
+          </mat-card>
         }
 
       </div>
-    </div>
-  }
-  
-  @else {
-    <div class="loading-state">
-      <mat-icon class="loading-icon">person</mat-icon>
-      <h3>Chargement du profil...</h3>
-    </div>
-  }
+
+    } @else {
+      <div class="loading-state">
+        <mat-icon>person</mat-icon>
+        <p>Chargement du profil...</p>
+      </div>
+    }
+  </section>
+
+  <aside class="ads-right">
+    <!-- Pub droite -->
+    <ins class="adsbygoogle" style="display:block"></ins>
+  </aside>
 </div>
-  

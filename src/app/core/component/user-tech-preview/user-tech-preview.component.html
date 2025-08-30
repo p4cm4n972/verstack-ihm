@@ -1,0 +1,42 @@
+<div class="tech-preview-container">
+  <div class="tech-header">
+    <h3>
+      <mat-icon>favorite</mat-icon>
+      MES TECHNOLOGIES
+    </h3>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-state">
+      <mat-spinner diameter="24"></mat-spinner>
+      <span>Chargement...</span>
+    </div>
+  } @else if (userTechnologies.length === 0) {
+    <div class="empty-state">
+      <mat-icon>code_off</mat-icon>
+      <p>Aucune technologie favorite</p>
+      <a mat-button routerLink="/profile" class="add-tech-btn">
+        <mat-icon>add</mat-icon>
+        Ajouter des technologies
+      </a>
+    </div>
+  } @else {
+    <div class="tech-grid">
+      @for (tech of userTechnologies; track tech._id) {
+        <div class="tech-card">
+          <div class="tech-logo">
+            <img [src]="tech.logoUrl || getDefaultLogo(tech.name)" 
+                 [alt]="tech.name" 
+                 (error)="onImageError($event)">
+          </div>
+          <div class="tech-name">{{ tech.name }}</div>
+          <div class="tech-versions">
+            @for(version of tech.versions; track version) {
+              <div class="tech-version" [class]="'version-' + version.type.toLowerCase()">{{ version.type}}: {{version.label}}</div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>
