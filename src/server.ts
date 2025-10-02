@@ -4,6 +4,7 @@ import {
   isMainModule,
   writeResponseToNodeResponse,
 } from '@angular/ssr/node';
+import bootstrap from './main.server';
 import express from 'express';
 import { join } from 'node:path';
 import { existsSync } from 'node:fs';

@@ -9,6 +9,7 @@ import { UserTechPreviewComponent } from '../user-tech-preview/user-tech-preview
 import { ProfileService } from '../../../services/profile.service';
 import { SeoService } from '../../../services/seo.service';
 import { PlatformService } from '../../services/platform.service';
+import { StructuredDataService } from '../../services/structured-data.service';
 import { Observable, tap } from 'rxjs';
 
 @Component({
@@ -32,7 +33,8 @@ export class HomeComponent {
     private authService: AuthenticationService,
     private profileService: ProfileService,
     private seo: SeoService,
-    private platformService: PlatformService
+    private platformService: PlatformService,
+    private structuredDataService: StructuredDataService
   ) {
     this.authStatus$ = this.authService.getAuthStatus();
   }
@@ -41,23 +43,17 @@ export class HomeComponent {
   ngOnInit(): void {
     this.preloadBackgroundImage();
     this.seo.updateMetaData({
-      title: 'Accueil – Verstack.io',
-      description: 'Découvrez les meilleurs outils et stacks pour développeurs modernes.Maintenez vos applications: suivez régulièrement les versions de langage et de framework ',
-      keywords: `verstack, langages, outils, développeurs, version Angular, version React, version Vue.js, version Node.js, version Python, version Java,
-      version C#, version PHP, version Ruby, version Go, version Rust, version JavaScript, version TypeScript, version Bash, version Shell, version Perl,
-      version Kotlin, version Swift, version Scala, version Dart, version Objective-C, version C, version C++, version R, version MATLAB, version Julia,
-      version Haskell, version Elixir, version Erlang, version F#, version Groovy, version PowerShell, version Assembly, version SQL, version HTML,
-      version CSS, version SASS, version LESS, version Docker, version Kubernetes, version Terraform, version Ansible, version Jenkins, version Git,
-      version GitHub Actions, version Travis CI, version CircleCI, version Webpack, version Babel, version ESLint, version Prettier, version Nginx,
-      version Apache, version PostgreSQL, version MySQL, version MongoDB, version Redis, version GraphQL, version Firebase, version Supabase,
-      version Netlify, version Vercel, version AWS, version Azure, version GCP, outils de développement, gestion de versions, mise à jour des stacks,
-      suivi des versions, gestion des dépendances, développement web,
-      développement logiciel, développement mobile, développement backend, développement frontend, outils de productivité, gestion de projet,
-      collaboration en équipe, intégration continue, déploiement continu , DevOps, meilleures pratiques de développement, ressources pour développeurs,
-      communauté de développeurs`,
+      title: 'Verstack.io - Suivez les versions de vos langages et frameworks préférés',
+      description: 'Maintenez vos applications à jour avec Verstack.io. Suivez les versions de Angular, React, Vue.js, Node.js, Python, Java et plus de 50 langages et frameworks. Gérez vos stacks technologiques et ne manquez aucune mise à jour critique.',
+      keywords: 'suivi versions logicielles, gestion stack technique, mise à jour framework, Angular version, React version, Vue.js version, Node.js version, Python version, Java version, gestion dépendances, développement web, DevOps, veille technologique',
       image: this.platformService.isBrowser ? `${this.platformService.getCurrentOrigin()}/assets/slider/slider1.png` : undefined,
       url: 'https://verstack.io/home'
     });
+
+    // Add structured data for home page
+    const websiteSchema = this.structuredDataService.createWebSiteSchema();
+    const organizationSchema = this.structuredDataService.createOrganizationSchema();
+    this.structuredDataService.addStructuredData([websiteSchema, organizationSchema]);
 
     this.authStatus$.subscribe((status) => {
       if (!status) {
