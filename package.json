@@ -5,10 +5,12 @@
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "build:prerender": "node scripts/generate-routes.js && ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "generate-version": "ts-node src/scripts/set-version.js",
     "generate-sitemap": "ts-node src/generate-sitemap.ts",
+    "generate-routes": "node scripts/generate-routes.js",
     "serve:ssr:verstack-ihm": "node dist/verstack-ihm/server/server.mjs"
   },
   "private": true,
