@@ -5,16 +5,14 @@
     <div class="col left">
       <div class="text-content">
         <span class="pixel-art-title">verstack.io</span>
-        <h2 id="heading">Votre plateforme de veille technologique</h2>
-
         @if (!isAuth) {
+        <h2 id="heading">Votre plateforme de veille technologique</h2>
+        } @if (!isAuth) {
         <p class="pixel-art-subtitle">
-          Explorez les dernières versions, références et tendances<br>
+          Explorez les dernières versions, références et tendances<br />
           pour rester à jour.
         </p>
-        }
-
-        @if (isAuth) {
+        } @if (isAuth) {
         <ng-container>
           <hr class="divider" />
           <div class="dashboard-container">
@@ -29,7 +27,7 @@
                 <span class="status-text">ONLINE</span>
               </div>
             </div>
-            
+
             <div class="dashboard-grid">
               <div class="dashboard-card user-card">
                 <div class="card-header">
@@ -39,7 +37,9 @@
                 <div class="card-content">
                   <div class="stat-line">
                     <span class="stat-label">NOM:</span>
-                    <span class="stat-value">{{ userData?.pseudo ?? 'GUEST' }}</span>
+                    <span class="stat-value">{{
+                      userData?.pseudo ?? "GUEST"
+                    }}</span>
                   </div>
                   <div class="stat-line">
                     <span class="stat-label">NIVEAU:</span>
@@ -56,11 +56,15 @@
                 <div class="card-content">
                   <div class="stat-line">
                     <span class="stat-label">EN LIGNE:</span>
-                    <span class="stat-value online-count">{{ userData?.friendsOnline ?? 0 }}</span>
+                    <span class="stat-value online-count">{{
+                      userData?.friendsOnline ?? 0
+                    }}</span>
                   </div>
                   <div class="stat-line">
                     <span class="stat-label">TOTAL:</span>
-                    <span class="stat-value">{{ userData?.totalFriends ?? 0 }}</span>
+                    <span class="stat-value">{{
+                      userData?.totalFriends ?? 0
+                    }}</span>
                   </div>
                 </div>
               </div>
@@ -73,10 +77,15 @@
                 <div class="card-content">
                   <div class="stat-line">
                     <span class="stat-label">ACTIFS:</span>
-                    <span class="stat-value projects-count">{{ userData?.projects?.length ?? 0 }}</span>
+                    <span class="stat-value projects-count">{{
+                      userData?.projects?.length ?? 0
+                    }}</span>
                   </div>
                   <div class="progress-bar">
-                    <div class="progress-fill" [style.width.%]="(userData?.projects?.length ?? 0) * 10"></div>
+                    <div
+                      class="progress-fill"
+                      [style.width.%]="(userData?.projects?.length ?? 0) * 10"
+                    ></div>
                   </div>
                 </div>
               </div>
@@ -89,24 +98,27 @@
                 <div class="card-content">
                   <div class="stat-line">
                     <span class="stat-label">NON LUS:</span>
-                    <span class="stat-value messages-count" [class.has-messages]="(userData?.unreadMessages ?? 0) > 0">
+                    <span
+                      class="stat-value messages-count"
+                      [class.has-messages]="(userData?.unreadMessages ?? 0) > 0"
+                    >
                       {{ userData?.unreadMessages ?? 0 }}
                     </span>
                   </div>
                   @if((userData?.unreadMessages ?? 0) > 0) {
-                    <div class="notification-pulse"></div>
+                  <div class="notification-pulse"></div>
                   }
                 </div>
               </div>
             </div>
           </div>
         </ng-container>
-        }
-
-        @if (!isAuth) {
+        } @if (!isAuth) {
         <div class="button-container">
           <a class="btn" href="/version">Découvrir</a>
-          <a class="btn" routerLink="/signup" routerLinkActive="active">Connexion</a>
+          <a class="btn" routerLink="/signup" routerLinkActive="active"
+            >Connexion</a
+          >
         </div>
         }
       </div>
@@ -120,7 +132,6 @@
     </ng-container>
     } @else {
     <ng-container>
-
       <div class="col right">
         <app-user-tech-preview></app-user-tech-preview>
       </div>
