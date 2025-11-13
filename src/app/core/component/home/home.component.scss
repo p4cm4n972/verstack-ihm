@@ -20,13 +20,15 @@
 .row {
   display: flex;
   width: 100%;
-  max-width: 1400px;
-  margin: auto;
+  max-width: 1200px; /* align with header width */
+  margin: 0 auto;
+  padding: 0 16px; /* horizontal breathing space */
   flex-direction: row;
   flex-wrap: nowrap;
   height: 100vh;
-  align-items: center; // centre verticalement
+  align-items: center; /* centre verticalement */
   justify-content: space-between;
+  box-sizing: border-box;
 }
 
 .col {
@@ -70,7 +72,7 @@
 }
 
 #heading {
-  font-size: 4.2rem;
+  font-size: 4rem;
   font-weight: 600;
   line-height: 72px;
 }

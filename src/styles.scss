@@ -66,3 +66,29 @@ body { margin: 0; font-family: Doto, "Helvetica Neue", sans-serif; }
   ));
 }
 
+/* Reusable centered container (renamed to avoid collision with component-level
+   `.container` classes). Use this inside the element that holds the background
+   (e.g. <main> or header content) rather than applying it to the background
+   element itself. */
+.site-container {
+  width: 100%;
+  max-width: 1200px; /* adjust to your design */
+  margin: 0 auto;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+/* Responsive breakpoints for site-container */
+@media (max-width: 768px) {
+  .site-container {
+    max-width: 100%;
+    padding: 0 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .site-container {
+    padding: 0 8px;
+  }
+}
+

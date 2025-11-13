@@ -62,6 +62,17 @@ mat-toolbar{
   justify-content: space-between;
 }
 
+/* Constrain the header content and center it */
+.toolbar > .site-container {
+  width: 100%;
+  max-width: 1200px; /* adjust as needed */
+  margin: 0 auto;
+  padding: 0 16px; /* horizontal breathing space on small screens */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .left-container {
   display: flex;
   align-items: center;
@@ -102,6 +113,34 @@ mat-toolbar{
   }
   .hide-on-small {
     display: none;
+  }
+
+  .toolbar > .site-container {
+    padding: 0 12px;
+  }
+
+  .navigation-items li a {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  .logo {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .toolbar > .site-container {
+    padding: 0 8px;
+  }
+
+  .navigation-items li a {
+    font-size: 12px;
+    padding: 4px 8px;
+  }
+
+  .logo {
+    font-size: 14px;
   }
 }
 
