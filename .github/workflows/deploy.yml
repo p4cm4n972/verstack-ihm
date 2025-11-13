@@ -28,15 +28,12 @@ jobs:
             git pull origin master
             npm install
 
-            # Set API URL for route generation
+            # API_BASE_URL si ton generate-routes en a besoin :
             export API_BASE_URL="${{ secrets.API_BASE_URL || 'http://127.0.0.1:3000' }}"
 
-            # Generate routes with articles for prerendering
-            npm run generate-routes
+            # 🟢 Build complet SSR (browser + server)
+            npm run build:ssr
 
-            # Build with SSR and prerendering
-            npm run build -- --configuration production
-
-            # Restart the Node.js SSR server (PM2 or systemd)
-            pm2 restart verstack-ihm || sudo systemctl restart verstack-ihm
+            # 🟢 Redémarre le SSR
+            pm2 restart verstack-ihm || pm2 start ecosystem.config.js --only verstack-ihm
           EOF

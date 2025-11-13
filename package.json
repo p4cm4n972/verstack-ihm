@@ -2,17 +2,21 @@
   "name": "verstack-ihm",
   "version": "1.3.0",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "build:prerender": "node scripts/generate-routes.js && ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "generate-version": "ts-node src/scripts/set-version.js",
-    "generate-sitemap": "ts-node src/generate-sitemap.ts",
-    "generate-routes": "node scripts/generate-routes.js",
-    "serve:ssr:verstack-ihm": "node dist/verstack-ihm/server/server.mjs"
-  },
+  "ng": "ng",
+  "start": "ng serve",
+  "build": "ng build",
+  "build:prerender": "node scripts/generate-routes.js && ng build",
+  "watch": "ng build --watch --configuration development",
+  "test": "ng test",
+  "generate-version": "ts-node src/scripts/set-version.js",
+  "generate-sitemap": "ts-node src/generate-sitemap.ts",
+  "generate-routes": "node scripts/generate-routes.js",
+
+  "build:ssr": "npm run generate-routes && ng build --configuration production && ng run verstack-ihm:server",
+
+  "serve:ssr:verstack-ihm": "node dist/verstack-ihm/server/server.mjs"
+},
+
   "private": true,
   "dependencies": {
     "@angular/animations": "^20.3.2",
