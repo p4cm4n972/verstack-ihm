@@ -162,6 +162,7 @@ export class VersionComponent implements OnInit {
     error: (err) => {
       console.error('Erreur lors de la récupération des langages', err);
       this.isLoading = false;
+      this.cdr.markForCheck();
     }
   });
 }
