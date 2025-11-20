@@ -9,7 +9,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ProfileService } from '../../../services/profile.service';
 import { CommonModule } from '@angular/common';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, take } from 'rxjs';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { differenceInMonths, parseISO, formatDistanceToNow, differenceInHours } from 'date-fns';
 import { fr, th } from 'date-fns/locale';
@@ -115,7 +115,7 @@ export class VersionComponent implements OnInit {
     image: 'https://verstack.io/assets/slider/slide2.png',
     url: 'https://verstack.io/version'
   });
-    this.getAuthStatus().subscribe((status: any) => {
+    this.getAuthStatus().pipe(take(1)).subscribe((status: any) => {
       if (status) {
         this.loadUserData();
         this.loadUserFavoris();
