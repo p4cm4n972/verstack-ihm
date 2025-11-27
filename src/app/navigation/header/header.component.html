@@ -47,6 +47,18 @@
 
                 <a routerLink="/profile" routerLinkActive="active">Profile <mat-icon>account_circle</mat-icon></a>
 
+                @if(!isSubscriber && !isAdmin){
+                    <a routerLink="/subscription" routerLinkActive="active" class="premium-link">
+                        Premium <mat-icon>workspace_premium</mat-icon>
+                    </a>
+                }
+
+                @if(isSubscriber){
+                    <a routerLink="/subscription" routerLinkActive="active" class="subscriber-badge">
+                        Abonnement <mat-icon>workspace_premium</mat-icon>
+                    </a>
+                }
+
                 <a routerLink="" (click)="logout()" >Déconnexion <mat-icon>logout</mat-icon></a>
             </li>}
         </ul>

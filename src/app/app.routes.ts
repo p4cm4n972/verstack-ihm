@@ -20,6 +20,8 @@ import { ShopifyModalProductComponent } from './composant/shopify-modal-product/
 import { NewsDetailComponent } from './composant/news-detail/news-detail.component';
 import { PolitiqueComponent } from './composant/politique/politique.component';
 import { AdminComponent } from './core/component/admin/admin.component';
+import { SubscriptionComponent } from './composant/subscription/subscription.component';
+import { SubscriptionSuccessComponent } from './composant/subscription-success/subscription-success.component';
 import { AdminGuard } from './guards/admin.guard';
 import { AuthGuard } from './guards/auth.guard';
 
@@ -46,6 +48,8 @@ export const routes: Routes = [
   { path: 'reset-password', component: ResetPasswordComponent, canActivate: [mobileNotAllowedGuard] },
   { path: 'mobile-not-allowed', component: MobileNotAllowedComponent },
   { path: 'manifeste', component: ManisfesteComponent },
+  { path: 'subscription/success', component: SubscriptionSuccessComponent, canActivate: [AuthGuard, mobileNotAllowedGuard] },
+  { path: 'subscription', component: SubscriptionComponent, canActivate: [AuthGuard, mobileNotAllowedGuard] },
 
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },

@@ -24,6 +24,8 @@ export class HeaderComponent implements OnInit {
   @Output() public sidenavToggle = new EventEmitter();
   authStatus: boolean = false;
   isAdmin: boolean = false;
+  isSubscriber: boolean = false;
+  userRole: string = '';
 
   constructor(
     private authService: AuthenticationService,
@@ -36,7 +38,9 @@ export class HeaderComponent implements OnInit {
 
     this.authService.getAuthStatus().subscribe(status => {
       this.authStatus = status;
-      this.isAdmin = status && this.authService.getUserRole() === 'admin';
+      this.userRole = this.authService.getUserRole();
+      this.isAdmin = status && this.userRole === 'admin';
+      this.isSubscriber = status && this.userRole === 'subscriber';
     });
   }
 

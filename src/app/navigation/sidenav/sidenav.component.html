@@ -28,8 +28,18 @@
 
 
     @if(isAuthenticated){<a mat-list-item routerLink="/profile" (click)="onSidenavClose()" *isDesktopOnly>
-        <mat-icon>assignment_ind</mat-icon> <span class="nav-caption">Profile</span>   
+        <mat-icon>assignment_ind</mat-icon> <span class="nav-caption">Profile</span>
     </a>
+    @if(!isSubscriber && !isAdmin){
+        <a mat-list-item routerLink="/subscription" (click)="onSidenavClose()" *isDesktopOnly class="premium-link">
+            <mat-icon>workspace_premium</mat-icon> <span class="nav-caption">Premium - Sans pub</span>
+        </a>
+    }
+    @if(isSubscriber){
+        <a mat-list-item routerLink="/subscription" (click)="onSidenavClose()" *isDesktopOnly class="subscriber-badge">
+            <mat-icon>workspace_premium</mat-icon> <span class="nav-caption">Mon abonnement</span>
+        </a>
+    }
     <a mat-list-item (click)="logout()" (click)="onSidenavClose()" *isDesktopOnly>
         <mat-icon>logout</mat-icon><span class="nav-caption">Déconnexion</span>
     </a>}

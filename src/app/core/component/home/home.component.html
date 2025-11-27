@@ -19,7 +19,9 @@
             <div class="dashboard-header">
               <h2 class="dashboard-title">
                 <span class="title-icon">▶</span>
-                TABLEAU DE BORD
+                <div class="glitch" data-text="TABLEAU DE BORD">
+                  TABLEAU DE BORD
+                </div>
                 <span class="title-decoration">_</span>
               </h2>
               <div class="status-indicator">
@@ -28,88 +30,58 @@
               </div>
             </div>
 
-            <div class="dashboard-grid">
-              <div class="dashboard-card user-card">
-                <div class="card-header">
-                  <span class="card-icon">👤</span>
-                  <span class="card-title">UTILISATEUR</span>
-                </div>
-                <div class="card-content">
-                  <div class="stat-line">
-                    <span class="stat-label">NOM:</span>
-                    <span class="stat-value">{{
-                      userData?.pseudo ?? "GUEST"
-                    }}</span>
-                  </div>
-                  <div class="stat-line">
-                    <span class="stat-label">NIVEAU:</span>
-                    <span class="stat-value level">PRO</span>
-                  </div>
+            <div class="terminal-display">
+              <div class="terminal-line">
+                <span class="terminal-prompt">$</span>
+                <span class="terminal-command">whoami</span>
+              </div>
+              <div class="terminal-output">
+                <span class="output-label">user:</span>
+                <span class="output-value">{{ userData?.pseudo ?? "guest" }}</span>
+                <span class="output-tag level-tag">&#91;PRO&#93;</span>
+              </div>
+
+              <div class="terminal-line">
+                <span class="terminal-prompt">$</span>
+                <span class="terminal-command">network --status</span>
+              </div>
+              <div class="terminal-output">
+                <span class="output-label">online:</span>
+                <span class="output-value online-count">{{ userData?.friendsOnline ?? 0 }}</span>
+                <span class="output-separator">/</span>
+                <span class="output-value">{{ userData?.totalFriends ?? 0 }}</span>
+                <span class="output-unit">users</span>
+              </div>
+
+              <div class="terminal-line">
+                <span class="terminal-prompt">$</span>
+                <span class="terminal-command">ls projects/</span>
+              </div>
+              <div class="terminal-output">
+                <span class="output-label">active:</span>
+                <span class="output-value projects-count">{{ userData?.projects?.length ?? 0 }}</span>
+                <span class="output-unit">projects</span>
+                <div class="progress-bar-terminal">
+                  <div class="progress-fill-terminal" [style.width.%]="(userData?.projects?.length ?? 0) * 10"></div>
                 </div>
               </div>
 
-              <div class="dashboard-card social-card">
-                <div class="card-header">
-                  <span class="card-icon">👥</span>
-                  <span class="card-title">RÉSEAU</span>
-                </div>
-                <div class="card-content">
-                  <div class="stat-line">
-                    <span class="stat-label">EN LIGNE:</span>
-                    <span class="stat-value online-count">{{
-                      userData?.friendsOnline ?? 0
-                    }}</span>
-                  </div>
-                  <div class="stat-line">
-                    <span class="stat-label">TOTAL:</span>
-                    <span class="stat-value">{{
-                      userData?.totalFriends ?? 0
-                    }}</span>
-                  </div>
-                </div>
+              <div class="terminal-line">
+                <span class="terminal-prompt">$</span>
+                <span class="terminal-command">mail --unread</span>
+              </div>
+              <div class="terminal-output">
+                <span class="output-label">inbox:</span>
+                <span class="output-value messages-count" [class.has-messages]="(userData?.unreadMessages ?? 0) > 0">
+                  {{ userData?.unreadMessages ?? 0 }}
+                </span>
+                <span class="output-unit">messages</span>
+                @if((userData?.unreadMessages ?? 0) > 0) {
+                  <span class="notification-badge">!</span>
+                }
               </div>
 
-              <div class="dashboard-card projects-card">
-                <div class="card-header">
-                  <span class="card-icon">📁</span>
-                  <span class="card-title">PROJETS</span>
-                </div>
-                <div class="card-content">
-                  <div class="stat-line">
-                    <span class="stat-label">ACTIFS:</span>
-                    <span class="stat-value projects-count">{{
-                      userData?.projects?.length ?? 0
-                    }}</span>
-                  </div>
-                  <div class="progress-bar">
-                    <div
-                      class="progress-fill"
-                      [style.width.%]="(userData?.projects?.length ?? 0) * 10"
-                    ></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="dashboard-card messages-card">
-                <div class="card-header">
-                  <span class="card-icon">📧</span>
-                  <span class="card-title">MESSAGES</span>
-                </div>
-                <div class="card-content">
-                  <div class="stat-line">
-                    <span class="stat-label">NON LUS:</span>
-                    <span
-                      class="stat-value messages-count"
-                      [class.has-messages]="(userData?.unreadMessages ?? 0) > 0"
-                    >
-                      {{ userData?.unreadMessages ?? 0 }}
-                    </span>
-                  </div>
-                  @if((userData?.unreadMessages ?? 0) > 0) {
-                  <div class="notification-pulse"></div>
-                  }
-                </div>
-              </div>
+              <div class="terminal-cursor">_</div>
             </div>
           </div>
         </ng-container>

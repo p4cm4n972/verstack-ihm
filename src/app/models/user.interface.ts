@@ -6,7 +6,7 @@ export interface UserProfile {
   email: string;
   favoris: any[];
   profilePicture?: string;
-  role: 'admin' | 'user';
+  role: 'admin' | 'user' | 'subscriber';
   job: string;
   ageRange: string;
   salaryRange: string;
@@ -43,7 +43,7 @@ export interface DecodedToken {
   id: string;
   email: string;
   pseudo: string;
-  role: 'admin' | 'user';
+  role: 'admin' | 'user' | 'subscriber';
   exp: number;
   iat: number;
 }

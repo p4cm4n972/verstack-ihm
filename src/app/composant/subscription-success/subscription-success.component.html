@@ -1,0 +1,82 @@
+<div class="success-container">
+  @if (isLoading) {
+    <div class="loading-state">
+      <mat-spinner></mat-spinner>
+      <p>Finalisation de votre abonnement...</p>
+    </div>
+  } @else if (error) {
+    <mat-card class="error-card">
+      <mat-card-content>
+        <div class="error-content">
+          <mat-icon color="warn">error</mat-icon>
+          <h2>Erreur</h2>
+          <p>{{ errorMessage }}</p>
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="goToSubscription()">
+          Retour à l'abonnement
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  } @else {
+    <mat-card class="success-card">
+      <mat-card-content>
+        <div class="success-content">
+          <div class="success-icon">
+            <mat-icon color="primary">check_circle</mat-icon>
+          </div>
+          <h1>Abonnement confirmé !</h1>
+          <p class="success-message">
+            Merci d'avoir souscrit à Verstack Premium
+          </p>
+
+          <div class="benefits-section">
+            <h3>Vos avantages :</h3>
+            <div class="benefit-list">
+              <div class="benefit-item">
+                <mat-icon>check</mat-icon>
+                <span>Aucune publicité sur tout le site</span>
+              </div>
+              <div class="benefit-item">
+                <mat-icon>check</mat-icon>
+                <span>Expérience de navigation optimale</span>
+              </div>
+              <div class="benefit-item">
+                <mat-icon>check</mat-icon>
+                <span>Renouvellement automatique à 0,99€/an</span>
+              </div>
+              <div class="benefit-item">
+                <mat-icon>check</mat-icon>
+                <span>Soutien au développement de Verstack</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-box">
+            <mat-icon>info</mat-icon>
+            <p>
+              Votre abonnement est maintenant actif. Rechargez la page pour profiter
+              d'une navigation sans publicité !
+            </p>
+          </div>
+
+          @if (sessionId) {
+            <div class="session-info">
+              <small>Référence de transaction : {{ sessionId }}</small>
+            </div>
+          }
+        </div>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" (click)="goToHome()">
+          <mat-icon>home</mat-icon>
+          Retour à l'accueil
+        </button>
+        <button mat-button (click)="goToSubscription()">
+          Gérer mon abonnement
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  }
+</div>

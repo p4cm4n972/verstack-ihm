@@ -1,0 +1,242 @@
+.success-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 200px);
+  padding: 32px 16px;
+
+  .loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+
+    p {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 1.1rem;
+    }
+  }
+
+  .success-card,
+  .error-card {
+    max-width: 600px;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    mat-card-content {
+      padding: 48px 32px;
+
+      .success-content,
+      .error-content {
+        text-align: center;
+
+        .success-icon {
+          margin-bottom: 24px;
+
+          mat-icon {
+            font-size: 80px;
+            width: 80px;
+            height: 80px;
+            color: #4caf50;
+          }
+        }
+
+        mat-icon {
+          font-size: 60px;
+          width: 60px;
+          height: 60px;
+          margin-bottom: 16px;
+        }
+
+        h1 {
+          font-size: 2rem;
+          font-weight: 600;
+          color: white;
+          margin: 16px 0;
+        }
+
+        h2 {
+          font-size: 1.5rem;
+          color: white;
+          margin: 16px 0;
+        }
+
+        .success-message {
+          font-size: 1.1rem;
+          color: rgba(255, 255, 255, 0.8);
+          margin: 16px 0 32px;
+        }
+
+        p {
+          color: rgba(255, 255, 255, 0.7);
+        }
+
+        .benefits-section {
+          margin: 32px 0;
+          text-align: left;
+
+          h3 {
+            font-size: 1.2rem;
+            color: white;
+            margin-bottom: 16px;
+            text-align: center;
+          }
+
+          .benefit-list {
+            .benefit-item {
+              display: flex;
+              align-items: center;
+              gap: 12px;
+              margin-bottom: 16px;
+              padding: 12px;
+              background: rgba(76, 175, 80, 0.1);
+              border-radius: 8px;
+              border-left: 3px solid #4caf50;
+
+              mat-icon {
+                font-size: 24px;
+                width: 24px;
+                height: 24px;
+                color: #4caf50;
+                margin: 0;
+              }
+
+              span {
+                color: white;
+                font-size: 1rem;
+              }
+            }
+          }
+        }
+
+        .info-box {
+          display: flex;
+          align-items: center;
+          gap: 16px;
+          padding: 16px;
+          background: rgba(33, 150, 243, 0.1);
+          border-radius: 8px;
+          border-left: 3px solid #2196f3;
+          margin: 24px 0;
+          text-align: left;
+
+          mat-icon {
+            font-size: 24px;
+            width: 24px;
+            height: 24px;
+            color: #2196f3;
+            margin: 0;
+            flex-shrink: 0;
+          }
+
+          p {
+            margin: 0;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+          }
+        }
+
+        .session-info {
+          margin-top: 32px;
+          padding-top: 16px;
+          border-top: 1px solid rgba(255, 255, 255, 0.1);
+
+          small {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.75rem;
+            font-family: monospace;
+          }
+        }
+      }
+    }
+
+    mat-card-actions {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      padding: 24px 32px 32px;
+      flex-wrap: wrap;
+
+      button {
+        min-width: 180px;
+
+        mat-icon {
+          margin-right: 8px;
+        }
+      }
+    }
+  }
+
+  .success-card {
+    border-color: #4caf50;
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+  }
+
+  .error-card {
+    border-color: #f44336;
+  }
+}
+
+// Animation d'entrée
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success-card,
+.error-card {
+  animation: fadeIn 0.5s ease-out;
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .success-container {
+    padding: 16px;
+
+    .success-card,
+    .error-card {
+      mat-card-content {
+        padding: 32px 16px;
+
+        .success-content,
+        .error-content {
+          h1 {
+            font-size: 1.5rem;
+          }
+
+          .success-message {
+            font-size: 1rem;
+          }
+
+          .benefits-section {
+            .benefit-list {
+              .benefit-item {
+                padding: 8px;
+
+                span {
+                  font-size: 0.9rem;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      mat-card-actions {
+        flex-direction: column;
+        padding: 16px;
+
+        button {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
