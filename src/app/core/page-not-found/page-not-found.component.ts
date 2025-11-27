@@ -1,11 +1,70 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-page-not-found',
-  imports: [],
+  imports: [
+    CommonModule,
+    RouterModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule
+  ],
   templateUrl: './page-not-found.component.html',
   styleUrl: './page-not-found.component.scss'
 })
-export class PageNotFoundComponent {
+export class PageNotFoundComponent implements OnInit {
+  currentUrl: string = '';
+  glitchText: string = '404';
 
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    this.currentUrl = this.router.url;
+    this.startGlitchAnimation();
+  }
+
+  private startGlitchAnimation(): void {
+    const chars = '!<>-_\\/[]{}—=+*^?#________';
+    let iteration = 0;
+
+    const interval = setInterval(() => {
+      this.glitchText = '404'
+        .split('')
+        .map((char, index) => {
+          if (index < iteration) {
+            return '404'[index];
+          }
+          return chars[Math.floor(Math.random() * chars.length)];
+        })
+        .join('');
+
+      if (iteration >= 3) {
+        clearInterval(interval);
+        this.glitchText = '404';
+      }
+
+      iteration += 1 / 3;
+    }, 30);
+  }
+
+  goToHome(): void {
+    this.router.navigate(['/home']);
+  }
+
+  goBack(): void {
+    window.history.back();
+  }
+
+  popularPages = [
+    { label: 'Accueil', route: '/home', icon: 'home' },
+    { label: 'Stack', route: '/version', icon: 'devices' },
+    { label: 'Évolution', route: '/stat', icon: 'insert_chart' },
+    { label: 'Actualités', route: '/news', icon: 'newspaper' },
+    { label: 'Boutique', route: '/shop', icon: 'storefront' }
+  ];
 }

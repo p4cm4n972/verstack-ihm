@@ -1,0 +1,14 @@
+@if (showAd) {
+  <div class="adsense-wrapper">
+    @if (showLabel && labelPosition === 'top') {
+      <span class="ad-label">PUBLICITÉ</span>
+    }
+
+    <!-- Le contenu AdSense projeté ici -->
+    <ng-content></ng-content>
+
+    @if (showLabel && labelPosition === 'bottom') {
+      <span class="ad-label">PUBLICITÉ</span>
+    }
+  </div>
+}

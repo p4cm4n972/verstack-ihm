@@ -1,10 +1,12 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, Inject, PLATFORM_ID, OnInit } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, OnInit, OnDestroy } from '@angular/core';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
-import { Chart, ChartItem, ChartOptions, ChartType, registerables } from 'chart.js';
+import { Chart, ChartType, registerables } from 'chart.js';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { TrendsAggregationService } from '../../services/trends-aggregation.service';
+import { PopularityTrend, TrendsResponse } from '../../models/popularity-trend.model';
 
 Chart.register(...registerables);
-
 
 @Component({
   selector: 'app-chart',
@@ -12,73 +14,89 @@ Chart.register(...registerables);
   templateUrl: './chart.component.html',
   styleUrl: './chart.component.scss'
 })
-export class ChartComponent implements OnInit {
+export class ChartComponent implements OnInit, OnDestroy {
   chart: Chart | undefined;
-  constructor(
-    private http: HttpClient,
-    @Inject(PLATFORM_ID) private platformId: object,
-    @Inject(DOCUMENT) private document: Document,
-  ) {}
+  isLoading = true;
+  error: string | null = null;
 
   // Données du graphique
-  chartColors: string[] = ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF',
-    '#FF9F40', '#E67E22', '#2ECC71', '#3498DB', '#9B59B6',
-    '#F1C40F', '#1ABC9C', '#E74C3C', '#8E44AD', '#2C3E50',
-    '#D35400', '#7F8C8D', '#C0392B', '#27AE60', '#2980B9'];
+  fullData: PopularityTrend[] = [];
+  years: string[] = [];
+  sources: string[] = [];
 
-  // Configuration de Chart.js
-  chartType!: ChartType; // 'bar', 'pie', 'line', etc.
-  chartOptions: ChartOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: true,
-        position: 'top',
-      },
-    },
-    scales: {
-      y: {
-        beginAtZero: true,
-        title: {
-          display: true,
-          text: 'Popularité (%)',
-        },
-      },
-      x: {
-        title: {
-          display: true,
-          text: 'Année',
-        },
-      },
-    },
-  };
+  private colorPalette: string[] = [
+    '#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A133FF', '#FF9133',
+    '#33FFF4', '#F4FF33', '#FF3385', '#FF8533', '#33FF8F', '#8F33FF',
+    '#F4A533', '#33F4A5', '#A533F4', '#F433FF', '#33FF9E', '#9E33FF',
+    '#FF33E0', '#33E0FF'
+  ];
+  private colorIndex: number = 0;
+  private destroy$ = new Subject<void>();
 
-  labels = ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'];
-  fullData: any[] = [];
+  constructor(
+    private trendsAggregationService: TrendsAggregationService,
+    @Inject(PLATFORM_ID) private platformId: object,
+    @Inject(DOCUMENT) private document: Document
+  ) {}
 
   ngOnInit(): void {
     this.loadTrendsData();
   }
 
-  loadTrendsData(): void {
-    this.http.get('json/popularity-trends.json').subscribe((trends: any) => {
-      this.fullData = trends;
-      this.updateChart('animation'); // Charge par défaut l'animation
-    });
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+    if (this.chart) {
+      this.chart.destroy();
+    }
   }
 
+  /**
+   * Charge les données de tendances via l'API
+   */
+  loadTrendsData(): void {
+    this.isLoading = true;
+    this.error = null;
 
+    this.trendsAggregationService.getEnrichedTrends()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response: TrendsResponse) => {
+          this.fullData = response.data;
+          this.years = response.years;
+          this.sources = response.metadata?.sources || [];
+          this.isLoading = false;
+          this.updateChart('animation'); // Charge par défaut le graphique d'animation
+        },
+        error: (err: unknown) => {
+          console.error('Erreur lors du chargement des données:', err);
+          this.error = 'Impossible de charger les données de tendances. Veuillez réessayer.';
+          this.isLoading = false;
+        }
+      });
+  }
+
+  /**
+   * Met à jour le graphique selon le filtre sélectionné
+   */
   updateChart(filter: string): void {
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
+
+    if (!this.fullData || this.fullData.length === 0) {
+      console.warn('Aucune donnée disponible pour créer le graphique');
+      return;
+    }
+
+    this.resetColors();
     const chartType = filter === 'animation' ? 'line' : 'bar';
 
     let datasets: any[];
     let labels: string[];
 
     if (filter === 'animation') {
-      // Animation : Un dataset par langage avec toutes les années
+      // Mode animation : Un dataset par langage avec toutes les années
       datasets = this.fullData.map((language) => ({
         label: language.name,
         data: language.popularity,
@@ -87,10 +105,15 @@ export class ChartComponent implements OnInit {
         tension: 0.3,
         fill: false,
       }));
-      labels = this.labels; // Années pour l'axe X
+      labels = this.years;
     } else {
-      // Année spécifique : Un seul dataset contenant tous les langages
-      const yearIndex = this.labels.indexOf(filter);
+      // Mode année spécifique : Un seul dataset avec tous les langages
+      const yearIndex = this.years.indexOf(filter);
+      if (yearIndex === -1) {
+        console.warn(`Année ${filter} non trouvée`);
+        return;
+      }
+
       datasets = [
         {
           label: `Popularité des langages en ${filter}`,
@@ -98,18 +121,13 @@ export class ChartComponent implements OnInit {
           backgroundColor: this.fullData.map(() => this.getDistinctColor()),
         },
       ];
-      labels = this.fullData.map((language) => language.name); // Langages pour l'axe X
+      labels = this.fullData.map((language) => language.name);
     }
 
     // Détruire l'ancien graphique avant de recréer
-    if (this.chart) this.chart.destroy();
-
-    // Sources utilisées pour les données
-  const sources = [
-    "Source 1: TIOBE Index - https://www.tiobe.com/tiobe-index/",
-    "Source 2: Stack Overflow Developer Survey 2025 - https://insights.stackoverflow.com/survey",
-    "Source 3: GitHub Octoverse 2025 - https://octoverse.github.com/"
-  ];
+    if (this.chart) {
+      this.chart.destroy();
+    }
 
     this.chart = new Chart('languageChart', {
       type: chartType as ChartType,
@@ -147,50 +165,63 @@ export class ChartComponent implements OnInit {
       },
     });
 
-    // Ajouter une section de sources en bas du graphique
-  this.addSourcesToPage(sources);
+    this.addSourcesToPage(this.sources);
   }
 
+  /**
+   * Gère le changement d'année/filtre
+   */
   onYearChange(event: Event): void {
     const filter = (event.target as HTMLSelectElement).value;
     this.updateChart(filter);
   }
 
-  private colorPalette: string[] = [
-    '#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A133FF', '#FF9133',
-    '#33FFF4', '#F4FF33', '#FF3385', '#FF8533', '#33FF8F', '#8F33FF',
-    '#F4A533', '#33F4A5', '#A533F4', '#F433FF', '#33FF9E', '#9E33FF', 
-    '#FF33E0', '#33E0FF'
-  ];
-  
-  private colorIndex: number = 0;
-  
-  getDistinctColor(): string {
+  /**
+   * Retourne la prochaine couleur distincte de la palette
+   */
+  private getDistinctColor(): string {
     const color = this.colorPalette[this.colorIndex];
-    this.colorIndex = (this.colorIndex + 1) % this.colorPalette.length; // Recycle si on atteint la fin
+    this.colorIndex = (this.colorIndex + 1) % this.colorPalette.length;
     return color;
   }
-  
-  resetColors(): void {
-    this.colorIndex = 0; // Réinitialisation de l'index
+
+  /**
+   * Réinitialise l'index de couleur
+   */
+  private resetColors(): void {
+    this.colorIndex = 0;
   }
 
-  // Fonction pour afficher les sources en dessous du graphique
-  addSourcesToPage(sources: string[]): void {
+  /**
+   * Affiche les sources en dessous du graphique
+   */
+  private addSourcesToPage(sources: string[]): void {
     if (!isPlatformBrowser(this.platformId)) {
       return;
     }
+
     const sourcesContainer = this.document.getElementById('sources-container');
-    const regex = /https:\/\/([^ ]+)/g;
-    if (sourcesContainer) {
-      sourcesContainer.innerHTML =
-        '<em>Sources utilisées :</em>' +
-        sources
-          .map((source) => {
-            return `<p><a href='${source.match(regex)} ' target=_blank>${source}</a></p>`;
-          })
-          .join('');
+    if (!sourcesContainer || !sources || sources.length === 0) {
+      return;
     }
+
+    const regex = /https:\/\/([^ ]+)/g;
+    sourcesContainer.innerHTML =
+      '<em>Sources utilisées :</em>' +
+      sources
+        .map((source) => {
+          const urlMatch = source.match(regex);
+          const url = urlMatch ? urlMatch[0] : '#';
+          return `<p><a href='${url}' target='_blank' rel='noopener'>${source}</a></p>`;
+        })
+        .join('');
   }
 
+  /**
+   * Forcer un refresh des données (efface le cache du service)
+   */
+  refreshData(): void {
+    this.trendsAggregationService.clearCache();
+    this.loadTrendsData();
+  }
 }

@@ -1,0 +1,22 @@
+.adsense-wrapper {
+  position: relative;
+  margin: 16px 0;
+
+  .ad-label {
+    display: inline-block;
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.5);
+    background: rgba(0, 0, 0, 0.3);
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+  }
+}
+
+// Styles optionnels pour harmoniser avec votre design
+:host {
+  display: block;
+  width: 100%;
+}
