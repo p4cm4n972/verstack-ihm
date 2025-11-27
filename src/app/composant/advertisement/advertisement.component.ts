@@ -1,6 +1,7 @@
 import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdvertisementService } from '../../services/advertisement.service';
+import { PlatformService } from '../../core/services/platform.service';
 
 /**
  * Composant wrapper pour les blocs Google AdSense
@@ -27,12 +28,20 @@ import { AdvertisementService } from '../../services/advertisement.service';
 })
 export class AdvertisementComponent {
   private adService = inject(AdvertisementService);
+  private platformService = inject(PlatformService);
 
   @Input() showLabel = false; // Afficher le label "PUBLICITÉ"
   @Input() labelPosition: 'top' | 'bottom' = 'top'; // Position du label
 
   // Getter réactif : réévalue à chaque détection de changement
+  // Retourne true côté serveur (SSR) pour éviter les erreurs
   get showAd(): boolean {
+    // Côté serveur : afficher les pubs par défaut (sera hydraté côté client)
+    if (!this.platformService.isBrowser) {
+      return true;
+    }
+
+    // Côté client : vérifier le rôle de l'utilisateur
     return this.adService.shouldShowAds();
   }
 }
