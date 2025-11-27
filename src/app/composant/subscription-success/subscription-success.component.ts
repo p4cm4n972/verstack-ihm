@@ -56,6 +56,9 @@ export class SubscriptionSuccessComponent implements OnInit {
         // Token rafraîchi avec le nouveau rôle
         this.authService.updateAuthStatus(true);
         this.isLoading = false;
+
+        // Recharger la page pour retirer le script AdSense et les publicités
+        setTimeout(() => window.location.reload(), 1000);
       },
       error: (error) => {
         console.error('Erreur refresh token:', error);

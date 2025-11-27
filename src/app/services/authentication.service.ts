@@ -54,6 +54,13 @@ export class AuthenticationService {
                 }
               });
             }
+
+            // Recharger la page si l'utilisateur est subscriber/admin pour retirer les pubs
+            const role = decodedToken?.role;
+            if (this.platformService.isBrowser && (role === 'subscriber' || role === 'admin')) {
+              // Délai court pour permettre au token d'être stocké
+              setTimeout(() => window.location.reload(), 300);
+            }
           }
         }),
         shareReplay()
