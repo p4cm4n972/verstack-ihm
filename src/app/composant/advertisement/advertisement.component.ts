@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdvertisementService } from '../../services/advertisement.service';
 
@@ -25,15 +25,14 @@ import { AdvertisementService } from '../../services/advertisement.service';
   templateUrl: './advertisement.component.html',
   styleUrl: './advertisement.component.scss'
 })
-export class AdvertisementComponent implements OnInit {
+export class AdvertisementComponent {
   private adService = inject(AdvertisementService);
 
   @Input() showLabel = false; // Afficher le label "PUBLICITÉ"
   @Input() labelPosition: 'top' | 'bottom' = 'top'; // Position du label
 
-  showAd = false;
-
-  ngOnInit(): void {
-    this.showAd = this.adService.shouldShowAds();
+  // Getter réactif : réévalue à chaque détection de changement
+  get showAd(): boolean {
+    return this.adService.shouldShowAds();
   }
 }
