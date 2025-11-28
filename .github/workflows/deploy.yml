@@ -13,35 +13,48 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build SSR Application
+        env:
+          NODE_OPTIONS: --max_old_space_size=6144
+          API_BASE_URL: ${{ secrets.API_BASE_URL || 'http://127.0.0.1:3000' }}
+        run: npm run build:ssr
+
+      - name: Create deployment archive
+        run: |
+          tar -czf dist.tar.gz dist/ package.json package-lock.json ecosystem.config.js
+
       - name: Setup SSH Key
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H "${{secrets.SSH_HOST}}" >> ~/.ssh/known_hosts
-          ssh-keyscan -H github.com >> ~/.ssh/known_hosts
 
-      - name: Deploy Frontend
+      - name: Deploy to VPS
         run: |
+          # Upload built files
+          scp dist.tar.gz ubuntu@"${{secrets.SSH_HOST}}":/var/www/verstack.io/verstack-ihm/
+
+          # Extract and restart
           ssh ubuntu@"${{secrets.SSH_HOST}}" << 'EOF'
             cd /var/www/verstack.io/verstack-ihm
 
-            # Reset local changes before pulling
-            git reset --hard
-            git clean -fd
-            git pull origin master
+            # Extract new build
+            tar -xzf dist.tar.gz
+            rm dist.tar.gz
 
-            npm install
+            # Install production dependencies only
+            npm ci --production
 
-            # API_BASE_URL si ton generate-routes en a besoin :
-            export API_BASE_URL="${{ secrets.API_BASE_URL || 'http://127.0.0.1:3000' }}"
-
-            # Increase Node.js memory limit for SSR build
-            export NODE_OPTIONS="--max_old_space_size=6144"
-
-            # 🟢 Build complet SSR (browser + server)
-            npm run build:ssr
-
-            # 🟢 Redémarre le SSR
+            # Restart PM2
             pm2 restart verstack-ihm || pm2 start ecosystem.config.js --only verstack-ihm
           EOF
