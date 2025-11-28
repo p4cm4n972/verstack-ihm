@@ -36,6 +36,9 @@ jobs:
             # API_BASE_URL si ton generate-routes en a besoin :
             export API_BASE_URL="${{ secrets.API_BASE_URL || 'http://127.0.0.1:3000' }}"
 
+            # Increase Node.js memory limit for SSR build
+            export NODE_OPTIONS="--max_old_space_size=6144"
+
             # 🟢 Build complet SSR (browser + server)
             npm run build:ssr
 
