@@ -1,202 +1,319 @@
-<div class="version-layout">
-  <aside class="ads-left">
-    <!-- Pub gauche -->
-    <ins class="adsbygoogle" style="display:block"></ins>
-  </aside>
-
-  <section>
-    @if(userData) {
-      <!-- Navigation en onglets horizontaux -->
-      <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedTabChange)="onTabChange($event)">
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <mat-icon>dashboard</mat-icon>
-            Vue d'ensemble
-          </ng-template>
-        </mat-tab>
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <mat-icon>code</mat-icon>
-            Stack technique
-          </ng-template>
-        </mat-tab>
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <mat-icon>folder</mat-icon>
-            Projets
-          </ng-template>
-        </mat-tab>
-        <mat-tab>
-          <ng-template mat-tab-label>
-            <mat-icon>timeline</mat-icon>
-            Activité
-          </ng-template>
-        </mat-tab>
-      </mat-tab-group>
-
-      <!-- Header profil -->
-      <div class="profile-header">
-        <div class="profile-info">
+<div class="profile-dashboard">
+  @if(userData) {
+    <!-- Header avec avatar et infos principales -->
+    <div class="dashboard-header">
+      <div class="avatar-section">
+        <div class="avatar-container">
           <img class="profile-avatar" [src]="userData.profilePicture || defaultProfilePicture" alt="Avatar" />
-          <div class="profile-details">
-            <h1 class="username">{{ userData.pseudo || 'Utilisateur' }}</h1>
-            <p class="user-role">{{ getUserRole() }}</p>
-            <div class="user-stats">
-              <span class="stat-item">{{ userData.favoris.length || 0 }} Technologies</span>
-              <span class="stat-item">{{ getProjectCount() }} Projets</span>
-              <span class="stat-item">{{ getFriendsCount() }} Contacts</span>
-            </div>
-          </div>
-          <div class="profile-actions">
-            <button mat-raised-button color="primary" (click)="openEditProfileDialog()">
-              <mat-icon>edit</mat-icon>
-              Modifier
-            </button>
-            <button mat-button (click)="shareProfile()">
-              <mat-icon>share</mat-icon>
-              Partager
-            </button>
-          </div>
+          <div class="status-indicator"></div>
+        </div>
+        <div class="user-info">
+          <h1 class="username">{{ userData.pseudo || 'Utilisateur' }}</h1>
+          <p class="user-role">{{ getUserRole() }}</p>
+          <p class="member-since">Membre depuis {{ formatDate(userData.createdAt) }}</p>
+        </div>
+      </div>
+      <div class="action-buttons">
+        <button mat-raised-button color="primary" (click)="openEditProfileDialog()">
+          <mat-icon>edit</mat-icon>
+          Modifier le profil
+        </button>
+        <button mat-icon-button (click)="shareProfile()" title="Partager">
+          <mat-icon>share</mat-icon>
+        </button>
+        <button mat-icon-button (click)="exportProfile()" title="Exporter">
+          <mat-icon>download</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- Gauges principales (compteurs à aiguilles) -->
+    <div class="gauges-section">
+      <div class="gauge-card">
+        <h3>Niveau d'expérience</h3>
+        <svg viewBox="0 0 200 120" class="gauge">
+          <defs>
+            <linearGradient id="gaugeGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#00ff41;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#39ff14;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <!-- Arc de fond -->
+          <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="12" stroke-linecap="round"/>
+          <!-- Arc de progression -->
+          <path [attr.d]="getGaugeArc(getExperienceLevel() * 10)" fill="none" stroke="url(#gaugeGradient1)" stroke-width="12" stroke-linecap="round" class="gauge-progress"/>
+          <!-- Aiguille -->
+          <line [attr.x1]="100" [attr.y1]="100"
+                [attr.x2]="getGaugeNeedleX(getExperienceLevel() * 10)"
+                [attr.y2]="getGaugeNeedleY(getExperienceLevel() * 10)"
+                stroke="#00ff41" stroke-width="2" class="gauge-needle"/>
+          <circle cx="100" cy="100" r="5" fill="#00ff41"/>
+          <!-- Valeur -->
+          <text x="100" y="90" text-anchor="middle" fill="white" font-size="32" font-weight="bold">{{ getExperienceLevel() }}</text>
+          <text x="100" y="110" text-anchor="middle" fill="#888" font-size="12">Niveau</text>
+        </svg>
+      </div>
+
+      <div class="gauge-card">
+        <h3>Profil complété</h3>
+        <svg viewBox="0 0 200 120" class="gauge">
+          <defs>
+            <linearGradient id="gaugeGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#00bcd4;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#0097a7;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="12" stroke-linecap="round"/>
+          <path [attr.d]="getGaugeArc(getProfileCompletion())" fill="none" stroke="url(#gaugeGradient2)" stroke-width="12" stroke-linecap="round" class="gauge-progress"/>
+          <line [attr.x1]="100" [attr.y1]="100"
+                [attr.x2]="getGaugeNeedleX(getProfileCompletion())"
+                [attr.y2]="getGaugeNeedleY(getProfileCompletion())"
+                stroke="#00bcd4" stroke-width="2" class="gauge-needle"/>
+          <circle cx="100" cy="100" r="5" fill="#00bcd4"/>
+          <text x="100" y="90" text-anchor="middle" fill="white" font-size="32" font-weight="bold">{{ getProfileCompletion() }}</text>
+          <text x="100" y="110" text-anchor="middle" fill="#888" font-size="12">%</text>
+        </svg>
+      </div>
+
+      <div class="gauge-card">
+        <h3>Score d'activité</h3>
+        <svg viewBox="0 0 200 120" class="gauge">
+          <defs>
+            <linearGradient id="gaugeGradient3" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#ffa726;stop-opacity:1" />
+            </linearGradient>
+          </defs>
+          <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="12" stroke-linecap="round"/>
+          <path [attr.d]="getGaugeArc(getActivityScore())" fill="none" stroke="url(#gaugeGradient3)" stroke-width="12" stroke-linecap="round" class="gauge-progress"/>
+          <line [attr.x1]="100" [attr.y1]="100"
+                [attr.x2]="getGaugeNeedleX(getActivityScore())"
+                [attr.y2]="getGaugeNeedleY(getActivityScore())"
+                stroke="#ff6b6b" stroke-width="2" class="gauge-needle"/>
+          <circle cx="100" cy="100" r="5" fill="#ff6b6b"/>
+          <text x="100" y="90" text-anchor="middle" fill="white" font-size="32" font-weight="bold">{{ getActivityScore() }}</text>
+          <text x="100" y="110" text-anchor="middle" fill="#888" font-size="12">Points</text>
+        </svg>
+      </div>
+    </div>
+
+    <!-- Compteurs numériques -->
+    <div class="counters-section">
+      <div class="counter-card">
+        <div class="counter-icon">
+          <mat-icon>code</mat-icon>
+        </div>
+        <div class="counter-value">{{ userData.favoris?.length || 0 }}</div>
+        <div class="counter-label">Technologies maîtrisées</div>
+        <div class="counter-trend positive">
+          <mat-icon>trending_up</mat-icon>
+          <span>+{{ Math.floor((userData.favoris?.length || 0) / 5) }} ce mois</span>
         </div>
       </div>
 
-      <!-- Contenu principal en grille -->
-      <div class="content-grid">
-        
-        <!-- Vue d'ensemble -->
-        @if (activeTab === 'overview') {
-          <mat-card class="profile-card">
-            <mat-card-header>
-              <mat-card-title>
-                <mat-icon>person</mat-icon>
-                Informations personnelles
-              </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <div class="info-list">
-                <div class="info-item">
-                  <span class="label">Email:</span>
-                  <span class="value">{{ userData.email }}</span>
-                </div>
-                <div class="info-item">
-                  <span class="label">Métier:</span>
-                  <span class="value">{{ userData.job || 'Non renseigné' }}</span>
-                </div>
-                <div class="info-item">
-                  <span class="label">Expérience:</span>
-                  <span class="value">{{ userData.experience || 'Non renseigné' }}</span>
-                </div>
-                <div class="info-item">
-                  <span class="label">Membre depuis:</span>
-                  <span class="value">{{ formatDate(userData.createdAt) }}</span>
-                </div>
-              </div>
-            </mat-card-content>
-          </mat-card>
+      <div class="counter-card">
+        <div class="counter-icon">
+          <mat-icon>folder</mat-icon>
+        </div>
+        <div class="counter-value">{{ getProjectCount() }}</div>
+        <div class="counter-label">Projets réalisés</div>
+        <div class="counter-trend positive">
+          <mat-icon>trending_up</mat-icon>
+          <span>+{{ Math.floor(getProjectCount() / 3) }} ce mois</span>
+        </div>
+      </div>
 
-          <mat-card class="profile-card">
-            <mat-card-header>
-              <mat-card-title>
-                <mat-icon>bar_chart</mat-icon>
-                Statistiques
-              </mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-              <div class="progress-item">
-                <span>Profil complété</span>
-                <div class="progress-bar">
-                  <div class="progress-fill" [style.width.%]="getProfileCompletion()"></div>
-                </div>
-                <span class="progress-value">{{ getProfileCompletion() }}%</span>
-              </div>
-              <div class="progress-item">
-                <span>Niveau d'activité</span>
-                <div class="progress-bar">
-                  <div class="progress-fill" [style.width.%]="getActivityScore()"></div>
-                </div>
-                <span class="progress-value">{{ getActivityScore() }}%</span>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        }
+      <div class="counter-card">
+        <div class="counter-icon">
+          <mat-icon>people</mat-icon>
+        </div>
+        <div class="counter-value">{{ getFriendsCount() }}</div>
+        <div class="counter-label">Contacts réseau</div>
+        <div class="counter-trend neutral">
+          <mat-icon>remove</mat-icon>
+          <span>Stable</span>
+        </div>
+      </div>
 
-        <!-- Stack technique -->
-        @if (activeTab === 'stack') {
-          @if (userData.favoris && userData.favoris.length > 0) {
-            @for (tech of userData.favoris; track tech) {
-              <mat-card class="profile-card tech-card">
-                <mat-card-header>
-                  <mat-card-title>
-                    <mat-icon>code</mat-icon>
-                    {{ tech.name }}
-                  </mat-card-title>
-                  <mat-card-subtitle>
-                    {{ getLevelText(getTechLevel(tech)) }}
-                  </mat-card-subtitle>
-                </mat-card-header>
-                <mat-card-content>
-                  <div class="tech-level">
-                    <div class="level-bar">
-                      <div class="level-fill" [style.width.%]="getTechLevel(tech)"></div>
-                    </div>
-                  </div>
-                </mat-card-content>
-              </mat-card>
-            }
-          } @else {
-            <mat-card class="profile-card empty-card">
-              <mat-card-content>
-                <div class="empty-state">
-                  <mat-icon>code</mat-icon>
-                  <p>Aucune technologie favorite ajoutée</p>
-                  <button mat-raised-button color="primary" (click)="addTechnology()">
-                    Ajouter une technologie
-                  </button>
-                </div>
-              </mat-card-content>
-            </mat-card>
+      <div class="counter-card">
+        <div class="counter-icon">
+          <mat-icon>calendar_today</mat-icon>
+        </div>
+        <div class="counter-value">{{ getDaysActive() }}</div>
+        <div class="counter-label">Jours d'activité</div>
+        <div class="counter-trend positive">
+          <mat-icon>trending_up</mat-icon>
+          <span>Continu</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Technologie avec mini-gauges -->
+    <div class="tech-section">
+      <div class="section-header">
+        <h2>
+          <mat-icon>code</mat-icon>
+          Stack Technique
+        </h2>
+        <button mat-button color="primary" (click)="addTechnology()">
+          <mat-icon>add</mat-icon>
+          Ajouter
+        </button>
+      </div>
+
+      @if (userData.favoris && userData.favoris.length > 0) {
+        <div class="tech-grid">
+          @for (tech of userData.favoris; track tech) {
+            <div class="tech-item">
+              <div class="tech-header">
+                <span class="tech-name">{{ tech.name || tech }}</span>
+                <span class="tech-percentage">{{ getTechLevel(tech) }}%</span>
+              </div>
+              <!-- Mini gauge circulaire -->
+              <svg viewBox="0 0 100 100" class="mini-gauge">
+                <circle cx="50" cy="50" r="45" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="8"/>
+                <circle cx="50" cy="50" r="45" fill="none"
+                        [attr.stroke]="getTechColor(tech)"
+                        stroke-width="8"
+                        stroke-linecap="round"
+                        [attr.stroke-dasharray]="283"
+                        [attr.stroke-dashoffset]="283 - (283 * getTechLevel(tech) / 100)"
+                        class="tech-progress-circle"/>
+                <text x="50" y="55" text-anchor="middle" fill="white" font-size="18" font-weight="bold">{{ getTechLevel(tech) }}</text>
+              </svg>
+              <div class="tech-level-text">{{ getLevelText(getTechLevel(tech)) }}</div>
+            </div>
           }
-        }
+        </div>
+      } @else {
+        <div class="empty-state">
+          <mat-icon>code</mat-icon>
+          <p>Aucune technologie favorite ajoutée</p>
+          <button mat-raised-button color="primary" (click)="addTechnology()">
+            Ajouter une technologie
+          </button>
+        </div>
+      }
+    </div>
 
-        <!-- Projets -->
-        @if (activeTab === 'projects') {
-          <mat-card class="profile-card empty-card">
-            <mat-card-content>
-              <div class="empty-state">
-                <mat-icon>folder_open</mat-icon>
-                <p>Aucun projet ajouté pour le moment</p>
-                <button mat-raised-button color="primary" (click)="addProject()">
-                  Ajouter un projet
-                </button>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        }
-
-        <!-- Activité -->
-        @if (activeTab === 'activity') {
-          <mat-card class="profile-card empty-card">
-            <mat-card-content>
-              <div class="empty-state">
-                <mat-icon>timeline</mat-icon>
-                <p>Aucune activité récente</p>
-              </div>
-            </mat-card-content>
-          </mat-card>
-        }
-
+    <!-- Achievements / Badges -->
+    <div class="achievements-section">
+      <div class="section-header">
+        <h2>
+          <mat-icon>emoji_events</mat-icon>
+          Accomplissements
+        </h2>
       </div>
 
-    } @else {
-      <div class="loading-state">
-        <mat-icon>person</mat-icon>
-        <p>Chargement du profil...</p>
-      </div>
-    }
-  </section>
+      <div class="achievements-grid">
+        <div class="achievement-card" [class.unlocked]="hasAchievement('first-code')">
+          <div class="achievement-icon">
+            <mat-icon>code</mat-icon>
+          </div>
+          <h4>Premier Pas</h4>
+          <p>Ajouter sa première technologie</p>
+          @if (hasAchievement('first-code')) {
+            <div class="achievement-badge">✓ Débloqué</div>
+          }
+        </div>
 
-  <aside class="ads-right">
-    <!-- Pub droite -->
-    <ins class="adsbygoogle" style="display:block"></ins>
-  </aside>
+        <div class="achievement-card" [class.unlocked]="hasAchievement('full-stack')">
+          <div class="achievement-icon">
+            <mat-icon>layers</mat-icon>
+          </div>
+          <h4>Full Stack</h4>
+          <p>Maîtriser 5 technologies</p>
+          <div class="achievement-progress">{{ getAchievementProgress('full-stack') }}</div>
+        </div>
+
+        <div class="achievement-card" [class.unlocked]="hasAchievement('expert')">
+          <div class="achievement-icon">
+            <mat-icon>star</mat-icon>
+          </div>
+          <h4>Expert</h4>
+          <p>Atteindre 10 technologies</p>
+          <div class="achievement-progress">{{ getAchievementProgress('expert') }}</div>
+        </div>
+
+        <div class="achievement-card" [class.unlocked]="hasAchievement('progress')">
+          <div class="achievement-icon">
+            <mat-icon>trending_up</mat-icon>
+          </div>
+          <h4>Profil Pro</h4>
+          <p>Profil complété à 80%</p>
+          @if (hasAchievement('progress')) {
+            <div class="achievement-badge">✓ Débloqué</div>
+          }
+        </div>
+
+        <div class="achievement-card" [class.unlocked]="hasAchievement('social')">
+          <div class="achievement-icon">
+            <mat-icon>people</mat-icon>
+          </div>
+          <h4>Social</h4>
+          <p>10 contacts dans le réseau</p>
+          <div class="achievement-progress">{{ getAchievementProgress('social') }}</div>
+        </div>
+
+        <div class="achievement-card" [class.unlocked]="hasAchievement('productive')">
+          <div class="achievement-icon">
+            <mat-icon>rocket_launch</mat-icon>
+          </div>
+          <h4>Productif</h4>
+          <p>Créer 20 projets</p>
+          <div class="achievement-progress">{{ getAchievementProgress('productive') }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Timeline d'activité -->
+    <div class="activity-section">
+      <div class="section-header">
+        <h2>
+          <mat-icon>timeline</mat-icon>
+          Activité Récente
+        </h2>
+      </div>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">Aujourd'hui</div>
+            <div class="timeline-text">Profil consulté {{ getRandomViews() }} fois</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">Il y a 2 jours</div>
+            <div class="timeline-text">Ajout de {{ (userData.favoris?.length || 0) > 0 ? (userData.favoris?.[0]?.name || userData.favoris?.[0]) : 'technologie' }}</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">Il y a 5 jours</div>
+            <div class="timeline-text">Profil mis à jour</div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <div class="timeline-date">Il y a 1 semaine</div>
+            <div class="timeline-text">Nouveau projet démarré</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  } @else {
+    <div class="loading-state">
+      <mat-spinner diameter="60"></mat-spinner>
+      <p>Chargement du tableau de bord...</p>
+    </div>
+  }
 </div>

@@ -5,6 +5,9 @@ export interface UserProfile {
   lastName?: string;
   email: string;
   favoris: any[];
+  projects?: any[];
+  contacts?: string[];
+  profileViews?: number;
   profilePicture?: string;
   role: 'admin' | 'user' | 'subscriber';
   job: string;

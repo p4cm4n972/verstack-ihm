@@ -14,12 +14,14 @@ import { SharedMaterialModule } from '../../shared/material.module';
 import { PlatformService } from '../../core/services/platform.service';
 import { SeoService } from '../../services/seo.service';
 import { UserProfile } from '../../models/user.interface';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-profile',
   imports: [
     ReactiveFormsModule,
-    SharedMaterialModule
+    SharedMaterialModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.scss',
@@ -218,13 +220,13 @@ export class ProfileComponent implements OnInit {
   }
 
   getProjectCount(): number {
-    // Pour la démo, retourne un nombre basé sur les technologies
-    return Math.floor((this.userData?.favoris?.length || 0) / 2) + 2;
+    // Retourne le nombre de projets depuis la BDD
+    return this.userData?.projects?.length || 0;
   }
 
   getFriendsCount(): number {
-    // Simulation d'un nombre d'amis pour la démo
-    return Math.floor(Math.random() * 20) + 5;
+    // Retourne le nombre de contacts depuis la BDD
+    return this.userData?.contacts?.length || 0;
   }
 
   getExperienceLevel(): number {
@@ -276,11 +278,20 @@ export class ProfileComponent implements OnInit {
     // TODO: Implémenter un dialog pour ajouter une technologie
   }
 
-  getTechLevel(techName: string): number {
-    // Simule un niveau de compétence pour la démo
-    const levels = ['Angular', 'TypeScript', 'JavaScript', 'HTML', 'CSS'];
-    const baseLevel = levels.includes(techName) ? 80 : 60;
-    return baseLevel + Math.floor(Math.random() * 20);
+  getTechLevel(tech: any): number {
+    // Retourne le niveau depuis l'objet tech ou calcule une valeur par défaut
+    if (typeof tech === 'object' && tech.level !== undefined) {
+      return tech.level;
+    }
+
+    // Valeur par défaut basée sur la position dans le tableau (les premiers = plus expérimentés)
+    const techName = typeof tech === 'string' ? tech : (tech.name || '');
+    const index = this.userData?.favoris?.findIndex((f: any) =>
+      (typeof f === 'string' ? f : f.name) === techName
+    ) ?? 0;
+
+    // Dégressif: les premières technos ont un niveau plus élevé
+    return Math.max(50, 90 - (index * 5));
   }
 
   getLevelText(level: number): string {
@@ -402,4 +413,82 @@ export class ProfileComponent implements OnInit {
 
     this.openSnackBar('Profil exporté avec succès !');
   }
+
+  // Méthodes pour les gauges à aiguilles
+  getGaugeArc(percentage: number): string {
+    // Arc SVG pour la gauge (demi-cercle)
+    // Centre: (100, 100), Rayon: 80
+    // Départ: 180° (gauche) → (20, 100)
+    // Fin: 180° + (percentage/100)*180° → varie jusqu'à 360° (droite) → (180, 100)
+
+    const clampedPercentage = Math.min(Math.max(percentage, 0), 100);
+
+    // Angle de départ: 180° (à gauche, position 9h)
+    const startAngle = 180;
+    // Angle balayé: de 0° à 180° selon le percentage
+    const sweepAngle = (clampedPercentage / 100) * 180;
+    const endAngle = startAngle + sweepAngle;
+
+    // Conversion en radians pour le calcul des coordonnées
+    const startRad = (startAngle * Math.PI) / 180;
+    const endRad = (endAngle * Math.PI) / 180;
+
+    // Point de départ (toujours à gauche)
+    const x1 = 100 + 80 * Math.cos(startRad);
+    const y1 = 100 + 80 * Math.sin(startRad);
+
+    // Point d'arrivée (varie selon percentage)
+    const x2 = 100 + 80 * Math.cos(endRad);
+    const y2 = 100 + 80 * Math.sin(endRad);
+
+    // Large arc flag : 0 car on ne dépasse jamais 180°
+    return `M ${x1} ${y1} A 80 80 0 0 1 ${x2} ${y2}`;
+  }
+
+  getGaugeNeedleX(percentage: number): number {
+    // Aiguille suit le même principe que l'arc
+    // De 180° à 360° (0°)
+    const clampedPercentage = Math.min(Math.max(percentage, 0), 100);
+    const angle = 180 + (clampedPercentage / 100) * 180;
+    const radians = (angle * Math.PI) / 180;
+    return 100 + 70 * Math.cos(radians);
+  }
+
+  getGaugeNeedleY(percentage: number): number {
+    // Aiguille suit le même principe que l'arc
+    // De 180° à 360° (0°)
+    const clampedPercentage = Math.min(Math.max(percentage, 0), 100);
+    const angle = 180 + (clampedPercentage / 100) * 180;
+    const radians = (angle * Math.PI) / 180;
+    return 100 + 70 * Math.sin(radians);
+  }
+
+  // Méthode pour les couleurs des technologies
+  getTechColor(tech: any): string {
+    const colors = [
+      '#00ff41', '#00bcd4', '#ff6b6b', '#ffa726',
+      '#ab47bc', '#26c6da', '#66bb6a', '#ffa726'
+    ];
+    const techName = typeof tech === 'string' ? tech : (tech.name || tech);
+    const index = techName.length % colors.length;
+    return colors[index];
+  }
+
+  // Méthode pour calculer les jours d'activité
+  getDaysActive(): number {
+    if (!this.userData?.createdAt) return 0;
+    const created = new Date(this.userData.createdAt);
+    const now = new Date();
+    const diffTime = Math.abs(now.getTime() - created.getTime());
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  }
+
+  // Méthode pour les vues du profil depuis la BDD
+  getRandomViews(): number {
+    return this.userData?.profileViews || 0;
+  }
+
+  // Exposer Math pour le template
+  Math = Math;
 }
