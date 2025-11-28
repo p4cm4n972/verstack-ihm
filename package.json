@@ -11,7 +11,7 @@
     "generate-version": "ts-node src/scripts/set-version.js",
     "generate-sitemap": "ts-node src/generate-sitemap.ts",
     "generate-routes": "node scripts/generate-routes.js",
-    "build:ssr": "npm run generate-routes && ng build --configuration production && ng run verstack-ihm:server",
+    "build:ssr": "npm run generate-routes && ng build --configuration production",
     "serve:ssr:verstack-ihm": "node dist/verstack-ihm/server/server.mjs"
   },
   "private": true,
