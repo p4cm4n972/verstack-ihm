@@ -1,7 +1,7 @@
 .profile-dashboard {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 1rem 2rem 2rem 2rem;
+  max-width: 1000px;
+  margin: 2rem auto 1rem auto;
+  padding: 0.5rem 1rem 0.5rem 1rem;
   background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
 }
 
@@ -10,18 +10,18 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem;
+  padding: 0.75rem;
   background: rgba(0, 0, 0, 0.6);
   border: 1px solid rgba(0, 255, 65, 0.3);
-  border-radius: 12px;
-  margin-bottom: 2rem;
-  box-shadow: 0 8px 32px rgba(0, 255, 65, 0.1);
+  border-radius: 6px;
+  margin-bottom: 0.75rem;
+  box-shadow: 0 2px 8px rgba(0, 255, 65, 0.1);
 }
 
 .avatar-section {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .avatar-container {
@@ -29,11 +29,11 @@
 }
 
 .profile-avatar {
-  width: 100px;
-  height: 100px;
+  width: 60px;
+  height: 60px;
   border-radius: 50%;
-  border: 3px solid #00ff41;
-  box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+  border: 2px solid #00ff41;
+  box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
   object-fit: cover;
   animation: pulse-avatar 3s ease-in-out infinite;
 }
@@ -62,21 +62,21 @@
 
 .user-info {
   .username {
-    font-size: 2rem;
+    font-size: 1.25rem;
     color: #00ff41;
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.25rem 0;
     font-weight: 700;
     text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
   }
 
   .user-role {
-    font-size: 1rem;
+    font-size: 0.875rem;
     color: #00bcd4;
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.25rem 0;
   }
 
   .member-since {
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     color: #888;
     margin: 0;
   }
@@ -84,43 +84,43 @@
 
 .action-buttons {
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 
 /* === GAUGES (COMPTEURS À AIGUILLES) === */
 .gauges-section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 2rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .gauge-card {
   background: rgba(0, 0, 0, 0.6);
   border: 1px solid rgba(0, 188, 212, 0.3);
-  border-radius: 12px;
-  padding: 1.5rem;
+  border-radius: 6px;
+  padding: 0.5rem;
   text-align: center;
-  box-shadow: 0 8px 32px rgba(0, 188, 212, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 188, 212, 0.1);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 48px rgba(0, 188, 212, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 188, 212, 0.2);
   }
 
   h3 {
     color: white;
-    font-size: 1rem;
-    margin: 0 0 1rem 0;
+    font-size: 0.65rem;
+    margin: 0 0 0.35rem 0;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
   }
 
   .gauge {
     width: 100%;
     height: auto;
-    margin-bottom: 1rem;
+    margin-bottom: 0.25rem;
 
     .gauge-progress {
       animation: gauge-fill 2s ease-out;
@@ -153,16 +153,16 @@
 /* === COMPTEURS NUMÉRIQUES === */
 .counters-section {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .counter-card {
   background: rgba(0, 0, 0, 0.6);
   border: 1px solid rgba(255, 107, 107, 0.3);
-  border-radius: 12px;
-  padding: 1.5rem;
+  border-radius: 6px;
+  padding: 0.5rem;
   text-align: center;
   position: relative;
   overflow: hidden;
@@ -190,43 +190,43 @@
 
   .counter-icon {
     mat-icon {
-      font-size: 3rem;
-      width: 3rem;
-      height: 3rem;
+      font-size: 1.25rem;
+      width: 1.25rem;
+      height: 1.25rem;
       color: #ff6b6b;
-      margin-bottom: 1rem;
-      filter: drop-shadow(0 0 10px rgba(255, 107, 107, 0.5));
+      margin-bottom: 0.35rem;
+      filter: drop-shadow(0 0 6px rgba(255, 107, 107, 0.5));
     }
   }
 
   .counter-value {
-    font-size: 3rem;
+    font-size: 1.5rem;
     font-weight: 700;
     color: #00ff41;
-    margin-bottom: 0.5rem;
-    text-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+    margin-bottom: 0.2rem;
+    text-shadow: 0 0 12px rgba(0, 255, 65, 0.5);
     animation: counter-glow 2s ease-in-out infinite;
   }
 
   .counter-label {
-    font-size: 0.875rem;
+    font-size: 0.6rem;
     color: #888;
     text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 1rem;
+    letter-spacing: 0.3px;
+    margin-bottom: 0.35rem;
   }
 
   .counter-trend {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 0.5rem;
-    font-size: 0.75rem;
+    gap: 0.2rem;
+    font-size: 0.6rem;
 
     mat-icon {
-      font-size: 1rem;
-      width: 1rem;
-      height: 1rem;
+      font-size: 0.7rem;
+      width: 0.7rem;
+      height: 0.7rem;
     }
 
     &.positive {
@@ -253,88 +253,81 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
-  padding-bottom: 1rem;
-  border-bottom: 2px solid rgba(0, 255, 65, 0.3);
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid rgba(0, 255, 65, 0.3);
 
   h2 {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.3rem;
     color: white;
-    font-size: 1.5rem;
+    font-size: 0.85rem;
     margin: 0;
 
     mat-icon {
       color: #00ff41;
+      font-size: 1rem;
+      width: 1rem;
+      height: 1rem;
     }
   }
 }
 
 /* === TECH SECTION === */
 .tech-section {
-  margin-bottom: 2rem;
-  padding: 2rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
   background: rgba(0, 0, 0, 0.4);
-  border-radius: 12px;
+  border-radius: 8px;
 }
 
 .tech-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 0.75rem;
 }
 
 .tech-item {
   background: rgba(0, 0, 0, 0.6);
   border: 1px solid rgba(0, 188, 212, 0.3);
-  border-radius: 12px;
-  padding: 1.5rem;
+  border-radius: 8px;
+  padding: 0.75rem;
   text-align: center;
   transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 
   &:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
     border-color: rgba(0, 188, 212, 0.6);
-    box-shadow: 0 8px 24px rgba(0, 188, 212, 0.3);
+    box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3);
   }
 
-  .tech-header {
+  .tech-logo {
+    width: 70px;
+    height: 70px;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    justify-content: center;
+    border-radius: 8px;
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.05);
 
-    .tech-name {
-      font-size: 0.875rem;
-      color: white;
-      font-weight: 600;
-    }
-
-    .tech-percentage {
-      font-size: 0.75rem;
-      color: #00ff41;
-      font-weight: 700;
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 0.5rem;
     }
   }
 
-  .mini-gauge {
-    width: 100px;
-    height: 100px;
-    margin: 0 auto 1rem;
-
-    .tech-progress-circle {
-      transform: rotate(-90deg);
-      transform-origin: 50% 50%;
-      transition: stroke-dashoffset 1s ease-out;
-      animation: draw-circle 2s ease-out;
-    }
-  }
-
-  .tech-level-text {
+  .tech-name {
     font-size: 0.75rem;
-    color: #888;
-    text-transform: uppercase;
+    color: white;
+    font-weight: 600;
   }
 }
 
@@ -346,23 +339,23 @@
 
 /* === ACHIEVEMENTS === */
 .achievements-section {
-  margin-bottom: 2rem;
-  padding: 2rem;
+  margin-bottom: 0.5rem;
+  padding: 0.75rem;
   background: rgba(0, 0, 0, 0.4);
-  border-radius: 12px;
+  border-radius: 6px;
 }
 
 .achievements-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 0.5rem;
 }
 
 .achievement-card {
   background: rgba(0, 0, 0, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  padding: 1.5rem;
+  border-radius: 6px;
+  padding: 0.5rem;
   text-align: center;
   transition: all 0.3s ease;
   position: relative;
@@ -399,40 +392,40 @@
 
   .achievement-icon {
     mat-icon {
-      font-size: 3rem;
-      width: 3rem;
-      height: 3rem;
+      font-size: 1.35rem;
+      width: 1.35rem;
+      height: 1.35rem;
       color: #444;
-      margin-bottom: 1rem;
+      margin-bottom: 0.35rem;
       transition: all 0.3s ease;
     }
   }
 
   h4 {
     color: white;
-    font-size: 1rem;
-    margin: 0 0 0.5rem 0;
+    font-size: 0.65rem;
+    margin: 0 0 0.2rem 0;
   }
 
   p {
     color: #888;
-    font-size: 0.75rem;
-    margin: 0 0 1rem 0;
+    font-size: 0.55rem;
+    margin: 0 0 0.35rem 0;
   }
 
   .achievement-badge {
     display: inline-block;
     background: #ffd700;
     color: #0a0a0a;
-    padding: 0.3rem 0.8rem;
-    border-radius: 20px;
-    font-size: 0.75rem;
+    padding: 0.15rem 0.4rem;
+    border-radius: 12px;
+    font-size: 0.55rem;
     font-weight: 700;
   }
 
   .achievement-progress {
     color: #00ff41;
-    font-size: 0.875rem;
+    font-size: 0.6rem;
     font-weight: 600;
   }
 }
@@ -450,20 +443,20 @@
 
 /* === TIMELINE === */
 .activity-section {
-  margin-bottom: 2rem;
-  padding: 2rem;
+  margin-bottom: 1rem;
+  padding: 1rem;
   background: rgba(0, 0, 0, 0.4);
-  border-radius: 12px;
+  border-radius: 8px;
 }
 
 .timeline {
   position: relative;
-  padding-left: 2rem;
+  padding-left: 1.5rem;
 
   &::before {
     content: '';
     position: absolute;
-    left: 8px;
+    left: 6px;
     top: 0;
     bottom: 0;
     width: 2px;
@@ -473,7 +466,7 @@
 
 .timeline-item {
   position: relative;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   animation: timeline-fade-in 0.5s ease-out backwards;
 
   &:nth-child(1) { animation-delay: 0.1s; }
@@ -483,38 +476,38 @@
 
   .timeline-dot {
     position: absolute;
-    left: -1.5rem;
-    top: 5px;
-    width: 16px;
-    height: 16px;
+    left: -1.2rem;
+    top: 3px;
+    width: 12px;
+    height: 12px;
     background: #00ff41;
     border-radius: 50%;
-    border: 3px solid #0a0a0a;
-    box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+    border: 2px solid #0a0a0a;
+    box-shadow: 0 0 8px rgba(0, 255, 65, 0.5);
     animation: pulse-dot 2s ease-in-out infinite;
   }
 
   .timeline-content {
     background: rgba(0, 0, 0, 0.6);
     border: 1px solid rgba(0, 255, 65, 0.2);
-    border-radius: 8px;
-    padding: 1rem;
+    border-radius: 6px;
+    padding: 0.5rem;
     transition: all 0.3s ease;
 
     &:hover {
       border-color: rgba(0, 255, 65, 0.5);
-      transform: translateX(5px);
+      transform: translateX(3px);
     }
 
     .timeline-date {
       color: #00bcd4;
-      font-size: 0.75rem;
-      margin-bottom: 0.5rem;
+      font-size: 0.65rem;
+      margin-bottom: 0.25rem;
     }
 
     .timeline-text {
       color: white;
-      font-size: 0.875rem;
+      font-size: 0.7rem;
     }
   }
 }
@@ -544,19 +537,20 @@
 /* === EMPTY STATE === */
 .empty-state {
   text-align: center;
-  padding: 3rem;
+  padding: 1.5rem;
   color: #666;
 
   mat-icon {
-    font-size: 4rem;
-    width: 4rem;
-    height: 4rem;
+    font-size: 2.5rem;
+    width: 2.5rem;
+    height: 2.5rem;
     color: #333;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
   }
 
   p {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.875rem;
   }
 }
 
@@ -566,12 +560,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4rem;
+  padding: 2rem;
   color: #666;
 
   p {
-    margin-top: 1rem;
-    font-size: 1rem;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
   }
 }
 
@@ -579,7 +573,7 @@
 @media (max-width: 1024px) {
   .dashboard-header {
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 0.75rem;
   }
 
   .gauges-section {
@@ -593,7 +587,7 @@
 
 @media (max-width: 768px) {
   .profile-dashboard {
-    padding: 1rem;
+    padding: 0.5rem;
   }
 
   .counters-section {
@@ -609,6 +603,6 @@
   }
 
   .timeline {
-    padding-left: 1.5rem;
+    padding-left: 1rem;
   }
 }

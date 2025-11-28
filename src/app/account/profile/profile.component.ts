@@ -278,29 +278,6 @@ export class ProfileComponent implements OnInit {
     // TODO: Implémenter un dialog pour ajouter une technologie
   }
 
-  getTechLevel(tech: any): number {
-    // Retourne le niveau depuis l'objet tech ou calcule une valeur par défaut
-    if (typeof tech === 'object' && tech.level !== undefined) {
-      return tech.level;
-    }
-
-    // Valeur par défaut basée sur la position dans le tableau (les premiers = plus expérimentés)
-    const techName = typeof tech === 'string' ? tech : (tech.name || '');
-    const index = this.userData?.favoris?.findIndex((f: any) =>
-      (typeof f === 'string' ? f : f.name) === techName
-    ) ?? 0;
-
-    // Dégressif: les premières technos ont un niveau plus élevé
-    return Math.max(50, 90 - (index * 5));
-  }
-
-  getLevelText(level: number): string {
-    if (level >= 90) return 'Expert';
-    if (level >= 70) return 'Avancé';
-    if (level >= 50) return 'Intermédiaire';
-    if (level >= 30) return 'Débutant';
-    return 'Novice';
-  }
 
   // Project methods
   addProject(): void {
@@ -321,18 +298,26 @@ export class ProfileComponent implements OnInit {
   // Utility methods for statistics
   getProfileCompletion(): number {
     if (!this.userData) return 0;
-    
+
     let completion = 0;
-    const fields: (keyof UserProfile)[] = ['pseudo', 'email', 'job'];
-    
-    fields.forEach(field => {
-      if (this.userData![field]) completion += 25;
-    });
-    
+    let totalFields = 8;
+    const fieldValue = 100 / totalFields; // ~12.5% par champ
+
+    // Champs obligatoires/de base
+    if (this.userData.pseudo) completion += fieldValue;
+    if (this.userData.email) completion += fieldValue;
+
+    // Champs optionnels mais importants
+    if (this.userData.firstName) completion += fieldValue;
+    if (this.userData.lastName) completion += fieldValue;
+    if (this.userData.job) completion += fieldValue;
+    if (this.userData.salaryRange) completion += fieldValue;
+    if (this.userData.experience) completion += fieldValue;
+
     // Vérification des favoris
-    if (this.userData.favoris?.length > 0) completion += 25;
-    
-    return completion;
+    if (this.userData.favoris && this.userData.favoris.length > 0) completion += fieldValue;
+
+    return Math.round(completion);
   }
 
   getActivityScore(): number {
@@ -463,16 +448,6 @@ export class ProfileComponent implements OnInit {
     return 100 + 70 * Math.sin(radians);
   }
 
-  // Méthode pour les couleurs des technologies
-  getTechColor(tech: any): string {
-    const colors = [
-      '#00ff41', '#00bcd4', '#ff6b6b', '#ffa726',
-      '#ab47bc', '#26c6da', '#66bb6a', '#ffa726'
-    ];
-    const techName = typeof tech === 'string' ? tech : (tech.name || tech);
-    const index = techName.length % colors.length;
-    return colors[index];
-  }
 
   // Méthode pour calculer les jours d'activité
   getDaysActive(): number {

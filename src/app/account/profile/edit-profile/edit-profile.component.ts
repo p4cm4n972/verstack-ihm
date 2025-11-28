@@ -43,10 +43,10 @@ export class EditProfileComponent {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
     this.profileForm = this.fb.group({
-      lastName: [data.lastName || ''],
-      firstName: [data.firstName || ''],
       pseudo: [data.pseudo, Validators.required],
-      
+      email: [data.email || ''],
+      firstName: [data.firstName || ''],
+      lastName: [data.lastName || ''],
     });
     this.profilePicture = data.profilePicture;
   }
