@@ -13,6 +13,7 @@ export class AuthenticationService {
   // authStatusSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
 
   private isAuthenticated$ = new BehaviorSubject<boolean>(false);
+  private userRole$ = new BehaviorSubject<string>('');
 
   constructor(
     private http: HttpClient,
@@ -20,6 +21,13 @@ export class AuthenticationService {
   ) {
     // Initialiser le statut d'authentification après injection des dépendances
     this.isAuthenticated$.next(this.hasValidAccessToken());
+    // Initialiser le rôle au démarrage
+    this.userRole$.next(this.getUserRole());
+  }
+
+  // Observable public pour que les composants puissent s'abonner
+  get userRoleObservable(): Observable<string> {
+    return this.userRole$.asObservable();
   }
 
 
@@ -55,12 +63,9 @@ export class AuthenticationService {
               });
             }
 
-            // Recharger la page si l'utilisateur est subscriber/admin pour retirer les pubs
-            const role = decodedToken?.role;
-            if (this.platformService.isBrowser && (role === 'subscriber' || role === 'admin')) {
-              // Délai court pour permettre au token d'être stocké
-              setTimeout(() => window.location.reload(), 300);
-            }
+            // Émettre le nouveau rôle pour mettre à jour l'UI de façon réactive
+            const role = decodedToken?.role || '';
+            this.userRole$.next(role);
           }
         }),
         shareReplay()
@@ -72,7 +77,10 @@ export class AuthenticationService {
     return this.http.post<AuthResponse>(`${this.baseUrl}/refresh-tokens`, { refreshToken }).pipe(
       tap((response: AuthResponse) => {
         this.storeUserData(response);
-        this.getDecodedToken();
+        const decodedToken = this.getDecodedToken();
+        // Émettre le nouveau rôle pour mettre à jour l'UI de façon réactive
+        const role = decodedToken?.role || '';
+        this.userRole$.next(role);
       })
     );
   }
