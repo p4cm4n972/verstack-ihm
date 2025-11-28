@@ -47,8 +47,7 @@ export class ExternalDataSourceService {
       .set('order', 'desc')
       .set('sort', 'popular')
       .set('site', 'stackoverflow')
-      .set('pagesize', '100')
-      .set('filter', '!9_bDE8THsQg1_');  // Filtre pour obtenir count
+      .set('pagesize', '100');
 
     return this.http.get<StackOverflowResponse>(this.STACKOVERFLOW_API, { params })
       .pipe(

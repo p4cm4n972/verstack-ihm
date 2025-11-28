@@ -2,8 +2,8 @@ import { Component, Inject, PLATFORM_ID, OnInit, OnDestroy } from '@angular/core
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
 import { Chart, ChartType, registerables } from 'chart.js';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { TrendsAggregationService } from '../../services/trends-aggregation.service';
+import { takeUntil, map } from 'rxjs/operators';
+import { StatService } from '../../services/stat.service';
 import { PopularityTrend, TrendsResponse } from '../../models/popularity-trend.model';
 
 Chart.register(...registerables);
@@ -34,7 +34,7 @@ export class ChartComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   constructor(
-    private trendsAggregationService: TrendsAggregationService,
+    private statService: StatService,
     @Inject(PLATFORM_ID) private platformId: object,
     @Inject(DOCUMENT) private document: Document
   ) {}
@@ -52,14 +52,30 @@ export class ChartComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Charge les données de tendances via l'API
+   * Charge les données de tendances via l'API backend
    */
   loadTrendsData(): void {
     this.isLoading = true;
     this.error = null;
 
-    this.trendsAggregationService.getEnrichedTrends()
-      .pipe(takeUntil(this.destroy$))
+    this.statService.getTrends()
+      .pipe(
+        takeUntil(this.destroy$),
+        map((response: any) => {
+          // Transformer les données du backend pour correspondre au format attendu
+          const transformedData: PopularityTrend[] = response.data.map((item: any) => ({
+            name: item.language,
+            popularity: item.popularity,
+            metadata: item.metadata
+          }));
+
+          return {
+            data: transformedData,
+            years: response.years,
+            metadata: response.metadata
+          } as TrendsResponse;
+        })
+      )
       .subscribe({
         next: (response: TrendsResponse) => {
           this.fullData = response.data;
@@ -100,7 +116,7 @@ export class ChartComponent implements OnInit, OnDestroy {
       datasets = this.fullData.map((language) => ({
         label: language.name,
         data: language.popularity,
-        borderColor: this.getDistinctColor(),
+        borderColor: language.metadata?.color || this.getDistinctColor(),
         borderWidth: 2,
         tension: 0.3,
         fill: false,
@@ -118,7 +134,7 @@ export class ChartComponent implements OnInit, OnDestroy {
         {
           label: `Popularité des langages en ${filter}`,
           data: this.fullData.map((language) => language.popularity[yearIndex]),
-          backgroundColor: this.fullData.map(() => this.getDistinctColor()),
+          backgroundColor: this.fullData.map((lang) => lang.metadata?.color || this.getDistinctColor()),
         },
       ];
       labels = this.fullData.map((language) => language.name);
@@ -221,7 +237,7 @@ export class ChartComponent implements OnInit, OnDestroy {
    * Forcer un refresh des données (efface le cache du service)
    */
   refreshData(): void {
-    this.trendsAggregationService.clearCache();
+    this.statService.clearCache();
     this.loadTrendsData();
   }
 }
