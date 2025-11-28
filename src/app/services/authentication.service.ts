@@ -103,6 +103,8 @@ export class AuthenticationService {
     this.platformService.removeLocalStorageItem('favoris');
     this.isAuthenticated$.next(false);
     this.updateAuthStatus(false);
+    // Émettre un rôle vide pour réafficher les publicités
+    this.userRole$.next('');
   }
 
   storeUserData(response: AuthResponse) {
