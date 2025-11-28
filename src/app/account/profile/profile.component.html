@@ -74,27 +74,6 @@
           <text x="100" y="110" text-anchor="middle" fill="#888" font-size="12">%</text>
         </svg>
       </div>
-
-      <div class="gauge-card">
-        <h3>Score d'activité</h3>
-        <svg viewBox="0 0 200 120" class="gauge">
-          <defs>
-            <linearGradient id="gaugeGradient3" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
-              <stop offset="100%" style="stop-color:#ffa726;stop-opacity:1" />
-            </linearGradient>
-          </defs>
-          <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="12" stroke-linecap="round"/>
-          <path [attr.d]="getGaugeArc(getActivityScore())" fill="none" stroke="url(#gaugeGradient3)" stroke-width="12" stroke-linecap="round" class="gauge-progress"/>
-          <line [attr.x1]="100" [attr.y1]="100"
-                [attr.x2]="getGaugeNeedleX(getActivityScore())"
-                [attr.y2]="getGaugeNeedleY(getActivityScore())"
-                stroke="#ff6b6b" stroke-width="2" class="gauge-needle"/>
-          <circle cx="100" cy="100" r="5" fill="#ff6b6b"/>
-          <text x="100" y="90" text-anchor="middle" fill="white" font-size="32" font-weight="bold">{{ getActivityScore() }}</text>
-          <text x="100" y="110" text-anchor="middle" fill="#888" font-size="12">Points</text>
-        </svg>
-      </div>
     </div>
 
     <!-- Compteurs numériques -->
@@ -103,35 +82,11 @@
         <div class="counter-icon">
           <mat-icon>code</mat-icon>
         </div>
-        <div class="counter-value">{{ userData.favoris?.length || 0 }}</div>
+        <div class="counter-value">{{ userData.favoris.length || 0 }}</div>
         <div class="counter-label">Technologies maîtrisées</div>
         <div class="counter-trend positive">
           <mat-icon>trending_up</mat-icon>
-          <span>+{{ Math.floor((userData.favoris?.length || 0) / 5) }} ce mois</span>
-        </div>
-      </div>
-
-      <div class="counter-card">
-        <div class="counter-icon">
-          <mat-icon>folder</mat-icon>
-        </div>
-        <div class="counter-value">{{ getProjectCount() }}</div>
-        <div class="counter-label">Projets réalisés</div>
-        <div class="counter-trend positive">
-          <mat-icon>trending_up</mat-icon>
-          <span>+{{ Math.floor(getProjectCount() / 3) }} ce mois</span>
-        </div>
-      </div>
-
-      <div class="counter-card">
-        <div class="counter-icon">
-          <mat-icon>people</mat-icon>
-        </div>
-        <div class="counter-value">{{ getFriendsCount() }}</div>
-        <div class="counter-label">Contacts réseau</div>
-        <div class="counter-trend neutral">
-          <mat-icon>remove</mat-icon>
-          <span>Stable</span>
+          <span>+{{ Math.floor((userData.favoris.length || 0) / 5) }} ce mois</span>
         </div>
       </div>
 
@@ -196,76 +151,6 @@
       }
     </div>
 
-    <!-- Achievements / Badges -->
-    <div class="achievements-section">
-      <div class="section-header">
-        <h2>
-          <mat-icon>emoji_events</mat-icon>
-          Accomplissements
-        </h2>
-      </div>
-
-      <div class="achievements-grid">
-        <div class="achievement-card" [class.unlocked]="hasAchievement('first-code')">
-          <div class="achievement-icon">
-            <mat-icon>code</mat-icon>
-          </div>
-          <h4>Premier Pas</h4>
-          <p>Ajouter sa première technologie</p>
-          @if (hasAchievement('first-code')) {
-            <div class="achievement-badge">✓ Débloqué</div>
-          }
-        </div>
-
-        <div class="achievement-card" [class.unlocked]="hasAchievement('full-stack')">
-          <div class="achievement-icon">
-            <mat-icon>layers</mat-icon>
-          </div>
-          <h4>Full Stack</h4>
-          <p>Maîtriser 5 technologies</p>
-          <div class="achievement-progress">{{ getAchievementProgress('full-stack') }}</div>
-        </div>
-
-        <div class="achievement-card" [class.unlocked]="hasAchievement('expert')">
-          <div class="achievement-icon">
-            <mat-icon>star</mat-icon>
-          </div>
-          <h4>Expert</h4>
-          <p>Atteindre 10 technologies</p>
-          <div class="achievement-progress">{{ getAchievementProgress('expert') }}</div>
-        </div>
-
-        <div class="achievement-card" [class.unlocked]="hasAchievement('progress')">
-          <div class="achievement-icon">
-            <mat-icon>trending_up</mat-icon>
-          </div>
-          <h4>Profil Pro</h4>
-          <p>Profil complété à 80%</p>
-          @if (hasAchievement('progress')) {
-            <div class="achievement-badge">✓ Débloqué</div>
-          }
-        </div>
-
-        <div class="achievement-card" [class.unlocked]="hasAchievement('social')">
-          <div class="achievement-icon">
-            <mat-icon>people</mat-icon>
-          </div>
-          <h4>Social</h4>
-          <p>10 contacts dans le réseau</p>
-          <div class="achievement-progress">{{ getAchievementProgress('social') }}</div>
-        </div>
-
-        <div class="achievement-card" [class.unlocked]="hasAchievement('productive')">
-          <div class="achievement-icon">
-            <mat-icon>rocket_launch</mat-icon>
-          </div>
-          <h4>Productif</h4>
-          <p>Créer 20 projets</p>
-          <div class="achievement-progress">{{ getAchievementProgress('productive') }}</div>
-        </div>
-      </div>
-    </div>
-
     <!-- Timeline d'activité -->
     <div class="activity-section">
       <div class="section-header">
@@ -288,23 +173,7 @@
           <div class="timeline-dot"></div>
           <div class="timeline-content">
             <div class="timeline-date">Il y a 2 jours</div>
-            <div class="timeline-text">Ajout de {{ (userData.favoris?.length || 0) > 0 ? (userData.favoris?.[0]?.name || userData.favoris?.[0]) : 'technologie' }}</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <div class="timeline-date">Il y a 5 jours</div>
-            <div class="timeline-text">Profil mis à jour</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-dot"></div>
-          <div class="timeline-content">
-            <div class="timeline-date">Il y a 1 semaine</div>
-            <div class="timeline-text">Nouveau projet démarré</div>
+            <div class="timeline-text">Ajout de {{ (userData.favoris.length || 0) > 0 ? (userData.favoris[0].name || userData.favoris[0]) : 'technologie' }}</div>
           </div>
         </div>
       </div>
