@@ -26,7 +26,8 @@ import { AdminGuard } from './guards/admin.guard';
 import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-  { path: 'home', component: HomeComponent, canActivate: [mobileNotAllowedGuard] },
+  { path: '', component: HomeComponent, canActivate: [mobileNotAllowedGuard] },
+  { path: 'home', redirectTo: '', pathMatch: 'full' },
   { path: 'about', component: AboutComponent },
   {
     path: 'version',
@@ -51,7 +52,6 @@ export const routes: Routes = [
   { path: 'subscription/success', component: SubscriptionSuccessComponent, canActivate: [AuthGuard, mobileNotAllowedGuard] },
   { path: 'subscription', component: SubscriptionComponent, canActivate: [AuthGuard, mobileNotAllowedGuard] },
 
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: '**', component: PageNotFoundComponent },
 
   /* { path: 'learn', component: LearnComponent },

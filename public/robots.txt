@@ -5,7 +5,6 @@ Allow: /
 Sitemap: https://verstack.io/sitemap.xml
 
 # Directories
-Allow: /home
 Allow: /about
 Allow: /news
 Allow: /profile
