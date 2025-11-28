@@ -58,12 +58,12 @@ html, body {
     flex-direction: column;
   }
   
-  /* Ensure routed components can use full-bleed backgrounds.
-     Avoid forcing a flex layout on the routed component root which can
-     shrink or alter its natural 100vh height. */
+  /* Ensure routed components expand to fill available space inside the
+     layout wrapper. Use flex growth instead of forcing each routed view to
+     be 100vh (which caused layout overflow and footer placement issues). */
   router-outlet + * {
     display: block;
-    min-height: 100vh;
+    flex: 1 1 auto;
     width: 100%;
   }
   

@@ -10,15 +10,15 @@
   }
   
   .layout-wrapper {
-    min-height: 100vh;
+    /* Let the host manage full viewport height; the wrapper should flex to fill
+       available space so the footer remains at the bottom when content is short. */
+    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    //background: url('/assets/images/bg.jpg') no-repeat center center;
     background: radial-gradient(#000 0%, #0f0f2f 100%);
-    background-size: cover;background-size: cover;
+    background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    min-height: 100vh;
   }
   
   
