@@ -25,7 +25,12 @@ jobs:
         run: |
           ssh ubuntu@"${{secrets.SSH_HOST}}" << 'EOF'
             cd /var/www/verstack.io/verstack-ihm
+
+            # Reset local changes before pulling
+            git reset --hard
+            git clean -fd
             git pull origin master
+
             npm install
 
             # API_BASE_URL si ton generate-routes en a besoin :
