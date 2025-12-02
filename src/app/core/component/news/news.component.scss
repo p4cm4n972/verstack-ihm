@@ -12,7 +12,9 @@ section {
   border-radius: 10px;
   width: 100%;
   padding: 16px;
-  min-height: 100vh;
+  /* Avoid forcing section to full viewport height so that short pages
+     don't create large white areas; let the layout determine natural height. */
+  min-height: auto;
 }
 
 .ads-left, .ads-right {
@@ -37,7 +39,8 @@ section {
 
 .article-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  /* Use auto-fit so cards wrap naturally; min width 240px looks good on mobile */
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 16px;
 }
 
@@ -47,6 +50,33 @@ section {
   flex-direction: column;
   justify-content: space-between;
   height: 100%;
+}
+
+/* Ensure mat-card content grows so actions stay pinned to bottom
+   and cards have consistent heights within a row. */
+.article-card mat-card-content {
+  flex: 1 1 auto;
+}
+
+/* Make images maintain an aspect ratio and cover the area. Use responsive
+   heights that scale down on small screens. */
+.article-card img[mat-card-image] {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  aspect-ratio: 16 / 9;
+}
+
+@media (max-width: 768px) {
+  .article-card img[mat-card-image] {
+    height: 180px; /* slightly taller on narrow screens for readability */
+  }
+}
+
+@media (max-width: 420px) {
+  .article-card img[mat-card-image] {
+    height: 140px;
+  }
 }
 
 .open-btn {
@@ -161,7 +191,7 @@ button.liked mat-icon {
 
 @media (max-width: 1400px) {
   .article-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   }
 }
 
