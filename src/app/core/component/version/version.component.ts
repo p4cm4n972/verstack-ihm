@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnInit, PLATFORM_ID, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, inject, input } from '@angular/core';
 import { Field } from '../../../models/field.model';
 import { LangagesService } from '../../../services/langages.service';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -9,7 +9,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthenticationService } from '../../../services/authentication.service';
 import { ProfileService } from '../../../services/profile.service';
 import { CommonModule } from '@angular/common';
-import { Observable, tap, take } from 'rxjs';
+import { Observable, Subject, tap, take, takeUntil } from 'rxjs';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { differenceInMonths, parseISO, formatDistanceToNow, differenceInHours } from 'date-fns';
 import { fr, th } from 'date-fns/locale';
@@ -51,7 +51,7 @@ import { isPlatformBrowser } from '@angular/common';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class VersionComponent implements OnInit {
+export class VersionComponent implements OnInit, OnDestroy {
   readonly favorisFromHome = input<unknown[]>([]);
   readonly origin = input('');
 
@@ -80,6 +80,8 @@ export class VersionComponent implements OnInit {
 
   isLoading: boolean = true;
   isBrowser: boolean;
+
+  private destroy$ = new Subject<void>();
 
   private readonly iconMap: Record<string, { type: string; color: string }> = {
     language: { type: 'code_blocks', color: 'icon-language' },
@@ -115,7 +117,7 @@ export class VersionComponent implements OnInit {
     image: 'https://verstack.io/assets/slider/slide2.png',
     url: 'https://verstack.io/version'
   });
-    this.getAuthStatus().pipe(take(1)).subscribe((status: any) => {
+    this.getAuthStatus().pipe(take(1), takeUntil(this.destroy$)).subscribe((status: any) => {
       if (status) {
         this.loadUserData();
         this.loadUserFavoris();
@@ -146,7 +148,7 @@ export class VersionComponent implements OnInit {
   }
 
  private loadLangages(): void {
-  this._langagesService.getAllLangages().subscribe({
+  this._langagesService.getAllLangages().pipe(takeUntil(this.destroy$)).subscribe({
     next: (langages) => {
       if (this.favorisFromHome() && this.favorisFromHome().length > 0) {
         const favorisNames = this.favorisFromHome().map((f: any) => f.name);
@@ -178,7 +180,7 @@ export class VersionComponent implements OnInit {
 
   private loadUserProfile(): void {
     if (this.userData?.id) {
-      this.profileService.getUserProfile(this.userData.id).subscribe({
+      this.profileService.getUserProfile(this.userData.id).pipe(takeUntil(this.destroy$)).subscribe({
         next: (data) => {
           this.userData = data;
           this.storeUserData(data);
@@ -252,6 +254,7 @@ export class VersionComponent implements OnInit {
   private updateUserFavoris(updatedData: any): void {
     this.profileService
       .updateUserProfile(this.userData._id, updatedData)
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
           console.log('Profil mis à jour avec succès !', this.pinnedLangages);
@@ -263,7 +266,7 @@ export class VersionComponent implements OnInit {
   }
 
   private refreshUserData(): void {
-    this.profileService.getUserProfile(this.userData._id).subscribe({
+    this.profileService.getUserProfile(this.userData._id).pipe(takeUntil(this.destroy$)).subscribe({
       next: (data) => {
         this.userData = data;
         this.storeUserData(data);
@@ -415,6 +418,11 @@ export class VersionComponent implements OnInit {
   trackP(index: number, item: any) {
   return item.id ?? index; // fallback si id absent
 }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
 }
 

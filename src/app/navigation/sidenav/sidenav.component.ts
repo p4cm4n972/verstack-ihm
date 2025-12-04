@@ -1,8 +1,9 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { Router, RouterModule } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { AuthenticationService } from '../../services/authentication.service';
 import { IsMobileOnlyDirective } from '../../shared/is-mobile-only.directive';
 import { IsDesktopOnlyDirective } from '../../shared/is-desktop-only.directive';
@@ -13,7 +14,7 @@ import { IsDesktopOnlyDirective } from '../../shared/is-desktop-only.directive';
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent implements OnInit, OnDestroy {
   isAuthenticated: boolean = false;
   @Output() sidenavClose = new EventEmitter();
   authStatus: boolean = false;
@@ -21,6 +22,7 @@ export class SidenavComponent implements OnInit {
   isSubscriber: boolean = false;
   userRole: string = '';
 
+  private destroy$ = new Subject<void>();
 
   constructor(
     private authService: AuthenticationService,
@@ -30,12 +32,17 @@ export class SidenavComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.authService.getAuthStatus().subscribe((status) => {
+    this.authService.getAuthStatus().pipe(takeUntil(this.destroy$)).subscribe((status) => {
       this.isAuthenticated = status;
       this.userRole = this.authService.getUserRole();
       this.isAdmin = status && this.userRole === 'admin';
       this.isSubscriber = status && this.userRole === 'subscriber';
     });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   logout() {

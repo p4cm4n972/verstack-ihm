@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,9 +17,10 @@ import { MatCardModule } from '@angular/material/card';
   templateUrl: './page-not-found.component.html',
   styleUrl: './page-not-found.component.scss'
 })
-export class PageNotFoundComponent implements OnInit {
+export class PageNotFoundComponent implements OnInit, OnDestroy {
   currentUrl: string = '';
   glitchText: string = '404';
+  private glitchIntervalId: ReturnType<typeof setInterval> | null = null;
 
   constructor(private router: Router) {}
 
@@ -32,7 +33,7 @@ export class PageNotFoundComponent implements OnInit {
     const chars = '!<>-_\\/[]{}—=+*^?#________';
     let iteration = 0;
 
-    const interval = setInterval(() => {
+    this.glitchIntervalId = setInterval(() => {
       this.glitchText = '404'
         .split('')
         .map((char, index) => {
@@ -44,12 +45,23 @@ export class PageNotFoundComponent implements OnInit {
         .join('');
 
       if (iteration >= 3) {
-        clearInterval(interval);
+        this.clearGlitchInterval();
         this.glitchText = '404';
       }
 
       iteration += 1 / 3;
     }, 30);
+  }
+
+  private clearGlitchInterval(): void {
+    if (this.glitchIntervalId !== null) {
+      clearInterval(this.glitchIntervalId);
+      this.glitchIntervalId = null;
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.clearGlitchInterval();
   }
 
   goToHome(): void {
