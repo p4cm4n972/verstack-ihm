@@ -24,6 +24,9 @@ export class ChartComponent implements OnInit, OnDestroy {
   years: string[] = [];
   sources: string[] = [];
 
+  private chartRetryCount = 0;
+  private readonly MAX_CHART_RETRIES = 10;
+
   private colorPalette: string[] = [
     '#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#A133FF', '#FF9133',
     '#33FFF4', '#F4FF33', '#FF3385', '#FF8533', '#33FF8F', '#8F33FF',
@@ -82,7 +85,12 @@ export class ChartComponent implements OnInit, OnDestroy {
           this.years = response.years;
           this.sources = response.metadata?.sources || [];
           this.isLoading = false;
-          this.updateChart('animation'); // Charge par défaut le graphique d'animation
+
+          // Attendre que le DOM soit mis à jour après isLoading = false
+          // avant de créer le chart
+          setTimeout(() => {
+            this.updateChart('animation');
+          }, 0);
         },
         error: (err: unknown) => {
           console.error('Erreur lors du chargement des données:', err);
@@ -104,6 +112,24 @@ export class ChartComponent implements OnInit, OnDestroy {
       console.warn('Aucune donnée disponible pour créer le graphique');
       return;
     }
+
+    // Vérifier que l'élément canvas existe dans le DOM
+    const canvasElement = this.document.getElementById('languageChart');
+    if (!canvasElement) {
+      if (this.chartRetryCount < this.MAX_CHART_RETRIES) {
+        this.chartRetryCount++;
+        console.warn(`Canvas element not found in DOM, retry ${this.chartRetryCount}/${this.MAX_CHART_RETRIES}...`);
+        setTimeout(() => this.updateChart(filter), 50);
+        return;
+      } else {
+        console.error('Failed to create chart: canvas element never became available');
+        this.error = 'Impossible d\'afficher le graphique. Veuillez réessayer.';
+        return;
+      }
+    }
+
+    // Réinitialiser le compteur de tentatives pour les prochains appels
+    this.chartRetryCount = 0;
 
     this.resetColors();
     const chartType = filter === 'animation' ? 'line' : 'bar';
