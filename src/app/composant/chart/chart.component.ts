@@ -179,10 +179,33 @@ export class ChartComponent implements OnInit, OnDestroy {
       },
       options: {
         responsive: true,
+        maintainAspectRatio: false,
+        interaction: {
+          mode: 'index',
+          intersect: false,
+        },
         plugins: {
           legend: {
             display: true,
             position: 'top',
+            labels: {
+              padding: 15,
+              font: {
+                size: window.innerWidth < 768 ? 11 : 12,
+              },
+              boxWidth: window.innerWidth < 768 ? 30 : 40,
+            },
+          },
+          tooltip: {
+            enabled: true,
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            titleFont: {
+              size: window.innerWidth < 768 ? 12 : 14,
+            },
+            bodyFont: {
+              size: window.innerWidth < 768 ? 11 : 13,
+            },
+            padding: window.innerWidth < 768 ? 8 : 12,
           },
         },
         scales: {
@@ -191,9 +214,22 @@ export class ChartComponent implements OnInit, OnDestroy {
             title: {
               display: true,
               text: filter === 'animation' ? 'Années' : 'Langages',
+              font: {
+                size: window.innerWidth < 768 ? 12 : 14,
+                weight: 'bold',
+              },
+              padding: { top: 10 },
             },
             ticks: {
-              autoSkip: false,
+              autoSkip: window.innerWidth < 768,
+              maxRotation: window.innerWidth < 768 ? 45 : 0,
+              minRotation: window.innerWidth < 768 ? 45 : 0,
+              font: {
+                size: window.innerWidth < 768 ? 10 : 12,
+              },
+            },
+            grid: {
+              display: window.innerWidth >= 768,
             },
           },
           y: {
@@ -201,6 +237,19 @@ export class ChartComponent implements OnInit, OnDestroy {
             title: {
               display: true,
               text: 'Popularité (%)',
+              font: {
+                size: window.innerWidth < 768 ? 12 : 14,
+                weight: 'bold',
+              },
+              padding: { bottom: 10 },
+            },
+            ticks: {
+              font: {
+                size: window.innerWidth < 768 ? 10 : 12,
+              },
+            },
+            grid: {
+              color: 'rgba(255, 255, 255, 0.1)',
             },
           },
         },

@@ -21,7 +21,7 @@
   @if (!isLoading && !error) {
     <div class="chart-content">
       <!-- Filtres -->
-      <div class="filter-container" style="margin: 2em;">
+      <div class="filter-container">
         <label for="yearFilter">Filtrer par année :</label>
         <select id="yearFilter" (change)="onYearChange($event)">
           <option value="animation">2015-2025 (Animation)</option>
@@ -41,11 +41,11 @@
 
       <!-- Graphique -->
       <div class="chart-container">
-        <canvas id="languageChart" width="1200" height="600"></canvas>
+        <canvas id="languageChart"></canvas>
       </div>
 
       <!-- Sources -->
-      <div id="sources-container" style="padding-bottom: 3em;"></div>
+      <div id="sources-container"></div>
 
       <!-- Bouton de rafraîchissement -->
       <div class="refresh-button-container">
