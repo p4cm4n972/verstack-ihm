@@ -8,7 +8,7 @@ import { PopularityTrend, TrendsResponse, TrendsFilterParams } from '../models/p
   providedIn: 'root'
 })
 export class StatService {
-  private apiBaseUrl = 'http://localhost:3000/api/stats'; // Backend API URL
+  private apiBaseUrl = '/api/stats'; // Backend API URL
   private trendsCache: TrendsResponse | null = null;
   private trends$: Observable<TrendsResponse> | null = null;
 
