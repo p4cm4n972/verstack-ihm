@@ -43,7 +43,10 @@ export class ChartComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.loadTrendsData();
+    // Ne charger les données que côté client (browser), pas pendant le SSR/prerendering
+    if (isPlatformBrowser(this.platformId)) {
+      this.loadTrendsData();
+    }
   }
 
   ngOnDestroy(): void {
