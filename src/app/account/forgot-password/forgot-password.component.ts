@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { AuthenticationService } from '../../services/authentication.service';
 import { MatInputModule } from '@angular/material/input';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 import { RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -12,12 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-forgot-password',
-  imports: [ReactiveFormsModule, MatFormFieldModule,
-    MatInputModule,
-    CommonModule,
-    MatButtonModule,
-    RouterModule
-  ],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, RouterModule],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss'
 })

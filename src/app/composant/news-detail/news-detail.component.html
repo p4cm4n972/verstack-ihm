@@ -1,36 +1,37 @@
 @if(article){<div class="news-detail-layout">
-    <!-- Pub gauche -->
-    <aside class="ads-left">
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-3195351081459490"
-           data-ad-slot="1234567890"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-    </aside>
-  
-    <!-- Contenu principal -->
-    <main class="news-detail-container">
-      <button mat-stroked-button color="accent" routerLink="/news" class="back-button">
-        <mat-icon>arrow_back</mat-icon> Retour aux actualités
-      </button>
-  
-      <h1 class="article-title">{{ article.title }}</h1>
-      <p class="article-meta">Publié le {{ article.date }} - <strong>{{ article.category }}</strong></p>
-  
-      <img *ngIf="article.img" [src]="article.img" [alt]="article.title" class="article-image">
-  
-      <div class="article-content" [innerHTML]="article.content"></div>
-    </main>
-  
-    <!-- Pub droite -->
-    <aside class="ads-right">
-      <ins class="adsbygoogle"
-           style="display:block"
-           data-ad-client="ca-pub-3195351081459490"
-           data-ad-slot="0987654321"
-           data-ad-format="auto"
-           data-full-width-responsive="true"></ins>
-    </aside>
-  </div>}
-  
+  <!-- Pub gauche -->
+  <aside class="ads-left">
+    <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-3195351081459490"
+      data-ad-slot="1234567890"
+      data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+  </aside>
+
+  <!-- Contenu principal -->
+  <main class="news-detail-container">
+    <button mat-stroked-button color="accent" routerLink="/news" class="back-button">
+      <mat-icon>arrow_back</mat-icon> Retour aux actualités
+    </button>
+
+    <h1 class="article-title">{{ article.title }}</h1>
+    <p class="article-meta">Publié le {{ article.date }} - <strong>{{ article.category }}</strong></p>
+
+    @if (article.img) {
+      <img [src]="article.img" [alt]="article.title" class="article-image">
+    }
+
+    <div class="article-content" [innerHTML]="article.content"></div>
+  </main>
+
+  <!-- Pub droite -->
+  <aside class="ads-right">
+    <ins class="adsbygoogle"
+      style="display:block"
+      data-ad-client="ca-pub-3195351081459490"
+      data-ad-slot="0987654321"
+      data-ad-format="auto"
+    data-full-width-responsive="true"></ins>
+  </aside>
+</div>}

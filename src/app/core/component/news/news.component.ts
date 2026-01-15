@@ -16,7 +16,7 @@ import {
   MatDialogModule,
 } from '@angular/material/dialog';
 import { DomSanitizer } from '@angular/platform-browser';
-import { CommonModule } from '@angular/common';
+
 import { TapeTextConsoleComponent } from '../../../composant/tape-text-console/tape-text-console.component';
 import { Router } from '@angular/router';
 import { SeoService } from '../../../services/seo.service';
@@ -41,12 +41,11 @@ interface Article {
     MatButtonModule,
     MatChipsModule,
     MatGridListModule,
-    CommonModule,
     MatBadgeModule,
     MatIconModule,
     TapeTextConsoleComponent,
     MatTooltipModule
-  ],
+],
   templateUrl: './news.component.html',
   styleUrl: './news.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

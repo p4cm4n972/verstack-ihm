@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { Router, RouterModule } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -8,12 +8,11 @@ import { MatCardModule } from '@angular/material/card';
 @Component({
   selector: 'app-page-not-found',
   imports: [
-    CommonModule,
     RouterModule,
     MatButtonModule,
     MatIconModule,
     MatCardModule
-  ],
+],
   templateUrl: './page-not-found.component.html',
   styleUrl: './page-not-found.component.scss'
 })

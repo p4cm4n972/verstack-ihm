@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,13 +11,12 @@ import { SubscriptionService } from '../../services/subscription.service';
 @Component({
   selector: 'app-subscription-success',
   imports: [
-    CommonModule,
     RouterModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule
-  ],
+],
   templateUrl: './subscription-success.component.html',
   styleUrl: './subscription-success.component.scss'
 })

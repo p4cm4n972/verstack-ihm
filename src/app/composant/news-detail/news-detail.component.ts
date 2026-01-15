@@ -2,14 +2,14 @@ import { Component, inject, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { ArticlesService } from '../../services/articles.service';
-import { CommonModule } from '@angular/common';
+
 import { MatButtonModule } from '@angular/material/button';
 import { SeoService } from '../../services/seo.service';
 import { StructuredDataService } from '../../core/services/structured-data.service';
 
 @Component({
   selector: 'app-news-detail',
-  imports: [MatIconModule, CommonModule, RouterModule, MatButtonModule],
+  imports: [MatIconModule, RouterModule, MatButtonModule],
   templateUrl: './news-detail.component.html',
   styleUrl: './news-detail.component.scss'
 })

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -12,10 +12,9 @@ import { ArticlesService } from '../../../services/articles.service';
   selector: 'app-admin',
   standalone: true,
   imports: [
-    CommonModule,
     FormsModule,
     SharedMaterialModule
-  ],
+],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
 })

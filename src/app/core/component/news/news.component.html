@@ -1,87 +1,92 @@
 <div class="news-layout">
-    <aside class="ads-left">
-        <ins class="adsbygoogle" style="display:block" data-full-width-responsive="true"></ins>
-    </aside>
-    <section>
-        <mat-toolbar color="secondary" class="mb-4" style="margin-bottom: 10px;">
-            <span><app-tape-text-console></app-tape-text-console></span>
-        </mat-toolbar>
+  <aside class="ads-left">
+    <ins class="adsbygoogle" style="display:block" data-full-width-responsive="true"></ins>
+  </aside>
+  <section>
+    <mat-toolbar color="secondary" class="mb-4" style="margin-bottom: 10px;">
+      <span><app-tape-text-console></app-tape-text-console></span>
+    </mat-toolbar>
 
-        <div class="articles-wrapper">
-            <div class="filters">
-                <!-- <mat-form-field appearance="outline">
-                <mat-label>Rechercher un article</mat-label>
-                <input matInput placeholder="Tapez un mot-clé">
-            </mat-form-field>-->
+    <div class="articles-wrapper">
+      <div class="filters">
+        <!-- <mat-form-field appearance="outline">
+        <mat-label>Rechercher un article</mat-label>
+        <input matInput placeholder="Tapez un mot-clé">
+      </mat-form-field>-->
 
-                @if(actualiteType.length > 0) {
-                <mat-chip-listbox>
-                    @for(type of actualiteType; track type; let i = $index) {
-                    <mat-chip-option (selectionChange)="filterByType(i)"> {{ type }}</mat-chip-option>
+      @if(actualiteType.length > 0) {
+        <mat-chip-listbox>
+          @for(type of actualiteType; track type; let i = $index) {
+            <mat-chip-option (selectionChange)="filterByType(i)"> {{ type }}</mat-chip-option>
+          }
+        </mat-chip-listbox>}
+
+      </div>
+
+      <div class="article-grid">
+        @for(article of filteredArticles; track trackById(i, article); let i = $index) {
+          <ng-container>
+            <mat-card class="article-card" appearance="outlined">
+              <!-- Bouton "open in new" flottant -->
+              <button mat-icon-button class="open-btn" aria-label="Voir l’article complet"
+                (click)="openArticlePage(article)">
+                <mat-icon>open_in_new</mat-icon>
+              </button>
+
+              <mat-card-header>
+                <div mat-card-avatar class="header-image"
+                  style="background-image: url({{article.img}}); background-size: cover; background-position: center;">
+                </div>
+                <mat-card-title>{{ article.title }}</mat-card-title>
+                <mat-card-subtitle>[{{ article.category }}] - P4cm4n972</mat-card-subtitle>
+              </mat-card-header>
+
+              <img mat-card-image [src]="article.img || defaultPicture" [alt]="article.title" />
+
+              <mat-card-content>
+                <div class="meta-row">
+                  <span class="article-date">{{ article.date }}</span>
+
+                  @if (currentUser && hasRecommended(article)) {
+                    <button mat-icon-button
+                      (click)="unrecommend(article)" aria-label="Retirer la recommandation" class="liked"
+                      [matBadge]="article.recommendations" [matBadgeColor]="'primary'"
+                      [matBadgePosition]="'above after'">
+                      <mat-icon>thumb_up</mat-icon>
+                    </button>
+                  } @else {
+                    @if (currentUser) {
+                      <button mat-icon-button [disabled]="hasRecommended(article)"
+                        [matBadge]="article.recommendations" [matBadgeColor]="'primary'"
+                        [matBadgePosition]="'above after'"
+                        [matTooltip]="hasRecommended(article) ? 'Tu as déjà recommandé cet article' : 'Recommander cet article'"
+                        (click)="recommend(article)" aria-label="Recommander cet article">
+                        <mat-icon>thumb_up</mat-icon>
+                      </button>
                     }
-                </mat-chip-listbox>}
-
-            </div>
-
-            <div class="article-grid">
-                @for(article of filteredArticles; track trackById(i, article); let i = $index) {
-                <ng-container>
-                    <mat-card class="article-card" appearance="outlined">
-                        <!-- Bouton "open in new" flottant -->
-                        <button mat-icon-button class="open-btn" aria-label="Voir l’article complet"
-                            (click)="openArticlePage(article)">
-                            <mat-icon>open_in_new</mat-icon>
+                    @if (!currentUser) {
+                      <span matTooltip="Connecte-toi pour recommander"
+                        [matBadge]="article.recommendations" [matBadgeColor]="'primary'"
+                        [matBadgePosition]="'above after'" matTooltipPosition="above">
+                        <button mat-icon-button disabled>
+                          <mat-icon>thumb_up</mat-icon>
                         </button>
+                      </span>
+                    }
+                  }
+                </div>
+              </mat-card-content>
 
-                        <mat-card-header>
-                            <div mat-card-avatar class="header-image"
-                                style="background-image: url({{article.img}}); background-size: cover; background-position: center;">
-                            </div>
-                            <mat-card-title>{{ article.title }}</mat-card-title>
-                            <mat-card-subtitle>[{{ article.category }}] - P4cm4n972</mat-card-subtitle>
-                        </mat-card-header>
-
-                        <img mat-card-image [src]="article.img || defaultPicture" [alt]="article.title" />
-
-                        <mat-card-content>
-                            <div class="meta-row">
-                                <span class="article-date">{{ article.date }}</span>
-
-                                <button mat-icon-button *ngIf="currentUser && hasRecommended(article); else likeBtn"
-                                    (click)="unrecommend(article)" aria-label="Retirer la recommandation" class="liked"
-                                    [matBadge]="article.recommendations" [matBadgeColor]="'primary'"
-                                    [matBadgePosition]="'above after'">
-                                    <mat-icon>thumb_up</mat-icon>
-                                </button>
-                                <ng-template #likeBtn>
-                                    <button mat-icon-button *ngIf="currentUser" [disabled]="hasRecommended(article)"
-                                        [matBadge]="article.recommendations" [matBadgeColor]="'primary'"
-                                        [matBadgePosition]="'above after'"
-                                        [matTooltip]="hasRecommended(article) ? 'Tu as déjà recommandé cet article' : 'Recommander cet article'"
-                                        (click)="recommend(article)" aria-label="Recommander cet article">
-                                        <mat-icon>thumb_up</mat-icon>
-                                    </button>
-                                    <span *ngIf="!currentUser" matTooltip="Connecte-toi pour recommander"
-                                        [matBadge]="article.recommendations" [matBadgeColor]="'primary'"
-                                        [matBadgePosition]="'above after'" matTooltipPosition="above">
-                                        <button mat-icon-button disabled>
-                                            <mat-icon>thumb_up</mat-icon>
-                                        </button>
-                                    </span>
-                                </ng-template>
-                            </div>
-                        </mat-card-content>
-
-                        <mat-card-actions>
-                            <button mat-raised-button color="accent"
-                                (click)="openArticleContentDialog(article.content)">Lire la suite</button>
-                        </mat-card-actions>
-                    </mat-card>
-                </ng-container>}
-            </div>
+              <mat-card-actions>
+                <button mat-raised-button color="accent"
+                (click)="openArticleContentDialog(article.content)">Lire la suite</button>
+              </mat-card-actions>
+            </mat-card>
+          </ng-container>}
         </div>
+      </div>
     </section>
     <aside class="ads-right">
-        <ins class="adsbygoogle" style="display:block" data-full-width-responsive="true"></ins>
+      <ins class="adsbygoogle" style="display:block" data-full-width-responsive="true"></ins>
     </aside>
-</div>
+  </div>

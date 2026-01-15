@@ -11,7 +11,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule, PageEvent, MatPaginatorIntl } from '@angular/material/paginator';
-import { CommonModule } from '@angular/common';
+
 import { SeoService } from '../../../services/seo.service';
 import { ProductsService } from '../../../services/products.service';
 
@@ -36,7 +36,7 @@ export function getFrenchPaginatorIntl(): MatPaginatorIntl {
 }
 
 @Component({
-  imports: [CommonModule, MatFormFieldModule, MatCardModule, MatButtonModule, MatToolbarModule, MatIconModule, MatSelectModule, ShopifyBuyButtonComponent, MatPaginatorModule],
+  imports: [MatFormFieldModule, MatCardModule, MatButtonModule, MatToolbarModule, MatIconModule, MatSelectModule, ShopifyBuyButtonComponent, MatPaginatorModule],
   selector: 'app-shop',
   templateUrl: './shop.component.html',
   styleUrls: ['./shop.component.scss'],
