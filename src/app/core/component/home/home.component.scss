@@ -20,37 +20,38 @@
 .row {
   display: flex;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 0 16px;
   flex-direction: row;
   flex-wrap: nowrap;
-  height: 100vh;
-  align-items: center;
+  height: calc(100vh - 60px);
+  align-items: flex-start;
+  padding-top: 4rem;
   justify-content: space-between;
   box-sizing: border-box;
+  gap: 1.5rem;
 }
 
 .col {
-  padding: 20px;
+  padding: 0;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .col.left {
-  flex: 1 1 22%;
+  flex: 0 0 380px;
   justify-content: flex-start;
   text-align: left;
 }
 
 .col.right {
-  flex: 1 1 78%;
+  flex: 1;
   display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-  height: 100vh;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 0;
   box-sizing: border-box;
 }
 
@@ -58,9 +59,9 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
-  gap: 0.2rem;
-  max-width: 500px;
+  justify-content: flex-start;
+  gap: 0.5rem;
+  width: 100%;
 }
 
 .pixel-art-title {
@@ -358,7 +359,7 @@
 
 @media (max-width: 900px) {
   .col.right {
-    padding-top: 16px;
+    padding-top: 1rem;
     padding-bottom: 16px;
   }
   .version-wrapper {
@@ -371,7 +372,7 @@
   border: none;
   height: 2px;
   background: linear-gradient(90deg, transparent, #00ff41, transparent);
-  margin: 2rem 0;
+  margin: 0.5rem 0 1rem 0;
   position: relative;
   overflow: hidden;
 }
@@ -411,8 +412,8 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1rem;
-  padding: 0.75rem 1rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem 0.8rem;
   background: linear-gradient(90deg, rgba(0, 255, 65, 0.2) 0%, rgba(0, 188, 212, 0.2) 100%);
   border: 2px solid rgba(0, 255, 65, 0.4);
   border-left: 4px solid #00ff41;
@@ -423,6 +424,30 @@
   overflow: hidden;
   height: auto;
   box-sizing: border-box;
+}
+
+.header-branding {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand-logo {
+  color: #00ff41;
+  font-size: 1.2rem;
+  font-weight: 900;
+  font-family: 'Courier New', monospace;
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.8);
+  animation: pulse 2s ease-in-out infinite alternate;
+}
+
+.brand-name {
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 900;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
 }
 
 .dashboard-header::before {
@@ -594,7 +619,7 @@
   line-height: 1.8;
   box-shadow: 0 4px 20px rgba(0, 255, 65, 0.2), inset 0 0 30px rgba(0, 255, 65, 0.05);
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 
   &::before {
     content: '';
@@ -728,6 +753,322 @@
     }
     51%, 100% {
       opacity: 0;
+    }
+  }
+
+  .typing-cursor {
+    color: #00ff41;
+    font-weight: 700;
+    animation: blink-typing 0.5s step-end infinite;
+    text-shadow: 0 0 8px rgba(0, 255, 65, 0.8);
+  }
+
+  @keyframes blink-typing {
+    0%, 50% {
+      opacity: 1;
+    }
+    51%, 100% {
+      opacity: 0;
+    }
+  }
+
+  .fade-in {
+    animation: fadeInOutput 0.3s ease-out forwards;
+  }
+
+  @keyframes fadeInOutput {
+    from {
+      opacity: 0;
+      transform: translateY(-5px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  // Notifications container
+  .notifications-container {
+    margin-top: 1rem;
+    background: linear-gradient(135deg, rgba(0, 255, 65, 0.08) 0%, rgba(0, 0, 0, 0.9) 100%);
+    border: 2px solid rgba(0, 255, 65, 0.5);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 255, 65, 0.3), inset 0 0 30px rgba(0, 255, 65, 0.05);
+  }
+
+  .notifications-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.6rem 0.8rem;
+    background: linear-gradient(90deg, rgba(0, 255, 65, 0.2) 0%, rgba(0, 255, 65, 0.05) 100%);
+    border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+  }
+
+  .notifications-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .live-indicator {
+      width: 8px;
+      height: 8px;
+      background: #ff0040;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #ff0040, 0 0 20px #ff0040;
+      animation: live-pulse 1.5s ease-in-out infinite;
+    }
+
+    .title-text {
+      font-size: 0.75rem;
+      font-weight: 900;
+      color: #00ff41;
+      letter-spacing: 2px;
+      text-shadow: 0 0 10px rgba(0, 255, 65, 0.7);
+    }
+  }
+
+  .notifications-count {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: 'Courier New', monospace;
+  }
+
+  @keyframes live-pulse {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.5;
+      transform: scale(0.9);
+    }
+  }
+
+  .notifications-feed {
+    padding: 0.5rem;
+  }
+
+  .notification-line {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.6rem;
+    padding: 0.5rem 0.4rem;
+    margin-bottom: 0.3rem;
+    border-radius: 4px;
+    border-left: 3px solid transparent;
+    background: rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(0, 255, 65, 0.1);
+      transform: translateX(3px);
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    .notif-icon {
+      font-size: 0.9rem;
+      width: 20px;
+      min-width: 20px;
+      text-align: center;
+      padding-top: 2px;
+    }
+
+    .notif-content {
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .notif-main {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .notif-tech {
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .notif-version {
+      font-size: 0.75rem;
+      font-weight: 700;
+      font-family: 'Courier New', monospace;
+      background: rgba(0, 255, 65, 0.15);
+      color: #00ff41;
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      border: 1px solid rgba(0, 255, 65, 0.3);
+    }
+
+    .notif-trending {
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-left: auto;
+      padding: 0.1rem 0.3rem;
+      border-radius: 3px;
+
+      &.trending-up {
+        color: #00ff41;
+        text-shadow: 0 0 5px rgba(0, 255, 65, 0.7);
+      }
+
+      &.trending-down {
+        color: #f44336;
+        text-shadow: 0 0 5px rgba(244, 67, 54, 0.7);
+      }
+
+      &.trending-stable {
+        color: #ff9800;
+        text-shadow: 0 0 5px rgba(255, 152, 0, 0.7);
+      }
+    }
+
+    .notif-details {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .notif-message-wrapper {
+      flex: 1;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .notif-message {
+      font-size: 0.7rem;
+      color: rgba(255, 255, 255, 0.6);
+      white-space: nowrap;
+      display: inline-block;
+    }
+
+    // Marquee effect for long messages
+    .notif-message-wrapper:hover .notif-message {
+      animation: marquee 8s linear infinite;
+    }
+
+    .notif-timestamp {
+      font-size: 0.6rem;
+      color: rgba(255, 255, 255, 0.4);
+      white-space: nowrap;
+      font-family: 'Courier New', monospace;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 0.1rem 0.3rem;
+      border-radius: 2px;
+    }
+
+    // Type-specific styles
+    &.notif-release {
+      border-left-color: #00ff41;
+
+      .notif-icon {
+        color: #00ff41;
+        text-shadow: 0 0 8px rgba(0, 255, 65, 0.8);
+      }
+
+      .notif-tech {
+        color: #00ff41;
+        text-shadow: 0 0 5px rgba(0, 255, 65, 0.5);
+      }
+    }
+
+    &.notif-security {
+      border-left-color: #ff9800;
+      background: rgba(255, 152, 0, 0.08);
+
+      .notif-icon {
+        color: #ff9800;
+        text-shadow: 0 0 8px rgba(255, 152, 0, 0.8);
+        animation: pulse-warning 1s ease-in-out infinite;
+      }
+
+      .notif-tech {
+        color: #ff9800;
+        text-shadow: 0 0 5px rgba(255, 152, 0, 0.5);
+      }
+
+      .notif-version {
+        background: rgba(255, 152, 0, 0.15);
+        color: #ff9800;
+        border-color: rgba(255, 152, 0, 0.3);
+      }
+    }
+
+    &.notif-deprecation {
+      border-left-color: #f44336;
+      background: rgba(244, 67, 54, 0.08);
+
+      .notif-icon {
+        color: #f44336;
+        text-shadow: 0 0 8px rgba(244, 67, 54, 0.8);
+      }
+
+      .notif-tech {
+        color: #f44336;
+        text-shadow: 0 0 5px rgba(244, 67, 54, 0.5);
+      }
+
+      .notif-version {
+        background: rgba(244, 67, 54, 0.15);
+        color: #f44336;
+        border-color: rgba(244, 67, 54, 0.3);
+      }
+
+      .notif-message {
+        color: rgba(244, 67, 54, 0.7);
+      }
+    }
+
+    &.notif-info {
+      border-left-color: #00bcd4;
+
+      .notif-icon {
+        color: #00bcd4;
+        text-shadow: 0 0 8px rgba(0, 188, 212, 0.8);
+      }
+
+      .notif-tech {
+        color: #00bcd4;
+        text-shadow: 0 0 5px rgba(0, 188, 212, 0.5);
+      }
+
+      .notif-version {
+        background: rgba(0, 188, 212, 0.15);
+        color: #00bcd4;
+        border-color: rgba(0, 188, 212, 0.3);
+      }
+    }
+  }
+
+  @keyframes pulse-warning {
+    0%, 100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.6;
+      transform: scale(1.1);
+    }
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-100%);
     }
   }
 }

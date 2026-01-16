@@ -1,4 +1,4 @@
-<div class="f1-dashboard">
+<div class="terminal-dashboard">
   @if (isLoading) {
     <div class="loading-state">
       <mat-spinner diameter="24"></mat-spinner>
@@ -14,239 +14,85 @@
       </a>
     </div>
   } @else {
-    <!-- Header style F1 -->
-    <div class="f1-header">
-      <div class="header-left">
-        <div class="live-indicator">
-          <span class="live-dot"></span>
-          <span class="live-text">LIVE</span>
+    <!-- Header style terminal -->
+    <div class="terminal-header">
+      <h2 class="terminal-title">
+        <span class="title-icon">▶</span>
+        <div class="glitch" data-text="MES TECHNOLOGIES">
+          MES TECHNOLOGIES
         </div>
-        <h2 class="header-title">MES TECHNOLOGIES</h2>
-      </div>
-      <div class="header-right">
-        <span class="tech-count">{{ userTechnologies.length }} TECH{{ userTechnologies.length > 1 ? 'S' : '' }}</span>
+        <span class="title-decoration">_</span>
+      </h2>
+      <div class="status-indicator">
+        <span class="status-dot"></span>
+        <span class="status-text">{{ userTechnologies.length }} STACK{{ userTechnologies.length > 1 ? 'S' : '' }}</span>
       </div>
     </div>
 
-    <!-- Podium TOP 3 -->
-    @if (topThree.length > 0) {
-      <div class="podium-section">
-        <div class="podium-container">
-          <!-- Position 2 (Gauche) -->
-          @if (topThree[1]) {
-            <div class="podium-card position-2" [style.animation-delay]="'0.2s'">
-              <div class="position-badge silver">
-                <span class="position-number">2</span>
-              </div>
-              <div class="tech-logo">
-                <img [src]="topThree[1].logoUrl || getDefaultLogo(topThree[1].name)"
-                     [alt]="topThree[1].name"
-                     (error)="onImageError($event)">
-              </div>
-              <h3 class="tech-name">{{ topThree[1].name }}</h3>
-              <div class="popularity-bar">
-                <div class="popularity-fill" [style.width.%]="topThree[1].popularity"></div>
-              </div>
-              <div class="tech-stats">
-                <span class="stat-item">
-                  <mat-icon class="trending-icon" [class]="'trending-' + topThree[1].trending">
-                    @if (topThree[1].trending === 'up') { trending_up }
-                    @if (topThree[1].trending === 'down') { trending_down }
-                    @if (topThree[1].trending === 'stable') { trending_flat }
-                  </mat-icon>
-                  {{ topThree[1].popularity }}%
-                </span>
-                <span class="rank-badge">RANG {{ topThree[1].rank }}</span>
-              </div>
-              @if (topThree[1].versions && topThree[1].versions.length > 0) {
-                <div class="versions-compact">
-                  @for(version of topThree[1].versions; track version) {
-                    <div class="version-item">
-                      <span [class]="'version-label version-' + version.type.toLowerCase()">
-                        <span>{{ version.type }}:</span>&nbsp;{{ version.label }}
-                      </span>
-                      @if (version.releaseDate && version.supportDuration) {
-                        <mat-progress-bar
-                          [mode]="getProgressMode(version.supportDuration)"
-                          [value]="getSupportPercentageFromDuration(version.releaseDate, version.supportDuration)"
-                          [ngClass]="getSupportColor(version.releaseDate, version.supportDuration)"
-                          [matTooltip]="getSupportTooltip(version.releaseDate, version.supportDuration, version.type)"
-                          matTooltipPosition="above">
-                        </mat-progress-bar>
-                      }
-                    </div>
-                  }
-                </div>
-              }
-            </div>
-          }
-
-          <!-- Position 1 (Centre) -->
-          @if (topThree[0]) {
-            <div class="podium-card position-1" [style.animation-delay]="'0s'">
-              <div class="position-badge gold">
-                <span class="position-number">1</span>
-                <mat-icon class="trophy-icon">emoji_events</mat-icon>
-              </div>
-              <div class="tech-logo champion">
-                <img [src]="topThree[0].logoUrl || getDefaultLogo(topThree[0].name)"
-                     [alt]="topThree[0].name"
-                     (error)="onImageError($event)">
-              </div>
-              <h3 class="tech-name">{{ topThree[0].name }}</h3>
-              <div class="popularity-bar">
-                <div class="popularity-fill" [style.width.%]="topThree[0].popularity"></div>
-              </div>
-              <div class="tech-stats">
-                <span class="stat-item">
-                  <mat-icon class="trending-icon" [class]="'trending-' + topThree[0].trending">
-                    @if (topThree[0].trending === 'up') { trending_up }
-                    @if (topThree[0].trending === 'down') { trending_down }
-                    @if (topThree[0].trending === 'stable') { trending_flat }
-                  </mat-icon>
-                  {{ topThree[0].popularity }}%
-                </span>
-                <span class="rank-badge">RANG {{ topThree[0].rank }}</span>
-              </div>
-              @if (topThree[0].versions && topThree[0].versions.length > 0) {
-                <div class="versions-compact">
-                  @for(version of topThree[0].versions; track version) {
-                    <div class="version-item">
-                      <span [class]="'version-label version-' + version.type.toLowerCase()">
-                        <span>{{ version.type }}:</span>&nbsp;{{ version.label }}
-                      </span>
-                      @if (version.releaseDate && version.supportDuration) {
-                        <mat-progress-bar
-                          [mode]="getProgressMode(version.supportDuration)"
-                          [value]="getSupportPercentageFromDuration(version.releaseDate, version.supportDuration)"
-                          [ngClass]="getSupportColor(version.releaseDate, version.supportDuration)"
-                          [matTooltip]="getSupportTooltip(version.releaseDate, version.supportDuration, version.type)"
-                          matTooltipPosition="above">
-                        </mat-progress-bar>
-                      }
-                    </div>
-                  }
-                </div>
-              }
-            </div>
-          }
-
-          <!-- Position 3 (Droite) -->
-          @if (topThree[2]) {
-            <div class="podium-card position-3" [style.animation-delay]="'0.4s'">
-              <div class="position-badge bronze">
-                <span class="position-number">3</span>
-              </div>
-              <div class="tech-logo">
-                <img [src]="topThree[2].logoUrl || getDefaultLogo(topThree[2].name)"
-                     [alt]="topThree[2].name"
-                     (error)="onImageError($event)">
-              </div>
-              <h3 class="tech-name">{{ topThree[2].name }}</h3>
-              <div class="popularity-bar">
-                <div class="popularity-fill" [style.width.%]="topThree[2].popularity"></div>
-              </div>
-              <div class="tech-stats">
-                <span class="stat-item">
-                  <mat-icon class="trending-icon" [class]="'trending-' + topThree[2].trending">
-                    @if (topThree[2].trending === 'up') { trending_up }
-                    @if (topThree[2].trending === 'down') { trending_down }
-                    @if (topThree[2].trending === 'stable') { trending_flat }
-                  </mat-icon>
-                  {{ topThree[2].popularity }}%
-                </span>
-                <span class="rank-badge">RANG {{ topThree[2].rank }}</span>
-              </div>
-              @if (topThree[2].versions && topThree[2].versions.length > 0) {
-                <div class="versions-compact">
-                  @for(version of topThree[2].versions; track version) {
-                    <div class="version-item">
-                      <span [class]="'version-label version-' + version.type.toLowerCase()">
-                        <span>{{ version.type }}:</span>&nbsp;{{ version.label }}
-                      </span>
-                      @if (version.releaseDate && version.supportDuration) {
-                        <mat-progress-bar
-                          [mode]="getProgressMode(version.supportDuration)"
-                          [value]="getSupportPercentageFromDuration(version.releaseDate, version.supportDuration)"
-                          [ngClass]="getSupportColor(version.releaseDate, version.supportDuration)"
-                          [matTooltip]="getSupportTooltip(version.releaseDate, version.supportDuration, version.type)"
-                          matTooltipPosition="above">
-                        </mat-progress-bar>
-                      }
-                    </div>
-                  }
-                </div>
-              }
-            </div>
-          }
-        </div>
+    <!-- Terminal display -->
+    <div class="terminal-display">
+      <!-- Command line -->
+      <div class="terminal-line">
+        <span class="terminal-prompt">$</span>
+        <span class="terminal-command">cat /etc/stack/technologies.conf</span>
       </div>
-    }
 
-    <!-- Grille des autres technologies -->
-    @if (otherTechnologies.length > 0) {
-      <div class="grid-section">
-        <div class="grid-header">
-          <span class="grid-title">AUTRES TECHNOLOGIES</span>
-        </div>
-        <div class="tech-grid">
-          @for (tech of otherTechnologies; track tech._id) {
-            <div class="tech-row">
-              <div class="row-position">
-                <span class="position-number">{{ $index + 4 }}</span>
-              </div>
-              <div class="row-logo">
+      <!-- Technologies list -->
+      <div class="tech-list">
+        @for (tech of userTechnologies; track tech._id; let i = $index) {
+          <div class="tech-entry" [style.animation-delay]="(i * 0.1) + 's'">
+            <div class="tech-header">
+              <span class="tech-index">[{{ i + 1 }}]</span>
+              <div class="tech-logo">
                 <img [src]="tech.logoUrl || getDefaultLogo(tech.name)"
                      [alt]="tech.name"
                      (error)="onImageError($event)">
               </div>
-              <div class="row-info">
-                <h4 class="row-name">{{ tech.name }}</h4>
-                @if (tech.versions && tech.versions.length > 0) {
-                  <div class="row-versions">
-                    @for(version of tech.versions; track version; let i = $index) {
-                      @if (i < 2) {
-                        <div class="version-row-item">
-                          <span [class]="'version-chip-label version-' + version.type.toLowerCase()">
-                            <span>{{ version.type }}:</span>&nbsp;{{ version.label }}
-                          </span>
-                          @if (version.releaseDate && version.supportDuration) {
-                            <mat-progress-bar
-                              class="version-mini-bar"
-                              [mode]="getProgressMode(version.supportDuration)"
-                              [value]="getSupportPercentageFromDuration(version.releaseDate, version.supportDuration)"
-                              [ngClass]="getSupportColor(version.releaseDate, version.supportDuration)"
-                              [matTooltip]="getSupportTooltip(version.releaseDate, version.supportDuration, version.type)"
-                              matTooltipPosition="above">
-                            </mat-progress-bar>
-                          }
+              <span class="tech-name">{{ tech.name }}</span>
+              <span class="tech-trending" [class]="'trending-' + tech.trending">
+                @if (tech.trending === 'up') { ↗ }
+                @if (tech.trending === 'down') { ↘ }
+                @if (tech.trending === 'stable') { → }
+              </span>
+              <span class="tech-rank">RANG #{{ tech.rank }}</span>
+            </div>
+
+            @if (tech.versions && tech.versions.length > 0) {
+              <div class="tech-versions">
+                @for(version of tech.versions; track version; let j = $index) {
+                  @if (j < 2) {
+                    <div class="version-row">
+                      <span class="version-type" [class]="'type-' + version.type.toLowerCase()">{{ version.type }}</span>
+                      <span class="version-number">{{ version.label }}</span>
+                      @if (version.releaseDate && version.supportDuration) {
+                        <div class="support-bar">
+                          <div class="support-fill"
+                               [style.width.%]="getSupportPercentageFromDuration(version.releaseDate, version.supportDuration)"
+                               [class]="getSupportColorClass(version.releaseDate, version.supportDuration)"
+                               [matTooltip]="getSupportTooltip(version.releaseDate, version.supportDuration, version.type)"
+                               matTooltipPosition="above">
+                          </div>
                         </div>
+                        <span class="support-percent">{{ getSupportPercentageFromDuration(version.releaseDate, version.supportDuration) | number:'1.0-0' }}%</span>
                       }
-                    }
-                  </div>
+                    </div>
+                  }
                 }
               </div>
-              <div class="row-stats">
-                <div class="popularity-indicator">
-                  <div class="popularity-value">{{ tech.popularity }}%</div>
-                  <div class="popularity-mini-bar">
-                    <div class="popularity-mini-fill" [style.width.%]="tech.popularity"></div>
-                  </div>
-                </div>
-                <mat-icon class="trending-icon small" [class]="'trending-' + tech.trending">
-                  @if (tech.trending === 'up') { trending_up }
-                  @if (tech.trending === 'down') { trending_down }
-                  @if (tech.trending === 'stable') { trending_flat }
-                </mat-icon>
+            }
+
+            <div class="tech-stats">
+              <span class="stat-label">Popularité:</span>
+              <div class="popularity-bar">
+                <div class="popularity-fill" [style.width.%]="tech.popularity"></div>
               </div>
-              <div class="row-rank">
-                <span class="rank-label">RANG</span>
-                <span class="rank-value">{{ tech.rank }}</span>
-              </div>
+              <span class="stat-value">{{ tech.popularity }}%</span>
             </div>
-          }
-        </div>
+          </div>
+        }
       </div>
-    }
+
+      <div class="terminal-cursor">_</div>
+    </div>
   }
 </div>

@@ -198,4 +198,23 @@ export class UserTechPreviewComponent implements OnInit {
     }
     return 'indeterminate';
   }
+
+  getSupportColorClass(releaseDate: string, supportTime: number): string {
+    if (!releaseDate || !supportTime) {
+      return 'support-ok';
+    }
+    const monthsLeft = this.getMonthsLeft(releaseDate, supportTime);
+
+    if (supportTime == null || supportTime === 0) {
+      return 'support-ok';
+    }
+
+    if (monthsLeft <= 0) {
+      return 'support-danger';
+    } else if (monthsLeft <= 2) {
+      return 'support-warning';
+    } else {
+      return 'support-ok';
+    }
+  }
 }

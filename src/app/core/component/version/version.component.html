@@ -44,14 +44,14 @@
                   class="language-logo" />
               </mat-card-title-group>
             </mat-card-header>
-           <!-- @if(!authStatus){
+           @if(!authStatus){
             <ng-container>
               <mat-card-content>
                 <p class="description"> {{ language.description }} <br>
                   <small> <a (click)="needLoginDialog()" class="more-link">voir plus</a></small>
                 </p>
               </mat-card-content>
-            </ng-container>} @else {-->
+            </ng-container>} @else {
             <ng-container>
               <mat-card-content style="margin: 10px;">
                 <mat-card appearance="outlined">
@@ -66,7 +66,7 @@
                   </mat-card-content>
                 </mat-card>
               </mat-card-content>
-            </ng-container><!--}-->
+            </ng-container>}
             <mat-card-actions class="card-actions">
               <a [href]="language.documentation" target="_blank" class="doc-link">
                 <button mat-raised-button color="primary">Documentation</button>

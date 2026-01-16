@@ -4,26 +4,22 @@
   <div class="row">
     <div class="col left">
       <div class="text-content">
-        <span class="pixel-art-title">verstack.io</span>
         @if (!isAuth) {
-        <h2 id="heading">Votre plateforme de veille technologique</h2>
-        } @if (!isAuth) {
-        <p class="pixel-art-subtitle">
-          Explorez les dernières versions, références et tendances<br />
-          pour rester à jour.
-        </p>
-        } @if (isAuth) {
+          <span class="pixel-art-title">verstack.io</span>
+          <h2 id="heading">Votre plateforme de veille technologique</h2>
+          <p class="pixel-art-subtitle">
+            Explorez les dernières versions, références et tendances<br />
+            pour rester à jour.
+          </p>
+        }
+        @if (isAuth) {
         <ng-container>
-          <hr class="divider" />
           <div class="dashboard-container">
             <div class="dashboard-header">
-              <h2 class="dashboard-title">
-                <span class="title-icon">▶</span>
-                <div class="glitch" data-text="TABLEAU DE BORD">
-                  TABLEAU DE BORD
-                </div>
-                <span class="title-decoration">_</span>
-              </h2>
+              <div class="header-branding">
+                <span class="brand-logo">V/></span>
+                <span class="brand-name">VERSTACK</span>
+              </div>
               <div class="status-indicator">
                 <span class="status-dot online"></span>
                 <span class="status-text">ONLINE</span>
@@ -31,55 +27,82 @@
             </div>
 
             <div class="terminal-display">
+              <!-- whoami command -->
               <div class="terminal-line">
                 <span class="terminal-prompt">$</span>
-                <span class="terminal-command">whoami</span>
-              </div>
-              <div class="terminal-output">
-                <span class="output-label">user:</span>
-                <span class="output-value">{{ userData?.pseudo ?? "guest" }}</span>
-                <span class="output-tag level-tag">&#91;PRO&#93;</span>
-              </div>
-
-              <div class="terminal-line">
-                <span class="terminal-prompt">$</span>
-                <span class="terminal-command">network --status</span>
-              </div>
-              <div class="terminal-output">
-                <span class="output-label">online:</span>
-                <span class="output-value online-count">{{ userData?.friendsOnline ?? 0 }}</span>
-                <span class="output-separator">/</span>
-                <span class="output-value">{{ userData?.totalFriends ?? 0 }}</span>
-                <span class="output-unit">users</span>
-              </div>
-
-              <div class="terminal-line">
-                <span class="terminal-prompt">$</span>
-                <span class="terminal-command">ls projects/</span>
-              </div>
-              <div class="terminal-output">
-                <span class="output-label">active:</span>
-                <span class="output-value projects-count">{{ userData?.projects?.length ?? 0 }}</span>
-                <span class="output-unit">projects</span>
-                <div class="progress-bar-terminal">
-                  <div class="progress-fill-terminal" [style.width.%]="(userData?.projects?.length ?? 0) * 10"></div>
-                </div>
-              </div>
-
-              <div class="terminal-line">
-                <span class="terminal-prompt">$</span>
-                <span class="terminal-command">mail --unread</span>
-              </div>
-              <div class="terminal-output">
-                <span class="output-label">inbox:</span>
-                <span class="output-value messages-count" [class.has-messages]="(userData?.unreadMessages ?? 0) > 0">
-                  {{ userData?.unreadMessages ?? 0 }}
-                </span>
-                <span class="output-unit">messages</span>
-                @if((userData?.unreadMessages ?? 0) > 0) {
-                  <span class="notification-badge">!</span>
+                <span class="terminal-command">{{ terminalCommands[0].displayedText }}</span>
+                @if (terminalCommands[0].isTyping) {
+                  <span class="typing-cursor">|</span>
                 }
               </div>
+              @if (terminalCommands[0].showOutput) {
+                <div class="terminal-output fade-in">
+                  <span class="output-label">user:</span>
+                  <span class="output-value">{{ userData?.pseudo ?? "guest" }}</span>
+                  <span class="output-tag level-tag">&#91;PRO&#93;</span>
+                </div>
+              }
+
+              <!-- tail -f releases.log command -->
+              @if (terminalCommands[0].isComplete) {
+                <div class="terminal-line">
+                  <span class="terminal-prompt">$</span>
+                  <span class="terminal-command">{{ terminalCommands[1].displayedText }}</span>
+                  @if (terminalCommands[1].isTyping) {
+                    <span class="typing-cursor">|</span>
+                  }
+                </div>
+              }
+
+              <!-- Notifications feed -->
+              @if (showNotificationsSection) {
+                <div class="notifications-container fade-in">
+                  <div class="notifications-header">
+                    <div class="notifications-title">
+                      <span class="live-indicator"></span>
+                      <span class="title-text">LIVE FEED</span>
+                    </div>
+                    <span class="notifications-count">{{ notifications.length }} updates</span>
+                  </div>
+                  <div class="notifications-feed">
+                    @for (notif of notifications; track notif.tech + notif.version) {
+                      @if (notif.isVisible) {
+                        <div class="notification-line fade-in" [class]="'notif-' + notif.type">
+                          <span class="notif-icon">
+                            @switch (notif.type) {
+                              @case ('release') { ▲ }
+                              @case ('security') { ⚠ }
+                              @case ('deprecation') { ✗ }
+                              @case ('info') { ● }
+                            }
+                          </span>
+                          <div class="notif-content">
+                            <div class="notif-main">
+                              <span class="notif-tech">{{ notif.tech }}</span>
+                              @if (notif.version) {
+                                <span class="notif-version">{{ notif.version }}</span>
+                              }
+                              <span class="notif-trending" [class]="'trending-' + notif.trending">
+                                @switch (notif.trending) {
+                                  @case ('up') { ↗ }
+                                  @case ('down') { ↘ }
+                                  @case ('stable') { → }
+                                }
+                              </span>
+                            </div>
+                            <div class="notif-details">
+                              <span class="notif-message-wrapper">
+                                <span class="notif-message">{{ notif.message }}</span>
+                              </span>
+                              <span class="notif-timestamp">{{ notif.timeAgo }}</span>
+                            </div>
+                          </div>
+                        </div>
+                      }
+                    }
+                  </div>
+                </div>
+              }
 
               <div class="terminal-cursor">_</div>
             </div>
