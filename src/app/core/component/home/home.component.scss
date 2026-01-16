@@ -5,16 +5,203 @@
   color: white;
   opacity: 0;
   transition: opacity 0.8s ease-in;
-  background-image: url("/assets/bkg/bkg-home-optimized-1920x1080.webp");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background: linear-gradient(135deg, #0a0a15 0%, #0d1525 25%, #0a1628 50%, #051020 75%, #020510 100%);
 }
 
 .container.bg-loaded {
   opacity: 1;
-  background-image: url("/assets/bkg/bkg-home-optimized-1920x1080.webp");
+}
+
+// Space animation elements
+.space-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+}
+
+// Stars layers
+.stars, .stars2, .stars3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
+.stars {
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, #00bcd4, transparent),
+    radial-gradient(1px 1px at 40px 70px, #4dd0e1, transparent),
+    radial-gradient(1px 1px at 50px 160px, #ffffff, transparent),
+    radial-gradient(1px 1px at 90px 40px, #00bcd4, transparent),
+    radial-gradient(1px 1px at 130px 80px, #4dd0e1, transparent),
+    radial-gradient(1.5px 1.5px at 160px 120px, #ffffff, transparent),
+    radial-gradient(1px 1px at 200px 200px, #00bcd4, transparent),
+    radial-gradient(1px 1px at 250px 50px, #4dd0e1, transparent),
+    radial-gradient(1px 1px at 300px 150px, #ffffff, transparent),
+    radial-gradient(1.5px 1.5px at 350px 90px, #00bcd4, transparent),
+    radial-gradient(1px 1px at 400px 180px, #4dd0e1, transparent),
+    radial-gradient(1px 1px at 450px 30px, #ffffff, transparent),
+    radial-gradient(1px 1px at 500px 120px, #00bcd4, transparent),
+    radial-gradient(1.5px 1.5px at 550px 200px, #4dd0e1, transparent),
+    radial-gradient(1px 1px at 600px 70px, #ffffff, transparent);
+  background-repeat: repeat;
+  background-size: 600px 250px;
+  animation: twinkle 4s ease-in-out infinite;
+}
+
+.stars2 {
+  background-image:
+    radial-gradient(1px 1px at 100px 100px, #00bcd4, transparent),
+    radial-gradient(1.5px 1.5px at 200px 150px, #ffffff, transparent),
+    radial-gradient(1px 1px at 300px 50px, #4dd0e1, transparent),
+    radial-gradient(1px 1px at 400px 200px, #00bcd4, transparent),
+    radial-gradient(1px 1px at 500px 80px, #ffffff, transparent),
+    radial-gradient(1.5px 1.5px at 150px 180px, #4dd0e1, transparent),
+    radial-gradient(1px 1px at 250px 30px, #00bcd4, transparent),
+    radial-gradient(1px 1px at 350px 130px, #ffffff, transparent),
+    radial-gradient(1px 1px at 450px 170px, #4dd0e1, transparent),
+    radial-gradient(1.5px 1.5px at 550px 60px, #00bcd4, transparent);
+  background-repeat: repeat;
+  background-size: 550px 220px;
+  animation: twinkle 6s ease-in-out infinite 1s;
+}
+
+.stars3 {
+  background-image:
+    radial-gradient(2px 2px at 80px 50px, #00bcd4, transparent),
+    radial-gradient(2px 2px at 180px 180px, #4dd0e1, transparent),
+    radial-gradient(1.5px 1.5px at 280px 100px, #ffffff, transparent),
+    radial-gradient(2px 2px at 380px 30px, #00bcd4, transparent),
+    radial-gradient(1.5px 1.5px at 480px 150px, #4dd0e1, transparent),
+    radial-gradient(2px 2px at 120px 120px, #ffffff, transparent),
+    radial-gradient(1.5px 1.5px at 220px 70px, #00bcd4, transparent),
+    radial-gradient(2px 2px at 320px 190px, #4dd0e1, transparent);
+  background-repeat: repeat;
+  background-size: 500px 200px;
+  animation: twinkle 8s ease-in-out infinite 2s;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+// Spaceships
+.spaceship {
+  position: absolute;
+  font-size: 1.5rem;
+  opacity: 0.7;
+  filter: drop-shadow(0 0 10px rgba(0, 188, 212, 0.8));
+  z-index: 1;
+}
+
+.ship1 {
+  top: 15%;
+  animation: flyAcross1 25s linear infinite;
+}
+
+.ship2 {
+  top: 35%;
+  animation: flyAcross2 30s linear infinite 5s;
+}
+
+.ship3 {
+  top: 55%;
+  font-size: 1rem;
+  animation: flyAcross3 20s linear infinite 2s;
+}
+
+.ship4 {
+  top: 75%;
+  animation: flyAcross1 35s linear infinite 10s;
+}
+
+.ship5 {
+  top: 25%;
+  animation: flyAcross2 28s linear infinite 15s;
+}
+
+.ship6 {
+  top: 85%;
+  font-size: 0.8rem;
+  animation: flyAcross3 18s linear infinite 8s;
+}
+
+.ship7 {
+  top: 45%;
+  animation: flyAcross1 32s linear infinite 20s;
+}
+
+.ship8 {
+  top: 65%;
+  font-size: 1rem;
+  animation: flyAcross2 22s linear infinite 12s;
+}
+
+@keyframes flyAcross1 {
+  0% {
+    left: -5%;
+    transform: rotate(15deg) scale(0.8);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.7;
+  }
+  95% {
+    opacity: 0.7;
+  }
+  100% {
+    left: 105%;
+    transform: rotate(15deg) scale(1.2);
+    opacity: 0;
+  }
+}
+
+@keyframes flyAcross2 {
+  0% {
+    right: -5%;
+    left: auto;
+    transform: rotate(-15deg) scaleX(-1) scale(0.8);
+    opacity: 0;
+  }
+  5% {
+    opacity: 0.6;
+  }
+  95% {
+    opacity: 0.6;
+  }
+  100% {
+    right: 105%;
+    left: auto;
+    transform: rotate(-15deg) scaleX(-1) scale(1.1);
+    opacity: 0;
+  }
+}
+
+@keyframes flyAcross3 {
+  0% {
+    left: -5%;
+    transform: rotate(5deg) scale(0.6);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.5;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    left: 105%;
+    transform: rotate(5deg) scale(0.9);
+    opacity: 0;
+  }
 }
 
 .row {
@@ -22,35 +209,34 @@
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 32px;
   flex-direction: row;
   flex-wrap: nowrap;
-  height: calc(100vh - 60px);
-  align-items: flex-start;
-  padding-top: 4rem;
-  justify-content: space-between;
+  height: calc(100vh - 64px);
+  align-items: center;
+  justify-content: center;
   box-sizing: border-box;
-  gap: 1.5rem;
+  gap: 3rem;
 }
 
 .col {
   padding: 0;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
 }
 
 .col.left {
-  flex: 0 0 380px;
-  justify-content: flex-start;
+  flex: 0 0 420px;
+  justify-content: center;
   text-align: left;
 }
 
 .col.right {
-  flex: 1;
+  flex: 0 0 500px;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: center;
   padding: 0;
   box-sizing: border-box;
 }
@@ -155,13 +341,22 @@
   .row {
     flex-direction: column;
     height: auto;
-    padding-top: 2rem;
+    padding: 2rem 16px;
+    gap: 2rem;
   }
 
   .col {
     flex: 1 1 100%;
     justify-content: center;
     text-align: center;
+  }
+
+  .col.left {
+    flex: 1 1 100%;
+  }
+
+  .col.right {
+    flex: 1 1 100%;
   }
 
   .col.left .text-content {
@@ -232,6 +427,18 @@
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
+  .row {
+    gap: 2rem;
+  }
+
+  .col.left {
+    flex: 0 0 360px;
+  }
+
+  .col.right {
+    flex: 0 0 400px;
+  }
+
   .version-wrapper {
     gap: 1rem;
   }
