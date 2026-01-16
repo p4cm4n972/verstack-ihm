@@ -24,7 +24,7 @@
   pointer-events: none;
 }
 
-// Stars layers
+// Stars layers - GPU optimized
 .stars, .stars2, .stars3 {
   position: absolute;
   top: 0;
@@ -32,175 +32,187 @@
   width: 100%;
   height: 100%;
   background: transparent;
+  will-change: opacity;
+  contain: strict;
+  backface-visibility: hidden;
+  transform: translateZ(0);
+  pointer-events: none;
 }
 
 .stars {
   background-image:
     radial-gradient(1px 1px at 20px 30px, #00bcd4, transparent),
-    radial-gradient(1px 1px at 40px 70px, #4dd0e1, transparent),
     radial-gradient(1px 1px at 50px 160px, #ffffff, transparent),
-    radial-gradient(1px 1px at 90px 40px, #00bcd4, transparent),
     radial-gradient(1px 1px at 130px 80px, #4dd0e1, transparent),
-    radial-gradient(1.5px 1.5px at 160px 120px, #ffffff, transparent),
     radial-gradient(1px 1px at 200px 200px, #00bcd4, transparent),
-    radial-gradient(1px 1px at 250px 50px, #4dd0e1, transparent),
     radial-gradient(1px 1px at 300px 150px, #ffffff, transparent),
-    radial-gradient(1.5px 1.5px at 350px 90px, #00bcd4, transparent),
     radial-gradient(1px 1px at 400px 180px, #4dd0e1, transparent),
-    radial-gradient(1px 1px at 450px 30px, #ffffff, transparent),
     radial-gradient(1px 1px at 500px 120px, #00bcd4, transparent),
-    radial-gradient(1.5px 1.5px at 550px 200px, #4dd0e1, transparent),
     radial-gradient(1px 1px at 600px 70px, #ffffff, transparent);
   background-repeat: repeat;
-  background-size: 600px 250px;
-  animation: twinkle 4s ease-in-out infinite;
+  background-size: 650px 280px;
+  animation: twinkle 5s ease-in-out infinite;
 }
 
 .stars2 {
   background-image:
     radial-gradient(1px 1px at 100px 100px, #00bcd4, transparent),
     radial-gradient(1.5px 1.5px at 200px 150px, #ffffff, transparent),
-    radial-gradient(1px 1px at 300px 50px, #4dd0e1, transparent),
-    radial-gradient(1px 1px at 400px 200px, #00bcd4, transparent),
-    radial-gradient(1px 1px at 500px 80px, #ffffff, transparent),
-    radial-gradient(1.5px 1.5px at 150px 180px, #4dd0e1, transparent),
-    radial-gradient(1px 1px at 250px 30px, #00bcd4, transparent),
-    radial-gradient(1px 1px at 350px 130px, #ffffff, transparent),
-    radial-gradient(1px 1px at 450px 170px, #4dd0e1, transparent),
-    radial-gradient(1.5px 1.5px at 550px 60px, #00bcd4, transparent);
+    radial-gradient(1px 1px at 350px 50px, #4dd0e1, transparent),
+    radial-gradient(1px 1px at 500px 200px, #00bcd4, transparent),
+    radial-gradient(1px 1px at 250px 130px, #ffffff, transparent);
   background-repeat: repeat;
-  background-size: 550px 220px;
-  animation: twinkle 6s ease-in-out infinite 1s;
+  background-size: 600px 250px;
+  animation: twinkle 7s ease-in-out infinite 2s;
 }
 
 .stars3 {
   background-image:
-    radial-gradient(2px 2px at 80px 50px, #00bcd4, transparent),
-    radial-gradient(2px 2px at 180px 180px, #4dd0e1, transparent),
-    radial-gradient(1.5px 1.5px at 280px 100px, #ffffff, transparent),
-    radial-gradient(2px 2px at 380px 30px, #00bcd4, transparent),
-    radial-gradient(1.5px 1.5px at 480px 150px, #4dd0e1, transparent),
-    radial-gradient(2px 2px at 120px 120px, #ffffff, transparent),
-    radial-gradient(1.5px 1.5px at 220px 70px, #00bcd4, transparent),
-    radial-gradient(2px 2px at 320px 190px, #4dd0e1, transparent);
+    radial-gradient(1.5px 1.5px at 80px 50px, #00bcd4, transparent),
+    radial-gradient(2px 2px at 220px 180px, #4dd0e1, transparent),
+    radial-gradient(1.5px 1.5px at 380px 100px, #ffffff, transparent),
+    radial-gradient(2px 2px at 520px 30px, #00bcd4, transparent);
   background-repeat: repeat;
-  background-size: 500px 200px;
-  animation: twinkle 8s ease-in-out infinite 2s;
+  background-size: 580px 220px;
+  animation: twinkle 9s ease-in-out infinite 4s;
 }
 
+// Optimized twinkle using only opacity (composited property)
 @keyframes twinkle {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 1; }
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.9; }
 }
 
-// Spaceships
+// Spaceships - Optimized for GPU acceleration
 .spaceship {
   position: absolute;
   font-size: 1.5rem;
-  opacity: 0.7;
-  filter: drop-shadow(0 0 10px rgba(0, 188, 212, 0.8));
+  opacity: 0;
   z-index: 1;
+  will-change: transform, opacity;
+  contain: layout style;
+  text-shadow: 0 0 8px rgba(0, 188, 212, 0.6);
 }
 
+// Each ship starts at a random position on screen
 .ship1 {
   top: 15%;
-  animation: flyAcross1 25s linear infinite;
+  left: 10%;
+  animation: fly1 30s linear infinite;
 }
 
 .ship2 {
   top: 35%;
-  animation: flyAcross2 30s linear infinite 5s;
+  left: 65%;
+  animation: fly2 28s linear infinite 0.5s;
 }
 
 .ship3 {
   top: 55%;
+  left: 30%;
   font-size: 1rem;
-  animation: flyAcross3 20s linear infinite 2s;
+  animation: fly3 25s linear infinite 1.2s;
 }
 
 .ship4 {
   top: 75%;
-  animation: flyAcross1 35s linear infinite 10s;
+  left: 80%;
+  animation: fly4 32s linear infinite 0.8s;
 }
 
 .ship5 {
   top: 25%;
-  animation: flyAcross2 28s linear infinite 15s;
+  left: 45%;
+  animation: fly5 27s linear infinite 1.5s;
 }
 
 .ship6 {
   top: 85%;
+  left: 20%;
   font-size: 0.8rem;
-  animation: flyAcross3 18s linear infinite 8s;
+  animation: fly6 24s linear infinite 0.3s;
 }
 
 .ship7 {
   top: 45%;
-  animation: flyAcross1 32s linear infinite 20s;
+  left: 90%;
+  animation: fly7 29s linear infinite 1.8s;
 }
 
 .ship8 {
   top: 65%;
+  left: 55%;
   font-size: 1rem;
-  animation: flyAcross2 22s linear infinite 12s;
+  animation: fly8 26s linear infinite 0.7s;
 }
 
-@keyframes flyAcross1 {
-  0% {
-    left: -5%;
-    transform: rotate(15deg) scale(0.8);
-    opacity: 0;
+// Each ship has its own animation starting from its position
+@keyframes fly1 {
+  0% { transform: translateX(0) rotate(10deg) scale(0.9); opacity: 0; }
+  2% { opacity: 0.6; }
+  98% { opacity: 0.6; }
+  100% { transform: translateX(90vw) rotate(10deg) scale(1.1); opacity: 0; }
+}
+
+@keyframes fly2 {
+  0% { transform: translateX(0) rotate(-8deg) scaleX(-1); opacity: 0; }
+  2% { opacity: 0.55; }
+  98% { opacity: 0.55; }
+  100% { transform: translateX(-70vw) rotate(-8deg) scaleX(-1); opacity: 0; }
+}
+
+@keyframes fly3 {
+  0% { transform: translateX(0) rotate(5deg) scale(0.7); opacity: 0; }
+  3% { opacity: 0.5; }
+  97% { opacity: 0.5; }
+  100% { transform: translateX(75vw) rotate(5deg) scale(0.95); opacity: 0; }
+}
+
+@keyframes fly4 {
+  0% { transform: translateX(0) rotate(-12deg) scaleX(-1) scale(0.85); opacity: 0; }
+  2% { opacity: 0.6; }
+  98% { opacity: 0.6; }
+  100% { transform: translateX(-85vw) rotate(-12deg) scaleX(-1) scale(1.05); opacity: 0; }
+}
+
+@keyframes fly5 {
+  0% { transform: translateX(0) rotate(15deg) scale(0.8); opacity: 0; }
+  3% { opacity: 0.55; }
+  97% { opacity: 0.55; }
+  100% { transform: translateX(60vw) rotate(15deg) scale(1.1); opacity: 0; }
+}
+
+@keyframes fly6 {
+  0% { transform: translateX(0) rotate(3deg) scale(0.6); opacity: 0; }
+  4% { opacity: 0.45; }
+  96% { opacity: 0.45; }
+  100% { transform: translateX(85vw) rotate(3deg) scale(0.85); opacity: 0; }
+}
+
+@keyframes fly7 {
+  0% { transform: translateX(0) rotate(-6deg) scaleX(-1) scale(0.9); opacity: 0; }
+  2% { opacity: 0.6; }
+  98% { opacity: 0.6; }
+  100% { transform: translateX(-95vw) rotate(-6deg) scaleX(-1) scale(1.1); opacity: 0; }
+}
+
+@keyframes fly8 {
+  0% { transform: translateX(0) rotate(-10deg) scaleX(-1) scale(0.75); opacity: 0; }
+  3% { opacity: 0.5; }
+  97% { opacity: 0.5; }
+  100% { transform: translateX(-60vw) rotate(-10deg) scaleX(-1) scale(0.95); opacity: 0; }
+}
+
+// Reduce motion for users who prefer it
+@media (prefers-reduced-motion: reduce) {
+  .spaceship {
+    animation: none !important;
+    opacity: 0.4;
   }
-  5% {
+
+  .stars, .stars2, .stars3 {
+    animation: none !important;
     opacity: 0.7;
-  }
-  95% {
-    opacity: 0.7;
-  }
-  100% {
-    left: 105%;
-    transform: rotate(15deg) scale(1.2);
-    opacity: 0;
-  }
-}
-
-@keyframes flyAcross2 {
-  0% {
-    right: -5%;
-    left: auto;
-    transform: rotate(-15deg) scaleX(-1) scale(0.8);
-    opacity: 0;
-  }
-  5% {
-    opacity: 0.6;
-  }
-  95% {
-    opacity: 0.6;
-  }
-  100% {
-    right: 105%;
-    left: auto;
-    transform: rotate(-15deg) scaleX(-1) scale(1.1);
-    opacity: 0;
-  }
-}
-
-@keyframes flyAcross3 {
-  0% {
-    left: -5%;
-    transform: rotate(5deg) scale(0.6);
-    opacity: 0;
-  }
-  10% {
-    opacity: 0.5;
-  }
-  90% {
-    opacity: 0.5;
-  }
-  100% {
-    left: 105%;
-    transform: rotate(5deg) scale(0.9);
-    opacity: 0;
   }
 }
 
@@ -255,6 +267,10 @@
   font-size: 1.8rem;
   text-transform: uppercase;
   color: limegreen;
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 6px;
+  text-decoration-color: rgba(50, 205, 50, 0.7);
 }
 
 #heading {
