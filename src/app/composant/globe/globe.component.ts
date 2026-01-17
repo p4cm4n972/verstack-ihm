@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, Inject, PLATFO
 import { isPlatformBrowser } from '@angular/common';
 import { FieldService } from '../../services/field.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { BehaviorSubject, filter, take } from 'rxjs';
+import { BehaviorSubject, Subject, filter, take, takeUntil } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -31,6 +31,9 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
   private static imageCache = new Map<string, HTMLImageElement>();
   private isVisible = true;
   private observer?: IntersectionObserver;
+  private destroy$ = new Subject<void>();
+  private isDestroyed = false;
+  private pendingImages: HTMLImageElement[] = [];
   
   loading$ = new BehaviorSubject<boolean>(true);
   loadingProgress$ = new BehaviorSubject<number>(0);
@@ -104,7 +107,7 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
 
 
   private loadImages(urls: string[]): void {
-    if (!this.isBrowser) return;
+    if (!this.isBrowser || this.isDestroyed) return;
 
     this.totalImages = urls.length;
 
@@ -116,17 +119,29 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
       return new Promise<HTMLImageElement>((resolve, reject) => {
         const img = new Image();
         img.crossOrigin = 'anonymous';
-        img.src = url;
+        this.pendingImages.push(img);
+
         img.onload = () => {
+          if (this.isDestroyed) {
+            reject(new Error('Component destroyed'));
+            return;
+          }
           GlobeComponent.imageCache.set(url, img);
           resolve(img);
         };
-        img.onerror = reject;
+        img.onerror = (err) => {
+          if (!this.isDestroyed) {
+            reject(err);
+          }
+        };
+
+        img.src = url;
       });
     };
 
     const promises = urls.map(url =>
       createImage(url).then(img => {
+        if (this.isDestroyed) return img;
         this.logos.push(img);
         this.loadedImages++;
         const percent = Math.round((this.loadedImages / this.totalImages) * 100);
@@ -135,8 +150,17 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
       })
     );
 
-    Promise.all(promises).then(() => this.onAllImagesLoaded())
-      .catch(err => console.error('Error loading images', err));
+    Promise.all(promises)
+      .then(() => {
+        if (!this.isDestroyed) {
+          this.onAllImagesLoaded();
+        }
+      })
+      .catch(err => {
+        if (!this.isDestroyed) {
+          console.error('Error loading images', err);
+        }
+      });
   }
 
 
@@ -211,16 +235,17 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
   private loadImagesLogos(): void {
     if (!this.isBrowser) return;
 
-    this._fieldService.getAllImages().subscribe({
-      next: (logos: string[]) => {
-        this.images = Array.from(new Set(logos));
-        //this.totalImages = this.images.length;
-        this.loadImages(this.images)
-      },
-      error: (error) => {
-        console.error('Erreur lors de la recuperation des images', error);
-      }
-    });
+    this._fieldService.getAllImages()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (logos: string[]) => {
+          this.images = Array.from(new Set(logos));
+          this.loadImages(this.images);
+        },
+        error: (error) => {
+          console.error('Erreur lors de la recuperation des images', error);
+        }
+      });
   }
 
 
@@ -233,21 +258,33 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.isDestroyed = true;
+    this.destroy$.next();
+    this.destroy$.complete();
+
     if (this.animationFrameId !== null) {
       cancelAnimationFrame(this.animationFrameId);
       this.animationFrameId = null;
     }
-    
+
     if (this.observer) {
       this.observer.disconnect();
     }
-    
+
+    // Clean up pending image handlers to prevent memory leaks
+    for (const img of this.pendingImages) {
+      img.onload = null;
+      img.onerror = null;
+      img.src = '';
+    }
+    this.pendingImages.length = 0;
+
     this.loading$.complete();
     this.loadingProgress$.complete();
-    
+
     this.logos.length = 0;
     this.points.length = 0;
-    
+
     if (this.ctx && this.canvasRef?.nativeElement) {
       this.ctx.clearRect(0, 0, this.canvasRef.nativeElement.width, this.canvasRef.nativeElement.height);
     }
