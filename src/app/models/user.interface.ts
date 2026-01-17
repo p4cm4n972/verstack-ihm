@@ -9,6 +9,7 @@ export interface UserProfile {
   contacts?: string[];
   profileViews?: number;
   profilePicture?: string;
+  useGravatar?: boolean;
   role: 'admin' | 'user' | 'subscriber';
   job: string;
   ageRange: string;

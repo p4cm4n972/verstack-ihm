@@ -267,7 +267,8 @@ describe('EditProfileComponent', () => {
         experience: '6-10',
         salaryRange: '60-80k',
         ageRange: '35-44',
-        profilePicture: 'https://example.com/avatar.jpg'
+        profilePicture: 'https://example.com/avatar.jpg',
+        useGravatar: false
       });
     });
 
@@ -344,6 +345,126 @@ describe('EditProfileComponent', () => {
     it('should close dialog with no data when cancelled', () => {
       component.dialogRef.close();
       expect(mockDialogRef.close).toHaveBeenCalledWith();
+    });
+  });
+
+  describe('Gravatar Functionality', () => {
+    it('should initialize useGravatar from data', () => {
+      expect(component.useGravatar).toBeFalse(); // Default when not provided
+    });
+
+    it('should generate gravatar URL on init', () => {
+      expect(component.gravatarUrl).toContain('https://www.gravatar.com/avatar/');
+    });
+
+    it('should enable gravatar when useGravatarAvatar is called', () => {
+      component.useGravatarAvatar();
+      expect(component.useGravatar).toBeTrue();
+    });
+
+    it('should clear selected file when using gravatar', () => {
+      component.selectedFile = 'data:image/png;base64,test';
+      component.useGravatarAvatar();
+      expect(component.selectedFile).toBe('');
+    });
+
+    it('should disable gravatar when uploading a file', fakeAsync(() => {
+      component.useGravatar = true;
+
+      const mockBase64 = 'data:image/png;base64,uploaded';
+      const mockFileReader = {
+        result: mockBase64,
+        onload: null as ((event: ProgressEvent<FileReader>) => void) | null,
+        readAsDataURL: function() {
+          setTimeout(() => {
+            if (this.onload) {
+              this.onload({ target: { result: this.result } } as ProgressEvent<FileReader>);
+            }
+          }, 0);
+        }
+      };
+
+      spyOn(window, 'FileReader').and.returnValue(mockFileReader as unknown as FileReader);
+
+      const mockFile = new File(['content'], 'test.png', { type: 'image/png' });
+      component.onFileSelected({ target: { files: [mockFile] } });
+
+      tick(10);
+
+      expect(component.useGravatar).toBeFalse();
+    }));
+
+    it('should clear avatar when clearAvatar is called', () => {
+      component.useGravatar = true;
+      component.selectedFile = 'data:image/png;base64,test';
+      component.profilePicture = 'https://example.com/avatar.jpg';
+
+      component.clearAvatar();
+
+      expect(component.useGravatar).toBeFalse();
+      expect(component.selectedFile).toBe('');
+      expect(component.profilePicture).toBe('');
+    });
+
+    describe('getDisplayAvatar', () => {
+      it('should return selectedFile when available', () => {
+        component.selectedFile = 'data:image/png;base64,uploaded';
+        component.useGravatar = true;
+        component.profilePicture = 'https://example.com/avatar.jpg';
+
+        expect(component.getDisplayAvatar()).toBe('data:image/png;base64,uploaded');
+      });
+
+      it('should return gravatar URL when useGravatar is true and no file selected', () => {
+        component.selectedFile = '';
+        component.useGravatar = true;
+        component.gravatarUrl = 'https://www.gravatar.com/avatar/abc123';
+        component.profilePicture = 'https://example.com/avatar.jpg';
+
+        expect(component.getDisplayAvatar()).toBe('https://www.gravatar.com/avatar/abc123');
+      });
+
+      it('should return profilePicture when no file and gravatar disabled', () => {
+        component.selectedFile = '';
+        component.useGravatar = false;
+        component.profilePicture = 'https://example.com/avatar.jpg';
+
+        expect(component.getDisplayAvatar()).toBe('https://example.com/avatar.jpg');
+      });
+
+      it('should return placeholder when nothing is set', () => {
+        component.selectedFile = '';
+        component.useGravatar = false;
+        component.profilePicture = '';
+
+        expect(component.getDisplayAvatar()).toBe('https://placehold.co/120x120');
+      });
+    });
+
+    it('should include useGravatar in saved data', () => {
+      component.useGravatar = true;
+      component.saveChanges();
+
+      expect(mockDialogRef.close).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          useGravatar: true
+        })
+      );
+    });
+
+    it('should clear profilePicture when saving with gravatar enabled', () => {
+      component.useGravatar = true;
+      component.selectedFile = '';
+      component.profilePicture = 'https://example.com/avatar.jpg';
+
+      component.saveChanges();
+
+      expect(mockDialogRef.close).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          profilePicture: '',
+          useGravatar: true
+        })
+      );
     });
   });
 });

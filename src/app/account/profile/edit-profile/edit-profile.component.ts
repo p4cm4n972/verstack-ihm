@@ -14,6 +14,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
+import { GravatarService } from '../../../services/gravatar.service';
 
 @Component({
   selector: 'app-edit-profile',
@@ -35,6 +36,8 @@ export class EditProfileComponent {
   profileForm: FormGroup;
   selectedFile!: string;
   profilePicture!: string;
+  useGravatar: boolean = false;
+  gravatarUrl: string = '';
 
   // Options pour les sélecteurs
   jobOptions = [
@@ -81,7 +84,8 @@ export class EditProfileComponent {
   constructor(
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<EditProfileComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: any,
+    private gravatarService: GravatarService
   ) {
     this.profileForm = this.fb.group({
       pseudo: [data.pseudo, Validators.required],
@@ -94,6 +98,8 @@ export class EditProfileComponent {
       ageRange: [data.ageRange || ''],
     });
     this.profilePicture = data.profilePicture;
+    this.useGravatar = data.useGravatar || false;
+    this.updateGravatarUrl();
   }
 
   onFileSelected(event: any): void {
@@ -102,15 +108,50 @@ export class EditProfileComponent {
       const reader = new FileReader();
       reader.onload = () => {
         this.selectedFile = reader.result as string;
+        this.useGravatar = false; // Disable Gravatar when uploading a custom photo
       };
       reader.readAsDataURL(file);
     }
   }
 
+  updateGravatarUrl(): void {
+    const email = this.profileForm?.get('email')?.value || this.data.email;
+    if (email) {
+      this.gravatarUrl = this.gravatarService.getGravatarUrl(email, 120);
+    }
+  }
+
+  useGravatarAvatar(): void {
+    this.updateGravatarUrl();
+    this.useGravatar = true;
+    this.selectedFile = ''; // Clear any uploaded file
+  }
+
+  clearAvatar(): void {
+    this.useGravatar = false;
+    this.selectedFile = '';
+    this.profilePicture = '';
+  }
+
+  getDisplayAvatar(): string {
+    // Priority: uploaded file > gravatar (if enabled) > existing profile picture > placeholder
+    if (this.selectedFile) {
+      return this.selectedFile;
+    }
+    if (this.useGravatar && this.gravatarUrl) {
+      return this.gravatarUrl;
+    }
+    if (this.profilePicture) {
+      return this.profilePicture;
+    }
+    return 'https://placehold.co/120x120';
+  }
+
   saveChanges(): void {
     const updatedData = {
       ...this.profileForm.value,
-      profilePicture: this.selectedFile || this.profilePicture,
+      profilePicture: this.selectedFile || (this.useGravatar ? '' : this.profilePicture),
+      useGravatar: this.useGravatar,
     };
     this.dialogRef.close(updatedData);
   }

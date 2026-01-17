@@ -15,6 +15,7 @@ import { PlatformService } from '../../core/services/platform.service';
 import { SeoService } from '../../services/seo.service';
 import { UserProfile } from '../../models/user.interface';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { GravatarService } from '../../services/gravatar.service';
 
 @Component({
   selector: 'app-profile',
@@ -41,7 +42,8 @@ export class ProfileComponent implements OnInit {
     private authService: AuthenticationService,
     private dialog: MatDialog,
     private platformService: PlatformService,
-    private seoService: SeoService
+    private seoService: SeoService,
+    private gravatarService: GravatarService
   ) {
     this.profileForm = this.fb.group({
       pseudo: ['', Validators.required],
@@ -466,4 +468,29 @@ export class ProfileComponent implements OnInit {
 
   // Exposer Math pour le template
   Math = Math;
+
+  /**
+   * Get profile avatar with priority system:
+   * 1. Uploaded profile picture (highest priority)
+   * 2. Gravatar (if useGravatar is enabled)
+   * 3. Placeholder (fallback)
+   */
+  getProfileAvatar(): string {
+    if (!this.userData) {
+      return this.defaultProfilePicture;
+    }
+
+    // Priority 1: Custom uploaded profile picture
+    if (this.userData.profilePicture) {
+      return this.userData.profilePicture;
+    }
+
+    // Priority 2: Gravatar (if enabled)
+    if (this.userData.useGravatar && this.userData.email) {
+      return this.gravatarService.getGravatarUrl(this.userData.email, 120);
+    }
+
+    // Priority 3: Placeholder
+    return this.defaultProfilePicture;
+  }
 }

@@ -4,8 +4,11 @@
     <div class="dashboard-header">
       <div class="avatar-section">
         <div class="avatar-container">
-          <img class="profile-avatar" [src]="userData.profilePicture || defaultProfilePicture" alt="Avatar" />
+          <img class="profile-avatar" [src]="getProfileAvatar()" alt="Avatar" />
           <div class="status-indicator"></div>
+          @if (userData.useGravatar && !userData.profilePicture) {
+            <div class="gravatar-indicator" title="Avatar Gravatar">G</div>
+          }
         </div>
         <div class="user-info">
           <h1 class="username">{{ userData.pseudo || 'Utilisateur' }}</h1>

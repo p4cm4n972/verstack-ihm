@@ -13,16 +13,32 @@
     <!-- Avatar Section -->
     <div class="avatar-section">
       <div class="avatar-container">
-        <img [src]="selectedFile || profilePicture || 'https://placehold.co/120x120'" class="avatar-preview" alt="Avatar">
+        <img [src]="getDisplayAvatar()" class="avatar-preview" alt="Avatar">
         <div class="avatar-overlay" (click)="fileInput.click()">
           <mat-icon>camera_alt</mat-icon>
           <span>Changer</span>
         </div>
         <input #fileInput type="file" accept="image/*" (change)="onFileSelected($event)" hidden>
+        @if (useGravatar) {
+          <div class="gravatar-badge" matTooltip="Utilise Gravatar">
+            <mat-icon>verified</mat-icon>
+          </div>
+        }
       </div>
       <div class="avatar-info">
         <p class="avatar-title">Photo de profil</p>
         <p class="avatar-hint">Cliquez pour changer votre avatar</p>
+        <div class="avatar-actions">
+          <button mat-stroked-button type="button" (click)="useGravatarAvatar()" class="gravatar-btn" [class.active]="useGravatar">
+            <mat-icon>account_circle</mat-icon>
+            Utiliser Gravatar
+          </button>
+          @if (selectedFile || profilePicture || useGravatar) {
+            <button mat-icon-button type="button" (click)="clearAvatar()" class="clear-btn" matTooltip="Supprimer l'avatar">
+              <mat-icon>delete</mat-icon>
+            </button>
+          }
+        </div>
       </div>
     </div>
 
