@@ -34,8 +34,8 @@
         <svg viewBox="0 0 200 120" class="gauge">
           <defs>
             <linearGradient id="gaugeGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#00ff41;stop-opacity:1" />
-              <stop offset="100%" style="stop-color:#39ff14;stop-opacity:1" />
+              <stop offset="0%" style="stop-color:#00bcd4;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#4dd0e1;stop-opacity:1" />
             </linearGradient>
           </defs>
           <!-- Arc de fond -->
@@ -46,11 +46,11 @@
           <line [attr.x1]="100" [attr.y1]="100"
                 [attr.x2]="getGaugeNeedleX(getExperienceLevel() * 10)"
                 [attr.y2]="getGaugeNeedleY(getExperienceLevel() * 10)"
-                stroke="#00ff41" stroke-width="2" class="gauge-needle"/>
-          <circle cx="100" cy="100" r="5" fill="#00ff41"/>
+                stroke="#00bcd4" stroke-width="2" class="gauge-needle"/>
+          <circle cx="100" cy="100" r="5" fill="#00bcd4"/>
           <!-- Valeur -->
           <text x="100" y="90" text-anchor="middle" fill="white" font-size="32" font-weight="bold">{{ getExperienceLevel() }}</text>
-          <text x="100" y="110" text-anchor="middle" fill="#888" font-size="12">Niveau</text>
+          <text x="100" y="110" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="12">Niveau</text>
         </svg>
       </div>
 
@@ -59,8 +59,8 @@
         <svg viewBox="0 0 200 120" class="gauge">
           <defs>
             <linearGradient id="gaugeGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#00bcd4;stop-opacity:1" />
-              <stop offset="100%" style="stop-color:#0097a7;stop-opacity:1" />
+              <stop offset="0%" style="stop-color:#4dd0e1;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#80deea;stop-opacity:1" />
             </linearGradient>
           </defs>
           <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="12" stroke-linecap="round"/>
@@ -68,10 +68,10 @@
           <line [attr.x1]="100" [attr.y1]="100"
                 [attr.x2]="getGaugeNeedleX(getProfileCompletion())"
                 [attr.y2]="getGaugeNeedleY(getProfileCompletion())"
-                stroke="#00bcd4" stroke-width="2" class="gauge-needle"/>
-          <circle cx="100" cy="100" r="5" fill="#00bcd4"/>
+                stroke="#4dd0e1" stroke-width="2" class="gauge-needle"/>
+          <circle cx="100" cy="100" r="5" fill="#4dd0e1"/>
           <text x="100" y="90" text-anchor="middle" fill="white" font-size="32" font-weight="bold">{{ getProfileCompletion() }}</text>
-          <text x="100" y="110" text-anchor="middle" fill="#888" font-size="12">%</text>
+          <text x="100" y="110" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="12">%</text>
         </svg>
       </div>
 
@@ -80,8 +80,8 @@
         <svg viewBox="0 0 200 120" class="gauge">
           <defs>
             <linearGradient id="gaugeGradient3" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" style="stop-color:#ff6b6b;stop-opacity:1" />
-              <stop offset="100%" style="stop-color:#ffa726;stop-opacity:1" />
+              <stop offset="0%" style="stop-color:#ff9800;stop-opacity:1" />
+              <stop offset="100%" style="stop-color:#ffb74d;stop-opacity:1" />
             </linearGradient>
           </defs>
           <path d="M 20 100 A 80 80 0 0 1 180 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="12" stroke-linecap="round"/>
@@ -89,10 +89,10 @@
           <line [attr.x1]="100" [attr.y1]="100"
                 [attr.x2]="getGaugeNeedleX(Math.min(getProjectCount() * 10, 100))"
                 [attr.y2]="getGaugeNeedleY(Math.min(getProjectCount() * 10, 100))"
-                stroke="#ff6b6b" stroke-width="2" class="gauge-needle"/>
-          <circle cx="100" cy="100" r="5" fill="#ff6b6b"/>
+                stroke="#ff9800" stroke-width="2" class="gauge-needle"/>
+          <circle cx="100" cy="100" r="5" fill="#ff9800"/>
           <text x="100" y="90" text-anchor="middle" fill="white" font-size="32" font-weight="bold">{{ getProjectCount() }}</text>
-          <text x="100" y="110" text-anchor="middle" fill="#888" font-size="12">Connectés</text>
+          <text x="100" y="110" text-anchor="middle" fill="rgba(255,255,255,0.6)" font-size="12">Connectés</text>
         </svg>
       </div>
     </div>

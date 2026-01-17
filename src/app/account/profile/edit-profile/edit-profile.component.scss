@@ -1,12 +1,16 @@
+// ========================================
+// EDIT PROFILE MODAL - SPACE THEME
+// ========================================
+
 .edit-profile-modal {
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  background: linear-gradient(135deg, rgba(10, 10, 21, 0.98) 0%, rgba(13, 21, 37, 0.98) 100%);
   border-radius: 12px;
   padding: 0;
   max-width: 600px;
   width: 100%;
   color: white;
-  border: 1px solid rgba(0, 255, 65, 0.3);
-  box-shadow: 0 8px 32px rgba(0, 255, 65, 0.2);
+  border: 1px solid rgba(0, 188, 212, 0.3);
+  box-shadow: 0 8px 40px rgba(0, 188, 212, 0.2), 0 0 60px rgba(0, 188, 212, 0.1);
 }
 
 /* === HEADER === */
@@ -15,7 +19,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 1.5rem;
-  border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+  border-bottom: 1px solid rgba(0, 188, 212, 0.3);
   background: rgba(0, 0, 0, 0.4);
   border-radius: 12px 12px 0 0;
 
@@ -25,18 +29,22 @@
     gap: 0.75rem;
     margin: 0;
     font-size: 1.5rem;
-    color: #00ff41;
-    text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+    color: #4dd0e1;
+    text-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 
     mat-icon {
       font-size: 1.75rem;
       width: 1.75rem;
       height: 1.75rem;
+      color: #00bcd4;
     }
   }
 
   .close-btn {
-    color: #888;
+    color: rgba(255, 255, 255, 0.6);
     transition: all 0.3s ease;
 
     &:hover {
@@ -54,7 +62,7 @@
   gap: 2rem;
   padding: 2rem 1.5rem;
   background: rgba(0, 0, 0, 0.2);
-  border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+  border-bottom: 1px solid rgba(0, 188, 212, 0.2);
 }
 
 .avatar-container {
@@ -72,7 +80,7 @@
     }
 
     .avatar-preview {
-      box-shadow: 0 0 30px rgba(0, 255, 65, 0.6);
+      box-shadow: 0 0 30px rgba(0, 188, 212, 0.6);
     }
   }
 }
@@ -82,8 +90,8 @@
   height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  border: 3px solid #00ff41;
-  box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+  border: 3px solid #00bcd4;
+  box-shadow: 0 0 20px rgba(0, 188, 212, 0.4);
   transition: all 0.3s ease;
 }
 
@@ -107,13 +115,15 @@
     font-size: 2rem;
     width: 2rem;
     height: 2rem;
-    color: #00ff41;
+    color: #00bcd4;
   }
 
   span {
     font-size: 0.875rem;
     color: white;
     font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
   }
 }
 
@@ -123,11 +133,12 @@
     font-weight: 600;
     color: white;
     margin: 0 0 0.5rem 0;
+    font-family: 'Courier New', monospace;
   }
 
   .avatar-hint {
     font-size: 0.875rem;
-    color: #888;
+    color: rgba(255, 255, 255, 0.5);
     margin: 0;
   }
 }
@@ -173,8 +184,8 @@ form {
         .mdc-notched-outline__leading,
         .mdc-notched-outline__notch,
         .mdc-notched-outline__trailing {
-          border-color: #00ff41 !important;
-          box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+          border-color: #4dd0e1 !important;
+          box-shadow: 0 0 10px rgba(0, 188, 212, 0.3);
         }
       }
 
@@ -185,15 +196,15 @@ form {
 
       input {
         color: white;
-        caret-color: #00ff41;
+        caret-color: #00bcd4;
       }
 
       .mat-mdc-floating-label {
-        color: #888 !important;
+        color: rgba(255, 255, 255, 0.6) !important;
       }
 
       &.mat-focused .mat-mdc-floating-label {
-        color: #00ff41 !important;
+        color: #4dd0e1 !important;
       }
 
       .mat-mdc-form-field-error {
@@ -209,7 +220,7 @@ form {
   justify-content: flex-end;
   gap: 1rem;
   padding-top: 1rem;
-  border-top: 1px solid rgba(0, 255, 65, 0.2);
+  border-top: 1px solid rgba(0, 188, 212, 0.2);
 
   button {
     display: flex;
@@ -220,6 +231,7 @@ form {
     text-transform: uppercase;
     letter-spacing: 0.5px;
     transition: all 0.3s ease;
+    font-family: 'Courier New', monospace;
 
     mat-icon {
       font-size: 1.25rem;
@@ -240,19 +252,19 @@ form {
     }
 
     &[mat-raised-button] {
-      background: linear-gradient(135deg, #00ff41 0%, #00bcd4 100%);
-      color: #0a0a0a;
+      background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%);
+      color: white;
       border: none;
-      box-shadow: 0 4px 12px rgba(0, 255, 65, 0.3);
+      box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3);
 
       &:hover:not(:disabled) {
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 255, 65, 0.5);
+        box-shadow: 0 6px 20px rgba(0, 188, 212, 0.5);
       }
 
       &:disabled {
         background: rgba(100, 100, 100, 0.3);
-        color: #666;
+        color: rgba(255, 255, 255, 0.4);
         box-shadow: none;
       }
     }

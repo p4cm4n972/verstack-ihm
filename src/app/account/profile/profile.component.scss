@@ -1,8 +1,13 @@
+// ========================================
+// PROFILE PAGE - SPACE THEME
+// ========================================
+
 .profile-dashboard {
   max-width: 1000px;
   margin: 2rem auto 1rem auto;
   padding: 0.5rem 1rem 0.5rem 1rem;
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  background: transparent;
+  position: relative;
 }
 
 /* === HEADER === */
@@ -11,11 +16,12 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.75rem;
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(0, 255, 65, 0.3);
+  background: rgba(13, 21, 37, 0.8);
+  border: 1px solid rgba(0, 188, 212, 0.3);
   border-radius: 6px;
   margin-bottom: 0.75rem;
-  box-shadow: 0 2px 8px rgba(0, 255, 65, 0.1);
+  box-shadow: 0 2px 20px rgba(0, 188, 212, 0.15);
+  backdrop-filter: blur(10px);
 }
 
 .avatar-section {
@@ -32,15 +38,15 @@
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  border: 2px solid #00ff41;
-  box-shadow: 0 0 15px rgba(0, 255, 65, 0.5);
+  border: 2px solid #00bcd4;
+  box-shadow: 0 0 15px rgba(0, 188, 212, 0.5);
   object-fit: cover;
   animation: pulse-avatar 3s ease-in-out infinite;
 }
 
 @keyframes pulse-avatar {
-  0%, 100% { box-shadow: 0 0 20px rgba(0, 255, 65, 0.5); }
-  50% { box-shadow: 0 0 30px rgba(0, 255, 65, 0.8); }
+  0%, 100% { box-shadow: 0 0 20px rgba(0, 188, 212, 0.5); }
+  50% { box-shadow: 0 0 30px rgba(0, 188, 212, 0.8), 0 0 40px rgba(77, 208, 225, 0.4); }
 }
 
 .status-indicator {
@@ -49,10 +55,11 @@
   right: 5px;
   width: 20px;
   height: 20px;
-  background: #00ff41;
+  background: #4dd0e1;
   border-radius: 50%;
-  border: 3px solid #0a0a0a;
+  border: 3px solid rgba(10, 10, 21, 0.9);
   animation: blink 2s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(0, 188, 212, 0.6);
 }
 
 @keyframes blink {
@@ -63,10 +70,11 @@
 .user-info {
   .username {
     font-size: 1.25rem;
-    color: #00ff41;
+    color: #4dd0e1;
     margin: 0 0 0.25rem 0;
     font-weight: 700;
-    text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+    text-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
+    font-family: 'Courier New', monospace;
   }
 
   .user-role {
@@ -77,7 +85,7 @@
 
   .member-since {
     font-size: 0.75rem;
-    color: #888;
+    color: rgba(255, 255, 255, 0.6);
     margin: 0;
   }
 }
@@ -85,6 +93,32 @@
 .action-buttons {
   display: flex;
   gap: 0.5rem;
+
+  button[mat-raised-button] {
+    background: linear-gradient(135deg, rgba(0, 188, 212, 0.8) 0%, rgba(0, 151, 167, 0.8) 100%) !important;
+    border: 1px solid rgba(0, 188, 212, 0.6);
+    color: white !important;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background: linear-gradient(135deg, rgba(0, 188, 212, 1) 0%, rgba(0, 151, 167, 1) 100%) !important;
+      box-shadow: 0 0 20px rgba(0, 188, 212, 0.5);
+    }
+  }
+
+  button[mat-icon-button] {
+    color: #00bcd4;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: #4dd0e1;
+      background: rgba(0, 188, 212, 0.1);
+      box-shadow: 0 0 10px rgba(0, 188, 212, 0.3);
+    }
+  }
 }
 
 /* === GAUGES (COMPTEURS À AIGUILLES) === */
@@ -96,17 +130,19 @@
 }
 
 .gauge-card {
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(13, 21, 37, 0.8);
   border: 1px solid rgba(0, 188, 212, 0.3);
   border-radius: 6px;
   padding: 0.5rem;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 188, 212, 0.1);
+  box-shadow: 0 2px 15px rgba(0, 188, 212, 0.1);
+  backdrop-filter: blur(10px);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 188, 212, 0.2);
+    box-shadow: 0 4px 20px rgba(0, 188, 212, 0.25);
+    border-color: rgba(0, 188, 212, 0.5);
   }
 
   h3 {
@@ -115,6 +151,7 @@
     margin: 0 0 0.35rem 0;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    font-family: 'Courier New', monospace;
   }
 
   .gauge {
@@ -128,7 +165,7 @@
 
     .gauge-needle {
       animation: needle-swing 1.5s ease-out;
-      filter: drop-shadow(0 0 3px rgba(0, 255, 65, 0.8));
+      filter: drop-shadow(0 0 3px rgba(0, 188, 212, 0.8));
     }
   }
 }
@@ -159,14 +196,15 @@
 }
 
 .counter-card {
-  background: rgba(0, 0, 0, 0.6);
-  border: 1px solid rgba(255, 107, 107, 0.3);
+  background: rgba(13, 21, 37, 0.8);
+  border: 1px solid rgba(255, 152, 0, 0.3);
   border-radius: 6px;
   padding: 0.5rem;
   text-align: center;
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
 
   &::before {
     content: '';
@@ -185,7 +223,8 @@
 
   &:hover {
     transform: scale(1.05);
-    border-color: rgba(255, 107, 107, 0.6);
+    border-color: rgba(255, 152, 0, 0.6);
+    box-shadow: 0 4px 20px rgba(255, 152, 0, 0.2);
   }
 
   .counter-icon {
@@ -193,24 +232,25 @@
       font-size: 1.25rem;
       width: 1.25rem;
       height: 1.25rem;
-      color: #ff6b6b;
+      color: #ff9800;
       margin-bottom: 0.35rem;
-      filter: drop-shadow(0 0 6px rgba(255, 107, 107, 0.5));
+      filter: drop-shadow(0 0 6px rgba(255, 152, 0, 0.5));
     }
   }
 
   .counter-value {
     font-size: 1.5rem;
     font-weight: 700;
-    color: #00ff41;
+    color: #4dd0e1;
     margin-bottom: 0.2rem;
-    text-shadow: 0 0 12px rgba(0, 255, 65, 0.5);
+    text-shadow: 0 0 12px rgba(0, 188, 212, 0.5);
     animation: counter-glow 2s ease-in-out infinite;
+    font-family: 'Courier New', monospace;
   }
 
   .counter-label {
     font-size: 0.6rem;
-    color: #888;
+    color: rgba(255, 255, 255, 0.6);
     text-transform: uppercase;
     letter-spacing: 0.3px;
     margin-bottom: 0.35rem;
@@ -238,14 +278,14 @@
     }
 
     &.neutral {
-      color: #888;
+      color: rgba(255, 255, 255, 0.5);
     }
   }
 }
 
 @keyframes counter-glow {
-  0%, 100% { text-shadow: 0 0 20px rgba(0, 255, 65, 0.5); }
-  50% { text-shadow: 0 0 30px rgba(0, 255, 65, 0.8), 0 0 40px rgba(0, 255, 65, 0.6); }
+  0%, 100% { text-shadow: 0 0 20px rgba(0, 188, 212, 0.5); }
+  50% { text-shadow: 0 0 30px rgba(0, 188, 212, 0.8), 0 0 40px rgba(77, 208, 225, 0.6); }
 }
 
 /* === SECTION HEADERS === */
@@ -255,7 +295,7 @@
   align-items: center;
   margin-bottom: 0.5rem;
   padding-bottom: 0.35rem;
-  border-bottom: 1px solid rgba(0, 255, 65, 0.3);
+  border-bottom: 1px solid rgba(0, 188, 212, 0.3);
 
   h2 {
     display: flex;
@@ -264,12 +304,24 @@
     color: white;
     font-size: 0.85rem;
     margin: 0;
+    font-family: 'Courier New', monospace;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 
     mat-icon {
-      color: #00ff41;
+      color: #00bcd4;
       font-size: 1rem;
       width: 1rem;
       height: 1rem;
+    }
+  }
+
+  button {
+    color: #00bcd4 !important;
+    font-family: 'Courier New', monospace;
+
+    &:hover {
+      background: rgba(0, 188, 212, 0.1);
     }
   }
 }
@@ -278,8 +330,10 @@
 .tech-section {
   margin-bottom: 1rem;
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(13, 21, 37, 0.6);
   border-radius: 8px;
+  border: 1px solid rgba(0, 188, 212, 0.2);
+  backdrop-filter: blur(10px);
 }
 
 .tech-grid {
@@ -289,7 +343,7 @@
 }
 
 .tech-item {
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(10, 10, 21, 0.8);
   border: 1px solid rgba(0, 188, 212, 0.3);
   border-radius: 8px;
   padding: 0.75rem;
@@ -303,7 +357,7 @@
   &:hover {
     transform: translateY(-3px);
     border-color: rgba(0, 188, 212, 0.6);
-    box-shadow: 0 4px 12px rgba(0, 188, 212, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 188, 212, 0.3);
   }
 
   .tech-logo {
@@ -315,6 +369,7 @@
     border-radius: 8px;
     overflow: hidden;
     background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(0, 188, 212, 0.2);
 
     img {
       width: 100%;
@@ -328,6 +383,7 @@
     font-size: 0.75rem;
     color: white;
     font-weight: 600;
+    font-family: 'Courier New', monospace;
   }
 }
 
@@ -341,8 +397,10 @@
 .achievements-section {
   margin-bottom: 0.5rem;
   padding: 0.75rem;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(13, 21, 37, 0.6);
   border-radius: 6px;
+  border: 1px solid rgba(0, 188, 212, 0.2);
+  backdrop-filter: blur(10px);
 }
 
 .achievements-grid {
@@ -352,7 +410,7 @@
 }
 
 .achievement-card {
-  background: rgba(0, 0, 0, 0.6);
+  background: rgba(10, 10, 21, 0.8);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 6px;
   padding: 0.5rem;
@@ -395,7 +453,7 @@
       font-size: 1.35rem;
       width: 1.35rem;
       height: 1.35rem;
-      color: #444;
+      color: rgba(255, 255, 255, 0.3);
       margin-bottom: 0.35rem;
       transition: all 0.3s ease;
     }
@@ -405,10 +463,11 @@
     color: white;
     font-size: 0.65rem;
     margin: 0 0 0.2rem 0;
+    font-family: 'Courier New', monospace;
   }
 
   p {
-    color: #888;
+    color: rgba(255, 255, 255, 0.5);
     font-size: 0.55rem;
     margin: 0 0 0.35rem 0;
   }
@@ -424,9 +483,10 @@
   }
 
   .achievement-progress {
-    color: #00ff41;
+    color: #4dd0e1;
     font-size: 0.6rem;
     font-weight: 600;
+    font-family: 'Courier New', monospace;
   }
 }
 
@@ -445,8 +505,10 @@
 .activity-section {
   margin-bottom: 1rem;
   padding: 1rem;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(13, 21, 37, 0.6);
   border-radius: 8px;
+  border: 1px solid rgba(0, 188, 212, 0.2);
+  backdrop-filter: blur(10px);
 }
 
 .timeline {
@@ -460,7 +522,8 @@
     top: 0;
     bottom: 0;
     width: 2px;
-    background: linear-gradient(180deg, #00ff41 0%, #00bcd4 100%);
+    background: linear-gradient(180deg, #00bcd4 0%, #4dd0e1 100%);
+    box-shadow: 0 0 8px rgba(0, 188, 212, 0.5);
   }
 }
 
@@ -480,29 +543,31 @@
     top: 3px;
     width: 12px;
     height: 12px;
-    background: #00ff41;
+    background: #00bcd4;
     border-radius: 50%;
-    border: 2px solid #0a0a0a;
-    box-shadow: 0 0 8px rgba(0, 255, 65, 0.5);
+    border: 2px solid rgba(10, 10, 21, 0.9);
+    box-shadow: 0 0 8px rgba(0, 188, 212, 0.5);
     animation: pulse-dot 2s ease-in-out infinite;
   }
 
   .timeline-content {
-    background: rgba(0, 0, 0, 0.6);
-    border: 1px solid rgba(0, 255, 65, 0.2);
+    background: rgba(10, 10, 21, 0.8);
+    border: 1px solid rgba(0, 188, 212, 0.2);
     border-radius: 6px;
     padding: 0.5rem;
     transition: all 0.3s ease;
 
     &:hover {
-      border-color: rgba(0, 255, 65, 0.5);
+      border-color: rgba(0, 188, 212, 0.5);
       transform: translateX(3px);
+      box-shadow: 0 2px 15px rgba(0, 188, 212, 0.2);
     }
 
     .timeline-date {
-      color: #00bcd4;
+      color: #4dd0e1;
       font-size: 0.65rem;
       margin-bottom: 0.25rem;
+      font-family: 'Courier New', monospace;
     }
 
     .timeline-text {
@@ -525,11 +590,11 @@
 
 @keyframes pulse-dot {
   0%, 100% {
-    box-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+    box-shadow: 0 0 10px rgba(0, 188, 212, 0.5);
     transform: scale(1);
   }
   50% {
-    box-shadow: 0 0 20px rgba(0, 255, 65, 0.8);
+    box-shadow: 0 0 20px rgba(0, 188, 212, 0.8);
     transform: scale(1.2);
   }
 }
@@ -538,19 +603,25 @@
 .empty-state {
   text-align: center;
   padding: 1.5rem;
-  color: #666;
+  color: rgba(255, 255, 255, 0.5);
 
   mat-icon {
     font-size: 2.5rem;
     width: 2.5rem;
     height: 2.5rem;
-    color: #333;
+    color: rgba(0, 188, 212, 0.3);
     margin-bottom: 0.5rem;
   }
 
   p {
     margin-bottom: 0.75rem;
     font-size: 0.875rem;
+  }
+
+  button {
+    background: linear-gradient(135deg, rgba(0, 188, 212, 0.8) 0%, rgba(0, 151, 167, 0.8) 100%) !important;
+    border: 1px solid rgba(0, 188, 212, 0.6);
+    color: white !important;
   }
 }
 
@@ -561,11 +632,15 @@
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  color: #666;
+  color: rgba(255, 255, 255, 0.5);
 
   p {
     margin-top: 0.5rem;
     font-size: 0.875rem;
+  }
+
+  ::ng-deep .mat-mdc-progress-spinner {
+    --mdc-circular-progress-active-indicator-color: #00bcd4;
   }
 }
 
