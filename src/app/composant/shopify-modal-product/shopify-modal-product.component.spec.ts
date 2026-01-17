@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { PLATFORM_ID } from '@angular/core';
 
 import { ShopifyModalProductComponent } from './shopify-modal-product.component';
 import { ShopifyLoaderService } from '../../services/shopify-loader.service';
@@ -11,13 +13,14 @@ describe('ShopifyModalProductComponent', () => {
     await TestBed.configureTestingModule({
       imports: [ShopifyModalProductComponent],
       providers: [
+        provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'browser' },
         {
           provide: ShopifyLoaderService,
           useValue: { load: () => Promise.resolve() }
         }
       ]
-    })
-    .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ShopifyModalProductComponent);
     component = fixture.componentInstance;

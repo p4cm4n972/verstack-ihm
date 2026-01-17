@@ -7,8 +7,12 @@ import { mobileNotAllowedGuard } from './mobile-not-allowed.guard';
 describe('mobileNotAllowedGuard', () => {
   let guard: mobileNotAllowedGuard;
   let router: jasmine.SpyObj<Router>;
+  let originalUserAgent: string;
 
   beforeEach(() => {
+    // Save original userAgent
+    originalUserAgent = navigator.userAgent;
+
     router = jasmine.createSpyObj('Router', ['navigate']);
     TestBed.configureTestingModule({
       providers: [
@@ -20,13 +24,27 @@ describe('mobileNotAllowedGuard', () => {
     guard = TestBed.inject(mobileNotAllowedGuard);
   });
 
+  afterEach(() => {
+    // Restore original userAgent
+    Object.defineProperty(navigator, 'userAgent', {
+      value: originalUserAgent,
+      configurable: true
+    });
+  });
+
   it('should allow desktop navigation', () => {
-    spyOnProperty(window.navigator, 'userAgent', 'get').and.returnValue('Mozilla');
+    Object.defineProperty(navigator, 'userAgent', {
+      value: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36',
+      configurable: true
+    });
     expect(guard.canActivate()).toBeTrue();
   });
 
   it('should block mobile navigation', () => {
-    spyOnProperty(window.navigator, 'userAgent', 'get').and.returnValue('iPhone');
+    Object.defineProperty(navigator, 'userAgent', {
+      value: 'Mozilla/5.0 (iPhone; CPU iPhone OS 14_0 like Mac OS X)',
+      configurable: true
+    });
     expect(guard.canActivate()).toBeFalse();
     expect(router.navigate).toHaveBeenCalledWith(['/mobile-not-allowed']);
   });

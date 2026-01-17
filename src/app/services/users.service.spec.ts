@@ -25,27 +25,31 @@ describe('UsersService', () => {
 
   it('should fetch all users', () => {
     service.getAllUsers().subscribe();
-    const req = httpMock.expectOne('api/users');
+    const req = httpMock.expectOne('/api/users/all');
     expect(req.request.method).toBe('GET');
+    req.flush([]);
   });
 
   it('should post user', () => {
     service.createUser({ name: 'John' }).subscribe();
-    const req = httpMock.expectOne('api/users');
+    const req = httpMock.expectOne('/api/users');
     expect(req.request.method).toBe('POST');
     expect(req.request.headers.get('Content-Type')).toBe('application/json');
+    req.flush({});
   });
 
   it('should delete user', () => {
     service.deleteUser('1').subscribe();
-    const req = httpMock.expectOne('api/users/1');
+    const req = httpMock.expectOne('/api/users/1');
     expect(req.request.method).toBe('DELETE');
+    req.flush({});
   });
 
   it('should patch user favoris', () => {
     service.update('2', ['a']).subscribe();
-    const req = httpMock.expectOne('api/users/2');
+    const req = httpMock.expectOne('/api/users/2');
     expect(req.request.method).toBe('PATCH');
     expect(req.request.body).toEqual({ favoris: ['a'] });
+    req.flush({});
   });
 });

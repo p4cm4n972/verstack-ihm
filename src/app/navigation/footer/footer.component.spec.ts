@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideRouter } from '@angular/router';
+import { PLATFORM_ID } from '@angular/core';
+import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 import { FooterComponent } from './footer.component';
 
@@ -8,9 +11,12 @@ describe('FooterComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [FooterComponent]
-    })
-    .compileComponents();
+      imports: [FooterComponent, NoopAnimationsModule],
+      providers: [
+        provideRouter([]),
+        { provide: PLATFORM_ID, useValue: 'browser' }
+      ]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FooterComponent);
     component = fixture.componentInstance;
