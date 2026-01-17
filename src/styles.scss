@@ -36,11 +36,152 @@ body { margin: 0; font-family: Doto, "Helvetica Neue", sans-serif; }
   ));
 }
 
+// ========================================
+// SNACKBAR - SPACE THEME
+// ========================================
+
 :root {
   @include mat.snack-bar-overrides((
-    container-color: rgb(116, 245, 219),
-    supporting-text-color: green,
+    container-color: rgba(13, 21, 37, 0.95),
+    supporting-text-color: rgba(255, 255, 255, 0.9),
   ));
+}
+
+// Base snackbar styling
+.mat-mdc-snack-bar-container {
+  --mdc-snackbar-container-color: rgba(13, 21, 37, 0.95) !important;
+  --mdc-snackbar-supporting-text-color: rgba(255, 255, 255, 0.9) !important;
+  --mat-snack-bar-button-color: #4dd0e1 !important;
+
+  .mdc-snackbar__surface {
+    background: rgba(13, 21, 37, 0.95) !important;
+    border: 1px solid rgba(0, 188, 212, 0.4) !important;
+    border-radius: 8px !important;
+    box-shadow:
+      0 8px 32px rgba(0, 188, 212, 0.3),
+      0 0 20px rgba(0, 188, 212, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+    backdrop-filter: blur(10px);
+  }
+
+  .mdc-snackbar__label {
+    font-family: 'Courier New', monospace !important;
+    font-size: 0.9rem !important;
+    letter-spacing: 0.5px !important;
+    padding: 14px 16px !important;
+  }
+
+  .mat-mdc-button.mat-mdc-snack-bar-action {
+    color: #4dd0e1 !important;
+    font-family: 'Courier New', monospace !important;
+    font-weight: bold !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
+
+    &:hover {
+      background: rgba(0, 188, 212, 0.15) !important;
+    }
+  }
+}
+
+// Success snackbar (green accent)
+.success-snackbar {
+  .mdc-snackbar__surface {
+    border-color: rgba(39, 202, 64, 0.5) !important;
+    box-shadow:
+      0 8px 32px rgba(39, 202, 64, 0.3),
+      0 0 20px rgba(39, 202, 64, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  }
+
+  .mdc-snackbar__label {
+    color: #a5d6a7 !important;
+  }
+
+  .mdc-snackbar__label::before {
+    content: '✓ ';
+    color: #27ca40;
+  }
+
+  .mat-mdc-button.mat-mdc-snack-bar-action {
+    color: #27ca40 !important;
+
+    &:hover {
+      background: rgba(39, 202, 64, 0.15) !important;
+    }
+  }
+}
+
+// Error snackbar (red accent)
+.error-snackbar {
+  .mdc-snackbar__surface {
+    border-color: rgba(255, 95, 86, 0.5) !important;
+    box-shadow:
+      0 8px 32px rgba(255, 95, 86, 0.3),
+      0 0 20px rgba(255, 95, 86, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  }
+
+  .mdc-snackbar__label {
+    color: #ef9a9a !important;
+  }
+
+  .mdc-snackbar__label::before {
+    content: '✗ ';
+    color: #ff5f56;
+  }
+
+  .mat-mdc-button.mat-mdc-snack-bar-action {
+    color: #ff5f56 !important;
+
+    &:hover {
+      background: rgba(255, 95, 86, 0.15) !important;
+    }
+  }
+}
+
+// Warning snackbar (yellow/orange accent)
+.warning-snackbar {
+  .mdc-snackbar__surface {
+    border-color: rgba(255, 189, 46, 0.5) !important;
+    box-shadow:
+      0 8px 32px rgba(255, 189, 46, 0.3),
+      0 0 20px rgba(255, 189, 46, 0.15),
+      inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  }
+
+  .mdc-snackbar__label {
+    color: #ffe082 !important;
+  }
+
+  .mdc-snackbar__label::before {
+    content: '⚠ ';
+    color: #ffbd2e;
+  }
+
+  .mat-mdc-button.mat-mdc-snack-bar-action {
+    color: #ffbd2e !important;
+
+    &:hover {
+      background: rgba(255, 189, 46, 0.15) !important;
+    }
+  }
+}
+
+// Info snackbar (cyan accent - default theme)
+.info-snackbar {
+  .mdc-snackbar__surface {
+    border-color: rgba(0, 188, 212, 0.5) !important;
+  }
+
+  .mdc-snackbar__label {
+    color: #b2ebf2 !important;
+  }
+
+  .mdc-snackbar__label::before {
+    content: 'ℹ ';
+    color: #4dd0e1;
+  }
 }
 
 :root {
