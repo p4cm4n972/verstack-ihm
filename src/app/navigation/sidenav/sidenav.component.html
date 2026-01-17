@@ -1,29 +1,29 @@
 <mat-nav-list>
-    <a mat-list-item routerLink="/home" (click)="onSidenavClose()" *isDesktopOnly>
-        <mat-icon>home</mat-icon> <span class="nav-caption">accueil</span>
+    <a mat-list-item routerLink="/" (click)="onSidenavClose()" *isDesktopOnly>
+        <mat-icon>home</mat-icon> <span class="nav-caption">~/home</span>
     </a>
     <a mat-list-item routerLink="/version" (click)="onSidenavClose()" *isDesktopOnly>
         <mat-icon>devices</mat-icon> <span class="nav-caption">stack</span>
     </a>
 
     <a mat-list-item routerLink="/stat" (click)="onSidenavClose()" *isDesktopOnly>
-        <mat-icon>insert_chart</mat-icon> <span class="nav-caption">évolution</span>
+        <mat-icon>insert_chart</mat-icon> <span class="nav-caption">metrics</span>
     </a>
 
 
     <a mat-list-item routerLink="/news" (click)="onSidenavClose()" *isDesktopOnly>
-        <mat-icon>newspaper</mat-icon> <span class="nav-caption">actualités</span>
+        <mat-icon>newspaper</mat-icon> <span class="nav-caption">logs</span>
     </a>
-    
+
     <a mat-list-item routerLink="/manifeste" (click)="onSidenavClose()" *isMobileOnly>
-        <mat-icon>history_edu</mat-icon> <span class="nav-caption">Le Manifeste</span>
+        <mat-icon>history_edu</mat-icon> <span class="nav-caption">readme</span>
     </a>
 
     <a mat-list-item routerLink="/shop" (click)="onSidenavClose()" *isDesktopOnly>
-        <mat-icon>storefront</mat-icon> <span class="nav-caption">boutique</span>
+        <mat-icon>storefront</mat-icon> <span class="nav-caption">store</span>
     </a>
     <a mat-list-item routerLink="/admin" (click)="onSidenavClose()" *isDesktopOnly [hidden]="!isAdmin">
-        <mat-icon>admin_panel_settings</mat-icon> <span class="nav-caption">admin</span>
+        <mat-icon>admin_panel_settings</mat-icon> <span class="nav-caption">sudo</span>
     </a>
 
 
@@ -31,24 +31,24 @@
         <!-- Loading state during SSR hydration - show nothing -->
     } @else if(isAuthenticated === true){
         <a mat-list-item routerLink="/profile" (click)="onSidenavClose()" *isDesktopOnly>
-            <mat-icon>assignment_ind</mat-icon> <span class="nav-caption">Profile</span>
+            <mat-icon>assignment_ind</mat-icon> <span class="nav-caption">whoami</span>
         </a>
         @if(!isSubscriber && !isAdmin){
             <a mat-list-item routerLink="/subscription" (click)="onSidenavClose()" *isDesktopOnly class="premium-link">
-                <mat-icon>workspace_premium</mat-icon> <span class="nav-caption">Premium - Sans pub</span>
+                <mat-icon>workspace_premium</mat-icon> <span class="nav-caption">upgrade</span>
             </a>
         }
         @if(isSubscriber){
             <a mat-list-item routerLink="/subscription" (click)="onSidenavClose()" *isDesktopOnly class="subscriber-badge">
-                <mat-icon>workspace_premium</mat-icon> <span class="nav-caption">Mon abonnement</span>
+                <mat-icon>workspace_premium</mat-icon> <span class="nav-caption">pro</span>
             </a>
         }
         <a mat-list-item (click)="logout()" (click)="onSidenavClose()" *isDesktopOnly>
-            <mat-icon>logout</mat-icon><span class="nav-caption">Déconnexion</span>
+            <mat-icon>logout</mat-icon><span class="nav-caption">logout</span>
         </a>
     } @else {
         <a mat-list-item routerLink="/signup" (click)="onSidenavClose()" *isDesktopOnly>
-            <mat-icon>account_balance</mat-icon><span class="nav-caption">Sign up</span>
+            <mat-icon>account_balance</mat-icon><span class="nav-caption">login</span>
         </a>
     }
     <!-- <mat-list-item [matMenuTriggerFor]="menu">

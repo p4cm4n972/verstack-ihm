@@ -13,25 +13,25 @@
 
         <ul class="navigation-items hide-on-small">
             <li class="" *isDesktopOnly>
-                <a class="" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">accueil</a>
+                <a class="" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">~/home</a>
             </li>
             <li class="" *isDesktopOnly>
                 <a class="" routerLink="/version" routerLinkActive="active">stack</a>
             </li>
             <li class="" *isDesktopOnly>
-                <a class="" routerLink="/stat" routerLinkActive="active">évolution</a>
+                <a class="" routerLink="/stat" routerLinkActive="active">metrics</a>
             </li>
             <li class="" *isDesktopOnly>
-                <a class="" routerLink="/news" routerLinkActive="active">actualités</a>
+                <a class="" routerLink="/news" routerLinkActive="active">logs</a>
             </li>
             <li class="" *isMobileOnly>
-                <a class="" routerLink="/manifeste" routerLinkActive="active">Le Manifeste</a>
+                <a class="" routerLink="/manifeste" routerLinkActive="active">readme</a>
             </li>
             <li class="" *isDesktopOnly>
-                <a class="" routerLink="/shop" routerLinkActive="active">boutique</a>
+                <a class="" routerLink="/shop" routerLinkActive="active">store</a>
             </li>
            @if(isAdmin){ <li class="" *isDesktopOnly >
-                <a class="" routerLink="/admin" routerLinkActive="active">admin</a>
+                <a class="" routerLink="/admin" routerLinkActive="active">sudo</a>
             </li>}
         </ul>
     </div>
@@ -43,25 +43,25 @@
                 <!-- Loading state during SSR hydration - show nothing -->
             } @else if(authStatus === false){
                 <li>
-                    <a routerLink="/signup" routerLinkActive="active">Connexion <mat-icon>lock</mat-icon></a>
+                    <a routerLink="/signup" routerLinkActive="active">login <mat-icon>lock</mat-icon></a>
                 </li>
             } @else {
                 <li>
-                    <a routerLink="/profile" routerLinkActive="active">Profile <mat-icon>account_circle</mat-icon></a>
+                    <a routerLink="/profile" routerLinkActive="active">whoami <mat-icon>account_circle</mat-icon></a>
 
                     @if(!isSubscriber && !isAdmin){
                         <a routerLink="/subscription" routerLinkActive="active" class="premium-link">
-                            Premium <mat-icon>workspace_premium</mat-icon>
+                            upgrade <mat-icon>workspace_premium</mat-icon>
                         </a>
                     }
 
                     @if(isSubscriber){
                         <a routerLink="/subscription" routerLinkActive="active" class="subscriber-badge">
-                            Abonnement <mat-icon>workspace_premium</mat-icon>
+                            pro <mat-icon>workspace_premium</mat-icon>
                         </a>
                     }
 
-                    <a routerLink="" (click)="logout()" >Déconnexion <mat-icon>logout</mat-icon></a>
+                    <a routerLink="" (click)="logout()" >logout <mat-icon>logout</mat-icon></a>
                 </li>
             }
         </ul>
