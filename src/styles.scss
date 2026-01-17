@@ -276,3 +276,33 @@ iframe.shopify-buy-frame {
   animation: scrollTitle 3s ease-in-out infinite alternate;
 }
 
+// ========================================
+// ARTICLE MODAL - SPACE THEME
+// ========================================
+
+.article-modal-panel {
+  // Override Material dialog container styling
+  .mat-mdc-dialog-container {
+    --mdc-dialog-container-color: transparent !important;
+    --mdc-dialog-container-shape: 12px;
+
+    .mdc-dialog__surface {
+      background: transparent !important;
+      border-radius: 12px !important;
+      overflow: hidden;
+      box-shadow:
+        0 8px 40px rgba(0, 188, 212, 0.25),
+        0 0 30px rgba(0, 188, 212, 0.1),
+        inset 0 0 1px rgba(255, 255, 255, 0.1) !important;
+    }
+  }
+
+  // Subtle glow animation on hover
+  &:hover .mdc-dialog__surface {
+    box-shadow:
+      0 12px 50px rgba(0, 188, 212, 0.35),
+      0 0 40px rgba(0, 188, 212, 0.15),
+      inset 0 0 1px rgba(255, 255, 255, 0.15) !important;
+  }
+}
+

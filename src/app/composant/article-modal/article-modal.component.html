@@ -1,0 +1,135 @@
+@if (article(); as art) {
+  <div class="article-modal">
+    <!-- Terminal Header -->
+    <header class="modal-header">
+      <div class="header-content">
+        <div class="header-left">
+          <div class="terminal-title">
+            <span class="bracket">[</span>
+            <span class="category">{{ art.category | lowercase }}</span>
+            <span class="bracket">]</span>
+          </div>
+        </div>
+
+        <div class="header-center">
+          <span class="terminal-path">
+            <span class="path-segment">~/news</span>
+            <span class="path-separator">/</span>
+            <span class="path-current">article</span>
+          </span>
+        </div>
+
+        <div class="header-right">
+          <button class="header-btn expand-btn" (click)="openFullPage()" matTooltip="Ouvrir en plein écran">
+            <mat-icon>open_in_new</mat-icon>
+          </button>
+          <button class="header-btn close-btn" (click)="close()" matTooltip="Fermer">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+      </div>
+
+      <!-- Article Meta Terminal Style -->
+      <div class="article-meta-terminal">
+        <div class="meta-line">
+          <span class="meta-prompt">$</span>
+          <span class="meta-command">cat article.info</span>
+        </div>
+        <div class="meta-output">
+          <div class="meta-item">
+            <span class="meta-label">date:</span>
+            <span class="meta-value">{{ formattedDate() }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">category:</span>
+            <span class="meta-value category-tag">{{ art.category }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">read_time:</span>
+            <span class="meta-value">{{ readingTime() }} min</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <mat-dialog-content class="modal-content">
+      <!-- Article Title -->
+      <h1 class="article-title">{{ art.title }}</h1>
+
+      <!-- Featured Image -->
+      @if (art.img) {
+        <figure class="article-image-container">
+          <img [src]="art.img" [alt]="art.title" class="article-image">
+          <div class="image-overlay"></div>
+        </figure>
+      }
+
+      <!-- Article Content -->
+      <article class="article-body" [innerHTML]="art.content"></article>
+    </mat-dialog-content>
+
+    <!-- Interaction Bar -->
+    <div class="interaction-bar">
+      <!-- Like/Recommend Section -->
+      <div class="like-section">
+        <button
+          class="like-btn"
+          [class.liked]="hasRecommended()"
+          [class.processing]="isProcessing()"
+          [disabled]="isProcessing()"
+          (click)="toggleRecommendation()"
+          [matTooltip]="hasRecommended() ? 'Retirer ma recommandation' : 'Recommander cet article'"
+        >
+          <mat-icon>{{ hasRecommended() ? 'favorite' : 'favorite_border' }}</mat-icon>
+          <span class="like-count">{{ recommendations() }}</span>
+        </button>
+        <span class="like-label">recommandations</span>
+      </div>
+
+      <!-- Share Section -->
+      <div class="share-section">
+        <span class="share-label">Partager:</span>
+        <div class="share-buttons">
+          <button
+            class="share-btn twitter"
+            (click)="shareOnTwitter()"
+            matTooltip="Partager sur X (Twitter)"
+          >
+            <i class="fab fa-x-twitter"></i>
+          </button>
+          <button
+            class="share-btn linkedin"
+            (click)="shareOnLinkedIn()"
+            matTooltip="Partager sur LinkedIn"
+          >
+            <i class="fab fa-linkedin-in"></i>
+          </button>
+          <button
+            class="share-btn facebook"
+            (click)="shareOnFacebook()"
+            matTooltip="Partager sur Facebook"
+          >
+            <i class="fab fa-facebook-f"></i>
+          </button>
+          <button
+            class="share-btn copy"
+            (click)="copyLink()"
+            matTooltip="Copier le lien"
+          >
+            <mat-icon>link</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Terminal Footer -->
+    <footer class="modal-footer">
+      <div class="footer-line">
+        <span class="footer-prompt">$</span>
+        <span class="footer-text">EOF</span>
+        <span class="footer-cursor">_</span>
+      </div>
+    </footer>
+  </div>
+}

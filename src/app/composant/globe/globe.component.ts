@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, Inject, PLATFORM_ID, OnDestroy, ChangeDetectionStrategy } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, Inject, PLATFORM_ID, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FieldService } from '../../services/field.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -42,6 +42,8 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
   showBoot = false;
   globeVisible: boolean = false;
 
+  private readonly cdr = inject(ChangeDetectorRef);
+
   constructor(private _fieldService: FieldService, @Inject(PLATFORM_ID) platformId: Object) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
@@ -52,6 +54,8 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
     ).subscribe(() => {
       //this.showBoot = true;
       this.globeVisible = true;
+      // OnPush: forcer la détection de changement quand le globe devient visible
+      this.cdr.markForCheck();
     });
     if (this.isBrowser) {
       this.loadImagesLogos();
@@ -293,6 +297,6 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
   onBootAnimationEnd() {
     this.showBoot = false;
     this.globeVisible = true;
-
+    this.cdr.markForCheck();
   }
 }

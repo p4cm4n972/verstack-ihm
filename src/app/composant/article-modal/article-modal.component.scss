@@ -1,0 +1,619 @@
+// Variables (cohérentes avec le thème global)
+$primary-cyan: #00bcd4;
+$primary-cyan-light: #4dd0e1;
+$primary-cyan-dark: #0097a7;
+$bg-dark: #0a0a15;
+$bg-card: rgba(0, 10, 20, 0.98);
+$text-primary: rgba(255, 255, 255, 0.95);
+$text-secondary: rgba(255, 255, 255, 0.7);
+$text-muted: rgba(255, 255, 255, 0.5);
+$accent-green: #32cd32;
+$accent-red: #ff4444;
+
+// Host styling (dialog container)
+:host {
+  display: block;
+}
+
+.article-modal {
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, $bg-dark 0%, #0d1525 50%, #051020 100%);
+  border-radius: 12px;
+  overflow: hidden;
+  max-height: 90vh;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Terminal Header
+// ─────────────────────────────────────────────────────────────────────────────
+
+.modal-header {
+  background: $bg-card;
+  border-bottom: 1px solid rgba($primary-cyan, 0.3);
+  flex-shrink: 0;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1rem;
+  background: linear-gradient(90deg, rgba($primary-cyan, 0.15) 0%, rgba($primary-cyan, 0.05) 100%);
+  border-bottom: 1px solid rgba($primary-cyan, 0.2);
+}
+
+.header-left {
+  .terminal-title {
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    font-weight: 700;
+
+    .bracket {
+      color: $text-muted;
+    }
+
+    .category {
+      color: $accent-green;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px rgba($accent-green, 0.5);
+    }
+  }
+}
+
+.header-center {
+  .terminal-path {
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+
+    .path-segment {
+      color: $text-muted;
+    }
+
+    .path-separator {
+      color: $primary-cyan;
+      margin: 0 2px;
+    }
+
+    .path-current {
+      color: $primary-cyan-light;
+      font-weight: 700;
+    }
+  }
+}
+
+.header-right {
+  display: flex;
+  gap: 0.5rem;
+
+  .header-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    border: 1px solid rgba($primary-cyan, 0.3);
+    background: transparent;
+    color: $text-secondary;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+
+    mat-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+    }
+
+    &:hover {
+      background: rgba($primary-cyan, 0.15);
+      border-color: $primary-cyan;
+      color: $primary-cyan;
+    }
+
+    &.close-btn:hover {
+      background: rgba($accent-red, 0.15);
+      border-color: $accent-red;
+      color: $accent-red;
+    }
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Article Meta Terminal Style
+// ─────────────────────────────────────────────────────────────────────────────
+
+.article-meta-terminal {
+  padding: 0.8rem 1rem;
+  font-family: 'Courier New', monospace;
+
+  .meta-line {
+    margin-bottom: 0.4rem;
+
+    .meta-prompt {
+      color: $primary-cyan-light;
+      font-weight: 700;
+      margin-right: 0.5rem;
+      text-shadow: 0 0 8px rgba($primary-cyan-light, 0.7);
+    }
+
+    .meta-command {
+      color: $primary-cyan;
+      font-size: 0.85rem;
+    }
+  }
+
+  .meta-output {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.2rem;
+    padding-left: 1rem;
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+
+      .meta-label {
+        color: $text-muted;
+        font-size: 0.8rem;
+      }
+
+      .meta-value {
+        color: $text-primary;
+        font-size: 0.8rem;
+
+        &.category-tag {
+          background: rgba($primary-cyan, 0.2);
+          color: $primary-cyan;
+          padding: 0.1rem 0.4rem;
+          border-radius: 4px;
+          border: 1px solid rgba($primary-cyan, 0.4);
+          text-transform: uppercase;
+          font-size: 0.7rem;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Modal Content
+// ─────────────────────────────────────────────────────────────────────────────
+
+.modal-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem !important;
+  background: rgba(255, 255, 255, 0.02);
+  max-height: 50vh;
+
+  // Custom scrollbar
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba($primary-cyan, 0.05);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba($primary-cyan, 0.3);
+    border-radius: 4px;
+
+    &:hover {
+      background: rgba($primary-cyan, 0.5);
+    }
+  }
+}
+
+.article-title {
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: $text-primary;
+  line-height: 1.3;
+  margin: 0 0 1.2rem 0;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+
+  position: relative;
+  padding-bottom: 0.8rem;
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 80px;
+    height: 3px;
+    background: linear-gradient(90deg, $primary-cyan, transparent);
+    border-radius: 2px;
+  }
+}
+
+// Article Image
+.article-image-container {
+  position: relative;
+  margin: 0 0 1.5rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+
+  .article-image {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .image-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(0, 0, 0, 0.6) 100%);
+    pointer-events: none;
+  }
+}
+
+// Article Body - Readable Blog Style
+.article-body {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: $text-secondary;
+
+  ::ng-deep {
+    p {
+      margin-bottom: 1.2rem;
+    }
+
+    h2 {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: $primary-cyan;
+      margin: 2rem 0 0.8rem 0;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid rgba($primary-cyan, 0.3);
+    }
+
+    h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: $primary-cyan-light;
+      margin: 1.5rem 0 0.6rem 0;
+    }
+
+    a {
+      color: $primary-cyan;
+      text-decoration: none;
+      border-bottom: 1px solid rgba($primary-cyan, 0.4);
+      transition: all 0.2s ease;
+
+      &:hover {
+        color: $primary-cyan-light;
+        border-bottom-color: $primary-cyan-light;
+        text-shadow: 0 0 8px rgba($primary-cyan, 0.5);
+      }
+    }
+
+    ul, ol {
+      margin: 1rem 0 1.2rem 1.2rem;
+
+      li {
+        margin-bottom: 0.4rem;
+
+        &::marker {
+          color: $primary-cyan;
+        }
+      }
+    }
+
+    blockquote {
+      margin: 1.2rem 0;
+      padding: 0.8rem 1.2rem;
+      border-left: 4px solid $primary-cyan;
+      background: rgba($primary-cyan, 0.05);
+      border-radius: 0 8px 8px 0;
+      font-style: italic;
+      color: $text-secondary;
+    }
+
+    code {
+      background: rgba($primary-cyan, 0.1);
+      color: $primary-cyan;
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.85em;
+    }
+
+    pre {
+      background: $bg-card;
+      border: 1px solid rgba($primary-cyan, 0.3);
+      border-radius: 8px;
+      padding: 0.8rem;
+      overflow-x: auto;
+      margin: 1.2rem 0;
+
+      code {
+        background: transparent;
+        padding: 0;
+      }
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin: 0.8rem 0;
+    }
+
+    strong, b {
+      color: $text-primary;
+      font-weight: 600;
+    }
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Interaction Bar
+// ─────────────────────────────────────────────────────────────────────────────
+
+.interaction-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  background: rgba($primary-cyan, 0.03);
+  border-top: 1px solid rgba($primary-cyan, 0.2);
+  flex-shrink: 0;
+}
+
+// Like Section
+.like-section {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+
+  .like-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: transparent;
+    border: 2px solid rgba($accent-red, 0.4);
+    border-radius: 50px;
+    padding: 0.5rem 1rem;
+    color: $text-secondary;
+    cursor: pointer;
+    transition: all 0.3s ease;
+
+    mat-icon {
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+      transition: all 0.3s ease;
+    }
+
+    .like-count {
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    &:hover {
+      border-color: $accent-red;
+      background: rgba($accent-red, 0.1);
+
+      mat-icon {
+        color: $accent-red;
+      }
+    }
+
+    &.liked {
+      border-color: $accent-red;
+      background: rgba($accent-red, 0.15);
+
+      mat-icon {
+        color: $accent-red;
+        text-shadow: 0 0 10px rgba($accent-red, 0.7);
+        animation: heartbeat 0.6s ease-in-out;
+      }
+
+      .like-count {
+        color: $accent-red;
+      }
+    }
+
+    &.processing {
+      opacity: 0.6;
+      cursor: wait;
+      pointer-events: none;
+
+      mat-icon {
+        animation: pulse 0.8s ease-in-out infinite;
+      }
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+  }
+
+  .like-label {
+    font-size: 0.8rem;
+    color: $text-muted;
+  }
+}
+
+@keyframes heartbeat {
+  0% { transform: scale(1); }
+  25% { transform: scale(1.3); }
+  50% { transform: scale(1); }
+  75% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+// Share Section
+.share-section {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+
+  .share-label {
+    font-size: 0.8rem;
+    color: $text-muted;
+  }
+
+  .share-buttons {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .share-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba($primary-cyan, 0.3);
+    background: transparent;
+    color: $text-secondary;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+
+    i, mat-icon {
+      font-size: 14px;
+    }
+
+    mat-icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    &.twitter:hover {
+      background: #1da1f2;
+      border-color: #1da1f2;
+      color: white;
+    }
+
+    &.linkedin:hover {
+      background: #0077b5;
+      border-color: #0077b5;
+      color: white;
+    }
+
+    &.facebook:hover {
+      background: #4267b2;
+      border-color: #4267b2;
+      color: white;
+    }
+
+    &.copy:hover {
+      background: rgba($primary-cyan, 0.2);
+      border-color: $primary-cyan;
+      color: $primary-cyan;
+    }
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Terminal Footer
+// ─────────────────────────────────────────────────────────────────────────────
+
+.modal-footer {
+  background: $bg-card;
+  border-top: 1px solid rgba($primary-cyan, 0.3);
+  padding: 0.6rem 1rem;
+  flex-shrink: 0;
+
+  .footer-line {
+    font-family: 'Courier New', monospace;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+
+    .footer-prompt {
+      color: $primary-cyan-light;
+      font-weight: 700;
+      margin-right: 0.5rem;
+    }
+
+    .footer-text {
+      color: $text-muted;
+    }
+
+    .footer-cursor {
+      color: $primary-cyan;
+      animation: blink 0.8s step-end infinite;
+      margin-left: 2px;
+    }
+  }
+}
+
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Responsive
+// ─────────────────────────────────────────────────────────────────────────────
+
+@media (max-width: 600px) {
+  .article-modal {
+    border-radius: 0;
+  }
+
+  .header-content {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    padding: 0.5rem 0.8rem;
+  }
+
+  .header-center {
+    order: -1;
+    width: 100%;
+    text-align: center;
+  }
+
+  .article-meta-terminal .meta-output {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .modal-content {
+    padding: 1rem !important;
+    max-height: 45vh;
+  }
+
+  .article-title {
+    font-size: 1.3rem;
+  }
+
+  .article-body {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  .interaction-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.8rem 1rem;
+  }
+
+  .share-section {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.4rem;
+  }
+}

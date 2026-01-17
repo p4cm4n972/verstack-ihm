@@ -20,12 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogModule,
-} from '@angular/material/dialog';
-import { DomSanitizer } from '@angular/platform-browser';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 
@@ -34,6 +29,7 @@ import { RecommendationService } from '../../../services/recommendation.service'
 import { AuthenticationService } from '../../../services/authentication.service';
 import { SeoService } from '../../../services/seo.service';
 import { TapeTextConsoleComponent } from '../../../composant/tape-text-console/tape-text-console.component';
+import { ArticleModalComponent } from '../../../composant/article-modal/article-modal.component';
 
 @Component({
   selector: 'app-news',
@@ -61,7 +57,6 @@ export class NewsComponent implements OnInit, OnDestroy {
   private readonly articlesService = inject(ArticlesService);
   private readonly recommendationService = inject(RecommendationService);
   private readonly authService = inject(AuthenticationService);
-  private readonly sanitizer = inject(DomSanitizer);
   private readonly seo = inject(SeoService);
   private readonly cdr = inject(ChangeDetectorRef);
 
@@ -193,9 +188,14 @@ export class NewsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/news', article._id]);
   }
 
-  openArticleContentDialog(content: string): void {
-    const rendu = this.sanitizer.bypassSecurityTrustHtml(content);
-    this.dialog.open(DialogDataArticle, { data: rendu });
+  openArticleModal(article: Article): void {
+    this.dialog.open(ArticleModalComponent, {
+      data: article,
+      width: '90vw',
+      maxWidth: '800px',
+      maxHeight: '90vh',
+      panelClass: 'article-modal-panel'
+    });
   }
 
   trackById(index: number, article: Article): string {
@@ -227,11 +227,3 @@ export class NewsComponent implements OnInit, OnDestroy {
   }
 }
 
-@Component({
-  selector: 'dialog-data-articles',
-  templateUrl: './dialog-data-articles.html',
-  imports: [MatDialogModule, MatButtonModule],
-})
-export class DialogDataArticle {
-  data = inject(MAT_DIALOG_DATA);
-}

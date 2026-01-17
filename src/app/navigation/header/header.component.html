@@ -13,7 +13,7 @@
 
         <ul class="navigation-items hide-on-small">
             <li class="" *isDesktopOnly>
-                <a class="" routerLink="/home" routerLinkActive="active">accueil</a>
+                <a class="" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">accueil</a>
             </li>
             <li class="" *isDesktopOnly>
                 <a class="" routerLink="/version" routerLinkActive="active">stack</a>
