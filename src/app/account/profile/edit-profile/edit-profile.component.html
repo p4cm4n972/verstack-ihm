@@ -26,32 +26,101 @@
       </div>
     </div>
 
-    <!-- Form Fields Grid -->
-    <div class="form-grid">
-      <mat-form-field appearance="outline">
-        <mat-label>Pseudo</mat-label>
-        <input matInput formControlName="pseudo" required>
-        <mat-icon matPrefix>person</mat-icon>
-        <mat-error>Le pseudo est requis</mat-error>
-      </mat-form-field>
+    <!-- Section: Informations de base -->
+    <div class="form-section">
+      <h3 class="section-title">
+        <mat-icon>person</mat-icon>
+        Informations de base
+      </h3>
+      <div class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Pseudo</mat-label>
+          <input matInput formControlName="pseudo" required>
+          <mat-icon matPrefix>alternate_email</mat-icon>
+          <mat-error>Le pseudo est requis</mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email" type="email">
-        <mat-icon matPrefix>email</mat-icon>
-      </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput formControlName="email" type="email">
+          <mat-icon matPrefix>email</mat-icon>
+        </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Prénom</mat-label>
-        <input matInput formControlName="firstName">
-        <mat-icon matPrefix>badge</mat-icon>
-      </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Prénom</mat-label>
+          <input matInput formControlName="firstName">
+          <mat-icon matPrefix>badge</mat-icon>
+        </mat-form-field>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Nom</mat-label>
-        <input matInput formControlName="lastName">
-        <mat-icon matPrefix>badge</mat-icon>
-      </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Nom</mat-label>
+          <input matInput formControlName="lastName">
+          <mat-icon matPrefix>badge</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Section: Profil professionnel -->
+    <div class="form-section">
+      <h3 class="section-title">
+        <mat-icon>work</mat-icon>
+        Profil professionnel
+      </h3>
+      <div class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Métier</mat-label>
+          <mat-select formControlName="job">
+            <mat-option value="">Non renseigné</mat-option>
+            @for (job of jobOptions; track job.value) {
+              <mat-option [value]="job.value">{{ job.label }}</mat-option>
+            }
+          </mat-select>
+          <mat-icon matPrefix>code</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Expérience</mat-label>
+          <mat-select formControlName="experience">
+            <mat-option value="">Non renseigné</mat-option>
+            @for (exp of experienceOptions; track exp.value) {
+              <mat-option [value]="exp.value">{{ exp.label }}</mat-option>
+            }
+          </mat-select>
+          <mat-icon matPrefix>timeline</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <!-- Section: Informations optionnelles -->
+    <div class="form-section">
+      <h3 class="section-title">
+        <mat-icon>info</mat-icon>
+        Informations optionnelles
+        <span class="section-hint">(pour les statistiques anonymes)</span>
+      </h3>
+      <div class="form-grid">
+        <mat-form-field appearance="outline">
+          <mat-label>Tranche de salaire</mat-label>
+          <mat-select formControlName="salaryRange">
+            <mat-option value="">Non renseigné</mat-option>
+            @for (salary of salaryOptions; track salary.value) {
+              <mat-option [value]="salary.value">{{ salary.label }}</mat-option>
+            }
+          </mat-select>
+          <mat-icon matPrefix>payments</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Tranche d'âge</mat-label>
+          <mat-select formControlName="ageRange">
+            <mat-option value="">Non renseigné</mat-option>
+            @for (age of ageOptions; track age.value) {
+              <mat-option [value]="age.value">{{ age.label }}</mat-option>
+            }
+          </mat-select>
+          <mat-icon matPrefix>cake</mat-icon>
+        </mat-form-field>
+      </div>
     </div>
 
     <!-- Action Buttons -->
