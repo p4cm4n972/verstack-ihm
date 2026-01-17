@@ -14,5 +14,5 @@ import { APP_VERSION, BUILD_DATE } from '../../../../version';
 export class FooterComponent {
   version = APP_VERSION;
   buildDate = BUILD_DATE;
-
+  currentYear = new Date().getFullYear();
 }

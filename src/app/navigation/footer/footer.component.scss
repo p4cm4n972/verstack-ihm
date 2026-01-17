@@ -1,3 +1,4 @@
+// Space theme footer
 .footer-toolbar {
     color: white;
     display: flex;
@@ -8,6 +9,10 @@
     position: relative;
     bottom: 0;
     margin-top: auto;
+    background: linear-gradient(180deg, rgba(13, 21, 37, 0.9) 0%, rgba(10, 10, 21, 0.95) 100%) !important;
+    border-top: 1px solid rgba(0, 188, 212, 0.3);
+    box-shadow: 0 -2px 20px rgba(0, 188, 212, 0.15);
+    backdrop-filter: blur(10px);
   }
 
   /* Center footer content with same width constraint as header and page content */
@@ -35,13 +40,15 @@
   }
   
   .footer-links a {
-    color: white;
+    color: rgba(255, 255, 255, 0.85);
     text-decoration: none;
-   // font-size: 0.9rem;
+    transition: color 0.3s ease, text-shadow 0.3s ease;
   }
-  
+
   .footer-links a:hover {
-    text-decoration: underline;
+    color: #4dd0e1;
+    text-decoration: none;
+    text-shadow: 0 0 8px rgba(0, 188, 212, 0.5);
   }
   
   .footer-social {
@@ -53,7 +60,13 @@
     margin-top: 5px;
     font-size: 14px;
     text-align: center;
-    color: white;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .version {
+    color: #00bcd4;
+    font-family: 'Courier New', monospace;
+    text-shadow: 0 0 5px rgba(0, 188, 212, 0.4);
   }
 
   /* Responsive for small screens */

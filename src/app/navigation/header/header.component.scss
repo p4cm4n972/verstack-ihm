@@ -2,12 +2,18 @@ a {
     text-decoration: none;
     color: white;
 }
- 
-a:hover, a:active{
-    color: lightgray;
-}
- 
 
+a:hover, a:active{
+    color: #4dd0e1;
+}
+
+// Space theme header
+mat-toolbar.toolbar {
+  background: linear-gradient(180deg, rgba(10, 10, 21, 0.95) 0%, rgba(13, 21, 37, 0.9) 100%) !important;
+  border-bottom: 1px solid rgba(0, 188, 212, 0.3);
+  box-shadow: 0 2px 20px rgba(0, 188, 212, 0.15);
+  backdrop-filter: blur(10px);
+}
 
 .navigation-items {
   list-style: none;
@@ -34,9 +40,9 @@ a:hover, a:active{
   left: 0;
   bottom: -4px;
   width: 0;
-  height: 3px;
-  background: linear-gradient(90deg, #00ff88, #00ff44);
-  box-shadow: 0 0 8px #00ff88, 0 0 12px #00ff44;
+  height: 2px;
+  background: linear-gradient(90deg, #00bcd4, #4dd0e1);
+  box-shadow: 0 0 8px rgba(0, 188, 212, 0.6);
   transition: width 0.3s ease;
 }
 
@@ -45,9 +51,21 @@ a:hover, a:active{
   width: 100%;
 }
 
- 
+.navigation-items a:hover {
+  color: #4dd0e1;
+  text-shadow: 0 0 8px rgba(0, 188, 212, 0.5);
+}
+
+.logo a {
+  color: #00bcd4 !important;
+  text-shadow: 0 0 10px rgba(0, 188, 212, 0.6);
+  font-family: 'Courier New', monospace;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
 mat-toolbar{
-    border-radius: 3px;
+    border-radius: 0;
 }
  
 @media(max-width: 959px){
