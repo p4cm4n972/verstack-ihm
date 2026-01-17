@@ -1,76 +1,64 @@
-<div class="signin-container">
-  <div class="signin-icon">
-    <mat-icon>person_add</mat-icon>
+<!-- Onglet Inscription -->
+<form [formGroup]="signupForm" (ngSubmit)="onSignup()">
+  <h2>Créer un compte</h2>
+
+  <!-- pseudo -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Pseudo</mat-label>
+    <input matInput placeholder="Entrez votre pseudo" formControlName="pseudo" required>
+    @if(signupForm.get('pseudo')?.invalid && signupForm.get('pseudo')?.touched) {
+      <mat-error>Le pseudo est obligatoire</mat-error>
+    }
+  </mat-form-field>
+
+  <!-- email -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput type="email" placeholder="Entrez votre adresse mail" formControlName="email" required>
+    @if(signupForm.get('email')?.invalid && signupForm.get('email')?.touched) {
+      <mat-error>Entrez une adresse e-mail valide</mat-error>
+    }
+  </mat-form-field>
+
+  <!-- Mot de passe -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Mot de passe</mat-label>
+    <input matInput type="password" placeholder="Entrez votre mot de passe" formControlName="password" required>
+    @if(signupForm.get('password')?.invalid && signupForm.get('password')?.touched) {
+      <mat-error>Le mot de passe est obligatoire</mat-error>
+    }
+    @if(signupForm.get('password')?.errors?.['minlength']) {
+      <mat-error>Le mot de passe doit contenir au moins 8 caractères</mat-error>
+    }
+    @if(signupForm.get('password')?.errors?.['pattern']) {
+      <mat-error>Majuscule, minuscule, chiffre et caractère spécial requis</mat-error>
+    }
+  </mat-form-field>
+
+  <!-- Confirmer le mot de passe -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Confirmer le mot de passe</mat-label>
+    <input matInput type="password" placeholder="Confirmez votre mot de passe" formControlName="confirmPassword" required>
+    @if(signupForm.get('confirmPassword')?.touched && signupForm.get('confirmPassword')?.errors?.['required']) {
+      <mat-error>La confirmation du mot de passe est obligatoire</mat-error>
+    }
+    @if(signupForm.get('password')?.touched && signupForm.hasError('passwordMismatch')) {
+      <mat-error>Les mots de passe ne correspondent pas</mat-error>
+    }
+  </mat-form-field>
+
+  <!-- Termes et conditions -->
+  <div class="terms-section">
+    <mat-checkbox formControlName="acceptTerms">
+      J'accepte les <a (click)="openPrivacyTermeDialog()" class="terms-link">termes et conditions</a>
+    </mat-checkbox>
   </div>
 
-  <h2>Créer un compte</h2>
-  <p class="signin-subtitle">Rejoignez la communauté des développeurs</p>
-
-  <form [formGroup]="signupForm" (ngSubmit)="onSignup()">
-    <!-- Pseudo -->
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Pseudo</mat-label>
-      <mat-icon matPrefix>person</mat-icon>
-      <input matInput placeholder="Votre pseudo" formControlName="pseudo" required>
-      @if(signupForm.get('pseudo')?.invalid && signupForm.get('pseudo')?.touched) {
-        <mat-error>Le pseudo est obligatoire</mat-error>
-      }
-    </mat-form-field>
-
-    <!-- Email -->
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Email</mat-label>
-      <mat-icon matPrefix>email</mat-icon>
-      <input matInput type="email" placeholder="votre@email.dev" formControlName="email" required>
-      @if(signupForm.get('email')?.invalid && signupForm.get('email')?.touched) {
-        <mat-error>Entrez une adresse e-mail valide</mat-error>
-      }
-    </mat-form-field>
-
-    <!-- Mot de passe -->
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Mot de passe</mat-label>
-      <mat-icon matPrefix>lock</mat-icon>
-      <input matInput type="password" placeholder="********" formControlName="password" required>
-      @if(signupForm.get('password')?.invalid && signupForm.get('password')?.touched) {
-        <mat-error>Le mot de passe est obligatoire</mat-error>
-      }
-      @if(signupForm.get('password')?.errors?.['minlength']) {
-        <mat-error>Minimum 8 caractères</mat-error>
-      }
-      @if(signupForm.get('password')?.errors?.['pattern']) {
-        <mat-error>Majuscule, minuscule, chiffre et caractère spécial requis</mat-error>
-      }
-    </mat-form-field>
-
-    <!-- Confirmer le mot de passe -->
-    <mat-form-field appearance="outline" class="full-width">
-      <mat-label>Confirmer le mot de passe</mat-label>
-      <mat-icon matPrefix>lock_outline</mat-icon>
-      <input matInput type="password" placeholder="********" formControlName="confirmPassword" required>
-      @if(signupForm.get('confirmPassword')?.touched && signupForm.get('confirmPassword')?.errors?.['required']) {
-        <mat-error>La confirmation est obligatoire</mat-error>
-      }
-      @if(signupForm.get('password')?.touched && signupForm.hasError('passwordMismatch')) {
-        <mat-error>Les mots de passe ne correspondent pas</mat-error>
-      }
-    </mat-form-field>
-
-    <!-- Termes et conditions -->
-    <div class="terms-section">
-      <mat-checkbox formControlName="acceptTerms" color="primary">
-        J'accepte les <a (click)="openPrivacyTermeDialog()" class="terms-link">termes et conditions</a>
-      </mat-checkbox>
-    </div>
-
-    <button mat-raised-button class="signup-btn" [disabled]="signupForm.invalid">
-      <mat-icon>rocket_launch</mat-icon>
-      Créer mon compte
-    </button>
-  </form>
+  <button mat-raised-button color="primary" class="full-width signup-btn" [disabled]="signupForm.invalid">
+    Créer un compte
+  </button>
 
   <p class="complete-later">
-    <mat-icon>info</mat-icon>
     Vous pourrez compléter votre profil après inscription
   </p>
-</div>
+</form>

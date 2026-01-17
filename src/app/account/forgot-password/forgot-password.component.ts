@@ -6,13 +6,14 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { MatInputModule } from '@angular/material/input';
 
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-forgot-password',
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, RouterModule],
+  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, RouterModule],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.scss'
 })

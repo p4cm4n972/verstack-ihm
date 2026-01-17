@@ -28,7 +28,7 @@ import { PlatformService } from '../../core/services/platform.service';
 })
 export class SigninComponent implements OnInit {
   @Output() signUpComplete = new EventEmitter<void>();
-  
+
   readonly dialog = inject(MatDialog);
   private _snackBar = inject(MatSnackBar);
   durationInSeconds = 5;
@@ -93,7 +93,7 @@ export class SigninComponent implements OnInit {
           this.openSnackBar('Inscription réussie');
         },
         error: (error) => {
-          
+
           this.openSnackBar("Erreur d'inscription: " + error.error.message);
           console.error("Erreur d'inscription", error.error.message);
         },
@@ -104,7 +104,7 @@ export class SigninComponent implements OnInit {
   }
 
   onSignUpSuccess() {
-    
+
     this.signUpComplete.emit();
   }
 
