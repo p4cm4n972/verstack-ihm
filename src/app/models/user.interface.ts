@@ -25,15 +25,16 @@ export interface LoginCredentials {
 }
 
 export interface SignupData {
-  sexe: string;
   pseudo: string;
   email: string;
   password: string;
-  job: string;
-  ageRange: string;
-  salaryRange: string;
-  experience: string;
   acceptTerms: boolean;
+  // Champs optionnels - complétés dans le profil
+  sexe?: string;
+  job?: string;
+  ageRange?: string;
+  salaryRange?: string;
+  experience?: string;
 }
 
 export interface AuthResponse {

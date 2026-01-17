@@ -1,15 +1,37 @@
-<section>
-    <mat-card class="signup-container">
-        <mat-tab-group class="tabstyle" dynamicHeight [(selectedIndex)]="selectedTab">
-            <mat-tab class="tabstyle" label="Se connecter">
+<section class="signup-page">
+  <!-- Space background effect -->
+  <div class="stars-bg"></div>
 
-                <app-login></app-login>
-            </mat-tab>
-            <mat-tab class="tabstyle" label="S'inscrire">
+  <div class="signup-card">
+    <!-- Terminal header -->
+    <div class="terminal-header">
+      <div class="terminal-dots">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+      </div>
+      <span class="terminal-title">verstack://auth/register</span>
+    </div>
 
-                <app-signin (signUpComplete)="resetTab()"></app-signin>
-            </mat-tab>
-        </mat-tab-group>
-    </mat-card>
-
+    <mat-tab-group class="space-tabs" dynamicHeight [(selectedIndex)]="selectedTab">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>login</mat-icon>
+          <span>Se connecter</span>
+        </ng-template>
+        <div class="tab-content">
+          <app-login></app-login>
+        </div>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>person_add</mat-icon>
+          <span>S'inscrire</span>
+        </ng-template>
+        <div class="tab-content">
+          <app-signin (signUpComplete)="resetTab()"></app-signin>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
 </section>

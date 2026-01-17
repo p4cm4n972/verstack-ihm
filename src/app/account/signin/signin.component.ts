@@ -13,7 +13,6 @@ import { TermesComponent } from '../../composant/termes/termes.component';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { JobListService } from '../../services/job-list.service';
 import { SharedMaterialModule } from '../../shared/material.module';
 import { PlatformService } from '../../core/services/platform.service';
 
@@ -46,21 +45,15 @@ export class SigninComponent implements OnInit {
   }
 
   signupForm: FormGroup;
-  jobList: string[] = [];
-  experienceList: string[] = [];
-  ageRanges: string[] = [];
-  salaryRanges: string[] = [];
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthenticationService,
     private router: Router,
-    private jobListService: JobListService,
     private platformService: PlatformService
   ) {
     this.signupForm = this.fb.group(
       {
-        sexe: [''],
         pseudo: ['', Validators.required],
         email: ['', [Validators.required, Validators.email]],
         password: [
@@ -73,11 +66,7 @@ export class SigninComponent implements OnInit {
             ),
           ],
         ],
-        confirmPassword: ['', [Validators.required, passwordMatchValidator]],
-        job: ['', Validators.required],
-        ageRange: ['', Validators.required],
-        salaryRange: ['', Validators.required],
-        experience: ['', Validators.required],
+        confirmPassword: ['', [Validators.required]],
         acceptTerms: [false, Validators.requiredTrue],
       },
       { validators: passwordMatchValidator }
@@ -85,25 +74,15 @@ export class SigninComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.jobListService.getAllData().subscribe((data) => {
-      this.jobList = data.jobList;
-      this.experienceList = data.experienceList;
-      this.ageRanges = data.ageRanges;
-      this.salaryRanges = data.salaryRanges;
-    });
+    // Form simplifiée - les utilisateurs complèteront leur profil après inscription
   }
 
   onSignup() {
     if (this.signupForm.valid) {
       const signupData = {
-        sexe: this.signupForm.value.sexe,
         pseudo: this.signupForm.value.pseudo,
         email: this.signupForm.value.email,
         password: this.signupForm.value.password,
-        job: this.signupForm.value.job,
-        ageRange: this.signupForm.value.ageRange,
-        salaryRange: this.signupForm.value.salaryRange,
-        experience: this.signupForm.value.experience,
         acceptTerms: this.signupForm.value.acceptTerms,
       };
 
