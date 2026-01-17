@@ -1,39 +1,98 @@
 <title>À propos de {{ portalName }}</title>
-<section class="about-container">
-  <h1>À Propos de <span class="highlight">{{ portalName }}</span></h1>
 
-  <p class="intro">
-    Bienvenue sur <strong>{{ portalName }}</strong>, votre source centralisée d'informations sur les langages de
-    programmation et les outils dédiés au développement informatique.
-    <br>
-    Notre mission est de fournir une vision claire et complète des versions courantes et LTS, permettant aux développeurs et professionnels IT d'accéder rapidement aux données les plus pertinentes.
-  </p>
+<section class="about-page">
+  <!-- Space background effect -->
+  <div class="stars-bg"></div>
 
-  <div class="features">
-    <h2>Ce que Nous Proposons</h2>
-
-    <div class="feature">
-      <h3>Langages de Programmation</h3>
-      <p>Découvrez les derniers langages de programmation, les plus utilisés ainsi que leurs outils associés.</p>
+  <div class="about-card">
+    <!-- Terminal header -->
+    <div class="terminal-header">
+      <div class="terminal-dots">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+      </div>
+      <span class="terminal-title">verstack://about</span>
     </div>
 
-    <div class="feature">
-      <h3>Versions Courantes et LTS</h3>
-      <p>Restez informé des mises à jour critiques grâce à notre section dédiée aux versions.</p>
+    <div class="about-content">
+      <h1>À Propos de <span class="highlight">{{ portalName }}</span></h1>
+
+      <p class="intro">
+        Bienvenue sur <strong>{{ portalName }}</strong>, votre source centralisée d'informations sur les langages de
+        programmation et les outils dédiés au développement informatique.
+      </p>
+      <p class="intro">
+        Notre mission est de fournir une vision claire et complète des versions courantes et LTS,
+        permettant aux développeurs et professionnels IT d'accéder rapidement aux données les plus pertinentes.
+      </p>
+
+      <div class="features-section">
+        <h2>Ce que Nous Proposons</h2>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <span class="feature-icon">></span>
+            </div>
+            <div class="feature-content">
+              <h3>Langages de Programmation</h3>
+              <p>Découvrez les derniers langages de programmation, les plus utilisés ainsi que leurs outils associés.</p>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <span class="feature-icon">></span>
+            </div>
+            <div class="feature-content">
+              <h3>Versions Courantes et LTS</h3>
+              <p>Restez informé des mises à jour critiques grâce à notre section dédiée aux versions.</p>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <span class="feature-icon">></span>
+            </div>
+            <div class="feature-content">
+              <h3>Statistiques & Tendances</h3>
+              <p>Suivez les tendances technologiques avec des données de Stack Overflow, GitHub et TIOBE.</p>
+            </div>
+          </div>
+
+          <div class="feature-card">
+            <div class="feature-icon-wrapper">
+              <span class="feature-icon">></span>
+            </div>
+            <div class="feature-content">
+              <h3>Articles & Actualités</h3>
+              <p>Lisez des articles et éditos sur l'évolution des technologies et frameworks.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="engagement-section">
+        <h2>Notre Engagement</h2>
+        <p>
+          Chez <strong>{{ portalName }}</strong>, notre engagement est de fournir des informations à jour et fiables.
+          Nous étendons sans cesse notre couverture pour que le portail reste une référence pour la communauté IT.
+        </p>
+      </div>
+
+      <div class="contact-section">
+        <h2>Contactez-Nous</h2>
+        <p>
+          Vous avez une question, une suggestion, ou vous souhaitez nous rejoindre ?
+          N'hésitez pas à nous écrire à <strong>contact&#64;itmade.fr</strong>.
+          Vos retours sont précieux pour faire évoluer <strong>{{ portalName }}</strong>.
+        </p>
+      </div>
+
+      <div class="thanks-section">
+        <p class="thanks-message">Merci de faire partie de notre communauté !</p>
+      </div>
     </div>
-  </div>
-
-  <div class="engagement">
-    <h2>Notre Engagement</h2>
-    <p>Chez <strong>{{ portalName }}</strong>, notre engagement est de fournir des informations à jour et fiables. Nous étendons sans cesse notre couverture pour que le portail reste une référence pour la communauté IT.</p>
-  </div>
-
-  <div class="contact">
-    <h2>Contactez-Nous</h2>
-    <p>Vous avez une question, une suggestion, ou vous souhaitez nous rejoindre ? N'hésitez pas à nous écrire. Vos retours sont précieux pour faire évoluer <strong>{{ portalName }}</strong>.</p>
-  </div>
-
-  <div class="remerciement">
-    <p class="final">Merci de faire partie de notre communauté !</p>
   </div>
 </section>
