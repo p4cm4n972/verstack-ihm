@@ -83,6 +83,8 @@ export class ShopComponent implements AfterViewInit, OnInit {
   loadedCount = 0;
   expectedCount = 0;
 
+  // Track loading state per product
+  loadingProducts = new Set<string>();
 
   products: any[] = [];
   filteredProducts: any[] = [];
@@ -206,13 +208,24 @@ export class ShopComponent implements AfterViewInit, OnInit {
     // Initialisation du suivi de chargement
     this.expectedCount = this.pagedProducts.length;
     this.loadedCount = 0;
+
+    // Mark all products as loading
+    this.loadingProducts.clear();
+    this.pagedProducts.forEach(p => this.loadingProducts.add(p.id));
   }
 
-   onProductLoaded() {
+  onProductLoaded(productId?: string) {
+    if (productId) {
+      this.loadingProducts.delete(productId);
+    }
     this.loadedCount++;
     if (this.loadedCount >= this.expectedCount) {
-    this.isLoadingAll = true;
+      this.isLoadingAll = true;
     }
+  }
+
+  isProductLoading(productId: string): boolean {
+    return this.loadingProducts.has(productId);
   }
 
   

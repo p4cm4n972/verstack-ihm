@@ -18,7 +18,21 @@
         }
       </div>
 
-      <div class="article-grid">
+      <!-- Empty state -->
+      @if(filteredArticles.length === 0) {
+        <div class="empty-state">
+          <div class="terminal-empty">
+            <span class="prompt">$</span>
+            <span class="command">cat /var/log/articles</span>
+          </div>
+          <div class="empty-output">
+            <span class="status">[INFO]</span>
+            <span class="message">no entries found</span>
+          </div>
+        </div>
+      }
+
+      <div class="article-grid" [class.single-article]="filteredArticles.length === 1">
         @for(article of filteredArticles; track trackById(i, article); let i = $index) {
           <mat-card class="article-card" appearance="outlined">
             <!-- Bouton "open in new" flottant -->

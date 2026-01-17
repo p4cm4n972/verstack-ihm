@@ -24,12 +24,21 @@
           @for(product of pagedProducts; track product) {
           <ng-container class="">
             <mat-card class="product-card" appearance="outlined">
+              <!-- Card loading spinner -->
+              @if(isProductLoading(product.id)) {
+                <div class="card-loader">
+                  <div class="card-spinner">
+                    <span></span><span></span><span></span>
+                  </div>
+                </div>
+              }
+
               <button mat-icon-button class="open-btn" (click)="gotoItems(product)">
                 <mat-icon>open_in_new</mat-icon>
               </button>
 
               <app-shopify-buy-button class="shopify-widget" [productId]="product.id"
-                [componentId]="'product-component-' + product.component" (loaded)="onProductLoaded()">
+                [componentId]="'product-component-' + product.component" (loaded)="onProductLoaded(product.id)">
               </app-shopify-buy-button>
             </mat-card>
           </ng-container>

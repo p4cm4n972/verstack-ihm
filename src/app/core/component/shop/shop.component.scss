@@ -237,6 +237,59 @@ section {
   }
 }
 
+// Card loading spinner overlay
+.card-loader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(15, 10, 12, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  backdrop-filter: blur(4px);
+}
+
+.card-spinner {
+  display: flex;
+  gap: 6px;
+
+  span {
+    width: 8px;
+    height: 8px;
+    background: #e53935;
+    border-radius: 50%;
+    animation: cardPulse 1.2s ease-in-out infinite;
+    box-shadow: 0 0 10px rgba(229, 57, 53, 0.6);
+
+    &:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    &:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    &:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+  }
+}
+
+@keyframes cardPulse {
+  0%, 100% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+    box-shadow: 0 0 15px rgba(229, 57, 53, 1);
+  }
+}
+
 // Shopify widget container
 .shopify-widget {
   display: flex;

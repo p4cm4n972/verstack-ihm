@@ -111,6 +111,60 @@ mat-chip-option {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 20px;
+
+  // When there's only one article, limit its width
+  &.single-article {
+    grid-template-columns: minmax(280px, 400px);
+    justify-content: center;
+  }
+}
+
+// Empty state with terminal style
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 2rem;
+  background: rgba(0, 20, 40, 0.4);
+  border: 1px solid rgba(0, 188, 212, 0.2);
+  border-radius: 8px;
+  font-family: 'Courier New', monospace;
+
+  .terminal-empty {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+
+    .prompt {
+      color: #4dd0e1;
+      font-weight: 700;
+      text-shadow: 0 0 8px rgba(77, 208, 225, 0.7);
+    }
+
+    .command {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 0.95rem;
+    }
+  }
+
+  .empty-output {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .status {
+      color: #ffd700;
+      font-weight: 700;
+      font-size: 0.85rem;
+    }
+
+    .message {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.9rem;
+    }
+  }
 }
 
 // Card with terminal/cyber style
