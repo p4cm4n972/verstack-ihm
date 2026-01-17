@@ -62,9 +62,8 @@
 .ticker-track {
   display: flex;
   gap: 3rem;
-  animation: scroll 60s linear infinite;
+  animation: scroll 180s linear infinite;
   white-space: nowrap;
-  padding-left: 100%;
 }
 
 @keyframes scroll {
