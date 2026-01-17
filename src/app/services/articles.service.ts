@@ -2,11 +2,20 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-interface Article {
+export interface Article {
+  _id: string;
   title: string;
-  framework: string;
-  image: string;
-  excerpt: string;
+  content: string;
+  excerpt?: string;
+  description?: string;
+  category: string;
+  date: string;
+  updatedAt?: string;
+  img?: string;
+  recommendations?: number;
+  recommendedBy?: string[];  // IDs des utilisateurs ayant recommandé l'article
+  framework?: string;
+  image?: string;
 }
 
 @Injectable({

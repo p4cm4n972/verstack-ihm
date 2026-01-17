@@ -1,37 +1,150 @@
-@if(article){<div class="news-detail-layout">
-  <!-- Pub gauche -->
-  <aside class="ads-left">
-    <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-3195351081459490"
-      data-ad-slot="1234567890"
-      data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-  </aside>
+<div class="news-detail-page">
+  <!-- Loading state -->
+  @if (isLoading()) {
+    <div class="loading-container">
+      <div class="terminal-loader">
+        <span class="loader-text">$ loading article...</span>
+        <span class="loader-cursor">_</span>
+      </div>
+    </div>
+  }
 
-  <!-- Contenu principal -->
-  <main class="news-detail-container">
-    <button mat-stroked-button color="accent" routerLink="/news" class="back-button">
-      <mat-icon>arrow_back</mat-icon> Retour aux actualités
-    </button>
+  @if (article(); as art) {
+    <div class="news-detail-layout">
+      <!-- Terminal Header -->
+      <header class="terminal-header">
+        <div class="header-content">
+          <div class="header-left">
+            <button class="back-btn" routerLink="/news">
+              <mat-icon>arrow_back</mat-icon>
+              <span>cd ..</span>
+            </button>
+          </div>
 
-    <h1 class="article-title">{{ article.title }}</h1>
-    <p class="article-meta">Publié le {{ article.date }} - <strong>{{ article.category }}</strong></p>
+          <div class="header-center">
+            <span class="terminal-path">
+              <span class="path-segment">~/news</span>
+              <span class="path-separator">/</span>
+              <span class="path-current">{{ art.category | lowercase }}</span>
+            </span>
+          </div>
 
-    @if (article.img) {
-      <img [src]="article.img" [alt]="article.title" class="article-image">
-    }
+          <div class="header-right">
+            <div class="status-indicator">
+              <span class="status-dot"></span>
+              <span class="status-text">ARTICLE</span>
+            </div>
+          </div>
+        </div>
 
-    <div class="article-content" [innerHTML]="article.content"></div>
-  </main>
+        <!-- Article Meta Terminal Style -->
+        <div class="article-meta-terminal">
+          <div class="meta-line">
+            <span class="meta-prompt">$</span>
+            <span class="meta-command">cat article.info</span>
+          </div>
+          <div class="meta-output">
+            <div class="meta-item">
+              <span class="meta-label">date:</span>
+              <span class="meta-value">{{ formattedDate() }}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">category:</span>
+              <span class="meta-value category-tag">{{ art.category }}</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label">read_time:</span>
+              <span class="meta-value">{{ readingTime() }} min</span>
+            </div>
+          </div>
+        </div>
+      </header>
 
-  <!-- Pub droite -->
-  <aside class="ads-right">
-    <ins class="adsbygoogle"
-      style="display:block"
-      data-ad-client="ca-pub-3195351081459490"
-      data-ad-slot="0987654321"
-      data-ad-format="auto"
-    data-full-width-responsive="true"></ins>
-  </aside>
-</div>}
+      <!-- Main Content Area -->
+      <main class="article-main">
+        <!-- Article Title -->
+        <h1 class="article-title">{{ art.title }}</h1>
+
+        <!-- Featured Image -->
+        @if (art.img) {
+          <figure class="article-image-container">
+            <img [src]="art.img" [alt]="art.title" class="article-image">
+            <div class="image-overlay"></div>
+          </figure>
+        }
+
+        <!-- Article Content -->
+        <article class="article-content" [innerHTML]="art.content"></article>
+
+        <!-- Interaction Bar -->
+        <div class="interaction-bar">
+          <!-- Like/Recommend Section -->
+          <div class="like-section">
+            <button
+              class="like-btn"
+              [class.liked]="hasRecommended()"
+              [class.processing]="isProcessing()"
+              [disabled]="isProcessing()"
+              (click)="toggleRecommendation()"
+              [matTooltip]="hasRecommended() ? 'Retirer ma recommandation' : 'Recommander cet article'"
+            >
+              <mat-icon>{{ hasRecommended() ? 'favorite' : 'favorite_border' }}</mat-icon>
+              <span class="like-count">{{ recommendations() }}</span>
+            </button>
+            <span class="like-label">recommandations</span>
+          </div>
+
+          <!-- Share Section -->
+          <div class="share-section">
+            <span class="share-label">Partager:</span>
+            <div class="share-buttons">
+              <button
+                class="share-btn twitter"
+                (click)="shareOnTwitter()"
+                matTooltip="Partager sur X (Twitter)"
+              >
+                <i class="fab fa-x-twitter"></i>
+              </button>
+              <button
+                class="share-btn linkedin"
+                (click)="shareOnLinkedIn()"
+                matTooltip="Partager sur LinkedIn"
+              >
+                <i class="fab fa-linkedin-in"></i>
+              </button>
+              <button
+                class="share-btn facebook"
+                (click)="shareOnFacebook()"
+                matTooltip="Partager sur Facebook"
+              >
+                <i class="fab fa-facebook-f"></i>
+              </button>
+              <button
+                class="share-btn copy"
+                (click)="copyLink()"
+                matTooltip="Copier le lien"
+              >
+                <mat-icon>link</mat-icon>
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Terminal Footer -->
+      <footer class="terminal-footer">
+        <div class="footer-line">
+          <span class="footer-prompt">$</span>
+          <span class="footer-text">EOF - Article terminé</span>
+          <span class="footer-cursor">_</span>
+        </div>
+        <div class="footer-actions">
+          <a routerLink="/news" class="footer-link">
+            <mat-icon>list</mat-icon>
+            <span>Voir tous les articles</span>
+          </a>
+        </div>
+      </footer>
+    </div>
+  }
+</div>
