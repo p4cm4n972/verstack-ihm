@@ -90,6 +90,48 @@ export class VersionComponent implements OnInit, OnDestroy {
     database: { type: 'storage', color: 'icon-database' },
   };
 
+  // Données de tendance (simulées en attendant l'API)
+  private readonly trendingData: Record<string, 'up' | 'down' | 'stable'> = {
+    'JavaScript': 'stable',
+    'TypeScript': 'up',
+    'Python': 'up',
+    'HTML': 'stable',
+    'CSS': 'stable',
+    'Node.js': 'up',
+    'Angular': 'stable',
+    'React': 'up',
+    'Vue.js': 'down',
+    'MongoDB': 'stable',
+    'C': 'stable',
+    'C++': 'stable',
+    'C#': 'up',
+    'Java': 'stable',
+    'PHP': 'down',
+    'Ruby': 'down',
+    'Go': 'up',
+    'Rust': 'up',
+    'Swift': 'up',
+    'Kotlin': 'up',
+    'Dart': 'up',
+    'Express.js': 'stable',
+    'NestJS': 'up',
+    'Django': 'stable',
+    'Flask': 'stable',
+    'Spring': 'stable',
+    'Laravel': 'stable',
+    'Next.js': 'up',
+    'Nuxt.js': 'up',
+    'Svelte': 'up',
+    'Docker': 'up',
+    'Kubernetes': 'up',
+    'PostgreSQL': 'up',
+    'MySQL': 'stable',
+    'Redis': 'up',
+    'GraphQL': 'up',
+    'Terraform': 'up',
+    'Ansible': 'stable',
+  };
+
   constructor(
     private _langagesService: LangagesService,
     private authService: AuthenticationService,
@@ -390,6 +432,10 @@ export class VersionComponent implements OnInit, OnDestroy {
         .map((d) => this.iconMap[d]?.color)
         .find((v) => !!v) || ''
     );
+  }
+
+  getTrending(name: string): 'up' | 'down' | 'stable' {
+    return this.trendingData[name] || 'stable';
   }
 
   getSupportTooltip(releaseDate: string, supportTime: number, type: string): string {

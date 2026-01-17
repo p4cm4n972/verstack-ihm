@@ -26,6 +26,15 @@
               <mat-card-title-group>
                 <mat-card-title class="language-title">
                   {{ language.name }}
+                  <span class="trending-indicator" [class]="'trending-' + getTrending(language.name)"
+                    [matTooltip]="getTrending(language.name) === 'up' ? 'En hausse' : getTrending(language.name) === 'down' ? 'En baisse' : 'Stable'"
+                    matTooltipPosition="above">
+                    @switch (getTrending(language.name)) {
+                      @case ('up') { ↗ }
+                      @case ('down') { ↘ }
+                      @case ('stable') { → }
+                    }
+                  </span>
                   <span class="status-indicator" [ngClass]="getDataStatusClass(language.versions[0]?.updatedAt)"
                     [matTooltip]="getDataStatusTooltip(language.versions[0]?.updatedAt)"
                     matTooltipPosition="above"></span>
@@ -71,12 +80,7 @@
               <a [href]="language.documentation" target="_blank" class="doc-link">
                 <button mat-raised-button color="primary">Documentation</button>
               </a>
-              @if(!authStatus && language.recommendations){<mat-icon style="margin-right: 20px;"
-                matTooltip="Popularité *Stackoverflow" matBadgeDescription="Popularité"
-                [matBadge]="language.recommendations" aria-label="Popularité" aria-hidden="false"
-                 fontIcon="bar_chart">
-              </mat-icon>}
-
+              
               @if(authStatus && favorisFromHome()!.length == 0 ){ <a mat-icon-button aria-label="épingler"
                 matTooltip="{{(isPinned(language.name) ? 'Retirer ' : 'Ajouter ') + language.name + ' à votre board'}}"
                 aria-label="Bouton qui ajoute la carte au tableau personnalisé" (click)="pinLanguage(language)">

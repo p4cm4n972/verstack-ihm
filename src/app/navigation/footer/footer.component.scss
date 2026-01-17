@@ -104,4 +104,25 @@
       font-size: 12px;
     }
   }
+
+// ========================================
+// SHOP THEME (Red Squiggly)
+// ========================================
+:host-context(.shop-theme) {
+  .footer-toolbar {
+    background: linear-gradient(180deg, rgba(26, 10, 16, 0.9) 0%, rgba(15, 10, 12, 0.95) 100%) !important;
+    border-top: 1px solid rgba(229, 57, 53, 0.3);
+    box-shadow: 0 -2px 20px rgba(229, 57, 53, 0.15);
+  }
+
+  .footer-links a:hover {
+    color: #ff5252;
+    text-shadow: 0 0 8px rgba(229, 57, 53, 0.5);
+  }
+
+  .version {
+    color: #e53935;
+    text-shadow: 0 0 5px rgba(229, 57, 53, 0.4);
+  }
+}
  

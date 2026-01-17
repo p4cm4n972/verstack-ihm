@@ -92,3 +92,46 @@ body { margin: 0; font-family: Doto, "Helvetica Neue", sans-serif; }
   }
 }
 
+/* Shopify Buy Button global overrides */
+.shopify-buy-frame {
+  position: relative !important;
+}
+
+div[id^="product-component"] {
+  position: relative !important;
+  width: 100% !important;
+}
+
+.shopify-buy__product {
+  position: relative !important;
+}
+
+/* Fix for Shopify iframe positioning */
+iframe.shopify-buy-frame {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+}
+
+/* Shopify title scroll animation for long titles */
+@keyframes scrollTitle {
+  0%, 20% {
+    transform: translateY(0);
+  }
+  80%, 100% {
+    transform: translateY(calc(-100% + 40px));
+  }
+}
+
+.shopify-buy__product__title {
+  max-height: 40px !important;
+  min-height: 40px !important;
+  overflow: hidden !important;
+  position: relative !important;
+}
+
+.shopify-buy__product__title:hover {
+  overflow: visible !important;
+  animation: scrollTitle 3s ease-in-out infinite alternate;
+}
+

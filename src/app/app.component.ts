@@ -9,7 +9,7 @@ import { FooterComponent } from "./navigation/footer/footer.component";
 import { SharedModule } from './shared/shared.module';
 import { AuthenticationService } from './services/authentication.service';
 import { PlatformService } from './core/services/platform.service';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, filter, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -31,6 +31,19 @@ export class AppComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if (!this.platformService.isBrowser) return;
 
+    // Détection de la route pour appliquer le thème shop
+    this.router.events
+      .pipe(
+        filter(event => event instanceof NavigationEnd),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((event: NavigationEnd) => {
+        this.updateThemeClass(event.urlAfterRedirects);
+      });
+
+    // Appliquer le thème initial
+    this.updateThemeClass(this.router.url);
+
     // S'abonner aux changements de rôle de façon réactive
     this.authService.userRoleObservable
       .pipe(takeUntil(this.destroy$))
@@ -45,6 +58,15 @@ export class AppComponent implements OnInit, OnDestroy {
           this.removeAds();
         }
       });
+  }
+
+  private updateThemeClass(url: string): void {
+    const body = document.body;
+    if (url.startsWith('/shop')) {
+      this.renderer.addClass(body, 'shop-theme');
+    } else {
+      this.renderer.removeClass(body, 'shop-theme');
+    }
   }
 
   ngOnDestroy(): void {

@@ -87,7 +87,7 @@ export class ShopComponent implements AfterViewInit, OnInit {
   products: any[] = [];
   filteredProducts: any[] = [];
   selectedCategory: string = '';
-  categories: string[] = ['hommes', 'femmes', 'accessoires', 'maison', 'jouets'];
+  categories: string[] = ['Tous', 'hommes', 'femmes', 'accessoires', 'maison', 'jouets'];
   themes = ['angular', 'react', 'Vue', 'Svelte', 'Node.js', 'Python', 'rs', 'retro', 'hello kitty', 'c++', 'java', 'docker', 'DBZ', 'pokemon'];
   activeTheme: string | null = null;
   // pagination

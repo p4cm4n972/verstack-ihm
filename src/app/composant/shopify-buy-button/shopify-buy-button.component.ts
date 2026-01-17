@@ -67,9 +67,56 @@ export class ShopifyBuyButtonComponent implements AfterViewInit {
                   "margin-bottom": "50px"
                 },
               },
-
-
-
+              "title": {
+                "font-family": "'Courier New', monospace",
+                "font-weight": "700",
+                "font-size": "13px",
+                "color": "#ffffff",
+                "text-shadow": "0 0 8px rgba(229, 57, 53, 0.3)",
+                "max-height": "40px",
+                "min-height": "40px",
+                "overflow": "hidden",
+                "line-height": "1.3",
+                "display": "-webkit-box",
+                "-webkit-line-clamp": "2",
+                "-webkit-box-orient": "vertical"
+              },
+              "price": {
+                "font-family": "'Courier New', monospace",
+                "font-weight": "600",
+                "font-size": "16px",
+                "color": "#ff5252"
+              },
+              "compareAt": {
+                "font-family": "'Courier New', monospace",
+                "font-size": "13px",
+                "color": "rgba(255, 255, 255, 0.5)"
+              },
+              "button": {
+                "font-family": "'Courier New', monospace",
+                "font-weight": "700",
+                "font-size": "12px",
+                "letter-spacing": "1px",
+                "text-transform": "uppercase",
+                "padding": "12px 20px",
+                "background": "linear-gradient(135deg, rgba(229, 57, 53, 0.8) 0%, rgba(183, 28, 28, 0.8) 100%)",
+                "border-radius": "6px",
+                "border": "1px solid rgba(229, 57, 53, 0.6)",
+                "color": "#ffffff",
+                ":hover": {
+                  "background": "linear-gradient(135deg, rgba(229, 57, 53, 1) 0%, rgba(183, 28, 28, 1) 100%)",
+                  "box-shadow": "0 0 20px rgba(229, 57, 53, 0.5)"
+                },
+                ":focus": {
+                  "background": "linear-gradient(135deg, rgba(229, 57, 53, 1) 0%, rgba(183, 28, 28, 1) 100%)"
+                }
+              },
+              "img": {
+                "border-radius": "8px"
+              },
+              "imgWrapper": {
+                "background": "transparent"
+              }
             },
             "contents": {
               "options": false,
@@ -103,28 +150,42 @@ export class ShopifyBuyButtonComponent implements AfterViewInit {
                 }
               },
               "title": {
-                "font-family": "Helvetica Neue, sans-serif",
+                "font-family": "'Courier New', monospace",
                 "font-weight": "bold",
-                "font-size": "26px",
-                "color": "#4c4c4c"
+                "font-size": "24px",
+                "color": "#ffffff"
               },
               "price": {
-                "font-family": "Helvetica Neue, sans-serif",
-                "font-weight": "normal",
-                "font-size": "18px",
-                "color": "#4c4c4c"
+                "font-family": "'Courier New', monospace",
+                "font-weight": "600",
+                "font-size": "20px",
+                "color": "#ff5252"
               },
               "compareAt": {
-                "font-family": "Helvetica Neue, sans-serif",
+                "font-family": "'Courier New', monospace",
                 "font-weight": "normal",
-                "font-size": "15.299999999999999px",
-                "color": "#4c4c4c"
+                "font-size": "15px",
+                "color": "rgba(255, 255, 255, 0.5)"
               },
               "unitPrice": {
-                "font-family": "Helvetica Neue, sans-serif",
+                "font-family": "'Courier New', monospace",
                 "font-weight": "normal",
-                "font-size": "15.299999999999999px",
-                "color": "#4c4c4c"
+                "font-size": "15px",
+                "color": "rgba(255, 255, 255, 0.6)"
+              },
+              "button": {
+                "font-family": "'Courier New', monospace",
+                "font-weight": "700",
+                "letter-spacing": "1px",
+                "text-transform": "uppercase",
+                "background": "linear-gradient(135deg, rgba(229, 57, 53, 0.8) 0%, rgba(183, 28, 28, 0.8) 100%)",
+                "border-radius": "6px",
+                "border": "1px solid rgba(229, 57, 53, 0.6)",
+                "color": "#ffffff",
+                ":hover": {
+                  "background": "linear-gradient(135deg, rgba(229, 57, 53, 1) 0%, rgba(183, 28, 28, 1) 100%)",
+                  "box-shadow": "0 0 20px rgba(229, 57, 53, 0.5)"
+                }
               }
             },
             "text": {
@@ -133,6 +194,62 @@ export class ShopifyBuyButtonComponent implements AfterViewInit {
           },
           "option": {},
           "cart": {
+            "styles": {
+              "cart": {
+                "background-color": "rgba(15, 10, 12, 0.98)",
+                "border-left": "1px solid rgba(229, 57, 53, 0.3)"
+              },
+              "header": {
+                "color": "#ffffff",
+                "font-family": "'Courier New', monospace"
+              },
+              "title": {
+                "color": "#ff5252",
+                "font-family": "'Courier New', monospace"
+              },
+              "lineItems": {
+                "color": "#ffffff"
+              },
+              "subtotalText": {
+                "color": "rgba(255, 255, 255, 0.7)",
+                "font-family": "'Courier New', monospace"
+              },
+              "subtotal": {
+                "color": "#ff5252",
+                "font-family": "'Courier New', monospace"
+              },
+              "notice": {
+                "color": "rgba(255, 255, 255, 0.5)",
+                "font-family": "'Courier New', monospace"
+              },
+              "button": {
+                "font-family": "'Courier New', monospace",
+                "font-weight": "700",
+                "letter-spacing": "1px",
+                "text-transform": "uppercase",
+                "background": "linear-gradient(135deg, rgba(229, 57, 53, 0.8) 0%, rgba(183, 28, 28, 0.8) 100%)",
+                "border-radius": "6px",
+                "border": "1px solid rgba(229, 57, 53, 0.6)",
+                "color": "#ffffff",
+                ":hover": {
+                  "background": "linear-gradient(135deg, rgba(229, 57, 53, 1) 0%, rgba(183, 28, 28, 1) 100%)"
+                }
+              },
+              "close": {
+                "color": "#ff5252",
+                ":hover": {
+                  "color": "#ffffff"
+                }
+              },
+              "empty": {
+                "color": "rgba(255, 255, 255, 0.5)",
+                "font-family": "'Courier New', monospace"
+              },
+              "footer": {
+                "background-color": "rgba(20, 10, 12, 0.5)",
+                "border-top": "1px solid rgba(229, 57, 53, 0.2)"
+              }
+            },
             "text": {
               "total": "Sous-total",
               "button": "Passer à la caisse",
@@ -144,19 +261,99 @@ export class ShopifyBuyButtonComponent implements AfterViewInit {
               "remove": "Supprimer",
             }
           },
-          "toggle": {}
+          "toggle": {
+            "styles": {
+              "toggle": {
+                "background": "linear-gradient(135deg, rgba(229, 57, 53, 0.8) 0%, rgba(183, 28, 28, 0.8) 100%)",
+                "border": "1px solid rgba(229, 57, 53, 0.6)",
+                ":hover": {
+                  "background": "linear-gradient(135deg, rgba(229, 57, 53, 1) 0%, rgba(183, 28, 28, 1) 100%)",
+                  "box-shadow": "0 0 20px rgba(229, 57, 53, 0.5)"
+                }
+              },
+              "count": {
+                "font-family": "'Courier New', monospace",
+                "font-weight": "700"
+              }
+            }
+          }
         },
       });
       const container = this.document.getElementById(`${this.componentId}`);
 
       const observer = new MutationObserver(() => {
-        const iframe = container?.querySelector('iframe');
+        const iframe = container?.querySelector('iframe') as HTMLIFrameElement;
         if (iframe) {
           this.loaded.emit();
           observer.disconnect();
+          // Inject scroll animation styles into iframe
+          this.injectScrollAnimation(iframe);
         }
       });
       observer.observe(container!, { childList: true, subtree: true });
     });
+  }
+
+  private injectScrollAnimation(iframe: HTMLIFrameElement): void {
+    // Wait for iframe to fully load
+    iframe.addEventListener('load', () => {
+      try {
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+        if (iframeDoc) {
+          const style = iframeDoc.createElement('style');
+          style.textContent = `
+            @keyframes scrollTitle {
+              0%, 20% { transform: translateY(0); }
+              80%, 100% { transform: translateY(calc(-100% + 40px)); }
+            }
+            .shopify-buy__product__title {
+              max-height: 40px !important;
+              min-height: 40px !important;
+              overflow: hidden !important;
+              position: relative !important;
+              transition: all 0.3s ease !important;
+            }
+            .shopify-buy__product__title:hover {
+              overflow: visible !important;
+              max-height: none !important;
+              animation: scrollTitle 3s ease-in-out infinite alternate !important;
+            }
+          `;
+          iframeDoc.head.appendChild(style);
+        }
+      } catch (e) {
+        // Cross-origin iframe - cannot inject styles
+        console.warn('Cannot inject styles into Shopify iframe (cross-origin)');
+      }
+    });
+
+    // Also try immediately in case iframe is already loaded
+    try {
+      const iframeDoc = iframe.contentDocument || iframe.contentWindow?.document;
+      if (iframeDoc && iframeDoc.head) {
+        const style = iframeDoc.createElement('style');
+        style.textContent = `
+          @keyframes scrollTitle {
+            0%, 20% { transform: translateY(0); }
+            80%, 100% { transform: translateY(calc(-100% + 40px)); }
+          }
+          .shopify-buy__product__title {
+            max-height: 40px !important;
+            min-height: 40px !important;
+            overflow: hidden !important;
+            position: relative !important;
+            transition: all 0.3s ease !important;
+          }
+          .shopify-buy__product__title:hover {
+            overflow: visible !important;
+            max-height: none !important;
+            animation: scrollTitle 3s ease-in-out infinite alternate !important;
+          }
+        `;
+        iframeDoc.head.appendChild(style);
+      }
+    } catch (e) {
+      // Cross-origin iframe - cannot inject styles
+    }
   }
 }
