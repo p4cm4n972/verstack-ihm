@@ -19,6 +19,7 @@ import { ManisfesteComponent } from './core/manisfeste/manisfeste.component';
 import { ShopifyModalProductComponent } from './composant/shopify-modal-product/shopify-modal-product.component';
 import { NewsDetailComponent } from './composant/news-detail/news-detail.component';
 import { PolitiqueComponent } from './composant/politique/politique.component';
+import { CguComponent } from './composant/cgu/cgu.component';
 import { AdminComponent } from './core/component/admin/admin.component';
 import { SubscriptionComponent } from './composant/subscription/subscription.component';
 import { SubscriptionSuccessComponent } from './composant/subscription-success/subscription-success.component';
@@ -41,6 +42,7 @@ export const routes: Routes = [
   { path: 'signup', component: SignupComponent, canActivate: [mobileNotAllowedGuard] },
   { path: 'mentions', component: MentionsComponent },
   { path: 'privacy-policy', component: PolitiqueComponent },
+  { path: 'cgu', component: CguComponent },
   { path: 'admin', component: AdminComponent, canActivate: [AdminGuard] },
   { path: 'release', component: ReleaseComponent, canActivate: [mobileNotAllowedGuard] },
   { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard, mobileNotAllowedGuard] },

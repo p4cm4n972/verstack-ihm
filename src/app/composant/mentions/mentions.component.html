@@ -1,40 +1,75 @@
-<title>Mentions légales - Verstack.io</title>
+<section class="legal-page">
+  <!-- Space background effect -->
+  <div class="stars-bg"></div>
 
-<section class="legal-container">
-  <h1>📜 Mentions Légales</h1>
+  <div class="legal-card">
+    <!-- Terminal header -->
+    <div class="terminal-header">
+      <div class="terminal-dots">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+      </div>
+      <span class="terminal-title">verstack://legal/mentions</span>
+    </div>
 
-  <h2>🏢 1. Éditeur du site</h2>
-  <p>
-    <strong>Entreprise :</strong> ITMADE<br>
-    <strong>📍 Adresse :</strong> chemin Perriolat, 97240 François<br>
-    <strong>🔢 SIRET :</strong> en cours<br>
-    <strong>📧 Email :</strong> contact&#64;itmade.fr
-  </p>
+    <div class="legal-content">
+      <h1>Mentions Légales</h1>
 
-  <h2>🖥️ 2. Hébergeur du site</h2>
-  <p>
-    <strong>Hébergeur :</strong> OVH SAS<br>
-    <strong>📍 Adresse :</strong> 2, rue Kellermann, 59100 Roubaix
-  </p>
+      <div class="legal-section">
+        <h2>1. Éditeur du site</h2>
+        <div class="info-block">
+          <p><strong>Entreprise :</strong> ITMADE</p>
+          <p><strong>Adresse :</strong> chemin Perriolat, 97240 François</p>
+          <p><strong>SIRET :</strong> en cours</p>
+          <p><strong>Email :</strong> contact&#64;itmade.fr</p>
+        </div>
+      </div>
 
-  <h2>🧠 3. Propriété intellectuelle</h2>
-  <p>
-    Tous les contenus (textes, images, logos, code source) sont protégés par le droit d’auteur. Toute reproduction ou modification est interdite sans accord préalable.
-  </p>
+      <div class="legal-section">
+        <h2>2. Hébergeur du site</h2>
+        <div class="info-block">
+          <p><strong>Hébergeur :</strong> OVH SAS</p>
+          <p><strong>Adresse :</strong> 2, rue Kellermann, 59100 Roubaix</p>
+        </div>
+      </div>
 
-  <h2>⚠️ 4. Responsabilité</h2>
-  <p>
-    Malgré nos efforts pour fournir des informations fiables, nous déclinons toute responsabilité en cas d’erreurs, omissions ou conséquences liées à leur utilisation.
-  </p>
+      <div class="legal-section">
+        <h2>3. Propriété intellectuelle</h2>
+        <p>
+          Tous les contenus (textes, images, logos, code source) sont protégés par le droit d'auteur.
+          Toute reproduction ou modification est interdite sans accord préalable.
+        </p>
+      </div>
 
-  <h2>🔐 5. Données personnelles</h2>
-  <p>
-    Pour comprendre comment nous collectons, stockons et utilisons vos données, consultez notre
-    <a (click)="openPrivacyMentionDialog()">politique de confidentialité</a>.
-  </p>
+      <div class="legal-section">
+        <h2>4. Responsabilité</h2>
+        <p>
+          Malgré nos efforts pour fournir des informations fiables, nous déclinons toute responsabilité
+          en cas d'erreurs, omissions ou conséquences liées à leur utilisation.
+        </p>
+      </div>
 
-  <h2>✉️ 6. Contact</h2>
-  <p>
-    Pour toute question relative au site, écrivez-nous à <strong>contact&#64;itmade.fr</strong>.
-  </p>
+      <div class="legal-section">
+        <h2>5. Données personnelles</h2>
+        <p>
+          Pour comprendre comment nous collectons, stockons et utilisons vos données, consultez notre
+          <a class="legal-link" (click)="openPrivacyMentionDialog()">politique de confidentialité</a>.
+        </p>
+      </div>
+
+      <div class="legal-section">
+        <h2>6. Contact</h2>
+        <p>
+          Pour toute question relative au site, écrivez-nous à <strong>contact&#64;itmade.fr</strong>.
+        </p>
+      </div>
+
+      <div class="legal-footer">
+        <a routerLink="/cgu" class="footer-link">Conditions Générales d'Utilisation</a>
+        <span class="separator">|</span>
+        <a routerLink="/privacy-policy" class="footer-link">Politique de Confidentialité</a>
+      </div>
+    </div>
+  </div>
 </section>

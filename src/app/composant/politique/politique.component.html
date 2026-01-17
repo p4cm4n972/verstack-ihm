@@ -1,91 +1,149 @@
-<h2 mat-dialog-title>🔒 Politique de Confidentialité</h2>
+@if (isDialog) {
+  <!-- Dialog mode -->
+  <h2 mat-dialog-title class="dialog-title">Politique de Confidentialité</h2>
 
-<mat-dialog-content class="privacy-dialog mat-typography">
-  <section>
-    <h3>📘 Introduction</h3>
+  <mat-dialog-content class="privacy-dialog">
+    <ng-container *ngTemplateOutlet="privacyContent"></ng-container>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end" class="dialog-actions">
+    <button mat-raised-button class="close-btn" mat-dialog-close>Fermer</button>
+  </mat-dialog-actions>
+} @else {
+  <!-- Standalone page mode -->
+  <section class="legal-page">
+    <div class="stars-bg"></div>
+
+    <div class="legal-card">
+      <div class="terminal-header">
+        <div class="terminal-dots">
+          <span class="dot red"></span>
+          <span class="dot yellow"></span>
+          <span class="dot green"></span>
+        </div>
+        <span class="terminal-title">verstack://legal/privacy-policy</span>
+      </div>
+
+      <div class="legal-content">
+        <h1>Politique de Confidentialité</h1>
+        <ng-container *ngTemplateOutlet="privacyContent"></ng-container>
+
+        <div class="legal-footer">
+          <a routerLink="/mentions" class="footer-link">Mentions Légales</a>
+          <span class="separator">|</span>
+          <a routerLink="/cgu" class="footer-link">Conditions Générales d'Utilisation</a>
+        </div>
+      </div>
+    </div>
+  </section>
+}
+
+<!-- Shared content template -->
+<ng-template #privacyContent>
+  <div class="legal-section">
+    <h2>Introduction</h2>
     <p>
-      Votre vie privée est essentielle. Cette politique décrit quelles données nous collectons, pourquoi, et comment elles sont protégées.
+      Votre vie privée est essentielle. Cette politique décrit quelles données nous collectons,
+      pourquoi, et comment elles sont protégées.
     </p>
+  </div>
 
-    <h3>👤 Responsable du traitement</h3>
-    <p>
-      <strong>Entreprise :</strong> ITMADE<br>
-      <strong>📍 Adresse :</strong> chemin Perriolat, 97240 Le François<br>
-      <strong>📧 Email :</strong> contact&#64;itmade.fr
-    </p>
+  <div class="legal-section">
+    <h2>Responsable du traitement</h2>
+    <div class="info-block">
+      <p><strong>Entreprise :</strong> ITMADE</p>
+      <p><strong>Adresse :</strong> chemin Perriolat, 97240 Le François</p>
+      <p><strong>Email :</strong> contact&#64;itmade.fr</p>
+    </div>
+  </div>
 
-    <h3>🧾 Données collectées</h3>
-    <ul>
-      <li>🧑‍💻 Identité : nom, prénom, pseudo</li>
-      <li>📬 Coordonnées : email, téléphone</li>
-      <li>💼 Profil pro : métier, expérience</li>
-      <li>💡 Préférences : langages favoris</li>
-      <li>🌐 Technique : adresse IP, navigateur</li>
-      <li>💳 Paiement et abonnement : informations de facturation, statut d'abonnement, historique de paiement (traitées de manière sécurisée par notre partenaire Stripe)</li>
+  <div class="legal-section">
+    <h2>Données collectées</h2>
+    <ul class="data-list">
+      <li><span class="list-icon">></span> <strong>Identité :</strong> nom, prénom, pseudo</li>
+      <li><span class="list-icon">></span> <strong>Coordonnées :</strong> email, téléphone</li>
+      <li><span class="list-icon">></span> <strong>Profil pro :</strong> métier, expérience</li>
+      <li><span class="list-icon">></span> <strong>Préférences :</strong> langages favoris</li>
+      <li><span class="list-icon">></span> <strong>Technique :</strong> adresse IP, navigateur</li>
+      <li><span class="list-icon">></span> <strong>Paiement :</strong> informations de facturation, statut d'abonnement, historique de paiement (traitées par Stripe)</li>
     </ul>
+  </div>
 
-    <h3>🎯 Finalités</h3>
-    <ul>
-      <li>👤 Création de compte</li>
-      <li>💳 Gestion des abonnements et paiements</li>
-      <li>⚙️ Amélioration des services</li>
-      <li>🛟 Support technique</li>
-      <li>🛡️ Sécurité du site</li>
-      <li>📜 Obligations légales et fiscales</li>
+  <div class="legal-section">
+    <h2>Finalités</h2>
+    <ul class="data-list">
+      <li><span class="list-icon">></span> Création de compte</li>
+      <li><span class="list-icon">></span> Gestion des abonnements et paiements</li>
+      <li><span class="list-icon">></span> Amélioration des services</li>
+      <li><span class="list-icon">></span> Support technique</li>
+      <li><span class="list-icon">></span> Sécurité du site</li>
+      <li><span class="list-icon">></span> Obligations légales et fiscales</li>
     </ul>
+  </div>
 
-    <h3>📁 Conservation</h3>
+  <div class="legal-section">
+    <h2>Conservation</h2>
     <p>
       Les données sont conservées le temps nécessaire à nos obligations et objectifs définis ci-dessus.
     </p>
+  </div>
 
-    <h3>🤝 Partage des données</h3>
+  <div class="legal-section">
+    <h2>Partage des données</h2>
     <p>
       Aucun partage sans nécessité légale ou de service (ex. hébergement sécurisé).
     </p>
-    <p>
-      <strong>💳 Paiements :</strong> Vos informations de paiement sont traitées par notre prestataire certifié Stripe (conforme PCI-DSS niveau 1). Nous ne stockons jamais vos données bancaires complètes sur nos serveurs.
+    <p class="highlight-box">
+      <strong>Paiements :</strong> Vos informations de paiement sont traitées par notre prestataire
+      certifié Stripe (conforme PCI-DSS niveau 1). Nous ne stockons jamais vos données bancaires
+      complètes sur nos serveurs.
     </p>
+  </div>
 
-    <h3>📌 Vos droits (RGPD)</h3>
-    <ul>
-      <li>🔍 Accès à vos données</li>
-      <li>✏️ Rectification</li>
-      <li>🗑️ Suppression</li>
-      <li>⛔ Opposition</li>
-      <li>📦 Portabilité</li>
+  <div class="legal-section">
+    <h2>Vos droits (RGPD)</h2>
+    <ul class="data-list">
+      <li><span class="list-icon">></span> Accès à vos données</li>
+      <li><span class="list-icon">></span> Rectification</li>
+      <li><span class="list-icon">></span> Suppression</li>
+      <li><span class="list-icon">></span> Opposition</li>
+      <li><span class="list-icon">></span> Portabilité</li>
     </ul>
     <p>
-      👉 Pour exercer vos droits : <strong>contact&#64;itmade.fr</strong>
+      Pour exercer vos droits : <strong>contact&#64;itmade.fr</strong>
     </p>
+  </div>
 
-    <h3>🍪 Cookies</h3>
-    <ul>
-      <li>✔️ Fonctionnalité</li>
-      <li>📈 Analyse trafic</li>
-      <li>🤖 Expérience utilisateur</li>
+  <div class="legal-section">
+    <h2>Cookies</h2>
+    <ul class="data-list">
+      <li><span class="list-icon">></span> Fonctionnalité</li>
+      <li><span class="list-icon">></span> Analyse trafic</li>
+      <li><span class="list-icon">></span> Expérience utilisateur</li>
     </ul>
     <p>
       Gérez vos préférences dans les paramètres de votre navigateur.
     </p>
+  </div>
 
-    <h3>🛡️ Sécurité</h3>
+  <div class="legal-section">
+    <h2>Sécurité</h2>
     <p>
       Vos données sont protégées par des mesures techniques et organisationnelles strictes.
     </p>
+  </div>
 
-    <h3>📅 Mises à jour</h3>
+  <div class="legal-section">
+    <h2>Mises à jour</h2>
     <p>
       Cette politique peut évoluer. Les modifications seront publiées ici avec date de mise à jour.
     </p>
+  </div>
 
-    <h3>📬 Contact</h3>
+  <div class="legal-section">
+    <h2>Contact</h2>
     <p>
       Pour toute question : <strong>contact&#64;itmade.fr</strong>
     </p>
-  </section>
-</mat-dialog-content>
-
-<mat-dialog-actions align="end">
-  <button mat-raised-button color="primary" mat-dialog-close>Fermer</button>
-</mat-dialog-actions>
+  </div>
+</ng-template>

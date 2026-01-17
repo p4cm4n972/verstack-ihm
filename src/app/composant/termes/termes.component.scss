@@ -1,3 +1,147 @@
+// ========================================
+// TERMES DIALOG - SPACE THEME
+// ========================================
+
+:host {
+  display: block;
+}
+
+// Override mat-dialog styles
+::ng-deep .mat-mdc-dialog-container {
+  .mdc-dialog__surface {
+    background: rgba(13, 21, 37, 0.98) !important;
+    border: 1px solid rgba(0, 188, 212, 0.3);
+    border-radius: 12px !important;
+    box-shadow:
+      0 8px 32px rgba(0, 188, 212, 0.3),
+      0 0 60px rgba(0, 188, 212, 0.15);
+  }
+}
+
+h1[mat-dialog-title] {
+  color: #4dd0e1 !important;
+  font-family: 'Courier New', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 1.25rem 1.5rem !important;
+  margin: 0 !important;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid rgba(0, 188, 212, 0.3);
+  font-size: 1.25rem;
+}
+
+mat-dialog-content {
+  background: rgba(13, 21, 37, 0.95);
+  padding: 1.5rem !important;
+  max-height: 70vh;
+  overflow-y: auto;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(0, 188, 212, 0.4);
+    border-radius: 4px;
+
+    &:hover {
+      background: rgba(0, 188, 212, 0.6);
+    }
+  }
+
+  p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-bottom: 1rem;
+
+    &:first-of-type {
+      color: rgba(255, 255, 255, 0.5);
+      font-style: italic;
+      font-size: 0.85rem;
+    }
+  }
+
+  h2 {
+    color: #00bcd4;
+    font-size: 1.05rem;
+    margin: 1.5rem 0 0.75rem 0;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    &::before {
+      content: '>';
+      color: #4dd0e1;
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 1rem 0;
+
+    li {
+      color: rgba(255, 255, 255, 0.8);
+      font-size: 0.875rem;
+      padding: 0.35rem 0;
+      padding-left: 1.5rem;
+      position: relative;
+
+      &::before {
+        content: '>';
+        position: absolute;
+        left: 0;
+        color: #4dd0e1;
+        font-family: 'Courier New', monospace;
+        font-weight: bold;
+      }
+
+      strong {
+        color: #00bcd4;
+      }
+    }
+  }
+}
+
+mat-dialog-actions {
+  padding: 1rem 1.5rem !important;
+  background: rgba(0, 0, 0, 0.3);
+  border-top: 1px solid rgba(0, 188, 212, 0.2);
+
+  button {
+    background: linear-gradient(135deg, #00bcd4 0%, #0097a7 100%) !important;
+    color: white !important;
+    border: 1px solid rgba(0, 188, 212, 0.6) !important;
+    font-family: 'Courier New', monospace !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s ease;
+    padding: 0.5rem 1.5rem !important;
+
+    &:hover {
+      box-shadow: 0 4px 15px rgba(0, 188, 212, 0.4);
+      transform: translateY(-1px);
+    }
+  }
+}
+
 a {
-    color: yellow
+  color: #4dd0e1;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid transparent;
+
+  &:hover {
+    color: #80deea;
+    border-bottom-color: #80deea;
+    text-shadow: 0 0 8px rgba(0, 188, 212, 0.5);
+  }
 }

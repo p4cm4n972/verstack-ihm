@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Termes et Conditions d'Utilisation</h1>
 <mat-dialog-content class="mat-typography">
-    <p>Dernière mise à jour : 27 novembre 2025</p>
+    <p>Dernière mise à jour : 17 janvier 2026</p>
 
     <h2>1. Acceptation des Conditions</h2>
     <p>En accédant à notre site ou en utilisant nos services, vous reconnaissez avoir lu, compris et accepté les
@@ -9,12 +9,29 @@
     <h2>2. Définitions</h2>
     <ul>
         <li><strong>Utilisateur</strong> : Toute personne qui accède ou utilise les services de notre site.</li>
-        <li><strong>Services</strong> : L'ensemble des fonctionnalités disponibles sur notre site, incluant l'accès aux
-            articles et contenus informatifs.</li>
-        <li><strong>Abonnement Premium</strong> : Service payant donnant accès à des fonctionnalités supplémentaires de la plateforme Verstack.</li>
+        <li><strong>Services</strong> : L'ensemble des fonctionnalités disponibles sur notre site.</li>
+        <li><strong>Abonnement Premium</strong> : Service payant donnant accès à des fonctionnalités supplémentaires.</li>
     </ul>
 
     <h2>3. Accès au Site</h2>
     <p>L'accès au site est gratuit. Toutefois, certains services peuvent être soumis à des frais ou conditions
         spécifiques. Nous nous réservons le droit de modifier, suspendre ou interrompre tout ou partie de notre site
         sans préavis.</p>
+
+    <h2>4. Inscription et Compte</h2>
+    <p>Pour accéder à certaines fonctionnalités, la création d'un compte est requise. L'utilisateur s'engage à fournir
+        des informations exactes et à préserver la confidentialité de ses identifiants.</p>
+
+    <h2>5. Propriété Intellectuelle</h2>
+    <p>Tous les contenus du site sont protégés par le droit d'auteur. Toute reproduction est interdite sans autorisation.</p>
+
+    <h2>6. Protection des Données</h2>
+    <p>Pour en savoir plus sur nos pratiques, consultez notre <a (click)="openPrivacyMentionDialog()">Politique de Confidentialité</a>.</p>
+
+    <h2>7. Droit Applicable</h2>
+    <p>Les présentes conditions sont régies par le droit français.</p>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+    <button mat-raised-button mat-dialog-close>Fermer</button>
+</mat-dialog-actions>

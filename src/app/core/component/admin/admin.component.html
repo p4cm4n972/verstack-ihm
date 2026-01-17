@@ -1,39 +1,23 @@
-<div class="version-layout">
+<div class="admin-layout">
+  <!-- Space background effect -->
+  <div class="stars-bg"></div>
+
   <aside class="ads-left">
-    <!-- Pub gauche -->
     <ins class="adsbygoogle" style="display:block"></ins>
   </aside>
 
-  <section>
-    <!-- Navigation en onglets horizontaux -->
-    <mat-tab-group [selectedIndex]="selectedTabIndex" (selectedTabChange)="onTabChange($event)">
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>dashboard</mat-icon>
-          Tableau de bord
-        </ng-template>
-      </mat-tab>
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>people</mat-icon>
-          Utilisateurs
-        </ng-template>
-      </mat-tab>
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>code</mat-icon>
-          Langages
-        </ng-template>
-      </mat-tab>
-      <mat-tab>
-        <ng-template mat-tab-label>
-          <mat-icon>article</mat-icon>
-          Articles
-        </ng-template>
-      </mat-tab>
-    </mat-tab-group>
+  <section class="admin-main">
+    <!-- Terminal header -->
+    <div class="terminal-header">
+      <div class="terminal-dots">
+        <span class="dot red"></span>
+        <span class="dot yellow"></span>
+        <span class="dot green"></span>
+      </div>
+      <span class="terminal-title">verstack://admin/dashboard</span>
+    </div>
 
-    <!-- Header admin avec statistiques -->
+    <!-- Admin header with stats -->
     <div class="admin-header">
       <div class="admin-title">
         <mat-icon class="admin-icon">admin_panel_settings</mat-icon>
@@ -41,23 +25,54 @@
       </div>
       <div class="quick-stats">
         <div class="stat-card">
+          <mat-icon>people</mat-icon>
           <span class="stat-number">{{ users.length }}</span>
           <span class="stat-label">Utilisateurs</span>
         </div>
         <div class="stat-card">
+          <mat-icon>code</mat-icon>
           <span class="stat-number">{{ langages.length }}</span>
           <span class="stat-label">Langages</span>
         </div>
         <div class="stat-card">
+          <mat-icon>article</mat-icon>
           <span class="stat-number">{{ articles.length }}</span>
           <span class="stat-label">Articles</span>
         </div>
       </div>
     </div>
 
-    <!-- Contenu principal en grille -->
+    <!-- Navigation tabs -->
+    <mat-tab-group class="space-tabs" [selectedIndex]="selectedTabIndex" (selectedTabChange)="onTabChange($event)">
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>dashboard</mat-icon>
+          <span>Tableau de bord</span>
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>people</mat-icon>
+          <span>Utilisateurs</span>
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>code</mat-icon>
+          <span>Langages</span>
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon>article</mat-icon>
+          <span>Articles</span>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+
+    <!-- Content grid -->
     <div class="content-grid">
-      
+
       <!-- Dashboard Tab -->
       @if (activeTab === 'dashboard') {
         <mat-card class="admin-card">
@@ -70,17 +85,23 @@
           <mat-card-content>
             <div class="activity-list">
               <div class="activity-item">
-                <div class="activity-icon new">+</div>
+                <div class="activity-icon new">
+                  <mat-icon>person_add</mat-icon>
+                </div>
                 <div class="activity-text">Nouvel utilisateur inscrit</div>
                 <div class="activity-time">il y a 2h</div>
               </div>
               <div class="activity-item">
-                <div class="activity-icon edit">✏️</div>
+                <div class="activity-icon edit">
+                  <mat-icon>edit</mat-icon>
+                </div>
                 <div class="activity-text">Article modifié</div>
                 <div class="activity-time">il y a 4h</div>
               </div>
               <div class="activity-item">
-                <div class="activity-icon delete">×</div>
+                <div class="activity-icon delete">
+                  <mat-icon>delete</mat-icon>
+                </div>
                 <div class="activity-text">Langage supprimé</div>
                 <div class="activity-time">il y a 1j</div>
               </div>
@@ -122,7 +143,7 @@
               <mat-icon>people</mat-icon>
               Gestion des Utilisateurs
             </mat-card-title>
-            <button mat-raised-button color="primary" (click)="openCreateUserDialog()">
+            <button mat-raised-button class="action-btn" (click)="openCreateUserDialog()">
               <mat-icon>add</mat-icon>
               Nouvel Utilisateur
             </button>
@@ -169,10 +190,10 @@
                   <th mat-header-cell *matHeaderCellDef>Actions</th>
                   <td mat-cell *matCellDef="let u">
                     <div class="action-buttons">
-                      <button mat-icon-button color="primary" matTooltip="Modifier" (click)="editUser(u)">
+                      <button mat-icon-button class="edit-btn" matTooltip="Modifier" (click)="editUser(u)">
                         <mat-icon>edit</mat-icon>
                       </button>
-                      <button mat-icon-button color="warn" matTooltip="Supprimer" (click)="confirmDeleteUser(u)">
+                      <button mat-icon-button class="delete-btn" matTooltip="Supprimer" (click)="confirmDeleteUser(u)">
                         <mat-icon>delete</mat-icon>
                       </button>
                     </div>
@@ -194,7 +215,7 @@
               <mat-icon>code</mat-icon>
               Gestion des Langages
             </mat-card-title>
-            <button mat-raised-button color="primary" (click)="openCreateLanguageDialog()">
+            <button mat-raised-button class="action-btn" (click)="openCreateLanguageDialog()">
               <mat-icon>add</mat-icon>
               Nouveau Langage
             </button>
@@ -212,14 +233,14 @@
               @for (language of filteredLanguages; track language._id) {
                 <div class="language-card">
                   <div class="language-header">
-                    <div class="language-icon">💻</div>
+                    <mat-icon class="language-icon">terminal</mat-icon>
                     <h4>{{ language.name }}</h4>
                   </div>
                   <div class="language-actions">
-                    <button mat-icon-button color="primary" matTooltip="Modifier" (click)="editLanguage(language)">
+                    <button mat-icon-button class="edit-btn" matTooltip="Modifier" (click)="editLanguage(language)">
                       <mat-icon>edit</mat-icon>
                     </button>
-                    <button mat-icon-button color="warn" matTooltip="Supprimer" (click)="confirmDeleteLanguage(language)">
+                    <button mat-icon-button class="delete-btn" matTooltip="Supprimer" (click)="confirmDeleteLanguage(language)">
                       <mat-icon>delete</mat-icon>
                     </button>
                   </div>
@@ -238,7 +259,7 @@
               <mat-icon>article</mat-icon>
               Gestion des Articles
             </mat-card-title>
-            <button mat-raised-button color="primary" (click)="openCreateArticleDialog()">
+            <button mat-raised-button class="action-btn" (click)="openCreateArticleDialog()">
               <mat-icon>add</mat-icon>
               Nouvel Article
             </button>
@@ -270,10 +291,10 @@
                     </div>
                   </div>
                   <div class="article-actions">
-                    <button mat-icon-button color="primary" matTooltip="Modifier" (click)="editArticle(article)">
+                    <button mat-icon-button class="edit-btn" matTooltip="Modifier" (click)="editArticle(article)">
                       <mat-icon>edit</mat-icon>
                     </button>
-                    <button mat-icon-button color="warn" matTooltip="Supprimer" (click)="confirmDeleteArticle(article)">
+                    <button mat-icon-button class="delete-btn" matTooltip="Supprimer" (click)="confirmDeleteArticle(article)">
                       <mat-icon>delete</mat-icon>
                     </button>
                   </div>
@@ -285,11 +306,9 @@
       }
 
     </div>
-
   </section>
 
   <aside class="ads-right">
-    <!-- Pub droite -->
     <ins class="adsbygoogle" style="display:block"></ins>
   </aside>
 </div>

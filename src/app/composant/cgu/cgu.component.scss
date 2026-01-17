@@ -1,5 +1,5 @@
 // ========================================
-// MENTIONS LÉGALES - SPACE THEME
+// CONDITIONS GÉNÉRALES D'UTILISATION - SPACE THEME
 // ========================================
 
 .legal-page {
@@ -98,11 +98,19 @@ h1 {
   text-align: center;
   color: #4dd0e1;
   font-size: 1.75rem;
-  margin: 0 0 2rem 0;
+  margin: 0 0 0.5rem 0;
   font-family: 'Courier New', monospace;
   text-transform: uppercase;
   letter-spacing: 2px;
   text-shadow: 0 0 15px rgba(0, 188, 212, 0.5);
+}
+
+.update-date {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.8rem;
+  margin-bottom: 2rem;
+  font-style: italic;
 }
 
 .legal-section {
@@ -134,20 +142,67 @@ h1 {
     color: rgba(255, 255, 255, 0.8);
     font-size: 0.95rem;
     line-height: 1.7;
-    margin: 0;
+    margin: 0 0 0.75rem 0;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 
+// Lists
+.definition-list,
+.obligation-list,
+.forbidden-list,
+.limitation-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+
+    .list-icon {
+      color: #4dd0e1;
+      font-family: 'Courier New', monospace;
+      font-weight: bold;
+      flex-shrink: 0;
+      margin-top: 2px;
+
+      &.text-danger {
+        color: #ff6b6b;
+      }
+    }
+
+    strong {
+      color: #00bcd4;
+    }
+  }
+}
+
+.definition-list li {
+  div {
+    flex: 1;
+  }
+}
+
+// Info block
 .info-block {
   background: rgba(0, 188, 212, 0.05);
   border: 1px solid rgba(0, 188, 212, 0.15);
   border-radius: 8px;
   padding: 1rem 1.25rem;
+  margin-top: 0.75rem;
 
   p {
     margin: 0.5rem 0;
     color: rgba(255, 255, 255, 0.75);
-    font-size: 0.9rem;
+    font-size: 0.875rem;
 
     &:first-child {
       margin-top: 0;
@@ -164,6 +219,7 @@ h1 {
   }
 }
 
+// Legal link
 .legal-link {
   color: #4dd0e1;
   cursor: pointer;
