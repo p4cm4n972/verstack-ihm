@@ -10,10 +10,11 @@ import { SharedModule } from './shared/shared.module';
 import { AuthenticationService } from './services/authentication.service';
 import { PlatformService } from './core/services/platform.service';
 import { Subject, filter, takeUntil } from 'rxjs';
+import { NewsTickerComponent } from './composant/news-ticker/news-ticker.component';
 
 @Component({
   selector: 'app-root',
-  imports: [MatSidenavModule, RouterOutlet, LayoutComponent, HeaderComponent, SidenavComponent, SharedModule],
+  imports: [MatSidenavModule, RouterOutlet, LayoutComponent, HeaderComponent, SidenavComponent, SharedModule, NewsTickerComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

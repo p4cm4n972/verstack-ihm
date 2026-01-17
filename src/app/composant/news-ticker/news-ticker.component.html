@@ -1,0 +1,62 @@
+@if (isVisible) {
+  <div class="news-ticker-container">
+    <div class="ticker-label">
+      <mat-icon>rss_feed</mat-icon>
+      <span>NEWS</span>
+    </div>
+
+    <div class="ticker-wrapper"
+         [class.paused]="isPaused"
+         (mouseenter)="togglePause()"
+         (mouseleave)="togglePause()">
+
+      @if (isLoading) {
+        <div class="ticker-loading">
+          <span>Chargement des actualités...</span>
+        </div>
+      } @else if (news.length === 0) {
+        <div class="ticker-empty">
+          <span>Aucune actualité disponible</span>
+        </div>
+      } @else {
+        <div class="ticker-track">
+          <!-- Double the content for seamless loop -->
+          @for (item of news; track item.id) {
+            <div class="ticker-item" (click)="openNews(item)">
+              <span class="item-source" [style.color]="getSourceColor(item.source)">
+                <mat-icon>{{ getSourceIcon(item.source) }}</mat-icon>
+                {{ item.source }}
+              </span>
+              <span class="item-title">{{ item.title }}</span>
+              <span class="item-description">{{ item.description }}</span>
+            </div>
+          }
+          <!-- Duplicate for seamless scrolling -->
+          @for (item of news; track item.id + '-dup') {
+            <div class="ticker-item" (click)="openNews(item)">
+              <span class="item-source" [style.color]="getSourceColor(item.source)">
+                <mat-icon>{{ getSourceIcon(item.source) }}</mat-icon>
+                {{ item.source }}
+              </span>
+              <span class="item-title">{{ item.title }}</span>
+              <span class="item-description">{{ item.description }}</span>
+            </div>
+          }
+        </div>
+      }
+    </div>
+
+    <div class="ticker-controls">
+      <button class="control-btn" (click)="togglePause()" [matTooltip]="isPaused ? 'Reprendre' : 'Pause'">
+        <mat-icon>{{ isPaused ? 'play_arrow' : 'pause' }}</mat-icon>
+      </button>
+      <button class="control-btn close-btn" (click)="hideTicker()" matTooltip="Masquer">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+} @else {
+  <button class="show-ticker-btn" (click)="showTicker()" matTooltip="Afficher les actualités">
+    <mat-icon>rss_feed</mat-icon>
+  </button>
+}
