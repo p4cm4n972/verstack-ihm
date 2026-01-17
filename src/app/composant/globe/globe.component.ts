@@ -37,6 +37,7 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
   loadedImages = 0;
   totalImages = 0;
   globeVisible = false;
+  showBoot = false;
 
   private readonly ngZone = inject(NgZone);
 
@@ -259,5 +260,10 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.logos = [];
     this.points = [];
+  }
+
+  onBootAnimationEnd(): void {
+    this.showBoot = false;
+    this.globeVisible = true;
   }
 }
