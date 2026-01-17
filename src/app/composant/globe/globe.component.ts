@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, Inject, PLATFORM_ID, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, inject } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, Inject, PLATFORM_ID, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, inject, afterNextRender, NgZone } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FieldService } from '../../services/field.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -43,36 +43,56 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
   globeVisible: boolean = false;
 
   private readonly cdr = inject(ChangeDetectorRef);
+  private readonly ngZone = inject(NgZone);
+  private isHydrated = false;
 
   constructor(private _fieldService: FieldService, @Inject(PLATFORM_ID) platformId: Object) {
     this.isBrowser = isPlatformBrowser(platformId);
+
+    // afterNextRender s'exécute après l'hydratation SSR, évitant NG0506
+    if (this.isBrowser) {
+      afterNextRender(() => {
+        this.isHydrated = true;
+        this.initializeGlobe();
+      });
+    }
   }
 
   ngOnInit(): void {
     this.loading$.pipe(
       filter(done => !done), take(1)
     ).subscribe(() => {
-      //this.showBoot = true;
       this.globeVisible = true;
-      // OnPush: forcer la détection de changement quand le globe devient visible
       this.cdr.markForCheck();
     });
-    if (this.isBrowser) {
-      this.loadImagesLogos();
-    }
   }
 
+  /**
+   * Initialise le globe après l'hydratation SSR.
+   * Appelé depuis afterNextRender pour éviter l'erreur NG0506.
+   */
+  private initializeGlobe(): void {
+    // Charger les images
+    this.loadImagesLogos();
 
-  ngAfterViewInit(): void {
-    if (this.isBrowser) {
-      const canvas = this.canvasRef.nativeElement;
+    // Initialiser le canvas
+    const canvas = this.canvasRef?.nativeElement;
+    if (canvas) {
       this.ctx = canvas.getContext('2d')!;
       canvas.width = 600;
       canvas.height = 600;
-      
+
       this.setupIntersectionObserver();
-      this.animationFrameId = requestAnimationFrame(() => this.animate());
+
+      // Lancer l'animation en dehors de NgZone pour éviter les cycles de change detection
+      this.ngZone.runOutsideAngular(() => {
+        this.animationFrameId = requestAnimationFrame(() => this.animate());
+      });
     }
+  }
+
+  ngAfterViewInit(): void {
+    // Le canvas est maintenant initialisé dans initializeGlobe() après hydratation
   }
 
   private setupIntersectionObserver(): void {
@@ -103,7 +123,9 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private resumeAnimation(): void {
     if (this.animationFrameId === null && this.isVisible) {
-      this.animationFrameId = requestAnimationFrame((time) => this.animate(time));
+      this.ngZone.runOutsideAngular(() => {
+        this.animationFrameId = requestAnimationFrame((time) => this.animate(time));
+      });
     }
   }
 
