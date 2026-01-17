@@ -55,6 +55,57 @@
     display: flex;
     gap: 10px;
   }
+
+  // Ko-fi support button
+  .footer-support {
+    display: flex;
+    align-items: center;
+  }
+
+  .kofi-button {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: linear-gradient(135deg, rgba(255, 94, 91, 0.15) 0%, rgba(255, 94, 91, 0.25) 100%);
+    border: 1px solid rgba(255, 94, 91, 0.4);
+    border-radius: 8px;
+    color: #ff5e5b;
+    text-decoration: none;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 10px rgba(255, 94, 91, 0.2);
+
+    &:hover {
+      background: linear-gradient(135deg, rgba(255, 94, 91, 0.25) 0%, rgba(255, 94, 91, 0.4) 100%);
+      border-color: rgba(255, 94, 91, 0.6);
+      box-shadow: 0 4px 20px rgba(255, 94, 91, 0.4);
+      transform: translateY(-2px);
+      color: #ff7b79;
+    }
+
+    .kofi-icon {
+      font-size: 1.1rem;
+      animation: steam 2s ease-in-out infinite;
+    }
+
+    .kofi-text {
+      white-space: nowrap;
+    }
+  }
+
+  @keyframes steam {
+    0%, 100% {
+      transform: translateY(0) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-2px) rotate(5deg);
+    }
+  }
   
   .footer-note {
     margin-top: 5px;
@@ -79,6 +130,7 @@
 
     .footer-logo,
     .footer-links,
+    .footer-support,
     .version {
       width: 100%;
       text-align: center;
@@ -87,6 +139,10 @@
     .footer-links {
       justify-content: center;
       flex-wrap: wrap;
+    }
+
+    .footer-support {
+      justify-content: center;
     }
   }
 
@@ -102,6 +158,15 @@
 
     .footer-note {
       font-size: 12px;
+    }
+
+    .kofi-button {
+      padding: 6px 12px;
+      font-size: 0.75rem;
+
+      .kofi-icon {
+        font-size: 1rem;
+      }
     }
   }
 
@@ -123,6 +188,20 @@
   .version {
     color: #e53935;
     text-shadow: 0 0 5px rgba(229, 57, 53, 0.4);
+  }
+
+  .kofi-button {
+    background: linear-gradient(135deg, rgba(255, 193, 7, 0.15) 0%, rgba(255, 193, 7, 0.25) 100%);
+    border-color: rgba(255, 193, 7, 0.4);
+    color: #ffc107;
+    box-shadow: 0 2px 10px rgba(255, 193, 7, 0.2);
+
+    &:hover {
+      background: linear-gradient(135deg, rgba(255, 193, 7, 0.25) 0%, rgba(255, 193, 7, 0.4) 100%);
+      border-color: rgba(255, 193, 7, 0.6);
+      box-shadow: 0 4px 20px rgba(255, 193, 7, 0.4);
+      color: #ffd54f;
+    }
   }
 }
  

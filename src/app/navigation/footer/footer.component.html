@@ -1,28 +1,23 @@
 <mat-toolbar color="primary" class="footer-toolbar">
   <div class="site-container">
     <div class="footer-logo">
-      
       <div class="footer-note">© 2024-{{ currentYear }} ITMADE - Tous droits réservés</div>
     </div>
-  
+
     <div class="footer-links">
       <a mat-button routerLink="/home">accueil</a>
       <a mat-button routerLink="/about">à propos</a>
       <a mat-button routerLink="/mentions">mentions légales</a>
       <a mat-button routerLink="/release">mise à jour</a>
     </div>
-  
-  <!-- <div class="footer-social">
-      <a mat-icon-button href="https://github.com" target="_blank" aria-label="GitHub">
-        <mat-icon>code</mat-icon>
+
+    <div class="footer-support">
+      <a href="https://ko-fi.com/itmade" target="_blank" rel="noopener noreferrer" class="kofi-button">
+        <span class="kofi-icon">☕</span>
+        <span class="kofi-text">Offrir un café</span>
       </a>
-      <a mat-icon-button href="https://twitter.com" target="_blank" aria-label="Twitter">
-        <mat-icon>share</mat-icon>
-      </a>
-    </div>-->
+    </div>
+
     <span class="version footer-note">v{{ version }}</span>
   </div>
-  </mat-toolbar>
-  
-  
-  
+</mat-toolbar>
