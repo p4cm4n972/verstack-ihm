@@ -138,7 +138,7 @@
       </div>
     </div>
 
-    @if (!isAuth || userFavoris?.length == 0 ) {
+    @if (!isAuth || userFavoris().length === 0) {
     <ng-container>
       <div class="col right hide-on-small">
         <app-globe></app-globe>

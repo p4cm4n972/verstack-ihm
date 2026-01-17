@@ -18,8 +18,7 @@
       </mat-tab-group>
 
       <div class="languages-grid">
-        @for(language of domainLangages(filteredLangages, selectedDomain, selectedDomainIndex) ; track trackP(language,
-        i); let i = $index)
+        @for(language of domainLangages(filteredLangages, selectedDomain, selectedDomainIndex); track language.name; let i = $index)
         {<ng-container>
           <mat-card class="language-card" appearance="outlined">
             <mat-card-header>
@@ -35,16 +34,18 @@
                       @case ('stable') { → }
                     }
                   </span>
-                  <span class="status-indicator" [ngClass]="getDataStatusClass(language.versions[0]?.updatedAt)"
-                    [matTooltip]="getDataStatusTooltip(language.versions[0]?.updatedAt)"
-                    matTooltipPosition="above"></span>
+                  @if(language.versions && language.versions.length > 0) {
+                    <span class="status-indicator" [ngClass]="getDataStatusClass(language.versions[0].updatedAt)"
+                      [matTooltip]="getDataStatusTooltip(language.versions[0].updatedAt)"
+                      matTooltipPosition="above"></span>
+                  }
                 </mat-card-title>
                 <mat-card-subtitle>
                   <mat-icon [ngClass]="getIconColor(language.domain)">
                     {{getIconType(language.domain)}}
                   </mat-icon>
                 </mat-card-subtitle>
-                @for(version of language.versions; track version) {
+                @for(version of language.versions; track version.label) {
                 <mat-card-subtitle [class]="'version-badge version-' + version.type.toLowerCase()">
                   <span> {{ version.type }}:</span>&nbsp; {{ version.label }}
                 </mat-card-subtitle>
@@ -65,11 +66,11 @@
               <mat-card-content style="margin: 10px;">
                 <mat-card appearance="outlined">
                   <mat-card-content>
-                    @for(version of language.versions; track version) {
-                    <mat-progress-bar [mode]="getProgressMode(version.supportDuration)" style="margin-bottom: 5px;"
-                      [value]="getSupportPercentageFromDuration(version.releaseDate, version.supportDuration)"
-                      [ngClass]="getSupportColor(version.releaseDate, version.supportDuration)"
-                      matTooltip="{{ getSupportTooltip(version.releaseDate, version.supportDuration, version.type) }}"
+                    @for(version of language.versions; track version.label) {
+                    <mat-progress-bar [mode]="getProgressMode(version.supportDuration ?? 0)" style="margin-bottom: 5px;"
+                      [value]="getSupportPercentageFromDuration(version.releaseDate, version.supportDuration ?? 0)"
+                      [ngClass]="getSupportColor(version.releaseDate, version.supportDuration ?? 0)"
+                      matTooltip="{{ getSupportTooltip(version.releaseDate, version.supportDuration ?? 0, version.type) }}"
                       matTooltipPosition="above">
                     </mat-progress-bar>}
                   </mat-card-content>
@@ -81,13 +82,20 @@
                 <button mat-raised-button color="primary">Documentation</button>
               </a>
               
-              @if(authStatus && favorisFromHome()!.length == 0 ){ <a mat-icon-button aria-label="épingler"
-                matTooltip="{{(isPinned(language.name) ? 'Retirer ' : 'Ajouter ') + language.name + ' à votre board'}}"
-                aria-label="Bouton qui ajoute la carte au tableau personnalisé" (click)="pinLanguage(language)">
-                <mat-icon aria-hidden="true" aria-label="épingle icone"
-                  [fontIcon]="isPinned(language.name) ? 'beenhere' : 'new_label'"
-                  [ngClass]="{ 'pinned-icon': isPinned(language.name) }"></mat-icon>
-              </a>}
+              @if(authStatus) {
+                <button mat-icon-button
+                  [attr.aria-label]="(isPinned(language.name) ? 'Retirer ' : 'Ajouter ') + language.name + ' de vos favoris'"
+                  [matTooltip]="(isPinned(language.name) ? 'Retirer ' : 'Ajouter ') + language.name + ' à votre board'"
+                  (click)="pinLanguage(language)"
+                  [disabled]="isFavorisLoading()">
+                  @if(isFavorisLoading()) {
+                    <mat-icon>hourglass_empty</mat-icon>
+                  } @else {
+                    <mat-icon [fontIcon]="isPinned(language.name) ? 'beenhere' : 'new_label'"
+                      [ngClass]="{ 'pinned-icon': isPinned(language.name) }"></mat-icon>
+                  }
+                </button>
+              }
             </mat-card-actions>
           </mat-card>
 

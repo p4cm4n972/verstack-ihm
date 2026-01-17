@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { AuthenticationService } from '../../services/authentication.service';
 import { ProfileService } from '../../services/profile.service';
+import { FavorisService } from '../../services/favoris.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
@@ -16,6 +17,7 @@ import { SeoService } from '../../services/seo.service';
 import { UserProfile } from '../../models/user.interface';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { GravatarService } from '../../services/gravatar.service';
+import { FavoriteTechnology } from '../../models/technology.interface';
 
 @Component({
   selector: 'app-profile',
@@ -28,13 +30,17 @@ import { GravatarService } from '../../services/gravatar.service';
   styleUrl: './profile.component.scss',
 })
 export class ProfileComponent implements OnInit {
+  private readonly favorisService = inject(FavorisService);
+
   profileForm: FormGroup;
   isEditMode: boolean = false;
   defaultProfilePicture: string = 'https://placehold.co/10x10';
-  favoris: string[] = [];
   userData: UserProfile | null = null;
   activeTab: string = 'overview';
   selectedTabIndex: number = 0;
+
+  // Expose favoris from centralized service
+  readonly userFavoris = this.favorisService.favoris;
 
   constructor(
     private fb: FormBuilder,
@@ -51,7 +57,6 @@ export class ProfileComponent implements OnInit {
       lastName: ['', Validators.required],
       email: [''],
       job: [''],
-      favoris: [''],
       profilePicture: [null],
     });
   }
@@ -128,7 +133,10 @@ export class ProfileComponent implements OnInit {
 
   private storeUserData(response: UserProfile) {
     this.platformService.setJson('user', response);
-    this.platformService.setJson('favoris', response.favoris);
+    // Update favoris in centralized service
+    if (response.favoris) {
+      this.favorisService.setFavoris(response.favoris);
+    }
   }
 
   toggleEditMode(): void {

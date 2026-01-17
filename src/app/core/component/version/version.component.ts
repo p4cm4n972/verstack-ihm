@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, inject, input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Inject, OnDestroy, OnInit, PLATFORM_ID, inject, input, effect } from '@angular/core';
 import { Field } from '../../../models/field.model';
 import { LangagesService } from '../../../services/langages.service';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -7,12 +7,12 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AuthenticationService } from '../../../services/authentication.service';
-import { ProfileService } from '../../../services/profile.service';
+import { FavorisService } from '../../../services/favoris.service';
 import { CommonModule } from '@angular/common';
 import { Observable, Subject, tap, take, takeUntil } from 'rxjs';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { differenceInMonths, parseISO, formatDistanceToNow, differenceInHours } from 'date-fns';
-import { fr, th } from 'date-fns/locale';
+import { fr } from 'date-fns/locale';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -20,15 +20,11 @@ import { Title, Meta } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import {
   MatDialog,
-  MatDialogActions,
-  MatDialogClose,
-  MatDialogContent,
   MatDialogModule,
-  MatDialogRef,
-  MatDialogTitle,
 } from '@angular/material/dialog';
 import { SeoService } from '../../../services/seo.service';
 import { isPlatformBrowser } from '@angular/common';
+import { Technology, FavoriteTechnology } from '../../../models/technology.interface';
 
 @Component({
   selector: 'app-version',
@@ -52,13 +48,14 @@ import { isPlatformBrowser } from '@angular/common';
 })
 
 export class VersionComponent implements OnInit, OnDestroy {
-  readonly favorisFromHome = input<unknown[]>([]);
+  readonly favorisFromHome = input<FavoriteTechnology[]>([]);
   readonly origin = input('');
 
   readonly dialog = inject(MatDialog);
+  readonly favorisService = inject(FavorisService);
 
-  langages: any[] = [];
-  filteredLangages: any[] = [];
+  langages: Technology[] = [];
+  filteredLangages: Technology[] = [];
   selectedDomainIndex: number = 0;
   domaines: string[] = [
     'web',
@@ -68,18 +65,19 @@ export class VersionComponent implements OnInit, OnDestroy {
     'ia',
     'game',
     'devops',
-    //'backend',
   ];
   toggle: boolean = false;
   fields: Field[] = [];
   selectedDomain: string = 'Web';
 
   authStatus: boolean = false;
-  userData: any;
-  userFavoris: any;
 
   isLoading: boolean = true;
   isBrowser: boolean;
+
+  // Expose favoris signals from service
+  readonly userFavoris = this.favorisService.favoris;
+  readonly isFavorisLoading = this.favorisService.isLoading;
 
   private destroy$ = new Subject<void>();
 
@@ -135,13 +133,19 @@ export class VersionComponent implements OnInit, OnDestroy {
   constructor(
     private _langagesService: LangagesService,
     private authService: AuthenticationService,
-    private profileService: ProfileService,
-    private title: Title, private meta: Meta,
+    private title: Title,
+    private meta: Meta,
     private seo: SeoService,
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object,
   ) {
     this.isBrowser = isPlatformBrowser(this.platformId);
+
+    // Effect to trigger change detection when favoris change
+    effect(() => {
+      this.favorisService.favoris();
+      this.cdr.markForCheck();
+    });
   }
 
   ngOnInit(): void {
@@ -159,58 +163,37 @@ export class VersionComponent implements OnInit, OnDestroy {
     image: 'https://verstack.io/assets/slider/slide2.png',
     url: 'https://verstack.io/version'
   });
-    this.getAuthStatus().pipe(take(1), takeUntil(this.destroy$)).subscribe((status: any) => {
+    this.getAuthStatus().pipe(take(1), takeUntil(this.destroy$)).subscribe((status: boolean) => {
       if (status) {
-        this.loadUserData();
-        this.loadUserFavoris();
-        this.loadUserProfile();
+        // Sync favoris from API when authenticated
+        this.favorisService.syncFromApi().pipe(takeUntil(this.destroy$)).subscribe();
       }
       this.loadLangages();
     });
   }
 
-  private loadUserData(): void {
-    if (this.isBrowser) {
-      const storedUserData = localStorage.getItem('user');
-      this.userData = storedUserData ? JSON.parse(storedUserData) : null;
-    } else {
-      this.userData = null;
-    }
-  }
+  private loadLangages(): void {
+    this._langagesService.getAllLangages().pipe(takeUntil(this.destroy$)).subscribe({
+      next: (langages: Technology[]) => {
+        const favorisFromHomeValue = this.favorisFromHome();
+        if (favorisFromHomeValue && favorisFromHomeValue.length > 0) {
+          const favorisNames = favorisFromHomeValue.map((f: FavoriteTechnology) => f.name);
+          this.langages = langages.filter(l => favorisNames.includes(l.name));
+        } else {
+          this.langages = langages;
+        }
 
-  private loadUserFavoris(): void {
-    if (this.isBrowser) {
-      const storedUserFavoris = localStorage.getItem('favoris');
-      this.userFavoris = (storedUserFavoris && storedUserFavoris.length !== 0)
-        ? JSON.parse(storedUserFavoris)
-        : null;
-    } else {
-      this.userFavoris = null;
-    }
-  }
-
- private loadLangages(): void {
-  this._langagesService.getAllLangages().pipe(takeUntil(this.destroy$)).subscribe({
-    next: (langages) => {
-      if (this.favorisFromHome() && this.favorisFromHome().length > 0) {
-        const favorisNames = this.favorisFromHome().map((f: any) => f.name);
-        this.langages = langages.filter(l => favorisNames.includes(l.name));
-      } else {
-        this.langages = langages;
+        this.filteredLangages = this.langages;
+        this.isLoading = false;
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        console.error('Erreur lors de la récupération des langages', err);
+        this.isLoading = false;
+        this.cdr.markForCheck();
       }
-
-      this.filteredLangages = this.langages;
-      this.isLoading = false;
-      this.cdr.markForCheck(); // Notifier Angular que les données ont changé
-    },
-    error: (err) => {
-      console.error('Erreur lors de la récupération des langages', err);
-      this.isLoading = false;
-      this.cdr.markForCheck();
-    }
-  });
-}
-
+    });
+  }
 
   private getAuthStatus(): Observable<boolean> {
     return this.authService.getAuthStatus().pipe(
@@ -220,23 +203,7 @@ export class VersionComponent implements OnInit, OnDestroy {
     );
   }
 
-  private loadUserProfile(): void {
-    if (this.userData?.id) {
-      this.profileService.getUserProfile(this.userData.id).pipe(takeUntil(this.destroy$)).subscribe({
-        next: (data) => {
-          this.userData = data;
-          this.storeUserData(data);
-        },
-        error: (err) =>
-          console.error(
-            'Erreur lors de la récupération des données utilisateur',
-            err
-          ),
-      });
-    }
-  }
-
-  domainLangages(langages: any[], selectedDomain: string, index: number): any[] {
+  domainLangages(langages: Technology[], selectedDomain: string, index: number): Technology[] {
     const filtered = langages.filter(langage =>
       langage.domain.includes(this.domaines[index])
     );
@@ -247,7 +214,6 @@ export class VersionComponent implements OnInit, OnDestroy {
       const aIndex = order.findIndex(type => a.domain.includes(type));
       const bIndex = order.findIndex(type => b.domain.includes(type));
 
-      // Si un élément n’a aucun des types, on lui attribue un index très élevé
       const scoreA = aIndex === -1 ? 999 : aIndex;
       const scoreB = bIndex === -1 ? 999 : bIndex;
 
@@ -255,82 +221,20 @@ export class VersionComponent implements OnInit, OnDestroy {
     });
   }
 
-
-
-
-  pinnedLangages: Set<string> = new Set();
-
-  pinLanguage(language: any): void {
-    if (
-      (this.userFavoris &&
-        this.userFavoris?.some((elm: any) => elm.name == language.name)) ||
-      this.pinnedLangages.has(language.name)
-    ) {
-      const index = this.userFavoris.findIndex(
-        (elm: any) => elm.name == language.name
-      );
-      this.userFavoris.splice(index, 1);
-      const updatedData = {
-        favoris: [...this.userFavoris],
-      };
-      this.updateUserFavoris(updatedData);
-      this.pinnedLangages.delete(language);
-    } else {
-      const { name, logoUrl } = language;
-      this.userFavoris = [...this.userData.favoris, { name, logoUrl }];
-      const updatedData = {
-        favoris: [...this.userData.favoris, { name, logoUrl }],
-      };
-      this.updateUserFavoris(updatedData);
-      this.loadUserFavoris();
-      this.pinnedLangages.add(language.name);
-    }
-  }
-  private storeUserData(response: any) {
-    if (this.isBrowser) {
-      // localStorage.setItem('user', JSON.stringify(response));
-      localStorage.setItem('favoris', JSON.stringify(response.favoris));
-    }
-  }
-
-  private updateUserFavoris(updatedData: any): void {
-    this.profileService
-      .updateUserProfile(this.userData._id, updatedData)
+  /**
+   * Toggle a technology in favorites using the centralized FavorisService
+   */
+  pinLanguage(language: Technology): void {
+    this.favorisService.toggleFavoris(language)
       .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: () => {
-          console.log('Profil mis à jour avec succès !', this.pinnedLangages);
-          this.refreshUserData();
-        },
-        error: (err) =>
-          console.error('Erreur lors de la mise à jour du profil', err),
-      });
+      .subscribe();
   }
 
-  private refreshUserData(): void {
-    this.profileService.getUserProfile(this.userData._id).pipe(takeUntil(this.destroy$)).subscribe({
-      next: (data) => {
-        this.userData = data;
-        this.storeUserData(data);
-      },
-      error: (err) =>
-        console.error(
-          'Erreur lors de la récupération des données utilisateur',
-          err
-        ),
-    });
-  }
-
-  isPinned(languageName: any): boolean {
-    if (
-      (this.userFavoris &&
-        this.userFavoris.some((elm: any) => elm.name == languageName)) ||
-      this.pinnedLangages.has(languageName)
-    ) {
-      return true;
-    } else {
-      return false;
-    }
+  /**
+   * Check if a technology is in favorites using the FavorisService
+   */
+  isPinned(languageName: string): boolean {
+    return this.favorisService.isFavoris(languageName);
   }
 
   redirectTo(url: string): void {

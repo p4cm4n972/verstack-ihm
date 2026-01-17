@@ -1,19 +1,29 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable, Injector } from '@angular/core';
 import { BehaviorSubject, Observable, tap, shareReplay } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { PlatformService } from '../core/services/platform.service';
 import { LoginCredentials, SignupData, AuthResponse, DecodedToken, UserProfile } from '../models/user.interface';
+import { FavorisService } from './favoris.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthenticationService {
   private baseUrl = '/api/authentication';
-  // authStatusSubject = new BehaviorSubject<boolean>(this.isLoggedIn());
+  private readonly injector = inject(Injector);
+  private _favorisService: FavorisService | null = null;
 
   private isAuthenticated$ = new BehaviorSubject<boolean>(false);
   private userRole$ = new BehaviorSubject<string>('');
+
+  // Lazy getter to avoid circular dependency with FavorisService
+  private getFavorisService(): FavorisService {
+    if (!this._favorisService) {
+      this._favorisService = this.injector.get(FavorisService);
+    }
+    return this._favorisService;
+  }
 
   constructor(
     private http: HttpClient,
@@ -54,10 +64,11 @@ export class AuthenticationService {
             if (userId) {
               this.http.get<UserProfile>(`/api/users/${userId}`).subscribe({
                 next: (profile: UserProfile) => {
+                  // Use FavorisService to set favoris (centralized state management)
                   const favoris = profile.favoris ?? [];
-                  this.platformService.setJson('favoris', favoris);
-                }
-                , error: (error) => {
+                  this.getFavorisService().setFavoris(favoris);
+                },
+                error: (error) => {
                   console.error('Error fetching user data:', error);
                 }
               });
@@ -100,7 +111,8 @@ export class AuthenticationService {
     this.platformService.removeLocalStorageItem('refresh_token');
     this.platformService.removeLocalStorageItem('user');
     this.platformService.removeLocalStorageItem('userId');
-    this.platformService.removeLocalStorageItem('favoris');
+    // Clear favoris using centralized service
+    this.getFavorisService().clearLocalState();
     this.isAuthenticated$.next(false);
     this.updateAuthStatus(false);
     // Émettre un rôle vide pour réafficher les publicités

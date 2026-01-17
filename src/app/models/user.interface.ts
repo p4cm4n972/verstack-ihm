@@ -1,10 +1,12 @@
+import { FavoriteTechnology } from './technology.interface';
+
 export interface UserProfile {
   _id: string;
   pseudo: string;
   firstName?: string;
   lastName?: string;
   email: string;
-  favoris: any[];
+  favoris: FavoriteTechnology[];
   projects?: any[];
   contacts?: string[];
   profileViews?: number;

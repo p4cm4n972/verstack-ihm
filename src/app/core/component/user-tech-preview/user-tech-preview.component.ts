@@ -1,13 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedMaterialModule } from '../../../shared/material.module';
 import { AuthenticationService } from '../../../services/authentication.service';
-import { PlatformService } from '../../services/platform.service';
 import { LangagesService } from '../../../services/langages.service';
+import { FavorisService } from '../../../services/favoris.service';
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { differenceInMonths, parseISO } from 'date-fns';
+import { FavoriteTechnology } from '../../../models/technology.interface';
 
 interface TechWithPopularity {
   _id: string;
@@ -58,18 +59,27 @@ export class UserTechPreviewComponent implements OnInit {
     database: { type: 'storage', color: 'icon-database' },
   };
 
+  private readonly favorisService = inject(FavorisService);
+
   constructor(
     private authService: AuthenticationService,
-    private platformService: PlatformService,
     private langagesService: LangagesService
-  ) {}
+  ) {
+    // React to favoris changes
+    effect(() => {
+      const favoris = this.favorisService.favoris();
+      if (favoris.length > 0) {
+        this.loadUserTechnologies();
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.loadUserTechnologies();
   }
 
   private loadUserTechnologies(): void {
-    const favoris = this.platformService.getJson('favoris', []);
+    const favoris = this.favorisService.favoris();
     this.userFavoris = Array.isArray(favoris) ? favoris : [];
 
     if (this.userFavoris.length === 0) {
@@ -79,7 +89,7 @@ export class UserTechPreviewComponent implements OnInit {
 
     this.langagesService.getAllLangages().subscribe({
       next: (allLangages) => {
-        const favorisNames = this.userFavoris.map((f: any) => f.name);
+        const favorisNames = this.userFavoris.map((f: FavoriteTechnology) => f.name);
         const filteredTechs = allLangages.filter(lang =>
           favorisNames.includes(lang.name)
         );

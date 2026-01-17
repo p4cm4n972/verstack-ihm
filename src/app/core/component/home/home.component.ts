@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, inject, effect } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { GlobeComponent } from '../../../composant/globe/globe.component';
 import { RouterModule } from '@angular/router';
@@ -11,8 +11,10 @@ import { SeoService } from '../../../services/seo.service';
 import { PlatformService } from '../../services/platform.service';
 import { StructuredDataService } from '../../services/structured-data.service';
 import { LangagesService } from '../../../services/langages.service';
+import { FavorisService } from '../../../services/favoris.service';
 import { Observable, tap } from 'rxjs';
 import { differenceInDays, differenceInHours } from 'date-fns';
+import { FavoriteTechnology } from '../../../models/technology.interface';
 
 interface TerminalCommand {
   command: string;
@@ -40,11 +42,15 @@ interface TerminalNotification {
   styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnDestroy {
+  private readonly favorisService = inject(FavorisService);
+
   authStatus: boolean = false;
   authStatus$: Observable<boolean>;
   userData: any;
-  userFavoris: any = [];
   bgLoaded = false;
+
+  // Expose favoris from centralized service
+  readonly userFavoris = this.favorisService.favoris;
 
   // Terminal typing effect
   terminalCommands: TerminalCommand[] = [
@@ -104,7 +110,7 @@ export class HomeComponent implements OnDestroy {
     });
 
     this.userData = this.platformService.getJson<any>('user', null);
-    this.userFavoris = this.platformService.getJson<any[]>('favoris', []);
+    // Favoris are now managed by FavorisService (already loaded from localStorage)
   }
 
 
@@ -120,8 +126,10 @@ export class HomeComponent implements OnDestroy {
   }
 
   private loadUserFavoris(): void {
-    this.userFavoris = this.platformService.getJson<any[]>('favoris', []);
-    this.loadNotificationsFromApi();
+    // Sync from API to ensure fresh data
+    this.favorisService.syncFromApi().subscribe(() => {
+      this.loadNotificationsFromApi();
+    });
   }
 
   private loadNotificationsFromApi(): void {
@@ -129,12 +137,12 @@ export class HomeComponent implements OnDestroy {
       return;
     }
 
-    const favoris = this.platformService.getJson<any[]>('favoris', []);
+    const favoris = this.favorisService.favoris();
     if (!favoris || favoris.length === 0) {
       return;
     }
 
-    const favorisNames = favoris.map((f: any) => f.name);
+    const favorisNames = favoris.map((f: FavoriteTechnology) => f.name);
 
     this.langagesService.getAllLangages().subscribe({
       next: (allLangages) => {
@@ -266,7 +274,10 @@ export class HomeComponent implements OnDestroy {
   }
 
   private storeUserData(response: any) {
-    this.platformService.setJson('favoris', response.favoris);
+    // Update favoris in the centralized service
+    if (response.favoris) {
+      this.favorisService.setFavoris(response.favoris);
+    }
   }
 
   private preloadBackgroundImage(): void {

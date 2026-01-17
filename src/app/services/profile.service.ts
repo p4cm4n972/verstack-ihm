@@ -1,45 +1,36 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ErrorMessageStrategy, DefaultErrorStrategy, strategyMap } from '../shared/strategies/error-message.strategy';
-import { catchError, Observable, tap, throwError } from 'rxjs';
+import { catchError, Observable, throwError } from 'rxjs';
+import { UserProfile } from '../models/user.interface';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProfileService {
-  private baseUrl = '/api/users';
-  private header = new HttpHeaders({ 'content-type': 'application/json' });
-  
+  private readonly baseUrl = '/api/users';
+  private readonly headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-  
   constructor(private http: HttpClient) {}
-  getUserProfile(userId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/${userId}`);
+
+  /**
+   * Get user profile by ID
+   */
+  getUserProfile(userId: string): Observable<UserProfile> {
+    return this.http.get<UserProfile>(`${this.baseUrl}/${userId}`);
   }
 
-  updateUserProfile(userId: string, updatedData: any): Observable<any> {
-    const formData = new FormData();
-    
-    // Ajouter les champs texte
-    for (const key in updatedData) {
-      if (updatedData[key] !== null && key !== 'profilePicture') {
-        formData.append(key, updatedData[key]);
-      }
-    }
-    
-    // Ajouter la photo de profil si présente
-    if (updatedData.profilePicture) {
-      formData.append('profilePicture', updatedData.profilePicture);
-    }
-    
-    return this.http.patch<any | any[]>(`${this.baseUrl}/${userId}`, updatedData, {headers: this.header}).pipe(
-      tap((response) => {
-        if (response) {
-          console.log(response);
-        }
-      }),
+  /**
+   * Update user profile and return the updated profile
+   */
+  updateUserProfile(userId: string, updatedData: Partial<UserProfile>): Observable<UserProfile> {
+    return this.http.patch<UserProfile>(
+      `${this.baseUrl}/${userId}`,
+      updatedData,
+      { headers: this.headers }
+    ).pipe(
       catchError((error: HttpErrorResponse) => {
-        console.error('erreur');
+        console.error('Profile update error:', error);
         let errorMessage = 'Une erreur inconnue est survenue.';
 
         if (error.error instanceof ErrorEvent) {
@@ -50,10 +41,8 @@ export class ProfileService {
           errorMessage = strategy.getMessage(error);
         }
 
-        alert(errorMessage);
         return throwError(() => new Error(errorMessage));
       })
-      
     );
   }
 }
