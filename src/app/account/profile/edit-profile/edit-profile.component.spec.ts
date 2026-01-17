@@ -461,7 +461,7 @@ describe('EditProfileComponent', () => {
 
       expect(mockDialogRef.close).toHaveBeenCalledWith(
         jasmine.objectContaining({
-          profilePicture: '',
+          profilePicture: null, // null is sent to properly clear the field on the backend
           useGravatar: true
         })
       );

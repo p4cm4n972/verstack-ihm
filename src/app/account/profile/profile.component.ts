@@ -89,18 +89,38 @@ export class ProfileComponent implements OnInit {
 
   openEditProfileDialog(): void {
     if (!this.userData) return;
-    
+
     const dialogRef = this.dialog.open(EditProfileComponent, {
       data: { ...this.userData },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+        // Store the useGravatar and profilePicture values from the dialog result
+        // in case the backend doesn't return them properly
+        const dialogUseGravatar = result.useGravatar;
+        const dialogProfilePicture = result.profilePicture;
+
         this.profileService
           .updateUserProfile(this.userData!._id, result)
-          .subscribe(() => {
+          .subscribe((response) => {
             this.openSnackBar('Profil mis à jour avec succès !');
-            this.loadUserProfile(); // Recharger les données utilisateur
+            // Reload profile and merge with dialog result to ensure Gravatar settings are preserved
+            this.profileService.getUserProfile(this.userData!._id).subscribe({
+              next: (data: UserProfile) => {
+                // Merge API response with dialog values for useGravatar and profilePicture
+                // This ensures the frontend reflects the user's choice even if backend doesn't persist these fields
+                this.userData = {
+                  ...data,
+                  useGravatar: dialogUseGravatar ?? data.useGravatar,
+                  profilePicture: dialogProfilePicture !== undefined ? dialogProfilePicture : data.profilePicture
+                };
+                this.storeUserData(this.userData);
+              },
+              error: (err) => {
+                console.error('Erreur lors de la récupération des données utilisateur', err);
+              }
+            });
           });
       }
     });

@@ -148,9 +148,20 @@ export class EditProfileComponent {
   }
 
   saveChanges(): void {
+    // When using Gravatar, we need to clear the profilePicture by sending null
+    // so the backend properly clears the field
+    let profilePictureValue: string | null;
+    if (this.selectedFile) {
+      profilePictureValue = this.selectedFile;
+    } else if (this.useGravatar) {
+      profilePictureValue = null; // Clear the profile picture when using Gravatar
+    } else {
+      profilePictureValue = this.profilePicture || null;
+    }
+
     const updatedData = {
       ...this.profileForm.value,
-      profilePicture: this.selectedFile || (this.useGravatar ? '' : this.profilePicture),
+      profilePicture: profilePictureValue,
       useGravatar: this.useGravatar,
     };
     this.dialogRef.close(updatedData);
