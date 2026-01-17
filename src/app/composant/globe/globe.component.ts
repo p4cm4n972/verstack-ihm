@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, Inject, PLATFORM_ID, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, inject, afterNextRender, NgZone } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, Inject, PLATFORM_ID, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, inject, NgZone } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FieldService } from '../../services/field.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -44,18 +44,10 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private readonly cdr = inject(ChangeDetectorRef);
   private readonly ngZone = inject(NgZone);
-  private isHydrated = false;
+  private initialized = false;
 
   constructor(private _fieldService: FieldService, @Inject(PLATFORM_ID) platformId: Object) {
     this.isBrowser = isPlatformBrowser(platformId);
-
-    // afterNextRender s'exécute après l'hydratation SSR, évitant NG0506
-    if (this.isBrowser) {
-      afterNextRender(() => {
-        this.isHydrated = true;
-        this.initializeGlobe();
-      });
-    }
   }
 
   ngOnInit(): void {
@@ -67,13 +59,20 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  ngAfterViewInit(): void {
+    if (this.isBrowser && !this.initialized) {
+      // Différer l'initialisation au prochain macrotask pour éviter les problèmes d'hydratation
+      setTimeout(() => this.initializeGlobe(), 0);
+    }
+  }
+
   /**
-   * Initialise le globe après l'hydratation SSR.
-   * Appelé depuis afterNextRender pour éviter l'erreur NG0506.
+   * Initialise le globe après le premier rendu.
+   * Utilise setTimeout pour différer après l'hydratation SSR.
    */
   private initializeGlobe(): void {
-    // Charger les images
-    this.loadImagesLogos();
+    if (this.initialized || this.isDestroyed) return;
+    this.initialized = true;
 
     // Initialiser le canvas
     const canvas = this.canvasRef?.nativeElement;
@@ -89,10 +88,9 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.animationFrameId = requestAnimationFrame(() => this.animate());
       });
     }
-  }
 
-  ngAfterViewInit(): void {
-    // Le canvas est maintenant initialisé dans initializeGlobe() après hydratation
+    // Charger les images
+    this.loadImagesLogos();
   }
 
   private setupIntersectionObserver(): void {
