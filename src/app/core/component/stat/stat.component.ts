@@ -21,8 +21,8 @@ export class StatComponent implements OnInit {
       image = `${window.location.origin}/assets/slider/slider-1.jpg`;
     }
     this.seo.updateMetaData({
-      title: 'Statistiques – Verstack.io',
-      description: 'Explorez les statistiques des langages de programmation et des outils de développement.',
+      title: 'metrics – verstack.io',
+      description: 'Explore programming languages and development tools popularity metrics.',
       keywords: `verstack, langages, outils, développeurs, Angular, React , version Angular, version React, version Vue.js, version Node.js, version Python, version Java,
       version C#, version PHP, version Ruby, version Go, version Rust, version JavaScript, version TypeScript, version Bash, version Shell, version Perl,
       version Kotlin, version Swift, version Scala, version Dart, version Objective-C, version C, version C++, version R, version MATLAB, version Julia,

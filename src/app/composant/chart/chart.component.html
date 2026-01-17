@@ -1,18 +1,30 @@
 <div class="chart-wrapper">
+  <!-- Terminal Header -->
+  <div class="terminal-header">
+    <span class="prompt">$</span>
+    <span class="command">cat /var/log/metrics</span>
+  </div>
+
   <!-- État de chargement -->
   @if (isLoading) {
     <div class="loading-state">
-      <div class="spinner"></div>
-      <p>Chargement des données...</p>
+      <div class="terminal-loading">
+        <span class="status-prefix">[...]</span>
+        <span class="status-text">fetching data</span>
+        <span class="cursor">_</span>
+      </div>
     </div>
   }
 
   <!-- État d'erreur -->
   @if (error && !isLoading) {
     <div class="error-state">
-      <p class="error-message">{{ error }}</p>
+      <div class="terminal-error">
+        <span class="status-prefix">[ERR]</span>
+        <span class="status-text">{{ error }}</span>
+      </div>
       <button (click)="refreshData()" class="retry-button">
-        Réessayer
+        retry
       </button>
     </div>
   }
@@ -20,11 +32,17 @@
   <!-- Contenu principal (graphique et filtres) -->
   @if (!isLoading && !error) {
     <div class="chart-content">
-      <!-- Filtres -->
+      <!-- Terminal Status OK -->
+      <div class="terminal-status">
+        <span class="status-prefix ok">[OK]</span>
+        <span class="status-text">data loaded</span>
+      </div>
+
+      <!-- Filtres style CLI -->
       <div class="filter-container">
-        <label for="yearFilter">Filtrer par année :</label>
+        <label for="yearFilter">--year</label>
         <select id="yearFilter" (change)="onYearChange($event)">
-          <option value="animation">2015-2025 (Animation)</option>
+          <option value="animation">2015-2025 (animation)</option>
           <option value="2025">2025</option>
           <option value="2024">2024</option>
           <option value="2023">2023</option>
@@ -45,12 +63,17 @@
       </div>
 
       <!-- Sources -->
-      <div id="sources-container"></div>
+      <div class="sources-section">
+        <div class="sources-header">
+          <span class="comment"># sources</span>
+        </div>
+        <div id="sources-container"></div>
+      </div>
 
       <!-- Bouton de rafraîchissement -->
       <div class="refresh-button-container">
         <button (click)="refreshData()" class="refresh-button">
-          🔄 Actualiser les données
+          <span class="prompt">$</span> refresh --force
         </button>
       </div>
     </div>

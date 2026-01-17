@@ -97,7 +97,7 @@ export class ChartComponent implements OnInit, OnDestroy {
         },
         error: (err: unknown) => {
           console.error('Erreur lors du chargement des données:', err);
-          this.error = 'Impossible de charger les données de tendances. Veuillez réessayer.';
+          this.error = 'connection failed: unable to fetch trends data';
           this.isLoading = false;
         }
       });
@@ -126,7 +126,7 @@ export class ChartComponent implements OnInit, OnDestroy {
         return;
       } else {
         console.error('Failed to create chart: canvas element never became available');
-        this.error = 'Impossible d\'afficher le graphique. Veuillez réessayer.';
+        this.error = 'render failed: canvas element not available';
         return;
       }
     }
