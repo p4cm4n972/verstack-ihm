@@ -1,8 +1,8 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, Inject, PLATFORM_ID, OnDestroy, ChangeDetectionStrategy, ChangeDetectorRef, inject, NgZone } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild, Inject, PLATFORM_ID, OnDestroy, ChangeDetectorRef, inject, NgZone } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { FieldService } from '../../services/field.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { BehaviorSubject, Subject, filter, take, takeUntil } from 'rxjs';
+import { BehaviorSubject, Subject, takeUntil } from 'rxjs';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -10,20 +10,18 @@ import { CommonModule } from '@angular/common';
   imports: [MatProgressSpinnerModule, CommonModule],
   templateUrl: './globe.component.html',
   styleUrl: './globe.component.scss',
-  standalone: true,
-  changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true
+  // Retiré OnPush pour éviter les problèmes de détection de changement
 })
 export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChild('globeCanvas', { static: true }) canvasRef!: ElementRef<HTMLCanvasElement>;
-  @ViewChild('bootScreen') bootScreenRef!: ElementRef<HTMLDivElement>;
 
   private ctx!: CanvasRenderingContext2D;
   private logos: HTMLImageElement[] = [];
   private points: { x: number, y: number, z: number, img: HTMLImageElement }[] = [];
   private angleY = 0;
   private animationFrameId: number | null = null;
-  private images: string[] = [];
   private isBrowser: boolean;
   private lastFrameTime = 0;
   private targetFPS = 60;
@@ -33,70 +31,44 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
   private observer?: IntersectionObserver;
   private destroy$ = new Subject<void>();
   private isDestroyed = false;
-  private pendingImages: HTMLImageElement[] = [];
-  
+
   loading$ = new BehaviorSubject<boolean>(true);
   loadingProgress$ = new BehaviorSubject<number>(0);
   loadedImages = 0;
   totalImages = 0;
-  showBoot = false;
-  globeVisible: boolean = false;
+  globeVisible = false;
 
-  private readonly cdr = inject(ChangeDetectorRef);
   private readonly ngZone = inject(NgZone);
-  private initialized = false;
 
   constructor(private _fieldService: FieldService, @Inject(PLATFORM_ID) platformId: Object) {
     this.isBrowser = isPlatformBrowser(platformId);
   }
 
   ngOnInit(): void {
-    this.loading$.pipe(
-      filter(done => !done), take(1)
-    ).subscribe(() => {
-      this.globeVisible = true;
-      this.cdr.markForCheck();
-    });
+    // Rien à faire ici - tout est dans ngAfterViewInit
   }
 
   ngAfterViewInit(): void {
-    if (this.isBrowser && !this.initialized) {
-      // Différer l'initialisation au prochain macrotask pour éviter les problèmes d'hydratation
-      setTimeout(() => this.initializeGlobe(), 0);
-    }
-  }
+    if (!this.isBrowser) return;
 
-  /**
-   * Initialise le globe après le premier rendu.
-   * Utilise setTimeout pour différer après l'hydratation SSR.
-   */
-  private initializeGlobe(): void {
-    if (this.initialized || this.isDestroyed) return;
-    this.initialized = true;
-
-    // Initialiser le canvas
     const canvas = this.canvasRef?.nativeElement;
-    if (canvas) {
-      this.ctx = canvas.getContext('2d')!;
-      canvas.width = 600;
-      canvas.height = 600;
+    if (!canvas) return;
 
-      this.setupIntersectionObserver();
+    this.ctx = canvas.getContext('2d')!;
+    canvas.width = 600;
+    canvas.height = 600;
 
-      // Lancer l'animation en dehors de NgZone pour éviter les cycles de change detection
-      this.ngZone.runOutsideAngular(() => {
-        this.animationFrameId = requestAnimationFrame(() => this.animate());
-      });
-    }
-
-    // Charger les images
+    this.setupIntersectionObserver();
     this.loadImagesLogos();
+
+    // Démarrer l'animation en dehors de NgZone
+    this.ngZone.runOutsideAngular(() => {
+      this.animationFrameId = requestAnimationFrame((t) => this.animate(t));
+    });
   }
 
   private setupIntersectionObserver(): void {
-    if (!this.isBrowser || !('IntersectionObserver' in window)) {
-      return;
-    }
+    if (!this.isBrowser || !('IntersectionObserver' in window)) return;
 
     this.observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -120,81 +92,93 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private resumeAnimation(): void {
-    if (this.animationFrameId === null && this.isVisible) {
+    if (this.animationFrameId === null && this.isVisible && !this.isDestroyed) {
       this.ngZone.runOutsideAngular(() => {
-        this.animationFrameId = requestAnimationFrame((time) => this.animate(time));
+        this.animationFrameId = requestAnimationFrame((t) => this.animate(t));
       });
     }
   }
 
-
-
-
-  private loadImages(urls: string[]): void {
+  private loadImagesLogos(): void {
     if (!this.isBrowser || this.isDestroyed) return;
 
-    this.totalImages = urls.length;
-
-    const createImage = (url: string) => {
-      if (GlobeComponent.imageCache.has(url)) {
-        return Promise.resolve(GlobeComponent.imageCache.get(url)!);
-      }
-
-      return new Promise<HTMLImageElement>((resolve, reject) => {
-        const img = new Image();
-        img.crossOrigin = 'anonymous';
-        this.pendingImages.push(img);
-
-        img.onload = () => {
-          if (this.isDestroyed) {
-            reject(new Error('Component destroyed'));
-            return;
-          }
-          GlobeComponent.imageCache.set(url, img);
-          resolve(img);
-        };
-        img.onerror = (err) => {
-          if (!this.isDestroyed) {
-            reject(err);
-          }
-        };
-
-        img.src = url;
-      });
-    };
-
-    const promises = urls.map(url =>
-      createImage(url).then(img => {
-        if (this.isDestroyed) return img;
-        this.logos.push(img);
-        this.loadedImages++;
-        const percent = Math.round((this.loadedImages / this.totalImages) * 100);
-        this.loadingProgress$.next(percent);
-        return img;
-      })
-    );
-
-    Promise.all(promises)
-      .then(() => {
-        if (!this.isDestroyed) {
-          this.onAllImagesLoaded();
-        }
-      })
-      .catch(err => {
-        if (!this.isDestroyed) {
-          console.error('Error loading images', err);
-        }
+    this._fieldService.getAllImages()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (logos: string[]) => {
+          const uniqueLogos = Array.from(new Set(logos));
+          this.loadImages(uniqueLogos);
+        },
+        error: (err) => console.error('Erreur chargement images:', err)
       });
   }
 
+  private loadImages(urls: string[]): void {
+    if (!this.isBrowser || this.isDestroyed || urls.length === 0) return;
+
+    this.totalImages = urls.length;
+    this.loadedImages = 0;
+    this.logos = [];
+
+    let loadedCount = 0;
+
+    urls.forEach(url => {
+      // Utiliser le cache si disponible
+      if (GlobeComponent.imageCache.has(url)) {
+        const cachedImg = GlobeComponent.imageCache.get(url)!;
+        this.logos.push(cachedImg);
+        loadedCount++;
+        this.loadedImages = loadedCount;
+        this.loadingProgress$.next(Math.round((loadedCount / this.totalImages) * 100));
+
+        if (loadedCount === this.totalImages) {
+          this.onAllImagesLoaded();
+        }
+        return;
+      }
+
+      // Charger l'image
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+
+      img.onload = () => {
+        if (this.isDestroyed) return;
+
+        GlobeComponent.imageCache.set(url, img);
+        this.logos.push(img);
+        loadedCount++;
+        this.loadedImages = loadedCount;
+        this.loadingProgress$.next(Math.round((loadedCount / this.totalImages) * 100));
+
+        if (loadedCount === this.totalImages) {
+          this.onAllImagesLoaded();
+        }
+      };
+
+      img.onerror = () => {
+        if (this.isDestroyed) return;
+        loadedCount++;
+        if (loadedCount === this.totalImages) {
+          this.onAllImagesLoaded();
+        }
+      };
+
+      img.src = url;
+    });
+  }
 
   private onAllImagesLoaded(): void {
+    if (this.isDestroyed) return;
+
     this.generatePoints();
     this.loading$.next(false);
+    this.globeVisible = true;
   }
 
   private generatePoints(): void {
     const total = this.logos.length;
+    if (total === 0) return;
+
     const radius = 240;
     this.points = this.logos.map((img, index) => {
       const phi = Math.acos(-1 + (2 * index) / total);
@@ -206,12 +190,13 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+  private animate(currentTime: number): void {
+    if (this.isDestroyed) return;
 
-  private animate(currentTime: number = 0): void {
-    this.animationFrameId = requestAnimationFrame((time) => this.animate(time));
-    
-    if (!this.isVisible) return;
-    
+    this.animationFrameId = requestAnimationFrame((t) => this.animate(t));
+
+    if (!this.isVisible || this.points.length === 0) return;
+
     if (currentTime - this.lastFrameTime >= this.frameInterval) {
       this.draw();
       this.angleY += 0.005;
@@ -219,11 +204,11 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-
   private draw(): void {
-    const ctx = this.ctx;
-    const canvas = ctx.canvas;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (!this.ctx) return;
+
+    const canvas = this.ctx.canvas;
+    this.ctx.clearRect(0, 0, canvas.width, canvas.height);
     const cx = canvas.width / 2, cy = canvas.height / 2;
 
     const cosY = Math.cos(this.angleY);
@@ -244,41 +229,14 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     rotated.sort((a, b) => b.z - a.z);
 
-    ctx.save();
+    this.ctx.save();
     for (const p of rotated) {
-      if (p.size > 2 && p.x > -p.size && p.x < canvas.width + p.size && 
+      if (p.size > 2 && p.x > -p.size && p.x < canvas.width + p.size &&
           p.y > -p.size && p.y < canvas.height + p.size) {
-        ctx.drawImage(p.img, p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
+        this.ctx.drawImage(p.img, p.x - p.size / 2, p.y - p.size / 2, p.size, p.size);
       }
     }
-    ctx.restore();
-  }
-
-
-
-  private loadImagesLogos(): void {
-    if (!this.isBrowser) return;
-
-    this._fieldService.getAllImages()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (logos: string[]) => {
-          this.images = Array.from(new Set(logos));
-          this.loadImages(this.images);
-        },
-        error: (error) => {
-          console.error('Erreur lors de la recuperation des images', error);
-        }
-      });
-  }
-
-
-  getLoading(status: any) {
-    return status === false ? 'canvasLoad' : 'canvasNotLoad'
-  }
-
-  displayLoadingLevel(time: any) {
-    return Math.round(time)
+    this.ctx.restore();
   }
 
   ngOnDestroy(): void {
@@ -293,30 +251,13 @@ export class GlobeComponent implements OnInit, AfterViewInit, OnDestroy {
 
     if (this.observer) {
       this.observer.disconnect();
+      this.observer = undefined;
     }
-
-    // Clean up pending image handlers to prevent memory leaks
-    for (const img of this.pendingImages) {
-      img.onload = null;
-      img.onerror = null;
-      img.src = '';
-    }
-    this.pendingImages.length = 0;
 
     this.loading$.complete();
     this.loadingProgress$.complete();
 
-    this.logos.length = 0;
-    this.points.length = 0;
-
-    if (this.ctx && this.canvasRef?.nativeElement) {
-      this.ctx.clearRect(0, 0, this.canvasRef.nativeElement.width, this.canvasRef.nativeElement.height);
-    }
-  }
-
-  onBootAnimationEnd() {
-    this.showBoot = false;
-    this.globeVisible = true;
-    this.cdr.markForCheck();
+    this.logos = [];
+    this.points = [];
   }
 }
