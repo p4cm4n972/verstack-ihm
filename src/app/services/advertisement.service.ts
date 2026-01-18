@@ -20,8 +20,10 @@ export class AdvertisementService {
    * @returns true si l'utilisateur doit voir les publicités, false sinon
    */
   shouldShowAds(): boolean {
-    const role = this.authService.getUserRole();
-    return role !== 'subscriber' && role !== 'admin';
+    // TODO: Réactiver les pubs plus tard en décommentant la ligne ci-dessous
+    // const role = this.authService.getUserRole();
+    // return role !== 'subscriber' && role !== 'admin';
+    return false; // Publicités désactivées temporairement
   }
 
   /**
