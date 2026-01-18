@@ -1,83 +1,122 @@
 [
-    {
-      "name": "Python",
-      "popularity": [5.0, 6.0, 7.5, 9.0, 10.5, 12.0, 13.5, 14.8, 15.6, 16.0, 16.3]
-    },
-    {
-      "name": "JavaScript",
-      "popularity": [12.5, 13.0, 13.5, 14.0, 14.5, 14.8, 15.0, 15.2, 15.4, 15.6, 15.7]
-    },
-    {
-      "name": "Java",
-      "popularity": [16.0, 15.8, 15.5, 15.0, 14.8, 14.5, 14.3, 14.0, 13.9, 13.8, 13.7]
-    },
-    {
-      "name": "C#",
-      "popularity": [8.0, 8.2, 8.5, 8.7, 8.9, 9.0, 9.1, 9.2, 9.3, 9.4, 9.5]
-    },
-    {
-      "name": "C",
-      "popularity": [9.5, 9.4, 9.3, 9.2, 9.1, 9.0, 8.9, 8.8, 8.7, 8.6, 8.5]
-    },
-    {
-      "name": "C++",
-      "popularity": [7.5, 7.6, 7.8, 8.0, 8.2, 8.4, 8.5, 8.6, 8.7, 8.8, 8.9]
-    },
-    {
-      "name": "TypeScript",
-      "popularity": [0.5, 1.0, 1.5, 2.0, 3.0, 4.5, 5.5, 6.5, 7.0, 7.5, 8.0]
-    },
-    {
-      "name": "PHP",
-      "popularity": [9.0, 8.8, 8.6, 8.5, 8.4, 8.3, 8.2, 8.1, 8.0, 7.9, 7.8]
-    },
-    {
-      "name": "Ruby",
-      "popularity": [5.5, 5.3, 5.0, 4.8, 4.5, 4.3, 4.2, 4.1, 4.0, 3.9, 3.8]
-    },
-    {
-      "name": "Swift",
-      "popularity": [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0]
-    },
-    {
-      "name": "Kotlin",
-      "popularity": [0.0, 0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 5.5, 6.0, 6.5]
-    },
-    {
-      "name": "Go",
-      "popularity": [0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 5.5, 6.0, 6.5, 7.0]
-    },
-    {
-      "name": "Rust",
-      "popularity": [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0]
-    },
-    {
-      "name": "Dart",
-      "popularity": [0.0, 0.0, 0.0, 0.5, 1.0, 2.0, 3.0, 4.0, 4.5, 5.0, 5.5]
-    },
-    {
-      "name": "Scala",
-      "popularity": [3.0, 3.2, 3.4, 3.5, 3.5, 3.4, 3.3, 3.2, 3.1, 3.0, 2.9]
-    },
-    {
-      "name": "R",
-      "popularity": [4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 8.6]
-    },
-    {
-      "name": "Perl",
-      "popularity": [6.0, 5.8, 5.5, 5.0, 4.5, 4.0, 3.5, 3.0, 2.5, 2.0, 1.5]
-    },
-    {
-      "name": "MATLAB",
-      "popularity": [2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5]
-    },
-    {
-      "name": "Shell",
-      "popularity": [3.5, 3.8, 4.0, 4.2, 4.5, 4.7, 5.0, 5.3, 5.5, 5.8, 6.0]
-    },
-    {
-      "name": "Objective-C",
-      "popularity": [5.0, 4.8, 4.5, 4.2, 4.0, 3.8, 3.5, 3.2, 3.0, 2.8, 2.5]
-    }
-  ]
-  
+  {
+    "name": "Python",
+    "popularity": [5.0, 6.0, 7.5, 9.0, 10.5, 12.0, 13.5, 14.8, 15.6, 16.0, 16.3],
+    "sources": { "stackoverflow": 85, "tiobe": 92, "github": 78 },
+    "metadata": { "color": "#3776ab" }
+  },
+  {
+    "name": "JavaScript",
+    "popularity": [12.5, 13.0, 13.5, 14.0, 14.5, 14.8, 15.0, 15.2, 15.4, 15.6, 15.7],
+    "sources": { "stackoverflow": 92, "tiobe": 65, "github": 95 },
+    "metadata": { "color": "#f7df1e" }
+  },
+  {
+    "name": "Java",
+    "popularity": [16.0, 15.8, 15.5, 15.0, 14.8, 14.5, 14.3, 14.0, 13.9, 13.8, 13.7],
+    "sources": { "stackoverflow": 55, "tiobe": 85, "github": 62 },
+    "metadata": { "color": "#b07219" }
+  },
+  {
+    "name": "C#",
+    "popularity": [8.0, 8.2, 8.5, 8.7, 8.9, 9.0, 9.1, 9.2, 9.3, 9.4, 9.5],
+    "sources": { "stackoverflow": 48, "tiobe": 72, "github": 45 },
+    "metadata": { "color": "#178600" }
+  },
+  {
+    "name": "C",
+    "popularity": [9.5, 9.4, 9.3, 9.2, 9.1, 9.0, 8.9, 8.8, 8.7, 8.6, 8.5],
+    "sources": { "stackoverflow": 32, "tiobe": 88, "github": 38 },
+    "metadata": { "color": "#555555" }
+  },
+  {
+    "name": "C++",
+    "popularity": [7.5, 7.6, 7.8, 8.0, 8.2, 8.4, 8.5, 8.6, 8.7, 8.8, 8.9],
+    "sources": { "stackoverflow": 42, "tiobe": 78, "github": 48 },
+    "metadata": { "color": "#f34b7d" }
+  },
+  {
+    "name": "TypeScript",
+    "popularity": [0.5, 1.0, 1.5, 2.0, 3.0, 4.5, 5.5, 6.5, 7.0, 7.5, 8.0],
+    "sources": { "stackoverflow": 68, "tiobe": 45, "github": 82 },
+    "metadata": { "color": "#3178c6" }
+  },
+  {
+    "name": "PHP",
+    "popularity": [9.0, 8.8, 8.6, 8.5, 8.4, 8.3, 8.2, 8.1, 8.0, 7.9, 7.8],
+    "sources": { "stackoverflow": 38, "tiobe": 58, "github": 42 },
+    "metadata": { "color": "#4F5D95" }
+  },
+  {
+    "name": "Ruby",
+    "popularity": [5.5, 5.3, 5.0, 4.8, 4.5, 4.3, 4.2, 4.1, 4.0, 3.9, 3.8],
+    "sources": { "stackoverflow": 25, "tiobe": 35, "github": 38 },
+    "metadata": { "color": "#701516" }
+  },
+  {
+    "name": "Swift",
+    "popularity": [1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0],
+    "sources": { "stackoverflow": 35, "tiobe": 52, "github": 28 },
+    "metadata": { "color": "#F05138" }
+  },
+  {
+    "name": "Kotlin",
+    "popularity": [0.0, 0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 5.5, 6.0, 6.5],
+    "sources": { "stackoverflow": 42, "tiobe": 48, "github": 35 },
+    "metadata": { "color": "#A97BFF" }
+  },
+  {
+    "name": "Go",
+    "popularity": [0.5, 1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 5.5, 6.0, 6.5, 7.0],
+    "sources": { "stackoverflow": 52, "tiobe": 55, "github": 58 },
+    "metadata": { "color": "#00ADD8" }
+  },
+  {
+    "name": "Rust",
+    "popularity": [0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 3.5, 4.0, 4.5, 5.0],
+    "sources": { "stackoverflow": 45, "tiobe": 38, "github": 52 },
+    "metadata": { "color": "#dea584" }
+  },
+  {
+    "name": "Dart",
+    "popularity": [0.0, 0.0, 0.0, 0.5, 1.0, 2.0, 3.0, 4.0, 4.5, 5.0, 5.5],
+    "sources": { "stackoverflow": 28, "tiobe": 32, "github": 35 },
+    "metadata": { "color": "#00B4AB" }
+  },
+  {
+    "name": "Scala",
+    "popularity": [3.0, 3.2, 3.4, 3.5, 3.5, 3.4, 3.3, 3.2, 3.1, 3.0, 2.9],
+    "sources": { "stackoverflow": 18, "tiobe": 28, "github": 22 },
+    "metadata": { "color": "#c22d40" }
+  },
+  {
+    "name": "R",
+    "popularity": [4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5, 8.0, 8.5, 8.6],
+    "sources": { "stackoverflow": 35, "tiobe": 42, "github": 28 },
+    "metadata": { "color": "#198CE7" }
+  },
+  {
+    "name": "Perl",
+    "popularity": [6.0, 5.8, 5.5, 5.0, 4.5, 4.0, 3.5, 3.0, 2.5, 2.0, 1.5],
+    "sources": { "stackoverflow": 12, "tiobe": 25, "github": 15 },
+    "metadata": { "color": "#0298c3" }
+  },
+  {
+    "name": "MATLAB",
+    "popularity": [2.5, 3.0, 3.5, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 7.5],
+    "sources": { "stackoverflow": 22, "tiobe": 45, "github": 18 },
+    "metadata": { "color": "#e16737" }
+  },
+  {
+    "name": "Shell",
+    "popularity": [3.5, 3.8, 4.0, 4.2, 4.5, 4.7, 5.0, 5.3, 5.5, 5.8, 6.0],
+    "sources": { "stackoverflow": 38, "tiobe": 32, "github": 45 },
+    "metadata": { "color": "#89e051" }
+  },
+  {
+    "name": "Objective-C",
+    "popularity": [5.0, 4.8, 4.5, 4.2, 4.0, 3.8, 3.5, 3.2, 3.0, 2.8, 2.5],
+    "sources": { "stackoverflow": 15, "tiobe": 35, "github": 12 },
+    "metadata": { "color": "#438eff" }
+  }
+]

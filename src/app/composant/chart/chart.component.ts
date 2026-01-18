@@ -1,6 +1,6 @@
 import { Component, Inject, PLATFORM_ID, OnInit, OnDestroy } from '@angular/core';
 import { isPlatformBrowser, DOCUMENT } from '@angular/common';
-import { Chart, ChartType, registerables } from 'chart.js';
+import { Chart, registerables } from 'chart.js';
 import { Subject } from 'rxjs';
 import { takeUntil, map } from 'rxjs/operators';
 import { StatService } from '../../services/stat.service';
@@ -62,8 +62,8 @@ export class ChartComponent implements OnInit, OnDestroy {
     }
   ];
 
-  // Filtre par année (mode history)
-  selectedYear = 'animation';
+  // Filtre par année (mode history) - défaut: avant-dernière année (données cohérentes)
+  selectedYear = '2024';
 
   private chartRetryCount = 0;
   private readonly MAX_CHART_RETRIES = 10;
@@ -108,8 +108,9 @@ export class ChartComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.destroy$),
         map((response: any) => {
-          const transformedData: PopularityTrend[] = response.data.map((item: any) => ({
-            name: item.language,
+          const rawData = Array.isArray(response) ? response : response.data || [];
+          const transformedData: PopularityTrend[] = rawData.map((item: any) => ({
+            name: item.language || item.name,
             popularity: item.popularity,
             sources: item.sources,
             average: item.average,
@@ -119,8 +120,11 @@ export class ChartComponent implements OnInit, OnDestroy {
 
           return {
             data: transformedData,
-            years: response.years,
-            metadata: response.metadata
+            years: response.years || ['2015', '2016', '2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024', '2025'],
+            metadata: response.metadata || {
+              sources: ['stackoverflow', 'tiobe', 'github'],
+              lastUpdated: new Date().toISOString()
+            }
           } as TrendsResponse;
         })
       )
@@ -247,55 +251,30 @@ export class ChartComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Crée le graphique en mode historique (lignes par langage)
+   * Crée le graphique en mode historique (barres par année)
    */
   private createHistoryChart(): void {
-    let datasets: any[];
-    let labels: string[];
-    let chartType: ChartType;
-
-    if (this.selectedYear === 'animation') {
-      // Mode animation : lignes avec toutes les années
-      chartType = 'line';
-      labels = this.years;
-      datasets = this.fullData.map((language) => ({
-        label: language.name,
-        data: language.popularity,
-        borderColor: language.metadata?.color || this.getDistinctColor(),
-        backgroundColor: this.adjustColorOpacity(language.metadata?.color || this.getDistinctColor(), 0.1),
-        borderWidth: 2,
-        tension: 0.3,
-        fill: false,
-        pointRadius: 3,
-        pointHoverRadius: 5,
-      }));
-    } else {
-      // Mode année spécifique : barres
-      chartType = 'bar';
-      const yearIndex = this.years.indexOf(this.selectedYear);
-      if (yearIndex === -1) {
-        console.warn(`Année ${this.selectedYear} non trouvée`);
-        return;
-      }
-
-      labels = this.fullData.map(lang => lang.name);
-      datasets = [{
-        label: `popularity ${this.selectedYear}`,
-        data: this.fullData.map(lang => lang.popularity[yearIndex]),
-        backgroundColor: this.fullData.map(lang =>
-          this.adjustColorOpacity(lang.metadata?.color || this.getDistinctColor(), 0.7)
-        ),
-        borderColor: this.fullData.map(lang => lang.metadata?.color || this.getDistinctColor()),
-        borderWidth: 1,
-      }];
+    const yearIndex = this.years.indexOf(this.selectedYear);
+    if (yearIndex === -1) {
+      console.warn(`Année ${this.selectedYear} non trouvée`);
+      return;
     }
 
-    const xLabel = this.selectedYear === 'animation' ? 'years' : 'languages';
+    const labels = this.fullData.map(lang => lang.name);
+    const datasets = [{
+      label: `popularity ${this.selectedYear}`,
+      data: this.fullData.map(lang => lang.popularity[yearIndex]),
+      backgroundColor: this.fullData.map(lang =>
+        this.adjustColorOpacity(lang.metadata?.color || this.getDistinctColor(), 0.7)
+      ),
+      borderColor: this.fullData.map(lang => lang.metadata?.color || this.getDistinctColor()),
+      borderWidth: 1,
+    }];
 
     this.chart = new Chart('languageChart', {
-      type: chartType,
+      type: 'bar',
       data: { labels, datasets },
-      options: this.getChartOptions(xLabel, 'popularity (%)', undefined)
+      options: this.getChartOptions('languages', 'popularity (%)', undefined)
     });
   }
 

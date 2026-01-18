@@ -113,7 +113,6 @@
         <div class="filter-container">
           <label for="yearSelect">--year</label>
           <select id="yearSelect" [value]="selectedYear" (change)="onYearChange($event)">
-            <option value="animation">all (animation)</option>
             @for (year of years; track year) {
               <option [value]="year">{{ year }}</option>
             }
