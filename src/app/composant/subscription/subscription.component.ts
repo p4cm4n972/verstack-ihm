@@ -7,7 +7,6 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { SubscriptionService } from '../../services/subscription.service';
 import { AuthenticationService } from '../../services/authentication.service';
 import { Subscription } from '../../models/subscription.interface';
-import { formatEuroPrice } from '../../utils/proration.utils';
 
 @Component({
   selector: 'app-subscription',
@@ -28,13 +27,14 @@ export class SubscriptionComponent implements OnInit {
   subscription: Subscription | null = null;
   isLoading = true;
   isProcessing = false;
-  prorationDetails: any = null;
   userRole = '';
+
+  /** Prix mensuel affiché */
+  readonly monthlyPrice = this.subscriptionService.MONTHLY_PRICE;
 
   ngOnInit(): void {
     this.userRole = this.authService.getUserRole();
     this.loadSubscription();
-    this.calculateProration();
   }
 
   private loadSubscription(): void {
@@ -56,15 +56,6 @@ export class SubscriptionComponent implements OnInit {
     });
   }
 
-  private calculateProration(): void {
-    const calculation = this.subscriptionService.calculateProration();
-    this.prorationDetails = {
-      ...calculation,
-      formattedPrice: formatEuroPrice(calculation.proratedPrice),
-      formattedFullPrice: formatEuroPrice(calculation.fullYearPrice)
-    };
-  }
-
   subscribe(): void {
     const userId = this.authService.getUserId();
     if (!userId) {
@@ -74,10 +65,7 @@ export class SubscriptionComponent implements OnInit {
 
     this.isProcessing = true;
 
-    this.subscriptionService.createCheckoutSession({
-      userId,
-      prorated: true
-    }).subscribe({
+    this.subscriptionService.createCheckoutSession({ userId }).subscribe({
       next: (response) => {
         // Redirect to Stripe checkout
         window.location.href = response.checkoutUrl;
@@ -149,6 +137,9 @@ export class SubscriptionComponent implements OnInit {
   }
 
   formatPrice(amount: number): string {
-    return formatEuroPrice(amount);
+    return new Intl.NumberFormat('fr-FR', {
+      style: 'currency',
+      currency: 'EUR'
+    }).format(amount);
   }
 }

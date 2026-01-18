@@ -1,5 +1,6 @@
 /**
  * Subscription model for managing user subscriptions
+ * Abonnement mensuel à 0.99€/mois
  */
 
 export type SubscriptionStatus = 'active' | 'cancelled' | 'expired' | 'pending';
@@ -13,7 +14,7 @@ export interface Subscription {
   startDate: Date;
   endDate: Date;
   nextBillingDate: Date;
-  amount: number; // Amount in euros
+  amount: number; // Montant en euros (0.99)
   currency: string; // 'EUR'
   autoRenew: boolean;
   createdAt: Date;
@@ -22,30 +23,15 @@ export interface Subscription {
 
 export interface SubscriptionCheckoutRequest {
   userId: string;
-  prorated: boolean;
 }
 
 export interface SubscriptionCheckoutResponse {
   sessionId: string;
   checkoutUrl: string;
   amount: number;
-  prorationDetails?: {
-    daysRemaining: number;
-    proratedAmount: number;
-    fullYearAmount: number;
-  };
 }
 
 export interface SubscriptionCancellationRequest {
   userId: string;
   immediate: boolean; // If true, cancel immediately. If false, cancel at period end
-}
-
-export interface ProrationCalculation {
-  fullYearPrice: number; // 0.99 EUR
-  daysInYear: number;
-  daysRemaining: number;
-  proratedPrice: number;
-  startDate: Date;
-  nextRenewalDate: Date; // First Tuesday of next year
 }

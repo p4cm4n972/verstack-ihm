@@ -6,12 +6,11 @@ import {
   SubscriptionCheckoutRequest,
   SubscriptionCheckoutResponse,
   SubscriptionCancellationRequest,
-  ProrationCalculation
 } from '../models/subscription.interface';
-import { calculateProration } from '../utils/proration.utils';
 
 /**
  * Service for managing user subscriptions
+ * Abonnement mensuel à 0.99€/mois
  */
 @Injectable({
   providedIn: 'root'
@@ -19,6 +18,9 @@ import { calculateProration } from '../utils/proration.utils';
 export class SubscriptionService {
   private http = inject(HttpClient);
   private readonly API_BASE = '/api/subscriptions';
+
+  /** Prix mensuel en euros */
+  readonly MONTHLY_PRICE = 0.99;
 
   // Observable to track current subscription status
   private subscriptionSubject = new BehaviorSubject<Subscription | null>(null);
@@ -34,14 +36,7 @@ export class SubscriptionService {
   }
 
   /**
-   * Calculate proration for current date
-   */
-  calculateProration(fullYearPrice: number = 0.99): ProrationCalculation {
-    return calculateProration(fullYearPrice, new Date());
-  }
-
-  /**
-   * Create Stripe checkout session for subscription
+   * Create Stripe checkout session for monthly subscription
    */
   createCheckoutSession(request: SubscriptionCheckoutRequest): Observable<SubscriptionCheckoutResponse> {
     return this.http.post<SubscriptionCheckoutResponse>(

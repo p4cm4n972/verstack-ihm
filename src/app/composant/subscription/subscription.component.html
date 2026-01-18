@@ -27,19 +27,16 @@
             </div>
           </div>
 
-          @if (prorationDetails) {
-            <div class="pricing-info">
-              <div class="price-main">
-                <span class="price-amount">{{ prorationDetails.formattedPrice }}</span>
-                <span class="price-period">pour le reste de l'année {{ prorationDetails.startDate | date: 'yyyy' }}</span>
-              </div>
-              <div class="price-details">
-                <p>Prix au prorata : {{ prorationDetails.daysRemaining }} jours restants</p>
-                <p>À partir du {{ prorationDetails.nextRenewalDate | date: 'dd/MM/yyyy' }} : {{ prorationDetails.formattedFullPrice }}/an</p>
-                <p class="renewal-info">Renouvellement automatique chaque premier mardi de l'année</p>
-              </div>
+          <div class="pricing-info">
+            <div class="price-main">
+              <span class="price-amount">{{ formatPrice(monthlyPrice) }}</span>
+              <span class="price-period">/ mois</span>
             </div>
-          }
+            <div class="price-details">
+              <p>Abonnement mensuel sans engagement</p>
+              <p class="renewal-info">Renouvellement automatique chaque mois - Annulable à tout moment</p>
+            </div>
+          </div>
         </mat-card-content>
         <mat-card-actions>
           <button
@@ -83,7 +80,7 @@
               <span class="detail-value">{{ subscription.startDate | date: 'dd/MM/yyyy' }}</span>
             </div>
             <div class="detail-item">
-              <span class="detail-label">Fin :</span>
+              <span class="detail-label">Prochaine échéance :</span>
               <span class="detail-value">{{ subscriptionEndDate }}</span>
             </div>
             @if (subscription.autoRenew && subscription.status === 'active') {
