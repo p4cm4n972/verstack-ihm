@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { PLATFORM_ID } from '@angular/core';
 import { EMPTY, of } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { SubscriptionComponent } from './subscription.component';
 import { SubscriptionService } from '../../services/subscription.service';
@@ -47,6 +47,8 @@ describe('SubscriptionComponent', () => {
       'getUserRole'
     ]);
 
+    const snackBarSpy = jasmine.createSpyObj('MatSnackBar', ['open']);
+
     await TestBed.configureTestingModule({
       imports: [
         SubscriptionComponent
@@ -54,10 +56,10 @@ describe('SubscriptionComponent', () => {
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
-        provideAnimationsAsync('noop'),
         { provide: PLATFORM_ID, useValue: 'browser' },
         { provide: SubscriptionService, useValue: subscriptionServiceSpy },
-        { provide: AuthenticationService, useValue: authServiceSpy }
+        { provide: AuthenticationService, useValue: authServiceSpy },
+        { provide: MatSnackBar, useValue: snackBarSpy }
       ]
     }).compileComponents();
 

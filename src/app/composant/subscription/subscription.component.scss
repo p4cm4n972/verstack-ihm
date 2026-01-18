@@ -1,219 +1,772 @@
-.subscription-container {
-  max-width: 800px;
-  margin: 32px auto;
-  padding: 0 16px;
+// Cyberpunk Subscription Page Styles
+// ===================================
 
-  .loading-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 400px;
+$cyan: #00bcd4;
+$cyan-light: #4dd0e1;
+$cyan-dark: #0097a7;
+$green: #4caf50;
+$green-light: #81c784;
+$yellow: #ffd54f;
+$red: #f44336;
+$orange: #ff9800;
+$bg-dark: #0a0a15;
+$bg-card: rgba(10, 15, 25, 0.9);
+
+.subscription-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a15 0%, #0d1525 25%, #0a1628 50%, #051020 75%, #020510 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+// Space Background
+.space-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.stars, .stars2, .stars3 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  will-change: opacity;
+}
+
+.stars {
+  background-image:
+    radial-gradient(1px 1px at 20px 30px, $cyan, transparent),
+    radial-gradient(1px 1px at 50px 160px, #ffffff, transparent),
+    radial-gradient(1px 1px at 130px 80px, $cyan-light, transparent),
+    radial-gradient(1px 1px at 200px 200px, $cyan, transparent),
+    radial-gradient(1px 1px at 300px 150px, #ffffff, transparent),
+    radial-gradient(1px 1px at 400px 180px, $cyan-light, transparent);
+  background-repeat: repeat;
+  background-size: 500px 250px;
+  animation: twinkle 5s ease-in-out infinite;
+}
+
+.stars2 {
+  background-image:
+    radial-gradient(1px 1px at 100px 100px, $cyan, transparent),
+    radial-gradient(1.5px 1.5px at 200px 150px, #ffffff, transparent),
+    radial-gradient(1px 1px at 350px 50px, $cyan-light, transparent);
+  background-repeat: repeat;
+  background-size: 450px 200px;
+  animation: twinkle 7s ease-in-out infinite 2s;
+}
+
+.stars3 {
+  background-image:
+    radial-gradient(1.5px 1.5px at 80px 50px, $cyan, transparent),
+    radial-gradient(2px 2px at 220px 180px, $cyan-light, transparent);
+  background-repeat: repeat;
+  background-size: 400px 180px;
+  animation: twinkle 9s ease-in-out infinite 4s;
+}
+
+.nebula {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(ellipse 30% 40% at 20% 80%, rgba($cyan, 0.04) 0%, transparent 60%),
+    radial-gradient(ellipse 25% 35% at 80% 20%, rgba($cyan-light, 0.03) 0%, transparent 55%);
+  animation: nebulaFloat 20s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.9; }
+}
+
+@keyframes nebulaFloat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+// Content Container
+.subscription-content {
+  position: relative;
+  z-index: 1;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+// Loading State
+.loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.cyber-loader {
+  text-align: center;
+
+  .loader-text {
+    font-family: 'Courier New', monospace;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: $cyan;
+    letter-spacing: 4px;
+    text-shadow: 0 0 10px rgba($cyan, 0.8);
+    animation: pulse 1.5s ease-in-out infinite;
   }
 
-  .subscription-card {
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.2);
+  .loader-bar {
+    width: 200px;
+    height: 4px;
+    background: rgba($cyan, 0.1);
+    border: 1px solid rgba($cyan, 0.3);
+    border-radius: 2px;
+    margin-top: 1rem;
+    overflow: hidden;
+  }
 
-    &.active {
-      border-color: #4caf50;
+  .loader-fill {
+    width: 30%;
+    height: 100%;
+    background: linear-gradient(90deg, $cyan, $cyan-light);
+    border-radius: 2px;
+    animation: loading 1.5s ease-in-out infinite;
+    box-shadow: 0 0 10px rgba($cyan, 0.8);
+  }
+}
+
+@keyframes loading {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(200%); }
+  100% { transform: translateX(-100%); }
+}
+
+// Page Header
+.page-header {
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.terminal-prompt {
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
+  opacity: 0.7;
+
+  .prompt-symbol {
+    color: $cyan;
+    font-weight: 700;
+    margin-right: 0.5rem;
+    text-shadow: 0 0 8px rgba($cyan, 0.8);
+  }
+
+  .prompt-command {
+    color: rgba(255, 255, 255, 0.8);
+  }
+}
+
+.cyber-title {
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: 8px;
+  margin: 0 0 0.5rem 0;
+  color: $cyan;
+  text-shadow:
+    0 0 10px rgba($cyan, 0.8),
+    0 0 20px rgba($cyan, 0.5),
+    0 0 40px rgba($cyan, 0.3);
+
+  .glitch {
+    position: relative;
+    display: inline-block;
+
+    &::before,
+    &::after {
+      content: 'PREMIUM';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
     }
 
-    mat-card-header {
-      margin-bottom: 24px;
-
-      mat-card-title {
-        font-size: 1.8rem;
-        font-weight: 600;
-        color: white;
-      }
-
-      mat-card-subtitle {
-        font-size: 1rem;
-        color: rgba(255, 255, 255, 0.7);
-        margin-top: 8px;
-      }
+    &::before {
+      animation: glitch-1 3s infinite;
+      clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+      color: $cyan-light;
     }
 
-    mat-card-content {
-      color: rgba(255, 255, 255, 0.9);
-
-      .benefits-list {
-        margin: 24px 0;
-
-        .benefit-item {
-          display: flex;
-          align-items: center;
-          gap: 12px;
-          margin-bottom: 16px;
-          font-size: 1.1rem;
-
-          .benefit-icon {
-            color: #4caf50;
-            font-size: 1.5rem;
-            font-weight: bold;
-          }
-
-          .benefit-text {
-            color: white;
-          }
-        }
-      }
-
-      .pricing-info {
-        background: rgba(255, 255, 255, 0.05);
-        padding: 24px;
-        border-radius: 8px;
-        margin: 24px 0;
-
-        .price-main {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          margin-bottom: 16px;
-          padding-bottom: 16px;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-          .price-amount {
-            font-size: 3rem;
-            font-weight: 700;
-            color: #ffd54f;
-            line-height: 1;
-          }
-
-          .price-period {
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.6);
-            margin-top: 8px;
-          }
-        }
-
-        .price-details {
-          p {
-            margin: 8px 0;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-
-            &.renewal-info {
-              margin-top: 16px;
-              font-style: italic;
-              color: rgba(255, 255, 255, 0.5);
-            }
-          }
-        }
-      }
-
-      .subscription-details {
-        margin: 24px 0;
-
-        .detail-item {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          padding: 12px 0;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-
-          .detail-label {
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.7);
-          }
-
-          .detail-value {
-            color: white;
-
-            &.status-active {
-              color: #4caf50;
-              font-weight: 600;
-            }
-
-            &.status-cancelled {
-              color: #ff9800;
-              font-weight: 600;
-            }
-          }
-        }
-      }
-
-      .subscription-benefits {
-        background: rgba(76, 175, 80, 0.1);
-        border-left: 3px solid #4caf50;
-        padding: 16px;
-        border-radius: 4px;
-        margin: 24px 0;
-
-        .benefit-active {
-          margin: 0;
-          color: #4caf50;
-          font-weight: 500;
-        }
-      }
-    }
-
-    mat-card-actions {
-      display: flex;
-      justify-content: center;
-      padding: 24px 16px;
-
-      button {
-        min-width: 200px;
-        height: 48px;
-        font-size: 1rem;
-        font-weight: 600;
-
-        mat-spinner {
-          margin: 0 auto;
-        }
-      }
+    &::after {
+      animation: glitch-2 3s infinite;
+      clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+      color: $cyan;
     }
   }
 }
 
-// Responsive design
-@media (max-width: 768px) {
-  .subscription-container {
-    margin: 16px auto;
+.cyber-subtitle {
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0;
+  letter-spacing: 1px;
+}
 
-    .subscription-card {
-      mat-card-header {
-        mat-card-title {
-          font-size: 1.4rem;
-        }
+@keyframes glitch-1 {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+}
 
-        mat-card-subtitle {
-          font-size: 0.9rem;
-        }
-      }
+@keyframes glitch-2 {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(2px, -2px); }
+  40% { transform: translate(2px, 2px); }
+  60% { transform: translate(-2px, -2px); }
+  80% { transform: translate(-2px, 2px); }
+}
 
-      mat-card-content {
-        .benefits-list {
-          .benefit-item {
-            font-size: 1rem;
-          }
-        }
+// Cyber Card Base
+.cyber-card {
+  background: $bg-card;
+  border: 2px solid rgba($cyan, 0.3);
+  border-radius: 12px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  box-shadow:
+    0 4px 30px rgba(0, 0, 0, 0.5),
+    inset 0 0 30px rgba($cyan, 0.03);
 
-        .pricing-info {
-          padding: 16px;
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, $cyan, transparent);
+  }
 
-          .price-main {
-            .price-amount {
-              font-size: 2.5rem;
-            }
-          }
-        }
+  .card-glow {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba($cyan, 0.05) 0%, transparent 50%);
+    pointer-events: none;
 
-        .subscription-details {
-          .detail-item {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 4px;
-          }
-        }
-      }
-
-      mat-card-actions {
-        button {
-          min-width: 100%;
-        }
-      }
+    &.active {
+      background: radial-gradient(circle, rgba($green, 0.08) 0%, transparent 50%);
     }
+  }
+}
+
+// Pricing Card
+.pricing-card {
+  .card-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .plan-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.4rem 1rem;
+    background: rgba($cyan, 0.1);
+    border: 1px solid rgba($cyan, 0.3);
+    border-radius: 20px;
+    margin-bottom: 1rem;
+
+    .badge-icon {
+      color: $cyan;
+      font-size: 0.8rem;
+      text-shadow: 0 0 8px rgba($cyan, 0.8);
+    }
+
+    .badge-text {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: $cyan;
+      text-shadow: 0 0 5px rgba($cyan, 0.5);
+    }
+  }
+
+  .price-display {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.25rem;
+
+    .price-currency {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: $yellow;
+      text-shadow: 0 0 10px rgba($yellow, 0.5);
+    }
+
+    .price-amount {
+      font-size: 4rem;
+      font-weight: 900;
+      color: $yellow;
+      line-height: 1;
+      text-shadow: 0 0 20px rgba($yellow, 0.5);
+      font-family: 'Courier New', monospace;
+    }
+
+    .price-period {
+      font-size: 1rem;
+      color: rgba(255, 255, 255, 0.5);
+      margin-left: 0.25rem;
+    }
+  }
+}
+
+.card-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 1.5rem 0;
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba($cyan, 0.3), transparent);
+  }
+
+  .divider-icon {
+    color: rgba($cyan, 0.5);
+    font-size: 0.8rem;
+  }
+}
+
+// Benefits List
+.benefits-list {
+  margin-bottom: 1.5rem;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  .benefit-icon {
+    color: $cyan;
+    font-size: 0.8rem;
+    text-shadow: 0 0 5px rgba($cyan, 0.5);
+  }
+
+  .benefit-text {
+    flex: 1;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+  }
+
+  .benefit-check {
+    color: $green;
+    font-weight: 700;
+    text-shadow: 0 0 8px rgba($green, 0.8);
+  }
+}
+
+// Card Footer
+.card-footer {
+  text-align: center;
+}
+
+.renewal-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.5);
+
+  .info-icon {
+    color: $cyan;
+  }
+}
+
+// Cyber Buttons
+.cyber-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 1rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  &.primary {
+    background: linear-gradient(135deg, $cyan 0%, $cyan-light 100%);
+    color: #000;
+    box-shadow: 0 4px 20px rgba($cyan, 0.4);
+
+    &:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba($cyan, 0.6);
+    }
+
+    .btn-shine {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+      transition: left 0.5s;
+    }
+
+    &:hover .btn-shine {
+      left: 100%;
+    }
+  }
+
+  &.secondary {
+    background: transparent;
+    color: $red;
+    border: 2px solid rgba($red, 0.5);
+
+    &:hover:not(:disabled) {
+      background: rgba($red, 0.1);
+      border-color: $red;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+
+  &.processing {
+    pointer-events: none;
+  }
+
+  .btn-icon {
+    font-size: 1.2rem;
+  }
+
+  .btn-loader {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-top-color: #000;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// Features Grid
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.feature-card {
+  background: rgba($cyan, 0.05);
+  border: 1px solid rgba($cyan, 0.2);
+  border-radius: 8px;
+  padding: 1.25rem 0.75rem;
+  text-align: center;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba($cyan, 0.1);
+    border-color: rgba($cyan, 0.4);
+    transform: translateY(-3px);
+  }
+
+  .feature-icon {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-title {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    color: $cyan;
+    margin-bottom: 0.25rem;
+    text-shadow: 0 0 5px rgba($cyan, 0.5);
+  }
+
+  .feature-desc {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+// Active Subscription Card
+.status-card {
+  border-color: rgba($green, 0.4);
+
+  &::before {
+    background: linear-gradient(90deg, transparent, $green, transparent);
+  }
+}
+
+.status-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.status-badge {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+
+  &.active {
+    background: rgba($green, 0.15);
+    border: 1px solid rgba($green, 0.4);
+    color: $green;
+
+    .status-dot {
+      background: $green;
+      box-shadow: 0 0 10px $green;
+      animation: pulse-dot 1.5s ease-in-out infinite;
+    }
+  }
+
+  &.cancelled {
+    background: rgba($orange, 0.15);
+    border: 1px solid rgba($orange, 0.4);
+    color: $orange;
+
+    .status-dot {
+      background: $orange;
+      box-shadow: 0 0 10px $orange;
+    }
+  }
+
+  .status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  }
+}
+
+@keyframes pulse-dot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.7; }
+}
+
+.plan-info {
+  text-align: right;
+
+  .plan-name {
+    display: block;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: $cyan;
+    letter-spacing: 1px;
+    text-shadow: 0 0 5px rgba($cyan, 0.5);
+  }
+
+  .plan-price {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+// Subscription Details
+.subscription-details {
+  margin-bottom: 1.5rem;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.detail-label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+
+  .label-icon {
+    color: $cyan;
+    font-size: 0.7rem;
+  }
+}
+
+.detail-value {
+  color: white;
+  font-weight: 600;
+  font-family: 'Courier New', monospace;
+
+  &.highlight {
+    color: $yellow;
+    text-shadow: 0 0 8px rgba($yellow, 0.5);
+  }
+}
+
+// Active Benefit Message
+.active-benefit {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba($green, 0.1);
+  border: 1px solid rgba($green, 0.3);
+  border-left: 3px solid $green;
+  border-radius: 6px;
+  margin-bottom: 1.5rem;
+
+  .benefit-icon-large {
+    font-size: 1.5rem;
+    color: $green;
+    text-shadow: 0 0 10px rgba($green, 0.8);
+  }
+
+  .benefit-message {
+    color: $green-light;
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
+}
+
+// Card Actions
+.card-actions {
+  text-align: center;
+}
+
+.cancelled-notice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  background: rgba($orange, 0.1);
+  border: 1px solid rgba($orange, 0.3);
+  border-radius: 6px;
+  margin-bottom: 1rem;
+
+  .notice-icon {
+    color: $orange;
+  }
+
+  .notice-text {
+    color: $orange;
+    font-size: 0.85rem;
+  }
+}
+
+// Animations
+@keyframes pulse {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}
+
+// Responsive
+@media (max-width: 600px) {
+  .subscription-content {
+    padding: 1.5rem 1rem 3rem;
+  }
+
+  .cyber-title {
+    font-size: 2rem;
+    letter-spacing: 4px;
+  }
+
+  .cyber-card {
+    padding: 1.5rem;
+  }
+
+  .pricing-card .price-display .price-amount {
+    font-size: 3rem;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  .feature-card {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    text-align: left;
+
+    .feature-icon {
+      margin-bottom: 0;
+    }
+  }
+
+  .status-header {
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+
+    .plan-info {
+      text-align: center;
+    }
+  }
+
+  .detail-row {
+    flex-direction: column;
+    gap: 0.25rem;
+    text-align: center;
+
+    .detail-label {
+      justify-content: center;
+    }
+  }
+
+  .cyber-btn {
+    width: 100%;
+    padding: 1rem 1.5rem;
   }
 }

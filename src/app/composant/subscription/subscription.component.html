@@ -1,122 +1,210 @@
-<div class="subscription-container">
-  @if (isLoading) {
-    <div class="loading-container">
-      <mat-spinner></mat-spinner>
-    </div>
-  } @else {
-    <!-- Not subscribed -->
-    @if (!isSubscriber) {
-      <mat-card class="subscription-card">
-        <mat-card-header>
-          <mat-card-title>ABONNEMENT PREMIUM</mat-card-title>
-          <mat-card-subtitle>Profitez d'une expérience sans publicité</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="benefits-list">
-            <div class="benefit-item">
-              <span class="benefit-icon">✓</span>
-              <span class="benefit-text">Aucune publicité</span>
+<div class="subscription-page">
+  <!-- Space background -->
+  <div class="space-background">
+    <div class="stars"></div>
+    <div class="stars2"></div>
+    <div class="stars3"></div>
+    <div class="nebula"></div>
+  </div>
+
+  <div class="subscription-content">
+    @if (isLoading) {
+      <div class="loading-container">
+        <div class="cyber-loader">
+          <span class="loader-text">CHARGEMENT</span>
+          <div class="loader-bar">
+            <div class="loader-fill"></div>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <!-- Header -->
+      <div class="page-header">
+        <div class="terminal-prompt">
+          <span class="prompt-symbol">$</span>
+          <span class="prompt-command">subscription --status</span>
+        </div>
+        <h1 class="cyber-title" data-text="PREMIUM">
+          <span class="glitch">PREMIUM</span>
+        </h1>
+        <p class="cyber-subtitle">Débloquez une expérience sans limites</p>
+      </div>
+
+      <!-- Not subscribed -->
+      @if (!isSubscriber) {
+        <div class="pricing-section">
+          <!-- Pricing Card -->
+          <div class="cyber-card pricing-card">
+            <div class="card-glow"></div>
+            <div class="card-header">
+              <div class="plan-badge">
+                <span class="badge-icon">◆</span>
+                <span class="badge-text">PREMIUM</span>
+              </div>
+              <div class="price-display">
+                <span class="price-currency">€</span>
+                <span class="price-amount">0,99</span>
+                <span class="price-period">/mois</span>
+              </div>
             </div>
-            <div class="benefit-item">
-              <span class="benefit-icon">✓</span>
-              <span class="benefit-text">Navigation sans interruption</span>
+
+            <div class="card-divider">
+              <span class="divider-line"></span>
+              <span class="divider-icon">⬡</span>
+              <span class="divider-line"></span>
             </div>
-            <div class="benefit-item">
-              <span class="benefit-icon">✓</span>
-              <span class="benefit-text">Soutenir le développement de Verstack</span>
+
+            <div class="benefits-list">
+              <div class="benefit-item">
+                <span class="benefit-icon">▹</span>
+                <span class="benefit-text">Navigation sans publicité</span>
+                <span class="benefit-check">✓</span>
+              </div>
+              <div class="benefit-item">
+                <span class="benefit-icon">▹</span>
+                <span class="benefit-text">Expérience fluide et rapide</span>
+                <span class="benefit-check">✓</span>
+              </div>
+              <div class="benefit-item">
+                <span class="benefit-icon">▹</span>
+                <span class="benefit-text">Soutien au développement</span>
+                <span class="benefit-check">✓</span>
+              </div>
+              <div class="benefit-item">
+                <span class="benefit-icon">▹</span>
+                <span class="benefit-text">Annulable à tout moment</span>
+                <span class="benefit-check">✓</span>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <div class="renewal-info">
+                <span class="info-icon">ℹ</span>
+                <span class="info-text">Renouvellement automatique mensuel</span>
+              </div>
+
+              <button
+                class="cyber-btn primary"
+                (click)="subscribe()"
+                [disabled]="isProcessing"
+                [class.processing]="isProcessing">
+                @if (isProcessing) {
+                  <span class="btn-loader"></span>
+                  <span class="btn-text">TRAITEMENT...</span>
+                } @else {
+                  <span class="btn-icon">⚡</span>
+                  <span class="btn-text">S'ABONNER</span>
+                }
+                <span class="btn-shine"></span>
+              </button>
             </div>
           </div>
 
-          <div class="pricing-info">
-            <div class="price-main">
-              <span class="price-amount">{{ formatPrice(monthlyPrice) }}</span>
-              <span class="price-period">/ mois</span>
+          <!-- Features highlight -->
+          <div class="features-grid">
+            <div class="feature-card">
+              <div class="feature-icon">🚫</div>
+              <div class="feature-title">ZERO PUB</div>
+              <div class="feature-desc">Aucune distraction</div>
             </div>
-            <div class="price-details">
-              <p>Abonnement mensuel sans engagement</p>
-              <p class="renewal-info">Renouvellement automatique chaque mois - Annulable à tout moment</p>
+            <div class="feature-card">
+              <div class="feature-icon">⚡</div>
+              <div class="feature-title">RAPIDE</div>
+              <div class="feature-desc">Chargement optimisé</div>
+            </div>
+            <div class="feature-card">
+              <div class="feature-icon">💎</div>
+              <div class="feature-title">PREMIUM</div>
+              <div class="feature-desc">Expérience exclusive</div>
             </div>
           </div>
-        </mat-card-content>
-        <mat-card-actions>
-          <button
-            mat-raised-button
-            color="primary"
-            (click)="subscribe()"
-            [disabled]="isProcessing">
-            @if (isProcessing) {
-              <mat-spinner diameter="20"></mat-spinner>
-            } @else {
-              S'abonner maintenant
-            }
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    }
+        </div>
+      }
 
-    <!-- Already subscribed -->
-    @if (isSubscriber && subscription) {
-      <mat-card class="subscription-card active">
-        <mat-card-header>
-          <mat-card-title>ABONNEMENT ACTIF</mat-card-title>
-          <mat-card-subtitle>
-            @if (subscription.status === 'active') {
-              Votre abonnement est actif
-            } @else if (subscription.status === 'cancelled') {
-              Abonnement annulé - Actif jusqu'au {{ subscriptionEndDate }}
-            }
-          </mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <div class="subscription-details">
-            <div class="detail-item">
-              <span class="detail-label">Statut :</span>
-              <span class="detail-value status-{{ subscription.status }}">
-                {{ subscription.status === 'active' ? 'Actif' : 'Annulé' }}
-              </span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">Début :</span>
-              <span class="detail-value">{{ subscription.startDate | date: 'dd/MM/yyyy' }}</span>
-            </div>
-            <div class="detail-item">
-              <span class="detail-label">Prochaine échéance :</span>
-              <span class="detail-value">{{ subscriptionEndDate }}</span>
-            </div>
-            @if (subscription.autoRenew && subscription.status === 'active') {
-              <div class="detail-item">
-                <span class="detail-label">Prochain paiement :</span>
-                <span class="detail-value">
-                  {{ subscription.nextBillingDate | date: 'dd/MM/yyyy' }} - {{ formatPrice(subscription.amount) }}
+      <!-- Already subscribed -->
+      @if (isSubscriber && subscription) {
+        <div class="active-subscription">
+          <div class="cyber-card status-card">
+            <div class="card-glow active"></div>
+
+            <div class="status-header">
+              <div class="status-badge" [class]="subscription.status">
+                <span class="status-dot"></span>
+                <span class="status-label">
+                  {{ subscription.status === 'active' ? 'ACTIF' : 'ANNULÉ' }}
                 </span>
               </div>
-            }
-          </div>
+              <div class="plan-info">
+                <span class="plan-name">PREMIUM</span>
+                <span class="plan-price">{{ formatPrice(subscription.amount) }}/mois</span>
+              </div>
+            </div>
 
-          <div class="subscription-benefits">
-            <p class="benefit-active">Vous bénéficiez d'une expérience sans publicité</p>
+            <div class="card-divider">
+              <span class="divider-line"></span>
+              <span class="divider-icon">⬡</span>
+              <span class="divider-line"></span>
+            </div>
+
+            <div class="subscription-details">
+              <div class="detail-row">
+                <span class="detail-label">
+                  <span class="label-icon">▸</span>
+                  Date de début
+                </span>
+                <span class="detail-value">{{ subscription.startDate | date: 'dd/MM/yyyy' }}</span>
+              </div>
+              <div class="detail-row">
+                <span class="detail-label">
+                  <span class="label-icon">▸</span>
+                  Prochaine échéance
+                </span>
+                <span class="detail-value">{{ subscriptionEndDate }}</span>
+              </div>
+              @if (subscription.autoRenew && subscription.status === 'active') {
+                <div class="detail-row">
+                  <span class="detail-label">
+                    <span class="label-icon">▸</span>
+                    Prochain paiement
+                  </span>
+                  <span class="detail-value highlight">
+                    {{ subscription.nextBillingDate | date: 'dd/MM/yyyy' }} - {{ formatPrice(subscription.amount) }}
+                  </span>
+                </div>
+              }
+            </div>
+
+            <div class="active-benefit">
+              <span class="benefit-icon-large">✓</span>
+              <span class="benefit-message">Vous bénéficiez d'une expérience sans publicité</span>
+            </div>
+
+            <div class="card-actions">
+              @if (subscription.status === 'active') {
+                <button
+                  class="cyber-btn secondary"
+                  (click)="cancelSubscription(false)"
+                  [disabled]="isProcessing">
+                  <span class="btn-text">ANNULER L'ABONNEMENT</span>
+                </button>
+              } @else if (subscription.status === 'cancelled') {
+                <div class="cancelled-notice">
+                  <span class="notice-icon">⚠</span>
+                  <span class="notice-text">Abonnement annulé - Actif jusqu'au {{ subscriptionEndDate }}</span>
+                </div>
+                <button
+                  class="cyber-btn primary"
+                  (click)="reactivateSubscription()"
+                  [disabled]="isProcessing">
+                  <span class="btn-icon">↻</span>
+                  <span class="btn-text">RÉACTIVER</span>
+                  <span class="btn-shine"></span>
+                </button>
+              }
+            </div>
           </div>
-        </mat-card-content>
-        <mat-card-actions>
-          @if (subscription.status === 'active') {
-            <button
-              mat-button
-              color="warn"
-              (click)="cancelSubscription(false)"
-              [disabled]="isProcessing">
-              Annuler l'abonnement
-            </button>
-          } @else if (subscription.status === 'cancelled') {
-            <button
-              mat-raised-button
-              color="primary"
-              (click)="reactivateSubscription()"
-              [disabled]="isProcessing">
-              Réactiver l'abonnement
-            </button>
-          }
-        </mat-card-actions>
-      </mat-card>
+        </div>
+      }
     }
-  }
+  </div>
 </div>

@@ -1,8 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCardModule } from '@angular/material/card';
-import { MatButtonModule } from '@angular/material/button';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SubscriptionService } from '../../services/subscription.service';
 import { AuthenticationService } from '../../services/authentication.service';
@@ -10,12 +7,7 @@ import { Subscription } from '../../models/subscription.interface';
 
 @Component({
   selector: 'app-subscription',
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatButtonModule,
-    MatProgressSpinnerModule
-  ],
+  imports: [CommonModule],
   templateUrl: './subscription.component.html',
   styleUrl: './subscription.component.scss'
 })
