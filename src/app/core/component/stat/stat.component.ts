@@ -22,7 +22,7 @@ export class StatComponent implements OnInit {
     }
     this.seo.updateMetaData({
       title: 'metrics – verstack.io',
-      description: 'Explore programming languages and development tools popularity metrics.',
+      description: 'Programming language popularity metrics from Stack Overflow, TIOBE Index and GitHub. Compare real-time data across multiple sources.',
       keywords: `verstack, langages, outils, développeurs, Angular, React , version Angular, version React, version Vue.js, version Node.js, version Python, version Java,
       version C#, version PHP, version Ruby, version Go, version Rust, version JavaScript, version TypeScript, version Bash, version Shell, version Perl,
       version Kotlin, version Swift, version Scala, version Dart, version Objective-C, version C, version C++, version R, version MATLAB, version Julia,
