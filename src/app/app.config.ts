@@ -5,6 +5,7 @@ import { routes } from './app.routes';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { AuthenticationService } from './services/authentication.service';
+import { apiUrlInterceptor } from './interceptors/api-url.interceptor';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { mobileNotAllowedGuard } from './guards/mobile-not-allowed.guard';
 import { AdminGuard } from './guards/admin.guard';
@@ -15,7 +16,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     provideAnimationsAsync(),
-    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([apiUrlInterceptor, authInterceptor])),
     AuthenticationService,
     mobileNotAllowedGuard,
     AdminGuard, provideClientHydration(withEventReplay())
