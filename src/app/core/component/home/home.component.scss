@@ -340,18 +340,19 @@
 }
 
 #heading {
-  font-size: 4rem;
+  font-size: 3rem;
   font-weight: 600;
-  line-height: 72px;
+  line-height: 1.1;
+  margin: 0;
 }
 
 .pixel-art-subtitle {
-  font-size: 29px;
-  line-height: 1.5;
+  font-size: 1.4rem;
+  line-height: 1.4;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.95);
-  padding: 1rem;
-  margin-top: 1px;
+  padding: 0.5rem 0;
+  margin: 0;
 }
 
 .button-container {
@@ -421,7 +422,7 @@
 
 // Codebog CTA
 .codebog-cta {
-  margin-top: 2rem;
+  margin-top: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
