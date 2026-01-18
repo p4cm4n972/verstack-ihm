@@ -169,6 +169,77 @@ $text-muted: rgba(255, 255, 255, 0.5);
   padding: 0 1rem 1.5rem 1rem;
 }
 
+// Mode Toggle
+.mode-toggle {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid rgba($primary-cyan, 0.15);
+
+  .toggle-header {
+    .toggle-label {
+      color: $primary-cyan;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+  }
+
+  .toggle-options {
+    display: flex;
+    gap: 0.5rem;
+  }
+}
+
+.mode-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba($text-muted, 0.3);
+  border-radius: 4px;
+  color: $text-secondary;
+  font-family: 'Courier New', monospace;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+
+  .mode-icon {
+    font-size: 0.7rem;
+    opacity: 0.5;
+    transition: all 0.3s ease;
+  }
+
+  &:hover {
+    border-color: rgba($primary-cyan, 0.5);
+    color: $text-primary;
+
+    .mode-icon {
+      opacity: 0.8;
+      color: $primary-cyan;
+    }
+  }
+
+  &.active {
+    border-color: $primary-cyan;
+    background: rgba($primary-cyan, 0.1);
+    color: $text-primary;
+
+    .mode-icon {
+      opacity: 1;
+      color: $primary-cyan;
+      text-shadow: 0 0 8px rgba($primary-cyan, 0.5);
+    }
+
+    .mode-name {
+      color: $primary-cyan-light;
+      font-weight: 600;
+    }
+  }
+}
+
 // Source Selector
 .source-selector {
   display: flex;
@@ -479,6 +550,17 @@ $text-muted: rgba(255, 255, 255, 0.5);
 
   .terminal-loading {
     font-size: 0.9rem;
+  }
+
+  .mode-toggle {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  .mode-btn {
+    padding: 0.4rem 0.8rem;
+    font-size: 0.8rem;
   }
 
   .source-selector {

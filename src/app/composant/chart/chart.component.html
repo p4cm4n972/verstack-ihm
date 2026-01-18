@@ -38,45 +38,86 @@
         <span class="status-text">{{ fullData.length }} languages loaded</span>
       </div>
 
-      <!-- Source Selector -->
-      <div class="source-selector">
-        <div class="selector-header">
-          <span class="selector-label">--source</span>
+      <!-- Mode Toggle -->
+      <div class="mode-toggle">
+        <div class="toggle-header">
+          <span class="toggle-label">--mode</span>
         </div>
-        <div class="source-options">
-          @for (source of availableSources; track source.id) {
-            <button
-              class="source-btn"
-              [class.active]="source.enabled"
-              [style.--source-color]="source.color"
-              (click)="toggleSource(source.id)"
-            >
-              <span class="source-indicator"></span>
-              <span class="source-name">{{ source.label }}</span>
-            </button>
-          }
-        </div>
-      </div>
-
-      <!-- Source Info -->
-      <div class="source-info">
-        <span class="info-label"># source details</span>
-        <div class="info-items">
-          @for (source of availableSources; track source.id) {
-            <div class="info-item" [class.disabled]="!source.enabled">
-              <span class="info-dot" [style.background]="source.color"></span>
-              <span class="info-name">{{ source.label }}:</span>
-              <span class="info-desc">{{ source.description }}</span>
-            </div>
-          }
+        <div class="toggle-options">
+          <button
+            class="mode-btn"
+            [class.active]="viewMode === 'source'"
+            (click)="setViewMode('source')"
+          >
+            <span class="mode-icon">◆</span>
+            <span class="mode-name">source</span>
+          </button>
+          <button
+            class="mode-btn"
+            [class.active]="viewMode === 'history'"
+            (click)="setViewMode('history')"
+          >
+            <span class="mode-icon">◇</span>
+            <span class="mode-name">history</span>
+          </button>
         </div>
       </div>
 
-      <!-- No source selected warning -->
-      @if (getEnabledSources().length === 0) {
-        <div class="no-source-warning">
-          <span class="warning-prefix">[WARN]</span>
-          <span class="warning-text">no source selected</span>
+      <!-- Source Mode Controls -->
+      @if (viewMode === 'source') {
+        <!-- Source Selector -->
+        <div class="source-selector">
+          <div class="selector-header">
+            <span class="selector-label">--source</span>
+          </div>
+          <div class="source-options">
+            @for (source of availableSources; track source.id) {
+              <button
+                class="source-btn"
+                [class.active]="source.enabled"
+                [style.--source-color]="source.color"
+                (click)="toggleSource(source.id)"
+              >
+                <span class="source-indicator"></span>
+                <span class="source-name">{{ source.label }}</span>
+              </button>
+            }
+          </div>
+        </div>
+
+        <!-- Source Info -->
+        <div class="source-info">
+          <span class="info-label"># source details</span>
+          <div class="info-items">
+            @for (source of availableSources; track source.id) {
+              <div class="info-item" [class.disabled]="!source.enabled">
+                <span class="info-dot" [style.background]="source.color"></span>
+                <span class="info-name">{{ source.label }}:</span>
+                <span class="info-desc">{{ source.description }}</span>
+              </div>
+            }
+          </div>
+        </div>
+
+        <!-- No source selected warning -->
+        @if (getEnabledSources().length === 0) {
+          <div class="no-source-warning">
+            <span class="warning-prefix">[WARN]</span>
+            <span class="warning-text">no source selected</span>
+          </div>
+        }
+      }
+
+      <!-- History Mode Controls -->
+      @if (viewMode === 'history') {
+        <div class="filter-container">
+          <label for="yearSelect">--year</label>
+          <select id="yearSelect" [value]="selectedYear" (change)="onYearChange($event)">
+            <option value="animation">all (animation)</option>
+            @for (year of years; track year) {
+              <option [value]="year">{{ year }}</option>
+            }
+          </select>
         </div>
       }
 
