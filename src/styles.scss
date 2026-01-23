@@ -234,7 +234,8 @@ body { margin: 0; font-family: Doto, "Helvetica Neue", sans-serif; }
 }
 
 /* Shopify Buy Button global overrides */
-.shopify-buy-frame {
+/* Only apply relative positioning to product frames, not cart toggle */
+.shopify-buy-frame:not([name*="cart-toggle"]):not([name*="toggle"]) {
   position: relative !important;
 }
 
@@ -247,11 +248,20 @@ div[id^="product-component"] {
   position: relative !important;
 }
 
-/* Fix for Shopify iframe positioning */
-iframe.shopify-buy-frame {
+/* Fix for Shopify iframe positioning - exclude cart toggle */
+iframe.shopify-buy-frame:not([name*="cart-toggle"]):not([name*="toggle"]) {
   position: relative !important;
   display: block !important;
   width: 100% !important;
+}
+
+/* Shopify Cart Toggle - ensure it stays fixed */
+iframe[name*="cart-toggle"],
+iframe[name*="toggle"],
+div[id*="cart-toggle"],
+.shopify-buy__cart-toggle {
+  position: fixed !important;
+  z-index: 999999 !important;
 }
 
 /* Shopify title scroll animation for long titles */
