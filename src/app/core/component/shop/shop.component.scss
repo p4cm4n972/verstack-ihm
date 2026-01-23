@@ -298,7 +298,7 @@ section {
   flex: 1;
   justify-content: space-between;
 
-  // Override Shopify iframe styles
+  // Override Shopify iframe styles - ONLY for product iframes, NOT cart toggle
   ::ng-deep {
     div[id^="product-component"] {
       position: relative !important;
@@ -306,7 +306,8 @@ section {
       flex-direction: column;
       height: 100%;
 
-      iframe {
+      // Only target product iframes, exclude cart toggle iframes
+      iframe.shopify-buy-frame--product {
         position: relative !important;
         width: 100% !important;
         min-height: 380px;

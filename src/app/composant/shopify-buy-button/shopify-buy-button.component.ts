@@ -262,8 +262,15 @@ export class ShopifyBuyButtonComponent implements AfterViewInit {
             }
           },
           "toggle": {
+            "sticky": true,
             "styles": {
               "toggle": {
+                "position": "fixed",
+                "bottom": "30px",
+                "right": "30px",
+                "left": "auto",
+                "top": "auto",
+                "z-index": "999999",
                 "background": "linear-gradient(135deg, rgba(229, 57, 53, 0.8) 0%, rgba(183, 28, 28, 0.8) 100%)",
                 "border": "1px solid rgba(229, 57, 53, 0.6)",
                 ":hover": {

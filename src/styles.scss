@@ -259,9 +259,20 @@ iframe.shopify-buy-frame:not([name*="cart-toggle"]):not([name*="toggle"]) {
 iframe[name*="cart-toggle"],
 iframe[name*="toggle"],
 div[id*="cart-toggle"],
-.shopify-buy__cart-toggle {
+.shopify-buy__cart-toggle,
+iframe.shopify-buy-frame--toggle,
+.shopify-buy-frame--toggle {
   position: fixed !important;
+  bottom: 30px !important;
+  right: 30px !important;
+  left: auto !important;
+  top: auto !important;
   z-index: 999999 !important;
+}
+
+/* Override any inherited positioning on toggle wrapper */
+div:has(> iframe.shopify-buy-frame--toggle) {
+  position: static !important;
 }
 
 /* Shopify title scroll animation for long titles */
