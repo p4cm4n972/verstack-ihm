@@ -234,8 +234,8 @@ body { margin: 0; font-family: Doto, "Helvetica Neue", sans-serif; }
 }
 
 /* Shopify Buy Button global overrides */
-/* Only apply relative positioning to product frames, not cart toggle */
-.shopify-buy-frame:not([name*="cart-toggle"]):not([name*="toggle"]) {
+/* Only apply relative positioning to product frames, not cart toggle or cart drawer */
+.shopify-buy-frame:not(.shopify-buy-frame--toggle):not(.shopify-buy-frame--cart) {
   position: relative !important;
 }
 
@@ -295,8 +295,8 @@ div.shopify-buy-frame--cart,
   bottom: 0 !important;
   z-index: 999998 !important;
   height: 100vh !important;
-  width: auto !important;
-  max-width: 400px !important;
+  width: 350px !important;
+  min-width: 350px !important;
 }
 
 /* Override wrapper positioning */
