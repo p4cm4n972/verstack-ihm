@@ -255,19 +255,20 @@ iframe.shopify-buy-frame:not([name*="cart-toggle"]):not([name*="toggle"]) {
   width: 100% !important;
 }
 
-/* Shopify Cart Toggle - ensure it stays fixed */
+/* Shopify Cart Toggle - ensure it stays fixed RIGHT side */
 /* Target the wrapper div.shopify-buy-frame--toggle specifically */
-/* Position: fixed right, vertically centered */
 div.shopify-buy-frame--toggle,
 div.shopify-buy-frame.shopify-buy-frame--toggle,
-.shopify-buy-frame--toggle.is-sticky {
+.shopify-buy-frame--toggle.is-sticky,
+.shopify-buy-frame--toggle.is-active {
   position: fixed !important;
-  right: 0 !important;
+  right: 0px !important;
+  left: unset !important;
   top: 50% !important;
+  bottom: unset !important;
   transform: translateY(-50%) !important;
-  bottom: auto !important;
-  left: auto !important;
   z-index: 999999 !important;
+  margin: 0 !important;
 }
 
 /* Target toggle button specifically */
@@ -283,16 +284,19 @@ iframe.shopify-buy-frame--toggle {
   position: relative !important;
 }
 
-/* Shopify Cart Drawer - fixed right side */
+/* Shopify Cart Drawer - fixed RIGHT side */
 div.shopify-buy-frame--cart,
-.shopify-buy-frame--cart {
+.shopify-buy-frame--cart,
+.shopify-buy-frame.shopify-buy-frame--cart {
   position: fixed !important;
   top: 0 !important;
-  right: 0 !important;
+  right: 0px !important;
+  left: unset !important;
   bottom: 0 !important;
-  left: auto !important;
   z-index: 999998 !important;
-  height: 100% !important;
+  height: 100vh !important;
+  width: auto !important;
+  max-width: 400px !important;
 }
 
 /* Override wrapper positioning */
