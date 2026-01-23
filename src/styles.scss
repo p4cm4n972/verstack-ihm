@@ -257,14 +257,16 @@ iframe.shopify-buy-frame:not([name*="cart-toggle"]):not([name*="toggle"]) {
 
 /* Shopify Cart Toggle - ensure it stays fixed */
 /* Target the wrapper div.shopify-buy-frame--toggle specifically */
+/* Position: fixed right, vertically centered */
 div.shopify-buy-frame--toggle,
 div.shopify-buy-frame.shopify-buy-frame--toggle,
 .shopify-buy-frame--toggle.is-sticky {
   position: fixed !important;
-  bottom: 30px !important;
-  right: 30px !important;
+  right: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  bottom: auto !important;
   left: auto !important;
-  top: auto !important;
   z-index: 999999 !important;
 }
 
@@ -274,18 +276,23 @@ div.shopify-buy-frame.shopify-buy-frame--toggle,
   position: relative !important;
 }
 
-/* Target iframe toggle - exact match for frame-toggle */
+/* Target iframe toggle - no position override, let wrapper handle it */
 iframe[name="frame-toggle"],
 iframe[name*="toggle"],
 iframe.shopify-buy-frame--toggle {
+  position: relative !important;
+}
+
+/* Shopify Cart Drawer - fixed right side */
+div.shopify-buy-frame--cart,
+.shopify-buy-frame--cart {
   position: fixed !important;
-  bottom: 30px !important;
-  right: 30px !important;
+  top: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
   left: auto !important;
-  top: auto !important;
-  z-index: 999999 !important;
-  width: 60px !important;
-  height: 80px !important;
+  z-index: 999998 !important;
+  height: 100% !important;
 }
 
 /* Override wrapper positioning */
