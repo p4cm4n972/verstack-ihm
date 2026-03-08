@@ -220,17 +220,17 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
 
   private getArticleUrl(): string {
     const art = this.article();
-    return art ? `https://verstack.io/news/${art._id}` : '';
+    return art ? `https://version.itmade.fr/news/${art._id}` : '';
   }
 
   private updateSeoForArticle(article: Article): void {
     const articleUrl = this.getArticleUrl();
 
     this.seoService.updateMetaData({
-      title: `${article.title} - Verstack.io`,
-      description: article.excerpt || article.description || 'Article sur Verstack.io',
+      title: `${article.title} - Version IT`,
+      description: article.excerpt || article.description || 'Article sur Version IT',
       keywords: `verstack, ${article.category}, article, actualité, ${article.title}`,
-      image: article.img || 'https://verstack.io/assets/icons/logo-banniere-RS.png',
+      image: article.img || 'https://version.itmade.fr/assets/icons/logo-banniere-RS.png',
       url: articleUrl,
       type: 'article',
       author: 'P4cm4n972',
@@ -241,7 +241,7 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
     const structuredData = this.structuredDataService.createArticleSchema({
       title: article.title,
       description: article.excerpt || article.description || '',
-      image: article.img || 'https://verstack.io/assets/icons/logo-banniere-RS.png',
+      image: article.img || 'https://version.itmade.fr/assets/icons/logo-banniere-RS.png',
       datePublished: article.date,
       dateModified: article.updatedAt || article.date,
       author: 'P4cm4n972',

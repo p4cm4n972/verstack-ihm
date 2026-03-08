@@ -9,11 +9,11 @@ import { SeoService } from '../../../services/seo.service';
 })
 export class AboutComponent {
   constructor(private seo: SeoService,) { }
-  portalName = "verstack.io"
+  portalName = "version.itmade.fr"
 
   ngOnInit() {
     this.seo.updateMetaData({
-    title: 'About – Verstack.io',
+    title: 'About – Version IT',
     description: 'Découvrez les meilleurs outils et stacks pour développeurs modernes.',
     keywords: `verstack, langages, outils, développeurs, Angular, React , version Angular, version React, version Vue.js, version Node.js, version Python, version Java,
       version C#, version PHP, version Ruby, version Go, version Rust, version JavaScript, version TypeScript, version Bash, version Shell, version Perl,
@@ -23,8 +23,8 @@ export class AboutComponent {
       version GitHub Actions, version Travis CI, version CircleCI, version Webpack, version Babel, version ESLint, version Prettier, version Nginx,
       version Apache, version PostgreSQL, version MySQL, version MongoDB, version Redis, version GraphQL, version Firebase, version Supabase,
       version Netlify, version Vercel, version AWS, version Azure, version GCP`,
-    image: 'https://verstack.io/assets/slider/slide1.png',
-    url: 'https://verstack.io/about'
+    image: 'https://version.itmade.fr/assets/slider/slide1.png',
+    url: 'https://version.itmade.fr/about'
     });
   }
 

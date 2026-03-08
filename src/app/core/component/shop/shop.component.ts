@@ -127,7 +127,7 @@ export class ShopComponent implements AfterViewInit, OnInit {
       version Apache, version PostgreSQL, version MySQL, version MongoDB, version Redis, version GraphQL, version Firebase, version Supabase,
       version Netlify, version Vercel, version AWS, version Azure, version GCP`,
     image: 'public/assets/slider/slider-1.jpg',
-    url: 'https://verstack.io/shop'
+    url: 'https://version.itmade.fr/shop'
   });
     this.products = this.productsService.getProducts();
 

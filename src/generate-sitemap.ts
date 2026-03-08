@@ -22,7 +22,7 @@ const routes: SiteRoute[] = [
 ];
 
 function generateSitemap(): void {
-  const baseUrl = 'https://verstack.io';
+  const baseUrl = 'https://version.itmade.fr';
   const currentDate = new Date().toISOString().split('T')[0];
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

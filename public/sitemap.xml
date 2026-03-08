@@ -5,70 +5,70 @@
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
   <url>
-    <loc>https://verstack.io/</loc>
+    <loc>https://version.itmade.fr/</loc>
     <lastmod>2026-01-18</lastmod>
     <changefreq>daily</changefreq>
     <priority>1</priority>
   </url>
 
   <url>
-    <loc>https://verstack.io/about</loc>
+    <loc>https://version.itmade.fr/about</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://verstack.io/news</loc>
+    <loc>https://version.itmade.fr/news</loc>
     <lastmod>2026-01-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
 
   <url>
-    <loc>https://verstack.io/stat</loc>
+    <loc>https://version.itmade.fr/stat</loc>
     <lastmod>2026-01-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://verstack.io/version</loc>
+    <loc>https://version.itmade.fr/version</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://verstack.io/release</loc>
+    <loc>https://version.itmade.fr/release</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
 
   <url>
-    <loc>https://verstack.io/shop</loc>
+    <loc>https://version.itmade.fr/shop</loc>
     <lastmod>2026-01-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
 
   <url>
-    <loc>https://verstack.io/privacy-policy</loc>
+    <loc>https://version.itmade.fr/privacy-policy</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.4</priority>
   </url>
 
   <url>
-    <loc>https://verstack.io/mentions</loc>
+    <loc>https://version.itmade.fr/mentions</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.3</priority>
   </url>
 
   <url>
-    <loc>https://verstack.io/manifeste</loc>
+    <loc>https://version.itmade.fr/manifeste</loc>
     <lastmod>2025-11-28</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -76,21 +76,21 @@
 
   <!-- Articles Story - Janvier 2026 -->
   <url>
-    <loc>https://verstack.io/news/696ce1c3b6069f0183093c77</loc>
+    <loc>https://version.itmade.fr/news/696ce1c3b6069f0183093c77</loc>
     <lastmod>2026-01-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://verstack.io/news/696ce4f1b6069f0183093c7d</loc>
+    <loc>https://version.itmade.fr/news/696ce4f1b6069f0183093c7d</loc>
     <lastmod>2026-01-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
 
   <url>
-    <loc>https://verstack.io/news/696ce856b6069f0183093c7f</loc>
+    <loc>https://version.itmade.fr/news/696ce856b6069f0183093c7f</loc>
     <lastmod>2026-01-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

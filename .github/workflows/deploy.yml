@@ -42,11 +42,11 @@ jobs:
       - name: Deploy to VPS
         run: |
           # Upload built files
-          scp dist.tar.gz ubuntu@"${{secrets.SSH_HOST}}":/var/www/verstack.io/verstack-ihm/
+          scp dist.tar.gz ubuntu@"${{secrets.SSH_HOST}}":/var/www/version.itmade.fr/verstack-ihm/
 
           # Extract and restart
           ssh ubuntu@"${{secrets.SSH_HOST}}" << 'EOF'
-            cd /var/www/verstack.io/verstack-ihm
+            cd /var/www/version.itmade.fr/verstack-ihm
 
             # Extract new build
             tar -xzf dist.tar.gz

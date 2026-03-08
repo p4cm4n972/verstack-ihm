@@ -69,7 +69,7 @@ export class TrendsAggregationService {
               'Stack Overflow API - https://api.stackexchange.com/docs/tags',
               'TIOBE Index - https://www.tiobe.com/tiobe-index/',
               'GitHub Octoverse - https://octoverse.github.com/',
-              'Verstack Database - Internal historical data'
+              'Version IT Database - Internal historical data'
             ],
             lastUpdated: new Date().toISOString()
           }

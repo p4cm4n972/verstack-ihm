@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-cd /var/www/verstack.io/verstack-ihm
+cd /var/www/version.itmade.fr/verstack-ihm
 
 # Variables d'env — adapte si tu veux
 export NODE_ENV=production

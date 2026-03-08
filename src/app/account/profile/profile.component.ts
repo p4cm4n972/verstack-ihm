@@ -68,10 +68,10 @@ export class ProfileComponent implements OnInit {
 
   private initSEO(): void {
     this.seoService.updateMetaData({
-      title: 'Mon Profil - Verstack.io',
-      description: 'Gérez votre profil développeur, vos technologies favorites et vos projets sur Verstack.io',
+      title: 'Mon Profil - Version IT',
+      description: 'Gérez votre profil développeur, vos technologies favorites et vos projets sur Version IT',
       keywords: 'profil développeur, technologies, favoris, projets, compétences',
-      url: 'https://verstack.io/profile',
+      url: 'https://version.itmade.fr/profile',
       image: this.platformService.isBrowser ? `${this.platformService.getCurrentOrigin()}/assets/icons/logo-banniere-RS.png` : undefined
     });
   }
@@ -292,7 +292,7 @@ export class ProfileComponent implements OnInit {
     if (navigator.share) {
       navigator.share({
         title: `Profil de ${this.userData?.pseudo}`,
-        text: `Découvrez le profil de ${this.userData?.pseudo} sur Verstack`,
+        text: `Découvrez le profil de ${this.userData?.pseudo} sur Version IT`,
         url: currentUrl
       });
     } else {

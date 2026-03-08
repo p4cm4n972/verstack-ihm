@@ -17,7 +17,7 @@ export class MobileNotAllowedComponent {
   slides = [
     {
       img: 'assets/slider/slide1.png',
-      title: 'Bienvenue sur Verstack',
+      title: 'Bienvenue sur Version IT',
       text: 'Une plateforme dédiée !'
     },
     {

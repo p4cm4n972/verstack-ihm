@@ -217,12 +217,12 @@ export class NewsComponent implements OnInit, OnDestroy {
     }
 
     this.seo.updateMetaData({
-      title: 'Actualités & Articles – Verstack.io',
-      description: 'Explorez les dernières actualités, articles, notes et stories sur les outils et stacks pour développeurs modernes. Restez informé avec Verstack.io.',
+      title: 'Actualités & Articles – Version IT',
+      description: 'Explorez les dernières actualités, articles, notes et stories sur les outils et stacks pour développeurs modernes. Restez informé avec Version IT.',
       keywords: `verstack, langages, outils, développeurs, Angular, React, version Angular, version React, version Vue.js, version Node.js, version Python, version Java,
       version C#, version PHP, version Ruby, version Go, version Rust, version JavaScript, version TypeScript, version Docker, version Kubernetes`,
       image: imageUrl,
-      url: 'https://verstack.io/news'
+      url: 'https://version.itmade.fr/news'
     });
   }
 }

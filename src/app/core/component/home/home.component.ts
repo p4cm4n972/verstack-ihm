@@ -82,11 +82,11 @@ export class HomeComponent implements OnDestroy {
   ngOnInit(): void {
     this.preloadBackgroundImage();
     this.seo.updateMetaData({
-      title: 'Verstack.io - Suivez les versions de vos langages et frameworks préférés',
-      description: 'Maintenez vos applications à jour avec Verstack.io. Suivez les versions de Angular, React, Vue.js, Node.js, Python, Java et plus de 50 langages et frameworks. Gérez vos stacks technologiques et ne manquez aucune mise à jour critique.',
+      title: 'Version IT - Suivez les versions de vos langages et frameworks préférés',
+      description: 'Maintenez vos applications à jour avec Version IT. Suivez les versions de Angular, React, Vue.js, Node.js, Python, Java et plus de 50 langages et frameworks. Gérez vos stacks technologiques et ne manquez aucune mise à jour critique.',
       keywords: 'suivi versions logicielles, gestion stack technique, mise à jour framework, Angular version, React version, Vue.js version, Node.js version, Python version, Java version, gestion dépendances, développement web, DevOps, veille technologique',
       image: this.platformService.isBrowser ? `${this.platformService.getCurrentOrigin()}/assets/slider/slider1.png` : undefined,
-      url: 'https://verstack.io/home'
+      url: 'https://version.itmade.fr/home'
     });
 
     // Add structured data for home page

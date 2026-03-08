@@ -1,6 +1,6 @@
 {
-  "name": "Verstack - Langages et Frameworks",
-  "short_name": "Verstack",
+  "name": "Version IT - Langages et Frameworks",
+  "short_name": "Version IT",
   "description": "Plateforme centralisée pour suivre les versions et tendances des langages de programmation, frameworks et outils dédiés au développement.",
   "start_url": "/",
   "display": "standalone",
@@ -34,7 +34,7 @@
       "src": "/assets/images/screenshot-home.png",
       "sizes": "1920x1080",
       "type": "image/png",
-      "label": "Page d'accueil Verstack"
+      "label": "Page d'accueil Version IT"
     }
   ]
 }

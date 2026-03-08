@@ -5,25 +5,25 @@ import { Observable } from 'rxjs';
 
 /**
  * Intercepteur HTTP qui transforme les URLs relatives /api/*
- * en URLs absolues vers api.verstack.io en production
+ * en URLs absolues vers api.version.itmade.fr en production
  */
 
 function getApiBaseUrl(platformId: Object): string {
   // Côté client (browser)
   if (isPlatformBrowser(platformId)) {
     const hostname = window.location.hostname;
-    // Production : Vercel ou verstack.io
-    if (hostname === 'verstack.io' ||
-        hostname === 'www.verstack.io' ||
+    // Production : version.itmade.fr ou Vercel
+    if (hostname === 'version.itmade.fr' ||
+        hostname === 'www.version.itmade.fr' ||
         hostname.includes('vercel.app')) {
-      return 'https://api.verstack.io';
+      return 'https://api.version.itmade.fr';
     }
     // Développement local : pas de préfixe (proxy Angular)
     return '';
   }
 
   // Côté serveur (SSR) : toujours utiliser l'URL complète
-  return 'https://api.verstack.io';
+  return 'https://api.version.itmade.fr';
 }
 
 export function apiUrlInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn): Observable<HttpEvent<unknown>> {

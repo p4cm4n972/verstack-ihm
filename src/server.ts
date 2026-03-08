@@ -36,22 +36,22 @@ app.get('/sitemap.xml', async (_req, res) => {
 
     // Generate sitemap XML
     const staticUrls = [
-      { loc: 'https://verstack.io/', lastmod: '2025-10-02', changefreq: 'daily', priority: '1' },
-      { loc: 'https://verstack.io/home', lastmod: '2025-10-02', changefreq: 'daily', priority: '0.9' },
-      { loc: 'https://verstack.io/about', lastmod: '2025-10-02', changefreq: 'monthly', priority: '0.8' },
-      { loc: 'https://verstack.io/news', lastmod: '2025-10-02', changefreq: 'weekly', priority: '0.8' },
-      { loc: 'https://verstack.io/stat', lastmod: '2025-10-02', changefreq: 'weekly', priority: '0.7' },
-      { loc: 'https://verstack.io/version', lastmod: '2025-10-02', changefreq: 'weekly', priority: '0.7' },
-      { loc: 'https://verstack.io/release', lastmod: '2025-10-02', changefreq: 'weekly', priority: '0.6' },
-      { loc: 'https://verstack.io/shop', lastmod: '2025-10-02', changefreq: 'monthly', priority: '0.5' },
-      { loc: 'https://verstack.io/privacy-policy', lastmod: '2025-10-02', changefreq: 'monthly', priority: '0.4' },
-      { loc: 'https://verstack.io/mentions', lastmod: '2025-10-02', changefreq: 'monthly', priority: '0.3' },
-      { loc: 'https://verstack.io/manifeste', lastmod: '2025-10-02', changefreq: 'monthly', priority: '0.5' },
+      { loc: 'https://version.itmade.fr/', lastmod: '2025-10-02', changefreq: 'daily', priority: '1' },
+      { loc: 'https://version.itmade.fr/home', lastmod: '2025-10-02', changefreq: 'daily', priority: '0.9' },
+      { loc: 'https://version.itmade.fr/about', lastmod: '2025-10-02', changefreq: 'monthly', priority: '0.8' },
+      { loc: 'https://version.itmade.fr/news', lastmod: '2025-10-02', changefreq: 'weekly', priority: '0.8' },
+      { loc: 'https://version.itmade.fr/stat', lastmod: '2025-10-02', changefreq: 'weekly', priority: '0.7' },
+      { loc: 'https://version.itmade.fr/version', lastmod: '2025-10-02', changefreq: 'weekly', priority: '0.7' },
+      { loc: 'https://version.itmade.fr/release', lastmod: '2025-10-02', changefreq: 'weekly', priority: '0.6' },
+      { loc: 'https://version.itmade.fr/shop', lastmod: '2025-10-02', changefreq: 'monthly', priority: '0.5' },
+      { loc: 'https://version.itmade.fr/privacy-policy', lastmod: '2025-10-02', changefreq: 'monthly', priority: '0.4' },
+      { loc: 'https://version.itmade.fr/mentions', lastmod: '2025-10-02', changefreq: 'monthly', priority: '0.3' },
+      { loc: 'https://version.itmade.fr/manifeste', lastmod: '2025-10-02', changefreq: 'monthly', priority: '0.5' },
     ];
 
     // Add article URLs
     const articleUrls = Array.isArray(articles) ? articles.map((article: any) => ({
-      loc: `https://verstack.io/news/${article._id}`,
+      loc: `https://version.itmade.fr/news/${article._id}`,
       lastmod: article.updatedAt || article.date || '2025-10-02',
       changefreq: 'monthly',
       priority: '0.7'
@@ -147,7 +147,7 @@ if (isMainModule(import.meta.url)) {
       throw error;
     }
 
-    console.log(`Verstack IHM SSR - Node Express server listening on http://localhost:${port}`);
+    console.log(`Version IT SSR - Node Express server listening on http://localhost:${port}`);
   });
 }
 

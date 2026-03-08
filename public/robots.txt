@@ -2,7 +2,7 @@ User-agent: *
 Allow: /
 
 # Sitemaps
-Sitemap: https://verstack.io/sitemap.xml
+Sitemap: https://version.itmade.fr/sitemap.xml
 
 # Directories
 Allow: /about

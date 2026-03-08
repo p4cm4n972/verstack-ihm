@@ -21,7 +21,7 @@ export class StatComponent implements OnInit {
       image = `${window.location.origin}/assets/slider/slider-1.jpg`;
     }
     this.seo.updateMetaData({
-      title: 'metrics – verstack.io',
+      title: 'metrics – version.itmade.fr',
       description: 'Programming language popularity metrics from Stack Overflow, TIOBE Index and GitHub. Compare real-time data across multiple sources.',
       keywords: `verstack, langages, outils, développeurs, Angular, React , version Angular, version React, version Vue.js, version Node.js, version Python, version Java,
       version C#, version PHP, version Ruby, version Go, version Rust, version JavaScript, version TypeScript, version Bash, version Shell, version Perl,
@@ -32,7 +32,7 @@ export class StatComponent implements OnInit {
       version Apache, version PostgreSQL, version MySQL, version MongoDB, version Redis, version GraphQL, version Firebase, version Supabase,
       version Netlify, version Vercel, version AWS, version Azure, version GCP`,
       image,
-      url: 'https://verstack.io/stat'
+      url: 'https://version.itmade.fr/stat'
     });
   }
 

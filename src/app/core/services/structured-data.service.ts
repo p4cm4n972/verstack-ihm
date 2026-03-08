@@ -44,9 +44,9 @@ export class StructuredDataService {
     return {
       '@context': 'https://schema.org',
       '@type': 'Organization',
-      name: 'Verstack',
-      url: 'https://verstack.io',
-      logo: 'https://verstack.io/assets/icons/logo-banniere-RS.png',
+      name: 'Version IT',
+      url: 'https://version.itmade.fr',
+      logo: 'https://version.itmade.fr/assets/icons/logo-banniere-RS.png',
       description: 'Plateforme centralisée pour suivre les versions et tendances des langages de programmation, frameworks et outils dédiés au développement.',
       sameAs: [
         // Add social media URLs if available
@@ -59,12 +59,12 @@ export class StructuredDataService {
     return {
       '@context': 'https://schema.org',
       '@type': 'WebSite',
-      name: 'Verstack',
-      url: 'https://verstack.io',
+      name: 'Version IT',
+      url: 'https://version.itmade.fr',
       description: 'Plateforme centralisée pour suivre les versions et tendances des langages de programmation, frameworks et outils dédiés au développement.',
       potentialAction: {
         '@type': 'SearchAction',
-        target: 'https://verstack.io/version?search={search_term_string}',
+        target: 'https://version.itmade.fr/version?search={search_term_string}',
         'query-input': 'required name=search_term_string'
       }
     };
@@ -94,10 +94,10 @@ export class StructuredDataService {
       },
       publisher: {
         '@type': 'Organization',
-        name: 'Verstack',
+        name: 'Version IT',
         logo: {
           '@type': 'ImageObject',
-          url: 'https://verstack.io/assets/icons/logo-banniere-RS.png'
+          url: 'https://version.itmade.fr/assets/icons/logo-banniere-RS.png'
         }
       },
       mainEntityOfPage: {

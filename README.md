@@ -753,12 +753,12 @@ export class DashboardComponent implements OnInit {
       title: 'Dashboard - Verstack.io',
       description: 'Technical monitoring dashboard for developers',
       keywords: 'dashboard, monitoring, angular, typescript',
-      url: 'https://verstack.io/dashboard',
-      image: 'https://verstack.io/assets/dashboard-preview.png',
+      url: 'https://version.itmade.fr/dashboard',
+      image: 'https://version.itmade.fr/assets/dashboard-preview.png',
       type: 'website'
     });
 
-    this.metaService.setCanonicalUrl('https://verstack.io/dashboard');
+    this.metaService.setCanonicalUrl('https://version.itmade.fr/dashboard');
   }
 }
 ```
@@ -768,13 +768,13 @@ export class DashboardComponent implements OnInit {
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://verstack.io/</loc>
+    <loc>https://version.itmade.fr/</loc>
     <lastmod>2025-01-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://verstack.io/dashboard</loc>
+    <loc>https://version.itmade.fr/dashboard</loc>
     <lastmod>2025-01-27</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
@@ -788,7 +788,7 @@ export class DashboardComponent implements OnInit {
 User-agent: *
 Allow: /
 
-Sitemap: https://verstack.io/sitemap.xml
+Sitemap: https://version.itmade.fr/sitemap.xml
 ```
 
 **Applications métier :**
