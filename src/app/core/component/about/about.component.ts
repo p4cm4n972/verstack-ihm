@@ -15,7 +15,7 @@ export class AboutComponent {
     this.seo.updateMetaData({
     title: 'About – Version IT',
     description: 'Découvrez les meilleurs outils et stacks pour développeurs modernes.',
-    keywords: `verstack, langages, outils, développeurs, Angular, React , version Angular, version React, version Vue.js, version Node.js, version Python, version Java,
+    keywords: `version it, suivi versions, langages, outils, développeurs, Angular, React, version Angular, version React, version Vue.js, version Node.js, version Python, version Java,
       version C#, version PHP, version Ruby, version Go, version Rust, version JavaScript, version TypeScript, version Bash, version Shell, version Perl,
       version Kotlin, version Swift, version Scala, version Dart, version Objective-C, version C, version C++, version R, version MATLAB, version Julia,
       version Haskell, version Elixir, version Erlang, version F#, version Groovy, version PowerShell, version Assembly, version SQL, version HTML,
