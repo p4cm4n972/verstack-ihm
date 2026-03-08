@@ -9,7 +9,7 @@ import { SeoService } from '../../../services/seo.service';
 })
 export class AboutComponent {
   constructor(private seo: SeoService,) { }
-  portalName = "version.itmade.fr"
+  portalName = "Version IT"
 
   ngOnInit() {
     this.seo.updateMetaData({

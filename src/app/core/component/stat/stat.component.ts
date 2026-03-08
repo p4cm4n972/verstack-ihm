@@ -21,7 +21,7 @@ export class StatComponent implements OnInit {
       image = `${window.location.origin}/assets/slider/slider-1.jpg`;
     }
     this.seo.updateMetaData({
-      title: 'metrics – version.itmade.fr',
+      title: 'metrics – Version IT',
       description: 'Programming language popularity metrics from Stack Overflow, TIOBE Index and GitHub. Compare real-time data across multiple sources.',
       keywords: `verstack, langages, outils, développeurs, Angular, React , version Angular, version React, version Vue.js, version Node.js, version Python, version Java,
       version C#, version PHP, version Ruby, version Go, version Rust, version JavaScript, version TypeScript, version Bash, version Shell, version Perl,
