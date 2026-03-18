@@ -311,7 +311,7 @@
 }
 
 .col.right {
-  flex: 0 0 500px;
+  flex: 0 0 600px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -584,6 +584,22 @@
 
   .pixel-art-subtitle {
     font-size: 1.3rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .row {
+    max-width: 1800px;
+    gap: 5rem;
+    padding: 0 48px;
+  }
+
+  .col.left {
+    flex: 0 0 560px;
+  }
+
+  .col.right {
+    flex: 0 0 680px;
   }
 }
 

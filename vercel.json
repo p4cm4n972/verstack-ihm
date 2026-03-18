@@ -1,0 +1,8 @@
+{
+  "buildCommand": "npm run build:ssr",
+  "outputDirectory": "dist/verstack-ihm/browser",
+  "framework": "angular",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
