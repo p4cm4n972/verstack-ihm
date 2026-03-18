@@ -603,6 +603,22 @@
   }
 }
 
+@media (min-width: 2100px) {
+  .row {
+    max-width: min(2400px, 93vw);
+    gap: 7rem;
+    padding: 0 60px;
+  }
+
+  .col.left {
+    flex: 0 0 700px;
+  }
+
+  .col.right {
+    flex: 0 0 900px;
+  }
+}
+
 @media (min-width: 769px) and (max-width: 1024px) {
   .row {
     gap: 2rem;

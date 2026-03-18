@@ -571,6 +571,13 @@ section {
   user-select: none;
 }
 
+// Écrans très larges (2K, 4K)
+@media (min-width: 2100px) {
+  .shop-layout {
+    max-width: min(2400px, 93vw);
+  }
+}
+
 // Responsive
 @media (max-width: 1200px) {
   .shop-layout {

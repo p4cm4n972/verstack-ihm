@@ -404,6 +404,13 @@ mat-tab-group {
   font-weight: 700;
 }
 
+// Écrans très larges (2K, 4K)
+@media (min-width: 2100px) {
+  .version-layout {
+    max-width: min(2400px, 93vw);
+  }
+}
+
 // Responsive
 @media (max-width: 1400px) {
   .languages-grid {
