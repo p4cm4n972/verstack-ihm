@@ -45,7 +45,7 @@ $text-muted: rgba(255, 255, 255, 0.5);
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba($primary-cyan, 0.2);
   border-top: none;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
 
   .status-prefix {
     font-weight: 700;
@@ -159,14 +159,29 @@ $text-muted: rgba(255, 255, 255, 0.5);
   }
 }
 
-// Chart Content
+// Chart Content — layout 2 colonnes sur desktop
 .chart-content {
-  width: 100%;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.5rem;
+  align-items: start;
   background: rgba(0, 0, 0, 0.3);
   border: 1px solid rgba($primary-cyan, 0.2);
   border-top: none;
   border-radius: 0 0 6px 6px;
-  padding: 0 1rem 1.5rem 1rem;
+  padding: 1.5rem 1rem;
+}
+
+.controls-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-right: 1px solid rgba($primary-cyan, 0.15);
+  padding-right: 1.5rem;
+}
+
+.chart-panel {
+  min-width: 0;
 }
 
 // Mode Toggle
@@ -532,6 +547,17 @@ $text-muted: rgba(255, 255, 255, 0.5);
 }
 
 @media (max-width: 768px) {
+  .chart-content {
+    grid-template-columns: 1fr;
+  }
+
+  .controls-panel {
+    border-right: none;
+    border-bottom: 1px solid rgba($primary-cyan, 0.15);
+    padding-right: 0;
+    padding-bottom: 1rem;
+  }
+
   .chart-wrapper {
     padding: 1em;
   }

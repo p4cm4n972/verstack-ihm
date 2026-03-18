@@ -4,4 +4,4 @@ dist
 .angular
 .playwright-mcp
 *.log
-*.png
+/*.png

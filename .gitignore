@@ -67,3 +67,5 @@ TRENDS_ARCHITECTURE.md
 # Production runtime files
 logs/
 test.html
+.vercel
+.env*.local

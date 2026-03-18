@@ -1,12 +1,9 @@
 // Space theme for news page
 .news-layout {
-  display: grid;
-  grid-template-columns: 1fr 5fr 1fr;
-  gap: 16px;
   padding: 20px;
   align-items: start;
   min-height: calc(100vh - 130px);
-  max-width: 1800px;
+  max-width: 1400px;
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
@@ -35,14 +32,8 @@
 }
 
 section {
-  background: rgba(10, 15, 25, 0.85);
-  box-shadow: 0 8px 32px rgba(0, 188, 212, 0.15), inset 0 0 60px rgba(0, 188, 212, 0.03);
-  border-radius: 12px;
-  border: 1px solid rgba(0, 188, 212, 0.2);
   width: 100%;
-  padding: 20px;
-  min-height: auto;
-  backdrop-filter: blur(10px);
+  padding: 20px 0;
   position: relative;
   z-index: 1;
 }
@@ -56,14 +47,6 @@ section {
   box-shadow: 0 4px 20px rgba(0, 188, 212, 0.2);
   margin-bottom: 20px !important;
   color: #4dd0e1 !important;
-}
-
-.ads-left, .ads-right {
-  position: sticky;
-  top: 80px;
-  height: fit-content;
-  min-width: 140px;
-  z-index: 1;
 }
 
 .articles-wrapper {
@@ -355,22 +338,7 @@ mat-card-actions {
   font-weight: 700;
 }
 
-// Écrans très larges (2K, 4K)
-@media (min-width: 2100px) {
-  .news-layout {
-    max-width: min(2400px, 93vw);
-  }
-}
-
 // Responsive
-@media (max-width: 1200px) {
-  .news-layout {
-    grid-template-columns: 1fr 4fr;
-  }
-  .ads-right {
-    display: none !important;
-  }
-}
 
 @media (max-width: 1024px) {
   .article-grid {
@@ -380,12 +348,7 @@ mat-card-actions {
 
 @media (max-width: 768px) {
   .news-layout {
-    grid-template-columns: 1fr;
     padding: 12px;
-  }
-
-  .ads-left, .ads-right {
-    display: none !important;
   }
 
   section {

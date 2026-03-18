@@ -21,6 +21,20 @@ html {
 html, body { height: 100%; }
 body { margin: 0; font-family: Doto, "Helvetica Neue", sans-serif; background-color: #050510; }
 
+/* Custom elements ont display:inline par défaut (comportement navigateur).
+   app-root et tous les composants routés doivent être display:block pour
+   occuper toute la largeur disponible. Ces règles ne peuvent pas être dans
+   les SCSS de composants car ViewEncapsulation les empêcherait de s'appliquer. */
+app-root {
+  display: block;
+  height: 100%;
+}
+app-home, app-version, app-news, app-stat, app-shop,
+app-about, app-signup, app-admin, app-user-tech-preview {
+  display: block;
+  width: 100%;
+}
+
 * {
     font-family: Doto, "Helvetica Neue", sans-serif;
     text-transform: uppercase;

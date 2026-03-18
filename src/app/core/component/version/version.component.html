@@ -1,8 +1,4 @@
 <div class="version-layout">
-  <aside class="ads-left">
-    <!-- Pub gauche -->
-    <ins class="adsbygoogle" style="display:block"></ins>
-  </aside>
   @if(isLoading){<div class="retro-loader">
     <div class="dots">
       <span>.</span><span>.</span><span>.</span><span>.</span><span>.</span>
@@ -63,18 +59,14 @@
               </mat-card-content>
             </ng-container>} @else {
             <ng-container>
-              <mat-card-content style="margin: 10px;">
-                <mat-card appearance="outlined">
-                  <mat-card-content>
-                    @for(version of language.versions; track version.label) {
-                    <mat-progress-bar [mode]="getProgressMode(version.supportDuration ?? 0)" style="margin-bottom: 5px;"
-                      [value]="getSupportPercentageFromDuration(version.releaseDate, version.supportDuration ?? 0)"
-                      [ngClass]="getSupportColor(version.releaseDate, version.supportDuration ?? 0)"
-                      matTooltip="{{ getSupportTooltip(version.releaseDate, version.supportDuration ?? 0, version.type) }}"
-                      matTooltipPosition="above">
-                    </mat-progress-bar>}
-                  </mat-card-content>
-                </mat-card>
+              <mat-card-content class="progress-content">
+                @for(version of language.versions; track version.label) {
+                <mat-progress-bar [mode]="getProgressMode(version.supportDuration ?? 0)"
+                  [value]="getSupportPercentageFromDuration(version.releaseDate, version.supportDuration ?? 0)"
+                  [ngClass]="getSupportColor(version.releaseDate, version.supportDuration ?? 0)"
+                  matTooltip="{{ getSupportTooltip(version.releaseDate, version.supportDuration ?? 0, version.type) }}"
+                  matTooltipPosition="above">
+                </mat-progress-bar>}
               </mat-card-content>
             </ng-container>}
             <mat-card-actions class="card-actions">
@@ -109,10 +101,6 @@
       </div>
     </div>}
   </section>
-  <aside class="ads-right">
-    <!-- Pub droite -->
-    <ins class="adsbygoogle" style="display:block"></ins>
-  </aside>
 </div>
 
 <!-- <section>

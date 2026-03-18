@@ -2,13 +2,10 @@
 
 // Space theme for version page
 .version-layout {
-  display: grid;
-  grid-template-columns: 1fr 5fr 1fr;
-  gap: 16px;
   padding: 20px;
   align-items: start;
   min-height: calc(100vh - 130px);
-  max-width: 1800px;
+  max-width: 1400px;
   margin: 0 auto;
   width: 100%;
   box-sizing: border-box;
@@ -37,30 +34,13 @@
 }
 
 section {
-  background: rgba(10, 15, 25, 0.85);
-  box-shadow: 0 8px 32px rgba(0, 188, 212, 0.15), inset 0 0 60px rgba(0, 188, 212, 0.03);
-  border-radius: 12px;
-  border: 1px solid rgba(0, 188, 212, 0.2);
-  padding: 20px;
-  backdrop-filter: blur(10px);
   position: relative;
-  z-index: 1;
-}
-
-// Ads
-.ads-left, .ads-right {
-  position: sticky;
-  top: 100px;
-  height: fit-content;
-  min-width: 120px;
   z-index: 1;
 }
 
 // Tabs with space theme
 mat-tab-group {
-  background: rgba(0, 20, 40, 0.6);
   border-radius: 8px;
-  border: 1px solid rgba(0, 188, 212, 0.2);
   padding: 8px;
 }
 
@@ -106,6 +86,13 @@ mat-tab-group {
   grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   padding-top: 24px;
+}
+
+.progress-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 8px 16px !important;
 }
 
 // Language card with cyber style
@@ -404,13 +391,6 @@ mat-tab-group {
   font-weight: 700;
 }
 
-// Écrans très larges (2K, 4K)
-@media (min-width: 2100px) {
-  .version-layout {
-    max-width: min(2400px, 93vw);
-  }
-}
-
 // Responsive
 @media (max-width: 1400px) {
   .languages-grid {
@@ -419,14 +399,6 @@ mat-tab-group {
 }
 
 @media (max-width: 1200px) {
-  .version-layout {
-    grid-template-columns: 1fr 4fr;
-  }
-
-  .ads-right {
-    display: none;
-  }
-
   .languages-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
@@ -459,12 +431,7 @@ mat-tab-group {
 
 @media (max-width: 768px) {
   .version-layout {
-    grid-template-columns: 1fr;
     padding: 12px;
-  }
-
-  .ads-left, .ads-right {
-    display: none !important;
   }
 
   section {

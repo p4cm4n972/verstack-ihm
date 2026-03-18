@@ -1,96 +1,50 @@
 .stat-layout {
-    display: grid;
-    grid-template-columns: 1fr 5fr 1fr; // pub - chart - pub
-    gap: 16px;
-    padding: 20px;
-    align-items: start;
-    max-width: 1800px;
-    margin: 0 auto;
-    width: 100%;
-    box-sizing: border-box;
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.chart-container {
+  min-height: 60vh;
+  padding: 24px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 255, 255, 0.2);
+  width: 100%;
+}
+
+@media (max-width: 992px) {
+  .stat-layout {
+    padding: 16px;
   }
 
-  /* Section principale */
   .chart-container {
-    min-height: 60vh;
-    padding: 24px;
-    background: rgba(0, 0, 0, 0.6);
-    border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 255, 255, 0.2);
-    width: 100%;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .stat-layout {
+    padding: 12px;
   }
 
-  /* Ads zones */
-  .ads-left, .ads-right {
-    position: sticky;
-    top: 80px;
-    height: fit-content;
-    min-width: 140px;
+  .chart-container {
+    padding: 16px;
+    border-radius: 8px;
+    min-height: 50vh;
+  }
+}
+
+@media (max-width: 480px) {
+  .stat-layout {
+    padding: 8px;
   }
 
-  /* Écrans très larges (2K, 4K) */
-  @media (min-width: 2100px) {
-    .stat-layout {
-      max-width: min(2400px, 93vw);
-    }
+  .chart-container {
+    padding: 12px;
+    border-radius: 6px;
+    min-height: 40vh;
   }
-
-  /* Responsive */
-  @media (max-width: 1400px) {
-    .stat-layout {
-      grid-template-columns: 1fr 6fr 1fr;
-      gap: 12px;
-    }
-  }
-
-  @media (max-width: 1200px) {
-    .stat-layout {
-      grid-template-columns: 1fr 4fr;
-    }
-    .ads-right {
-      display: none;
-    }
-  }
-
-  @media (max-width: 992px) {
-    .stat-layout {
-      grid-template-columns: 1fr;
-      padding: 16px;
-    }
-    .ads-left {
-      display: none;
-    }
-
-    .chart-container {
-      padding: 20px;
-    }
-  }
-
-  @media (max-width: 768px) {
-    .stat-layout {
-      padding: 12px;
-      gap: 0;
-    }
-    .ads-left, .ads-right {
-      display: none;
-    }
-
-    .chart-container {
-      padding: 16px;
-      border-radius: 8px;
-      min-height: 50vh;
-    }
-  }
-
-  @media (max-width: 480px) {
-    .stat-layout {
-      padding: 8px;
-    }
-
-    .chart-container {
-      padding: 12px;
-      border-radius: 6px;
-      min-height: 40vh;
-    }
-  }
-  
+}
