@@ -1,4 +1,7 @@
 node_modules
 dist
 .git
+.angular
+.playwright-mcp
 *.log
+*.png
