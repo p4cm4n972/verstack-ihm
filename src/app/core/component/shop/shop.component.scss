@@ -8,6 +8,10 @@
   padding: 20px;
   align-items: start;
   min-height: calc(100vh - 130px);
+  max-width: 1800px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
   background: linear-gradient(135deg, #0a0808 0%, #150a0d 25%, #1a0a10 50%, #100508 75%, #050202 100%);
   position: relative;
 
