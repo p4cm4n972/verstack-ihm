@@ -578,8 +578,23 @@ section {
     grid-template-columns: 180px 1fr;
   }
 
+  // Ne pas cacher ads-right avec display:none car les .tabs fixed sont à l'intérieur.
+  // On le retire du flux grid (position:absolute) tout en gardant ses enfants rendus.
   .ads-right {
-    display: none !important;
+    position: absolute; // Hors du flux grid → ne perturbe pas la mise en page
+    width: 0;
+    height: 0;
+    min-width: 0;
+    padding: 0;
+    border: none;
+    background: none;
+    box-shadow: none;
+    overflow: visible;
+    pointer-events: none;
+
+    ins.adsbygoogle {
+      display: none;
+    }
   }
 
   section {
@@ -591,6 +606,7 @@ section {
     bottom: 0;
     left: 0;
     right: 0;
+    pointer-events: auto; // Réactive les clics (hérités depuis ads-right)
     flex-direction: row;
     justify-content: center;
     align-items: center;
