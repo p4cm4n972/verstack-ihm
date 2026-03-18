@@ -145,28 +145,20 @@ export class ShopComponent implements AfterViewInit, OnInit {
       return;
     }
 
-    const asides = this.document.querySelectorAll('aside');
-    if (!asides) return;
+    // Protéger uniquement ads-left (slots AdSense) contre les bloqueurs de pub.
+    // Ne PAS forcer ads-right : il doit se masquer via le CSS responsive (≤1200px).
+    const adsLeft = this.document.querySelector('aside.ads-left') as HTMLElement | null;
+    if (!adsLeft) return;
 
-    asides.forEach((aside: any) => {
-      const el = aside as HTMLElement;
-      el.style.setProperty('display', 'block', 'important');
+    adsLeft.style.setProperty('display', 'block', 'important');
 
-
-      const observer = new MutationObserver(() => {
-        if (el.style.display === 'none') {
-          el.style.setProperty('display', 'block', 'important');
-        }
-      });
-
-      observer.observe(el, { attributes: true, attributeFilter: ['style'] });
-
+    const observer = new MutationObserver(() => {
+      if (adsLeft.style.display === 'none') {
+        adsLeft.style.setProperty('display', 'block', 'important');
+      }
     });
 
-   
-
-
-
+    observer.observe(adsLeft, { attributes: true, attributeFilter: ['style'] });
 
   }
 

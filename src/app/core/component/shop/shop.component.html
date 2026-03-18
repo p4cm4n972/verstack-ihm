@@ -1,3 +1,13 @@
+@if(!isLoadingAll){
+<div class="loader-overlay">
+  <div class="retro-loader red">
+    <div class="dots">
+      <span>.</span><span>.</span><span>.</span><span>.</span><span>.</span>
+    </div>
+    <p class="retro-text">Chargement des produits...</p>
+  </div>
+</div>}
+
 <div class="shop-layout">
   <aside class="ads-left">
    <a href="https://red-squiggly.com" target="_blank"> <img src="assets/icons/logo-red-squiggly-01.png" alt="logo Red Squiggly" width="150" /></a>
@@ -7,16 +17,6 @@
   <ng-container id="image-wrapper" [class.dimmed]="isLoadingAll">
 
     <section>
-      @if(!isLoadingAll){
-      <div class="loader-overlay">
-        <div class="retro-loader red">
-          <div class="dots">
-            <span>.</span><span>.</span><span>.</span><span>.</span><span>.</span>
-          </div>
-          <p class="retro-text">Chargement des produits...</p>
-        </div>
-      </div>}
-
       <div class="products-wrapper">
 
         <div class="product-grid">
