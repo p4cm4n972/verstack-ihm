@@ -1,4 +1,4 @@
-import { Component, OnDestroy, inject, effect } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject, afterNextRender } from '@angular/core';
 import { MatTabsModule } from '@angular/material/tabs';
 import { GlobeComponent } from '../../../composant/globe/globe.component';
 import { RouterModule } from '@angular/router';
@@ -12,7 +12,7 @@ import { PlatformService } from '../../services/platform.service';
 import { StructuredDataService } from '../../services/structured-data.service';
 import { LangagesService } from '../../../services/langages.service';
 import { FavorisService } from '../../../services/favoris.service';
-import { Observable, tap } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, tap, takeUntil } from 'rxjs';
 import { differenceInDays, differenceInHours } from 'date-fns';
 import { FavoriteTechnology } from '../../../models/technology.interface';
 
@@ -41,11 +41,14 @@ interface TerminalNotification {
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
-export class HomeComponent implements OnDestroy {
+export class HomeComponent implements OnInit, OnDestroy {
   private readonly favorisService = inject(FavorisService);
+  private readonly destroy$ = new Subject<void>();
 
-  authStatus: boolean = false;
-  authStatus$: Observable<boolean>;
+  // null = état SSR/hydration non résolu (évite le flash)
+  private readonly authSubject = new BehaviorSubject<boolean | null>(null);
+  authStatus$: Observable<boolean | null> = this.authSubject.asObservable();
+
   userData: any;
   bgLoaded = false;
 
@@ -75,7 +78,12 @@ export class HomeComponent implements OnDestroy {
     private structuredDataService: StructuredDataService,
     private langagesService: LangagesService
   ) {
-    this.authStatus$ = this.authService.getAuthStatus();
+    // Résoudre l'auth uniquement après l'hydration client pour éviter le SSR mismatch
+    afterNextRender(() => {
+      this.authService.getAuthStatus().pipe(takeUntil(this.destroy$)).subscribe(status => {
+        this.authSubject.next(status);
+      });
+    });
   }
 
 
@@ -98,7 +106,6 @@ export class HomeComponent implements OnDestroy {
       if (!status) {
         return;
       }
-      this.authStatus = status;
       this.loadUserProfile().subscribe({
         next: () => {
           this.loadUserFavoris();
@@ -373,6 +380,8 @@ export class HomeComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
     // Clear all typing timeouts
     this.typingTimeouts.forEach(timeout => clearTimeout(timeout));
     this.typingTimeouts = [];
