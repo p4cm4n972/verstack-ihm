@@ -173,23 +173,13 @@ mat-toolbar{
 // ========================================
 // CODEBOG LINK - CTA pill button
 // ========================================
+// CODEBOG — solide vert (CTA externe, toujours en dernier)
 .codebog-link {
+  @include pill-base;
   background: #4caf50 !important;
   border: none !important;
-  border-radius: 20px !important;
-  padding: 7px 16px !important;
   color: #0a0a0a !important;
-  font-family: 'Courier New', monospace !important;
-  font-weight: 700 !important;
-  font-size: 0.8rem !important;
-  letter-spacing: 0.5px;
-  transition: all 0.25s ease !important;
   box-shadow: 0 0 12px rgba(76, 175, 80, 0.4) !important;
-  display: inline-flex !important;
-  align-items: center;
-  gap: 5px;
-  white-space: nowrap;
-  text-shadow: none !important;
 
   &:hover {
     background: #66bb6a !important;
@@ -198,13 +188,30 @@ mat-toolbar{
     transform: translateY(-2px);
     text-shadow: none !important;
   }
+  mat-icon { color: #0a0a0a !important; }
+}
 
-  &::after {
-    display: none !important;
-  }
+// ========================================
+// Mixin pill partagé
+// ========================================
+@mixin pill-base {
+  border-radius: 20px !important;
+  padding: 7px 16px !important;
+  font-family: 'Courier New', monospace !important;
+  font-weight: 700 !important;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.5px;
+  transition: all 0.25s ease !important;
+  display: inline-flex !important;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  text-shadow: none !important;
+  cursor: pointer;
+
+  &::after { display: none !important; }
 
   mat-icon {
-    color: #0a0a0a !important;
     font-size: 14px !important;
     width: 14px !important;
     height: 14px !important;
@@ -214,23 +221,13 @@ mat-toolbar{
 // ========================================
 // LOGIN LINK - pill button (même forme que codebog)
 // ========================================
+// LOGIN — solide cyan
 .login-link {
+  @include pill-base;
   background: #00bcd4 !important;
   border: none !important;
-  border-radius: 20px !important;
-  padding: 7px 16px !important;
   color: #0a0a0a !important;
-  font-family: 'Courier New', monospace !important;
-  font-weight: 700 !important;
-  font-size: 0.8rem !important;
-  letter-spacing: 0.5px;
-  transition: all 0.25s ease !important;
   box-shadow: 0 0 12px rgba(0, 188, 212, 0.4) !important;
-  display: inline-flex !important;
-  align-items: center;
-  gap: 5px;
-  white-space: nowrap;
-  text-shadow: none !important;
 
   &:hover {
     background: #26c6da !important;
@@ -239,17 +236,45 @@ mat-toolbar{
     transform: translateY(-2px);
     text-shadow: none !important;
   }
+  mat-icon { color: #0a0a0a !important; }
+}
 
-  &::after {
-    display: none !important;
-  }
+// WHOAMI — ghost cyan (outline, pas rempli)
+.whoami-link {
+  @include pill-base;
+  background: transparent !important;
+  border: 1px solid rgba(0, 188, 212, 0.6) !important;
+  color: #4dd0e1 !important;
+  box-shadow: none !important;
 
-  mat-icon {
-    color: #0a0a0a !important;
-    font-size: 14px !important;
-    width: 14px !important;
-    height: 14px !important;
+  &:hover {
+    background: rgba(0, 188, 212, 0.12) !important;
+    border-color: #00bcd4 !important;
+    color: #80deea !important;
+    box-shadow: 0 0 12px rgba(0, 188, 212, 0.3) !important;
+    transform: translateY(-1px);
+    text-shadow: none !important;
   }
+  mat-icon { color: #4dd0e1 !important; }
+}
+
+// LOGOUT — ghost rouge discret
+.logout-link {
+  @include pill-base;
+  background: transparent !important;
+  border: 1px solid rgba(229, 57, 53, 0.4) !important;
+  color: rgba(239, 154, 154, 0.8) !important;
+  box-shadow: none !important;
+
+  &:hover {
+    background: rgba(229, 57, 53, 0.1) !important;
+    border-color: rgba(229, 57, 53, 0.7) !important;
+    color: #ef9a9a !important;
+    box-shadow: 0 0 10px rgba(229, 57, 53, 0.25) !important;
+    transform: translateY(-1px);
+    text-shadow: none !important;
+  }
+  mat-icon { color: rgba(239, 154, 154, 0.8) !important; }
 }
 
 // ========================================

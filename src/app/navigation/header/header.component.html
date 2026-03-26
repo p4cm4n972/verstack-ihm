@@ -39,11 +39,6 @@
     <div class="navigation-container hide-on-small" *isDesktopOnly>
 
         <ul class="navigation-items">
-            <li>
-                <a href="https://codebog.itmade.fr/" target="_blank" rel="noopener" class="codebog-link">
-                    codebog <mat-icon>code</mat-icon>
-                </a>
-            </li>
             @if(authStatus === null){
                 <!-- Loading state during SSR hydration - show nothing -->
             } @else if(authStatus === false){
@@ -52,7 +47,7 @@
                 </li>
             } @else {
                 <li>
-                    <a routerLink="/profile" routerLinkActive="active">whoami <mat-icon>account_circle</mat-icon></a>
+                    <a routerLink="/profile" routerLinkActive="active" class="whoami-link">whoami <mat-icon>account_circle</mat-icon></a>
 
                     @if(!isSubscriber && !isAdmin){
                         <a routerLink="/subscription" routerLinkActive="active" class="premium-link">
@@ -66,9 +61,14 @@
                         </a>
                     }
 
-<a routerLink="" (click)="logout()" >logout <mat-icon>logout</mat-icon></a>
+                    <a (click)="logout()" class="logout-link">logout <mat-icon>logout</mat-icon></a>
                 </li>
             }
+            <li>
+                <a href="https://codebog.itmade.fr/" target="_blank" rel="noopener" class="codebog-link">
+                    codebog <mat-icon>code</mat-icon>
+                </a>
+            </li>
         </ul>
     </div>
     </div>
