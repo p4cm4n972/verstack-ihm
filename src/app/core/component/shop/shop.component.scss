@@ -3,7 +3,7 @@
 
 .shop-layout {
   display: grid;
-  grid-template-columns: 200px 1fr 180px;
+  grid-template-columns: 200px 1fr 150px;
   gap: 20px;
   padding: 20px;
   align-items: start;
@@ -57,7 +57,7 @@ section {
   position: sticky;
   top: 80px;
   height: fit-content;
-  min-width: 140px;
+  min-width: 0;
   z-index: 1;
 }
 
@@ -360,7 +360,7 @@ section {
   padding: 16px 12px;
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 0 30px rgba(229, 57, 53, 0.03);
-  max-width: 160px;
+  max-width: 140px;
   margin-left: auto;
 
   // Terminal header - RED
