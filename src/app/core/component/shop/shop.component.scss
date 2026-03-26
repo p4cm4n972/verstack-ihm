@@ -52,8 +52,8 @@ section {
 }
 
 // Asides with cyber style
-.ads-left,
-.ads-right {
+.sidebar-left,
+.sidebar-right {
   position: sticky;
   top: 80px;
   height: fit-content;
@@ -61,7 +61,7 @@ section {
   z-index: 1;
 }
 
-.ads-left {
+.sidebar-left {
   background: rgba(15, 10, 12, 0.85);
   border: 1px solid rgba(229, 57, 53, 0.25);
   border-radius: 16px;
@@ -582,7 +582,7 @@ section {
 
   // Ne pas cacher ads-right avec display:none car les .tabs fixed sont à l'intérieur.
   // On le retire du flux grid (position:absolute) tout en gardant ses enfants rendus.
-  .ads-right {
+  .sidebar-right {
     position: absolute; // Hors du flux grid → ne perturbe pas la mise en page
     width: 0;
     height: 0;
@@ -659,8 +659,8 @@ section {
     padding-bottom: 70px;
   }
 
-  .ads-left,
-  .ads-right {
+  .sidebar-left,
+  .sidebar-right {
     display: none !important;
   }
 
@@ -717,7 +717,7 @@ section {
     opacity: 1;
   }
 
-  .ads-left {
+  .sidebar-left {
     a::before,
     a::after {
       animation: none;
