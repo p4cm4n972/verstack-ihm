@@ -58,6 +58,8 @@ section {
   top: 80px;
   height: fit-content;
   min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
   z-index: 1;
 }
 
@@ -360,8 +362,8 @@ section {
   padding: 16px 12px;
   backdrop-filter: blur(10px);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3), inset 0 0 30px rgba(229, 57, 53, 0.03);
-  max-width: 140px;
-  margin-left: auto;
+  width: 100%;
+  box-sizing: border-box;
 
   // Terminal header - RED
   &::before {
