@@ -171,33 +171,32 @@ mat-toolbar{
 }
 
 // ========================================
-// CODEBOG LINK - CTA button
+// CODEBOG LINK - CTA pill button
 // ========================================
 .codebog-link {
-  background: linear-gradient(135deg, rgba(76, 175, 80, 0.15) 0%, rgba(139, 195, 74, 0.15) 100%) !important;
-  border: 1px solid rgba(139, 195, 74, 0.6) !important;
-  border-radius: 6px !important;
-  padding: 7px 14px !important;
-  color: #aed581 !important;
+  background: #4caf50 !important;
+  border: none !important;
+  border-radius: 20px !important;
+  padding: 7px 16px !important;
+  color: #0a0a0a !important;
   font-family: 'Courier New', monospace !important;
   font-weight: 700 !important;
-  font-size: 0.85rem !important;
-  letter-spacing: 1px;
-  text-transform: lowercase;
-  transition: all 0.3s ease !important;
-  box-shadow: 0 0 10px rgba(139, 195, 74, 0.2), inset 0 0 10px rgba(139, 195, 74, 0.05) !important;
+  font-size: 0.8rem !important;
+  letter-spacing: 0.5px;
+  transition: all 0.25s ease !important;
+  box-shadow: 0 0 12px rgba(76, 175, 80, 0.4) !important;
   display: inline-flex !important;
   align-items: center;
-  gap: 6px;
+  gap: 5px;
   white-space: nowrap;
+  text-shadow: none !important;
 
   &:hover {
-    background: linear-gradient(135deg, rgba(76, 175, 80, 0.35) 0%, rgba(139, 195, 74, 0.35) 100%) !important;
-    color: #ccff90 !important;
-    box-shadow: 0 0 20px rgba(139, 195, 74, 0.5), 0 0 40px rgba(139, 195, 74, 0.2) !important;
-    text-shadow: 0 0 10px rgba(204, 255, 144, 0.8) !important;
-    border-color: #aed581 !important;
-    transform: translateY(-1px);
+    background: #66bb6a !important;
+    color: #0a0a0a !important;
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.7), 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    transform: translateY(-2px);
+    text-shadow: none !important;
   }
 
   &::after {
@@ -205,7 +204,7 @@ mat-toolbar{
   }
 
   mat-icon {
-    color: #aed581;
+    color: #0a0a0a !important;
     font-size: 14px !important;
     width: 14px !important;
     height: 14px !important;
