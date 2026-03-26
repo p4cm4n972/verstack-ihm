@@ -30,9 +30,6 @@
             <li class="" *isDesktopOnly>
                 <a class="" routerLink="/shop" routerLinkActive="active">store</a>
             </li>
-            <li class="" *isDesktopOnly>
-                <a class="" href="https://codebog.itmade.fr/" target="_blank" rel="noopener">codebog</a>
-            </li>
            @if(isAdmin){ <li class="" *isDesktopOnly >
                 <a class="" routerLink="/admin" routerLinkActive="active">sudo</a>
             </li>}
@@ -42,6 +39,11 @@
     <div class="navigation-container hide-on-small" *isDesktopOnly>
 
         <ul class="navigation-items">
+            <li>
+                <a href="https://codebog.itmade.fr/" target="_blank" rel="noopener" class="codebog-link">
+                    codebog <mat-icon>code</mat-icon>
+                </a>
+            </li>
             @if(authStatus === null){
                 <!-- Loading state during SSR hydration - show nothing -->
             } @else if(authStatus === false){
