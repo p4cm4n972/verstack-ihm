@@ -171,27 +171,6 @@ mat-toolbar{
 }
 
 // ========================================
-// CODEBOG LINK - CTA pill button
-// ========================================
-// CODEBOG — solide vert (CTA externe, toujours en dernier)
-.codebog-link {
-  @include pill-base;
-  background: #4caf50 !important;
-  border: none !important;
-  color: #0a0a0a !important;
-  box-shadow: 0 0 12px rgba(76, 175, 80, 0.4) !important;
-
-  &:hover {
-    background: #66bb6a !important;
-    color: #0a0a0a !important;
-    box-shadow: 0 0 20px rgba(76, 175, 80, 0.7), 0 4px 12px rgba(0, 0, 0, 0.3) !important;
-    transform: translateY(-2px);
-    text-shadow: none !important;
-  }
-  mat-icon { color: #0a0a0a !important; }
-}
-
-// ========================================
 // Mixin pill partagé
 // ========================================
 @mixin pill-base {
@@ -216,6 +195,27 @@ mat-toolbar{
     width: 14px !important;
     height: 14px !important;
   }
+}
+
+// ========================================
+// CODEBOG LINK - CTA pill button
+// ========================================
+// CODEBOG — solide vert (CTA externe, toujours en dernier)
+.codebog-link {
+  @include pill-base;
+  background: #4caf50 !important;
+  border: none !important;
+  color: #0a0a0a !important;
+  box-shadow: 0 0 12px rgba(76, 175, 80, 0.4) !important;
+
+  &:hover {
+    background: #66bb6a !important;
+    color: #0a0a0a !important;
+    box-shadow: 0 0 20px rgba(76, 175, 80, 0.7), 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+    transform: translateY(-2px);
+    text-shadow: none !important;
+  }
+  mat-icon { color: #0a0a0a !important; }
 }
 
 // ========================================
