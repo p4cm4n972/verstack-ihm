@@ -48,7 +48,7 @@
                 <!-- Loading state during SSR hydration - show nothing -->
             } @else if(authStatus === false){
                 <li>
-                    <a routerLink="/signup" routerLinkActive="active">login <mat-icon>lock</mat-icon></a>
+                    <a routerLink="/signup" routerLinkActive="active" class="login-link">login <mat-icon>lock</mat-icon></a>
                 </li>
             } @else {
                 <li>
