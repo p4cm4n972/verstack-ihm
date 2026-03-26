@@ -37,11 +37,13 @@
 }
 
 section {
+  grid-column: 2; // Toujours colonne 2 (1fr) — résiste à la suppression de ads-left par les bloqueurs de pub
   background: rgba(15, 10, 12, 0.85);
   box-shadow: 0 8px 32px rgba(229, 57, 53, 0.15), inset 0 0 60px rgba(229, 57, 53, 0.03);
   border-radius: 12px;
   border: 1px solid rgba(229, 57, 53, 0.2);
   width: 100%;
+  min-width: 0; // Empêche le débordement dans la grille
   padding: 20px;
   min-height: auto;
   backdrop-filter: blur(10px);
@@ -598,6 +600,7 @@ section {
   }
 
   section {
+    grid-column: 2; // Colonne 2 dans le layout 2-colonnes (180px 1fr)
     padding-bottom: 80px; // Compense la barre de catégories fixe en bas
   }
 
@@ -662,6 +665,7 @@ section {
   }
 
   section {
+    grid-column: 1; // Layout 1 colonne (≤768px)
     padding: 12px;
   }
 
