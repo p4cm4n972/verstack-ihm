@@ -1,6 +1,5 @@
 // shop.component.ts
-import { AfterViewInit, Component, inject, OnInit, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser, DOCUMENT } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { ShopifyBuyButtonComponent } from '../../../composant/shopify-buy-button/shopify-buy-button.component';
@@ -78,7 +77,7 @@ export function getFrenchPaginatorIntl(): MatPaginatorIntl {
  * @method setCategorie Sets the active category for filtering.
  * @method setTheme Sets the active theme for filtering.
  */
-export class ShopComponent implements AfterViewInit, OnInit {
+export class ShopComponent implements OnInit {
   isLoadingAll = false;
   loadedCount = 0;
   expectedCount = 0;
@@ -110,8 +109,6 @@ export class ShopComponent implements AfterViewInit, OnInit {
     private metaService: Meta,
     private seo: SeoService,
     private productsService: ProductsService,
-    @Inject(DOCUMENT) private document: Document,
-    @Inject(PLATFORM_ID) private platformId: Object,
   ) {}
 
   ngOnInit(): void {
@@ -140,29 +137,8 @@ export class ShopComponent implements AfterViewInit, OnInit {
 
   }
 
-  ngAfterViewInit() {
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
 
-    // Protéger uniquement ads-left (slots AdSense) contre les bloqueurs de pub.
-    // Ne PAS forcer ads-right : il doit se masquer via le CSS responsive (≤1200px).
-    const adsLeft = this.document.querySelector('aside.ads-left') as HTMLElement | null;
-    if (!adsLeft) return;
 
-    adsLeft.style.setProperty('display', 'block', 'important');
-
-    const observer = new MutationObserver(() => {
-      if (adsLeft.style.display === 'none') {
-        adsLeft.style.setProperty('display', 'block', 'important');
-      }
-    });
-
-    observer.observe(adsLeft, { attributes: true, attributeFilter: ['style'] });
-
-  }
-
- 
 
 
   trackById(index: number, product: any): number {
