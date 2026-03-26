@@ -30,6 +30,9 @@
             <li class="" *isDesktopOnly>
                 <a class="" routerLink="/shop" routerLinkActive="active">store</a>
             </li>
+            <li class="" *isDesktopOnly>
+                <a class="" href="https://codebog.itmade.fr/" target="_blank" rel="noopener">codebog</a>
+            </li>
            @if(isAdmin){ <li class="" *isDesktopOnly >
                 <a class="" routerLink="/admin" routerLinkActive="active">sudo</a>
             </li>}
@@ -61,10 +64,7 @@
                         </a>
                     }
 
-                    <a href="https://codebog.itmade.fr/" target="_blank" rel="noopener" class="codebog-link">
-                        codebog <mat-icon>code</mat-icon>
-                    </a>
-                    <a routerLink="" (click)="logout()" >logout <mat-icon>logout</mat-icon></a>
+<a routerLink="" (click)="logout()" >logout <mat-icon>logout</mat-icon></a>
                 </li>
             }
         </ul>

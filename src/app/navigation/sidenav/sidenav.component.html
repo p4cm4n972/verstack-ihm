@@ -22,6 +22,9 @@
     <a mat-list-item routerLink="/shop" (click)="onSidenavClose()" *isDesktopOnly>
         <mat-icon>storefront</mat-icon> <span class="nav-caption">store</span>
     </a>
+    <a mat-list-item href="https://codebog.itmade.fr/" target="_blank" rel="noopener" *isDesktopOnly>
+        <mat-icon>code</mat-icon> <span class="nav-caption">codebog</span>
+    </a>
     <a mat-list-item routerLink="/admin" (click)="onSidenavClose()" *isDesktopOnly [hidden]="!isAdmin">
         <mat-icon>admin_panel_settings</mat-icon> <span class="nav-caption">sudo</span>
     </a>
