@@ -14,6 +14,7 @@ export interface SeoMetadata {
   author?: string;
   publishedTime?: string;
   modifiedTime?: string;
+  section?: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -38,8 +39,12 @@ export class SeoService {
     // Open Graph tags
     this.meta.updateTag({ property: 'og:title', content: options.title });
     this.meta.updateTag({ property: 'og:description', content: options.description });
+    this.meta.updateTag({ property: 'og:locale', content: 'fr_FR' });
+    this.meta.updateTag({ property: 'og:site_name', content: 'Version IT' });
     if (options.image) {
       this.meta.updateTag({ property: 'og:image', content: options.image });
+      this.meta.updateTag({ property: 'og:image:width', content: '1200' });
+      this.meta.updateTag({ property: 'og:image:height', content: '630' });
     }
     if (options.url) {
       this.meta.updateTag({ property: 'og:url', content: options.url });
@@ -56,6 +61,9 @@ export class SeoService {
       }
       if (options.author) {
         this.meta.updateTag({ property: 'article:author', content: options.author });
+      }
+      if (options.section) {
+        this.meta.updateTag({ property: 'article:section', content: options.section });
       }
     }
 

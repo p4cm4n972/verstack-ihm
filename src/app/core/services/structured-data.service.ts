@@ -1,5 +1,5 @@
-import { Injectable, Inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser, DOCUMENT } from '@angular/common';
+import { Injectable, Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -8,19 +8,15 @@ export class StructuredDataService {
   private scriptId = 'structured-data';
 
   constructor(
-    @Inject(DOCUMENT) private document: Document,
-    @Inject(PLATFORM_ID) private platformId: Object
+    @Inject(DOCUMENT) private document: Document
   ) {}
 
   addStructuredData(data: any): void {
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
-
-    // Remove existing structured data if present
+    // Supprimer les données structurées existantes
     this.removeStructuredData();
 
-    // Create and append new structured data
+    // Injecter le JSON-LD dans le <head> — fonctionne en SSR et en browser
+    // Angular SSR utilise une émulation DOM (domino) compatible avec createElement
     const script = this.document.createElement('script');
     script.type = 'application/ld+json';
     script.id = this.scriptId;
@@ -29,10 +25,6 @@ export class StructuredDataService {
   }
 
   removeStructuredData(): void {
-    if (!isPlatformBrowser(this.platformId)) {
-      return;
-    }
-
     const existingScript = this.document.getElementById(this.scriptId);
     if (existingScript) {
       existingScript.remove();

@@ -88,30 +88,26 @@ ${allUrls.map(url => `  <url>
 });
 
 /**
- * Basic API endpoints used during server-side rendering.
- * These stubs prevent errors when the real backend is not
- * available during the build process.
+ * Proxy des endpoints API vers le backend réel.
+ * En production SSR, Angular HttpClient appelle directement https://api.version.itmade.fr
+ * via l'apiUrlInterceptor. Ces routes Express servent uniquement les requêtes directes
+ * reçues par ce serveur (outils de test, curl, etc.).
  */
-app.get('/api/news/all', (_req, res) => {
-  res.json([]);
-});
+async function proxyToBackend(path: string, res: express.Response): Promise<void> {
+  try {
+    const response = await fetch(`${API_BASE_URL}${path}`);
+    const data = await response.json();
+    res.status(response.status).json(data);
+  } catch {
+    res.status(502).json({ error: 'Backend unavailable' });
+  }
+}
 
-app.get('/api/news/:id', (_req, res) => {
-  res.json({});
-});
-
-app.get('/api/langages/all', (_req, res) => {
-  res.json([]);
-});
-
-// Basic /api/users stubs for SSR
-app.get('/api/users', (_req, res) => {
-  res.json([]);
-});
-
-app.get('/api/users/:id', (_req, res) => {
-  res.json({});
-});
+app.get('/api/news/all', (_req, res) => proxyToBackend('/api/news/all', res));
+app.get('/api/news/:id', (req, res) => proxyToBackend(`/api/news/${req.params['id']}`, res));
+app.get('/api/langages/all', (_req, res) => proxyToBackend('/api/langages/all', res));
+app.get('/api/users', (_req, res) => proxyToBackend('/api/users', res));
+app.get('/api/users/:id', (req, res) => proxyToBackend(`/api/users/${req.params['id']}`, res));
 
 /**
  * Serve static files from /browser

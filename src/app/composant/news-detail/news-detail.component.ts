@@ -235,7 +235,9 @@ export class NewsDetailComponent implements OnInit, OnDestroy {
       type: 'article',
       author: 'P4cm4n972',
       publishedTime: article.date,
-      canonical: articleUrl
+      modifiedTime: article.updatedAt || article.date,
+      canonical: articleUrl,
+      section: article.category
     });
 
     const structuredData = this.structuredDataService.createArticleSchema({
